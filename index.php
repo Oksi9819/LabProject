@@ -1,4 +1,5 @@
 <?php
-$enddds=32;
+phpinfo();
 echo "Hello World!";
+$enddds=32;
 ?>
