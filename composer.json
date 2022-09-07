@@ -1,0 +1,19 @@
+{
+    "name": "itechart/internship_project",
+    "description": "Designed for the internship process.",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Itechart\\InternshipProject\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "OksiFoxy",
+            "email": "oksanaostapuk@gmail.com"
+        }
+    ],
+    "require": {
+        "steampixel/simple-php-router": "^0.7.0"
+    }
+}
