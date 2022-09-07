@@ -1,4 +1,4 @@
 <IfModule mod_rewrite.c>
 RewriteEngine On
-RewriteRule ^dir(.*)$ /index.php [L,R=301]
+RewriteRule ^dir(.*)$ /index.php [R=301,L]
 </IfModule mod_rewrite.c>
