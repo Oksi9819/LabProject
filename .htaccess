@@ -1,4 +1,4 @@
 <IfModule mod_rewrite.c>
-RewriteEngine On
-#RewriteRule ^(.*)$ /index.php/$1 [R=301,L]
-</IfModule mod_rewrite.c>
+#RewriteEngine On
+RewriteRule ^(.*)$ http://localhost/LabProject/index.php [L,R=301]
+</IfModule>
