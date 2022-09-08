@@ -12,4 +12,5 @@ Route::add('/', function() {
 
 // Run the router
 Route::run('/');
+echo "Hello";
 ?>
