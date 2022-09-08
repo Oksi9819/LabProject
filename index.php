@@ -54,7 +54,7 @@ Route::add('/catalog/category/([A-Za-z]*)', function($category_id) {
 // Route to product card
 Route::add('/catalog/category/([A-Za-z]*)/([a-z-0-9-]*)', function($category_id, $product_id) {
   navi();
-  echo 'It is a product card.'.$product_id.'<br>';
+  echo 'It is a card of product: '.$product_id.'<br>';
 });
 
 // Route to cart
