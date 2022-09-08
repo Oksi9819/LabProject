@@ -13,7 +13,7 @@ function navi() {
   <ul>
       <li><a href="'.BASEPATH.'">Главная</a></li>
       <li><a href="'.BASEPATH.'catalog">Каталог</a>
-      <ul><li><a href="'.BASEPATH.'catalog/category/1">Категория 1</a></li></ul></li>
+      <ul><li><a href="'.BASEPATH.'catalog/category/A">Категория 1</a></li></ul></li>
       <li><a href="'.BASEPATH.'contacts">Контакты</a></li>
       <li><a href="'.BASEPATH.'delivery">Доставка</a></li> 
   </ul>
@@ -52,7 +52,7 @@ Route::add('/catalog/category/([A-Za-z]*)', function($category_id) {
 });
 
 // Route to product card
-Route::add('/catalog/category/([A-Za-z]*)/([a-z-0-9-]*)', function($product_id) {
+Route::add('/catalog/category/([A-Za-z]*)/([a-z-0-9-]*)', function($category_id, $product_id) {
   navi();
   echo 'It is a product card.'.$product_id.'<br>';
 });
@@ -93,6 +93,7 @@ Route::add('/delivery', function() {
   navi();
   echo 'It is page about delivery here';
 });
-?>
+
+Route::run(BASEPATH);
 
 
