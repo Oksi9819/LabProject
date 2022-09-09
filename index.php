@@ -4,6 +4,7 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 // Use this namespace
 use Steampixel\Route;
+use Controller\HomeController;
 
 define('BASEPATH','/LabProject/');
 
@@ -22,8 +23,7 @@ function navi() {
 
 // Base route (startpage)
 Route::add('/', function() {
-  navi();
-  echo 'Welcome to the main page!';
+  (new HomeController())->execute();
 });
 
 // Route to registration form
