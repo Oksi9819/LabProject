@@ -2,9 +2,17 @@
 // Autoload files using composer
 require_once __DIR__ . '/vendor/autoload.php';
 
+spl_autoload_register(static function($className){
+  $file = __DIR__. '\\src\\Controller\\' . $className . '.php';
+  $file = str_replace('\\', DIRECTORY_SEPARATOR, $file);
+
+  if (file_exists($file)) {
+      require_once($file);
+  }
+});
+
 // Use this namespace
 use Steampixel\Route;
-use Controller\HomeController;
 
 define('BASEPATH','/LabProject/');
 
@@ -14,9 +22,14 @@ function navi() {
   <ul>
       <li><a href="'.BASEPATH.'">Главная</a></li>
       <li><a href="'.BASEPATH.'catalog">Каталог</a>
-      <ul><li><a href="'.BASEPATH.'catalog/category/A">Категория 1</a></li></ul></li>
-      <li><a href="'.BASEPATH.'contacts">Контакты</a></li>
-      <li><a href="'.BASEPATH.'delivery">Доставка</a></li> 
+      <ul><li><a href="'.BASEPATH.'catalog/category/A">Категория A</a></li></ul>
+      <ul><li><a href="'.BASEPATH.'catalog/category/A/Lamba335">Категория A Ламба335</a></li></ul></li>
+      <li><a href="'.BASEPATH.'contacts">Контакты</a>
+      <ul><li><a href="'.BASEPATH.'contacts/contact-form">Форма обратной связи</a></li></ul></li>
+      <li><a href="'.BASEPATH.'delivery">Доставка</a></li>
+      <li><a href="'.BASEPATH.'registration-form">Регистрация</a></li>
+      <li><a href="'.BASEPATH.'cart/2256665">Корзина пользователя 2256665</a></li>
+      <li><a href="'.BASEPATH.'cart/2256665/order/265478555">Заказ 265478555 пользователя 2256665</a></li>
   </ul>
   ';
 }
@@ -28,70 +41,57 @@ Route::add('/', function() {
 
 // Route to registration form
 Route::add('/registration-form', function() {
-  navi();
-  echo 'There is registration form here';
+  (new RegistrationFormController())->save();
 }, 'get');
 
 // Post route to registration-form
 Route::add('/registration-form', function() {
-  navi();
-  echo 'You are already registered:<br>';
-  print_r($_POST);
+  (new RegistrationFormController())->show();
 }, 'post');
 
 // Route to catalog
 Route::add('/catalog', function() {
-  navi();
-  echo 'It is catalog here';
+  (new CatalogController())->execute();
 });
 
 // Route to a particular category of products
 Route::add('/catalog/category/([A-Za-z]*)', function($category_id) {
-  navi();
-  echo 'There are products of category:'.$category_id.'<br>';
+  (new CatalogController())->getCategory($category_id);
 });
 
 // Route to product card
 Route::add('/catalog/category/([A-Za-z]*)/([a-z-0-9-]*)', function($category_id, $product_id) {
-  navi();
-  echo 'It is a card of product: '.$product_id.'<br>';
+  (new CatalogController())->getProductByCategoryAndId($category_id, $product_id);
 });
 
 // Route to cart
 Route::add('/cart/([0-9]*)', function($user_id) {
-  navi();
-  echo 'It is cart of client with id: '.$user_id.'<br>';
+  (new CartController())->show($user_id);
 });
 
 // Route to make an order
 Route::add('/cart/([0-9]*)/order/([0-9]*)', function($user_id, $order_id) {
-  navi();
-  echo 'It is an order '.$order_id.' of client '.$user_id.'.<br>';
+  (new CartController())->order($user_id, $order_id);
 });
 
 // Route to contacts
 Route::add('/contacts', function() {
-  navi();
-  echo 'It is page with contacts here';
+  (new ContactsController())->execute();
 });
 
 // Route to contact-form
 Route::add('/contacts/contact-form', function() {
-  navi();
-  echo 'There is contact-form here';
+  (new ContactsController())->send();
 }, 'get');
 
 // Post route to contact-form
 Route::add('/contacts/contact-form', function() {
-  navi();
-  echo 'The form has been sent:<br>';
-  print_r($_POST);
+  (new ContactsController())->show();
 }, 'post');
 
 // Route to delivery page
 Route::add('/delivery', function() {
-  navi();
-  echo 'It is page about delivery here';
+  (new DeliveryController())->execute();
 });
 
 Route::run(BASEPATH);
