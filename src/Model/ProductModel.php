@@ -15,7 +15,7 @@ class ProductModel
         return $productsByCategory;
     }
 
-    public function getProductById($category_id, $product_id):array
+    public function getProductById($product_id):array
     {
         $productById=array(
             "product_id"=>111222,

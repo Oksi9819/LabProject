@@ -14,6 +14,7 @@ spl_autoload_register(static function($className){
 
 // Use this namespace
 use Steampixel\Route;
+use Itechart\InternshipProject\Controller\ProductController;
 
 define('BASEPATH','/LabProject/');
 
@@ -23,8 +24,10 @@ function navi() {
   <ul>
       <li><a href="'.BASEPATH.'">Главная</a></li>
       <li><a href="'.BASEPATH.'catalog">Каталог</a>
-      <ul><li><a href="'.BASEPATH.'catalog/category/A">Категория A</a></li></ul>
-      <ul><li><a href="'.BASEPATH.'catalog/category/A/Lamba335">Категория A Ламба335</a></li></ul></li>
+      <ul><li><a href="'.BASEPATH.'catalog/categoryVacuumCleaners">Категория Пылесосы</a></li>
+          <li><a href="'.BASEPATH.'catalog/categoryVacuumCleaners/id111222">Пылесосы id111222</a></li>
+          <li><a href="'.BASEPATH.'catalog/id111222">Продукт id111222</a></li>
+          <li><a href="'.BASEPATH.'catalog/xiaomi-mi-robot-vacuum-mop-2">Xiaomi Mi Robot Vacuum Mop</a></li></ul></li>
       <li><a href="'.BASEPATH.'contacts">Контакты</a>
       <ul><li><a href="'.BASEPATH.'contacts/contact-form">Форма обратной связи</a></li></ul></li>
       <li><a href="'.BASEPATH.'delivery">Доставка</a></li>
@@ -52,17 +55,27 @@ Route::add('/registration-form', function() {
 
 // Route to catalog
 Route::add('/catalog', function() {
-  (new ProductController())->execute();
+  (new ProductController())->getProducts();
 });
 
 // Route to a particular category of products
-Route::add('/catalog/category/([A-Za-z]*)', function($category_id) {
-  (new ProductController())->getCategory($category_id);
+Route::add('/catalog/category([A-Za-z]*)', function($category_id) {
+  (new ProductController())->getProductsByCategory($category_id);
 });
 
 // Route to product card
-Route::add('/catalog/category/([A-Za-z]*)/([a-z-0-9-]*)', function($category_id, $product_id) {
-  (new ProductController())->getProductByCategoryAndId($category_id, $product_id);
+Route::add('/catalog/category([A-Za-z]*)/id([0-9]*)', function($category_id, $product_id) {
+  (new ProductController())->getProductById($product_id);
+});
+
+// Route to product card by product Id
+Route::add('/catalog/id([0-9]*)', function($product_id) {
+  (new ProductController())->getProductById($product_id);
+});
+
+// Route to product card by product name
+Route::add('/catalog/([a-z-0-9-]*)', function($product_name) {
+  (new ProductController())->getProductByName($product_name);
 });
 
 // Route to cart
