@@ -28,4 +28,12 @@ class ReviewModel
         );
         return setReview;
     }
+
+    /*public function deleteReview(int $review_id):void
+    {
+        if(review_to_delete['review_id']==$review_id)
+        {
+            unset($review_to_delete);
+        }
+    }*/
 }
