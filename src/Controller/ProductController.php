@@ -20,7 +20,7 @@ class ProductController
 
     public function getProductById($product_id)
     {
-        $product=(new ProductModel())->getProductsById($product_id);
+        $product=(new ProductModel())->getProductById($product_id);
         return (new ProductView())->renderProductListById($product);
     }
 

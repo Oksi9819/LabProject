@@ -3,14 +3,14 @@
 require_once __DIR__ . '/vendor/autoload.php';
 
 
-spl_autoload_register(static function($className){
+/*spl_autoload_register(static function($className){
   $file = __DIR__. '\\src\\Controller\\' . $className . '.php';
   $file = str_replace('\\', DIRECTORY_SEPARATOR, $file);
 
   if (file_exists($file)) {
       require_once($file);
   }
-});
+});*/
 
 // Use this namespace
 use Steampixel\Route;
