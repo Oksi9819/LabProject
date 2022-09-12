@@ -6,7 +6,7 @@ class ReviewModel
 {
     public function getReviews():array
     {
-        $reviews=array("Робот-пылесос моющий Xiaomi Mi Robot Vacuum Mop 2 Ultra", "Электрический чайник Xiaomi Water Kettle 1.5L", "Увлажнитель воздуха Deerma Air Humidifier DEM F628S", "Мультифункциональный пароочиститель Deerma Steam Cleaner DEM-ZQ610");
+        $reviews=array("Xiaomi Mi Robot Vacuum Mop 2 Ultra очень понравился! Шикарный помощник по дому", "Очень приятный персонал. Быстро помогли выбрать нужный товар.", "Большой ассортимент!", "Пароочиститель Deerma Steam Cleaner DEM-ZQ610 очень рекомендую!");
         return $reviews;
     }
 
