@@ -1,10 +1,10 @@
 <?php
+require_once __DIR__.'/View/View.php';
 
 class HomeController
 {
     public function execute()
     {
-        navi();
-        echo 'Welcome to the main page!<br>';
+        (new View/HomeView())->render();
     }
 }

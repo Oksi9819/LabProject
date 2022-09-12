@@ -2,6 +2,7 @@
 // Autoload files using composer
 require_once __DIR__ . '/vendor/autoload.php';
 
+
 spl_autoload_register(static function($className){
   $file = __DIR__. '\\src\\Controller\\' . $className . '.php';
   $file = str_replace('\\', DIRECTORY_SEPARATOR, $file);
@@ -41,27 +42,27 @@ Route::add('/', function() {
 
 // Route to registration form
 Route::add('/registration-form', function() {
-  (new RegistrationFormController())->save();
+  (new RegistrationAuthorizationController())->save();
 }, 'get');
 
 // Post route to registration-form
 Route::add('/registration-form', function() {
-  (new RegistrationFormController())->show();
+  (new RegistrationAuthorizationController())->show();
 }, 'post');
 
 // Route to catalog
 Route::add('/catalog', function() {
-  (new CatalogController())->execute();
+  (new ProductController())->execute();
 });
 
 // Route to a particular category of products
 Route::add('/catalog/category/([A-Za-z]*)', function($category_id) {
-  (new CatalogController())->getCategory($category_id);
+  (new ProductController())->getCategory($category_id);
 });
 
 // Route to product card
 Route::add('/catalog/category/([A-Za-z]*)/([a-z-0-9-]*)', function($category_id, $product_id) {
-  (new CatalogController())->getProductByCategoryAndId($category_id, $product_id);
+  (new ProductController())->getProductByCategoryAndId($category_id, $product_id);
 });
 
 // Route to cart
@@ -76,22 +77,22 @@ Route::add('/cart/([0-9]*)/order/([0-9]*)', function($user_id, $order_id) {
 
 // Route to contacts
 Route::add('/contacts', function() {
-  (new ContactsController())->execute();
+  (new BasicController())->execute();
 });
 
 // Route to contact-form
 Route::add('/contacts/contact-form', function() {
-  (new ContactsController())->send();
+  (new BasicController())->send();
 }, 'get');
 
 // Post route to contact-form
 Route::add('/contacts/contact-form', function() {
-  (new ContactsController())->show();
+  (new BasicController())->show();
 }, 'post');
 
 // Route to delivery page
 Route::add('/delivery', function() {
-  (new DeliveryController())->execute();
+  (new BasicController())->execute();
 });
 
 Route::run(BASEPATH);

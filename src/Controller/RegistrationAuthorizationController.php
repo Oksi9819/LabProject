@@ -1,6 +1,6 @@
 <?php
 
-class RegistrationFormController
+class RegistrationAuthorizationController
 {
     public function save()
     {
