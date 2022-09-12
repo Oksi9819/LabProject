@@ -26,7 +26,7 @@ class UserModel
     public function getUserInfo(int $user_id):array
     {
             $user=array(
-            "user_id"=>111222,
+            "user_id"=>$user_id,
             "user_name"=>"Смирнов",
             "user_surname"=>"Петр",
             "user_birthday"=>"01/01/1998",

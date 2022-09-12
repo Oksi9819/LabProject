@@ -3,14 +3,34 @@
 namespace Itechart\InternshipProject\Controller;
 
 use Itechart\InternshipProject\Model\UserModel;
+use Itechart\InternshipProject\Model\ReviewModel;
+use Itechart\InternshipProject\Model\OrderModel;
 use Itechart\InternshipProject\View\UserView;
 
 class UserController
 {
-    public function getUserInfo($user_id)
+    public function getUserInfo(int $user_id)
     {
-        $user=(new UserModel())->getUserInfo($user_id);
-        return (new UserView())->renderUserPage($user);
+        if($user_id=="111" || $user_id=="112" || $user_id=="113")
+        {
+            $user=(new UserModel())->getUserInfo($user_id);
+            return (new UserView())->renderAdminPage($user);
+        }else{
+            $user=(new UserModel())->getUserInfo($user_id);
+            return (new UserView())->renderUserPage($user);
+            }
+    }
+
+    public function getUserReviews(int $user_id)
+    {
+        if($user_id=="111" || $user_id=="112" || $user_id=="113")
+        {
+            $reviews=(new ReviewModel())->getReviews();
+            return (new UserView())->renderAdminReviewsPage($reviews);
+        }else{
+                 $reviews=(new ReviewModel())->getReviewsByUserId($user_id);
+                 return (new UserView())->renderUserReviewsPage($reviews);
+            }
     }
 
     /*public function getUserOrders($user_id)

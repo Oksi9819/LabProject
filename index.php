@@ -24,9 +24,17 @@ function navi() {
       <ul><li><a href="'.BASEPATH.'contacts/contact-form">Форма обратной связи</a></li></ul></li>
       <li><a href="'.BASEPATH.'delivery">Доставка</a></li>
       <li><a href="'.BASEPATH.'registration-form">Регистрация/Авторизация</a></li>
-      <li><a href="'.BASEPATH.'profile/111222">Пользователь id 111222</a></li>
+      <li><a href="'.BASEPATH.'profile/111222">Пользователь id 111222</a>
+      <ul><li><a href="'.BASEPATH.'profile/111222/info">Пользователь id 111222. Информация</a></li>
+          <li><a href="'.BASEPATH.'profile/111222/reviews">Пользователь id 111222. Отзывы</a></li>
+          <li><a href="'.BASEPATH.'profile/111222/orders">Пользователь id 111222. Заказы</a></li></ul></li>
+      <li><a href="'.BASEPATH.'profile/112">Пользователь id 112 = Админ</a>
+      <ul><li><a href="'.BASEPATH.'profile/112/info">Админ id 112. Информация</a></li>
+          <li><a href="'.BASEPATH.'profile/112/reviews">Все отзывы</a></li>
+          <li><a href="'.BASEPATH.'profile/112/orders">Все заказы</a></li></ul></li>
       <li><a href="'.BASEPATH.'cart/2256665">Корзина пользователя 2256665</a></li>
       <li><a href="'.BASEPATH.'cart/2256665/order/265478555">Заказ 265478555 пользователя 2256665</a></li>
+
   </ul>
   ';
 }
@@ -49,6 +57,21 @@ Route::add('/registration-form', function() {
 // Route to profile page
 Route::add('/profile/([0-9]*)', function($user_id) {
   (new UserController())->getUserInfo($user_id);
+});
+
+// Route to profile page->info about user
+Route::add('/profile/([0-9]*)/info', function($user_id) {
+  (new UserController())->getUserInfo($user_id);
+});
+
+// Route to profile page->info about user's orders
+Route::add('/profile/([0-9]*)/orders', function($user_id) {
+  (new UserController())->getUserInfo($user_id);
+});
+
+// Route to profile page->info about user's reviews
+Route::add('/profile/([0-9]*)/reviews', function($user_id) {
+  (new UserController())->getUserReviews($user_id);
 });
 
 // Route to catalog
