@@ -27,7 +27,7 @@ function navi() {
       <li><a href="'.BASEPATH.'catalog">Каталог</a>
       <ul><li><a href="'.BASEPATH.'catalog/categoryVacuumCleaners">Категория Пылесосы</a></li>
           <li><a href="'.BASEPATH.'catalog/categoryVacuumCleaners/id111222">Пылесосы id111222</a></li>
-          <li><a href="'.BASEPATH.'catalog/id111222">Продукт id111222</a></li>
+          <li><a href="'.BASEPATH.'catalog/id11122">Продукт id1112222</a></li>
           <li><a href="'.BASEPATH.'catalog/xiaomi-mi-robot-vacuum-mop-2">Xiaomi Mi Robot Vacuum Mop</a></li></ul></li>
       <li><a href="'.BASEPATH.'contacts">Контакты</a>
       <ul><li><a href="'.BASEPATH.'contacts/contact-form">Форма обратной связи</a></li></ul></li>

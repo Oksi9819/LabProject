@@ -4,9 +4,28 @@ namespace Itechart\InternshipProject\Model;
 
 class UserModel
 {
-    public function getUserInfo($user_id):array
+    public function setUser(int $user_id, string $user_name, string $user_surname, string $user_birthday, string $user_phone, string $user_address, string $user_email):array
     {
         $user=array(
+            "user_id"=>$user_id,
+            "user_name"=>$user_name,
+            "user_surname"=>$user_surname,
+            "user_birthday"=>$user_birthday,
+            "user_phone"=>$user_phone,
+            "user_address"=>$user_address,
+            "user_email"=>$user_email,
+            );
+        return $user;
+    }
+
+    /*public function deleteUser(array $user):void
+    {
+        unset($user);
+    }*/
+
+    public function getUserInfo(int $user_id):array
+    {
+            $user=array(
             "user_id"=>111222,
             "user_name"=>"Смирнов",
             "user_surname"=>"Петр",
@@ -15,12 +34,6 @@ class UserModel
             "user_address"=>"г. Минск, пр-т Независимости, 116",
             "user_email"=>"testclient@gmail.com",
             );
-        return $user;
+            return $user;
     }
-
-/*    public function getUserOrders($user_id)
-    {
-        echo "Заказы пользователя id".$user_id.":<br>";
-
-    }*/
 }

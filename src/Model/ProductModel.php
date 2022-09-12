@@ -9,13 +9,13 @@ class ProductModel
         return $products;
     }
 
-    public function getProductsByCategory($category_id):array
+    public function getProductsByCategory(string $category_id):array
     {
         $productsByCategory=array("Робот-пылесос моющий Xiaomi Mi Robot Vacuum Mop 2 Ultra", "Робот-пылесос моющий Dreame D9 Max Robot Vacuum Cleaner", "Робот-пылесос моющий Dreame Bot Z10 Pro", "Робот-пылесос моющий Trouver Finder Vacuum Mop LDS RLS3");
         return $productsByCategory;
     }
 
-    public function getProductById($product_id):array
+    public function getProductById(int $product_id):array
     {
         $productById=array(
             "product_id"=>111222,
@@ -26,7 +26,7 @@ class ProductModel
         return $productById;
     }
 
-    public function getProductByName($product_name):array
+    public function getProductByName(string $product_name):array
     {
         $productByName=array(
         "product_id"=>111222,

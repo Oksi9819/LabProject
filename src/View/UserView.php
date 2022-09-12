@@ -6,6 +6,8 @@ class UserView
 {
     public function renderUserPage($user)
     {
+        navi();
+        
         echo "Данные о пользователе: <br>";
         echo "Id: ".$user['user_id']."<br>";
         echo "Фамилия: ".$user['user_name']."<br>";
