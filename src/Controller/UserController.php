@@ -33,8 +33,17 @@ class UserController
             }
     }
 
-    /*public function getUserOrders($user_id)
+    public function getUserOrders(int $user_id)
     {
+        if($user_id=="111" || $user_id=="112" || $user_id=="113")
+        {
+            $orders=(new OrderModel())->getOrders();
+            return (new UserView())->renderAdminOrdersPage($orders);
+        }else{
+            $orders=(new OrderModel())->getOrdersByUserId($user_id);
+            return (new UserView())->renderUserOrdersPage($orders);
+            }
+    }
 
-    }*/
+
 }

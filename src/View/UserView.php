@@ -29,6 +29,28 @@ class UserView
         }
     }
 
+    public function renderUserOrdersPage(array $orders)
+    {
+        navi();
+        $i=1;
+        echo "Код заказа        ";
+        echo "Список товаров заказа     ";
+        echo "Сумма заказа      ";
+        echo "Адрес заказа<br>";
+        foreach ($orders as $order)
+        {
+            echo $i."-ый заказ:<br>";
+            echo $order['order_id']." \t\t";
+            foreach ($order['order_product_list'] as $order_product)
+            {
+                echo $order_product." ";
+            }
+            echo $order['order_sum']." BYN ";
+            echo $order['order_address']."<br>";
+            $i++;
+        }
+    }
+
     public function renderAdminPage(array $user)
     {
         navi();
@@ -50,6 +72,33 @@ class UserView
         foreach ($reviews as $review)
         {
             echo $i."-ый отзыв:".$review."<br>";
+            $i++;
+        }
+    }
+
+    public function renderAdminOrdersPage(array $orders)
+    {
+        navi();
+        $i=1;
+        echo "Все Заказы<br>";
+        echo "Код заказа        ";
+        echo "Список товаров заказа     ";
+        echo "Сумма заказа      ";
+        echo "Адрес заказа      ";
+        echo "Телефон заказа        ";
+        echo "Email заказа      ";
+        foreach ($orders as $order)
+        {
+            echo $i."-ый заказ:<br>";
+            echo $order['order_id']." \t\t";
+            foreach ($order['order_product_list'] as $order_product)
+            {
+                echo $order_product." ";
+            }
+            echo $order['order_sum']." BYN ";
+            echo $order['order_address']." ";
+            echo $order['order_phone']." ";
+            echo $order['order_email']."<br>";
             $i++;
         }
     }
