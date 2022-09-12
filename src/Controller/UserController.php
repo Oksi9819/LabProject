@@ -9,6 +9,11 @@ use Itechart\InternshipProject\View\UserView;
 
 class UserController
 {
+    public function setUser()
+    {
+        return (new UserView())->setUser();
+    }
+
     public function getUserInfo(int $user_id)
     {
         if($user_id=="111" || $user_id=="112" || $user_id=="113")

@@ -46,7 +46,7 @@ Route::add('/', function() {
 
 // Route to registration form
 Route::add('/registration-form', function() {
-  (new RegistrationAuthorizationController())->save();
+  (new UserController())->setUser();
 }, 'get');
 
 // Post route to registration-form

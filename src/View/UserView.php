@@ -4,6 +4,13 @@ namespace Itechart\InternshipProject\View;
 
 class UserView
 {
+    public function setUser()
+    {
+        navi();
+        echo 'Заполните пожалуйста форму регистрации: <br>';
+        echo '<form method="post"><input type="text" name="user_surname" value="Введите фамилию"><input type="text" name="user_name" value="Введите имя">Введите дату рождения: <input type="date" name="user_birthday">Введите телефон: <input type="tel" name="user_phone">Введите адрес: <input type="text" name="user_address" value="Введите адрес">Введите email: <input type="email" name="user_email" value="Введите email"><input type="submit" value="Зарегистрироваться"></form>';
+    }
+
     public function renderUserPage(array $user)
     {
         navi();
