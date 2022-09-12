@@ -15,6 +15,7 @@ spl_autoload_register(static function($className){
 // Use this namespace
 use Steampixel\Route;
 use Itechart\InternshipProject\Controller\ProductController;
+use Itechart\InternshipProject\Controller\UserController;
 
 define('BASEPATH','/LabProject/');
 
@@ -31,7 +32,8 @@ function navi() {
       <li><a href="'.BASEPATH.'contacts">Контакты</a>
       <ul><li><a href="'.BASEPATH.'contacts/contact-form">Форма обратной связи</a></li></ul></li>
       <li><a href="'.BASEPATH.'delivery">Доставка</a></li>
-      <li><a href="'.BASEPATH.'registration-form">Регистрация</a></li>
+      <li><a href="'.BASEPATH.'registration-form">Регистрация/Авторизация</a></li>
+      <li><a href="'.BASEPATH.'profile/111222">Пользователь id 111222</a></li>
       <li><a href="'.BASEPATH.'cart/2256665">Корзина пользователя 2256665</a></li>
       <li><a href="'.BASEPATH.'cart/2256665/order/265478555">Заказ 265478555 пользователя 2256665</a></li>
   </ul>
@@ -40,7 +42,7 @@ function navi() {
 
 // Base route (startpage)
 Route::add('/', function() {
-  (new HomeController())->execute();
+  navi();
 });
 
 // Route to registration form
@@ -52,6 +54,11 @@ Route::add('/registration-form', function() {
 Route::add('/registration-form', function() {
   (new RegistrationAuthorizationController())->show();
 }, 'post');
+
+// Route to profile page
+Route::add('/profile/([0-9]*)', function($user_id) {
+  (new UserController())->getUserInfo($user_id);
+});
 
 // Route to catalog
 Route::add('/catalog', function() {
