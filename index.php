@@ -2,20 +2,11 @@
 // Autoload files using composer
 require_once __DIR__ . '/vendor/autoload.php';
 
-
-/*spl_autoload_register(static function($className){
-  $file = __DIR__. '\\src\\Controller\\' . $className . '.php';
-  $file = str_replace('\\', DIRECTORY_SEPARATOR, $file);
-
-  if (file_exists($file)) {
-      require_once($file);
-  }
-});*/
-
 // Use this namespace
 use Steampixel\Route;
 use Itechart\InternshipProject\Controller\ProductController;
 use Itechart\InternshipProject\Controller\UserController;
+use Itechart\InternshipProject\Controller\BasicController;
 
 define('BASEPATH','/LabProject/');
 
@@ -42,7 +33,7 @@ function navi() {
 
 // Base route (startpage)
 Route::add('/', function() {
-  navi();
+  (new BasicController())->executeMainPage();
 });
 
 // Route to registration form
@@ -97,22 +88,22 @@ Route::add('/cart/([0-9]*)/order/([0-9]*)', function($user_id, $order_id) {
 
 // Route to contacts
 Route::add('/contacts', function() {
-  (new BasicController())->execute();
+  (new BasicController())->executeContactsPage();
 });
 
 // Route to contact-form
 Route::add('/contacts/contact-form', function() {
-  (new BasicController())->send();
+  (new BasicController())->sendContactForm();
 }, 'get');
 
 // Post route to contact-form
 Route::add('/contacts/contact-form', function() {
-  (new BasicController())->show();
+  (new BasicController())->showContactForm();
 }, 'post');
 
 // Route to delivery page
 Route::add('/delivery', function() {
-  (new BasicController())->execute();
+  (new BasicController())->executeDeliveryPage();
 });
 
 Route::run(BASEPATH);
