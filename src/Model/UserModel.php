@@ -6,23 +6,25 @@ class UserModel
 {
     public function setUser():array
     {
-        /*$user_name=(int)$_POST['user_name'];
-        $user_surname=(string)$_POST['user_surname'];
-        $user_birthday=(string)$_POST['user_birthday'];
-        $user_phone=(string)$_POST['user_phone'];
-        $user_address=(string)$_POST['user_address'];
-        $user_email=(string)$_POST['user_email'];*/
-
-        $user=array(
+        $registeredUser=array(
+            "user_id"=>(int)$_POST['user_password'],
             "user_name"=>(int)$_POST['user_name'],
             "user_surname"=>(string)$_POST['user_surname'],
             "user_birthday"=>(string)$_POST['user_birthday'],
             "user_phone"=>(string)$_POST['user_phone'],
             "user_address"=>(string)$_POST['user_address'],
             "user_email"=>(string)$_POST['user_email'],
+            "user_password"=>(string)$_POST['user_password'],
             );
-        return $user;
+        return $registeredUser;
     }
+
+    /*public function authUser():array
+    {
+        
+        $user
+        return $user;
+    }*/
 
     /*public function deleteUser(array $user):void
     {

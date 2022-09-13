@@ -16,7 +16,27 @@ class UserController
 
     public function setUser()
     {
-        return (new UserView())->setUser((new UserModel())->setUser());
+        $registeredUser=(new UserModel())->setUser();
+        /*$registeredUsers=array();
+        $registeredUsers+=$registeredUser;*/
+        return (new UserView())->setUser($registeredUser);
+    }
+
+    public function authUser()
+    {
+       return (new UserView())->authUser();
+    }
+
+    public function checkUser()
+    {
+        if($_POST['user_email']=="ksusha-1802@mail.ru")
+        { 
+            if($_POST['user_password']=="11111")
+            {
+                $user_id=11111;
+                return $this->getUserInfo($user_id);
+            }else echo "Неправильный пароль.";
+        }else echo "Вы не зарегистрированы.";
     }
 
     public function getUserInfo(int $user_id)

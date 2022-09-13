@@ -12,7 +12,7 @@ define('BASEPATH','/LabProject/');
 
 function navi() {
   echo '
-  Navigation:
+  Навигация:
   <ul>
       <li><a href="'.BASEPATH.'">Главная</a></li>
       <li><a href="'.BASEPATH.'catalog">Каталог</a>
@@ -23,7 +23,8 @@ function navi() {
       <li><a href="'.BASEPATH.'contacts">Контакты</a>
       <ul><li><a href="'.BASEPATH.'contacts/contact-form">Форма обратной связи</a></li></ul></li>
       <li><a href="'.BASEPATH.'delivery">Доставка</a></li>
-      <li><a href="'.BASEPATH.'registration-form">Регистрация/Авторизация</a></li>
+      <li><a href="'.BASEPATH.'registration-form">Регистрация</a></li>
+      <li><a href="'.BASEPATH.'authorization-form">Авторизация</a></li>
       <li><a href="'.BASEPATH.'profile/111222">Пользователь id 111222</a>
       <ul><li><a href="'.BASEPATH.'profile/111222/info">Пользователь id 111222. Информация</a></li>
           <li><a href="'.BASEPATH.'profile/111222/reviews">Пользователь id 111222. Отзывы</a></li>
@@ -33,8 +34,6 @@ function navi() {
           <li><a href="'.BASEPATH.'profile/112/reviews">Все отзывы</a></li>
           <li><a href="'.BASEPATH.'profile/112/orders">Все заказы</a></li></ul></li>
       <li><a href="'.BASEPATH.'cart/2256665">Корзина пользователя 2256665</a></li>
-      <li><a href="'.BASEPATH.'cart/2256665/order/265478555">Заказ 265478555 пользователя 2256665</a></li>
-
   </ul>
   ';
 }
@@ -55,13 +54,13 @@ Route::add('/registration-form', function() {
 }, 'post');
 
 // Route to auth form
-Route::add('/registration-form', function() {
-  (new UserController())->sendUser();
+Route::add('/authorization-form', function() {
+  (new UserController())->authUser();
 }, 'get');
 
 // Post route to auth-form
-Route::add('/registration-form', function() {
-  (new UserController())->setUser();
+Route::add('/authorization-form', function() {
+  (new UserController())->checkUser();
 }, 'post');
 
 // Route to profile page
@@ -114,10 +113,10 @@ Route::add('/cart/([0-9]*)', function($user_id) {
   (new CartController())->show($user_id);
 });
 
-// Route to make an order
+/*Route to make an order
 Route::add('/cart/([0-9]*)/order/([0-9]*)', function($user_id, $order_id) {
   (new CartController())->order($user_id, $order_id);
-});
+});*/
 
 // Route to contacts
 Route::add('/contacts', function() {
