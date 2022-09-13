@@ -54,6 +54,16 @@ Route::add('/registration-form', function() {
   (new UserController())->setUser();
 }, 'post');
 
+// Route to auth form
+Route::add('/registration-form', function() {
+  (new UserController())->sendUser();
+}, 'get');
+
+// Post route to auth-form
+Route::add('/registration-form', function() {
+  (new UserController())->setUser();
+}, 'post');
+
 // Route to profile page
 Route::add('/profile/([0-9]*)', function($user_id) {
   (new UserController())->getUserInfo($user_id);

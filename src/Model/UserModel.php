@@ -4,15 +4,22 @@ namespace Itechart\InternshipProject\Model;
 
 class UserModel
 {
-    public function setUser(string $user_name, string $user_surname, string $user_birthday, string $user_phone, string $user_address, string $user_email):array
+    public function setUser():array
     {
+        /*$user_name=(int)$_POST['user_name'];
+        $user_surname=(string)$_POST['user_surname'];
+        $user_birthday=(string)$_POST['user_birthday'];
+        $user_phone=(string)$_POST['user_phone'];
+        $user_address=(string)$_POST['user_address'];
+        $user_email=(string)$_POST['user_email'];*/
+
         $user=array(
-            "user_name"=>$user_name,
-            "user_surname"=>$user_surname,
-            "user_birthday"=>$user_birthday,
-            "user_phone"=>$user_phone,
-            "user_address"=>$user_address,
-            "user_email"=>$user_email,
+            "user_name"=>(int)$_POST['user_name'],
+            "user_surname"=>(string)$_POST['user_surname'],
+            "user_birthday"=>(string)$_POST['user_birthday'],
+            "user_phone"=>(string)$_POST['user_phone'],
+            "user_address"=>(string)$_POST['user_address'],
+            "user_email"=>(string)$_POST['user_email'],
             );
         return $user;
     }
