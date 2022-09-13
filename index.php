@@ -46,12 +46,12 @@ Route::add('/', function() {
 
 // Route to registration form
 Route::add('/registration-form', function() {
-  (new UserController())->setUser();
+  (new UserController())->sendUser();
 }, 'get');
 
 // Post route to registration-form
 Route::add('/registration-form', function() {
-  (new RegistrationAuthorizationController())->show();
+  (new UserController())->setUser();
 }, 'post');
 
 // Route to profile page

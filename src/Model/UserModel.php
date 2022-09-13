@@ -4,10 +4,9 @@ namespace Itechart\InternshipProject\Model;
 
 class UserModel
 {
-    public function setUser(int $user_id, string $user_name, string $user_surname, string $user_birthday, string $user_phone, string $user_address, string $user_email):array
+    public function setUser(string $user_name, string $user_surname, string $user_birthday, string $user_phone, string $user_address, string $user_email):array
     {
         $user=array(
-            "user_id"=>$user_id,
             "user_name"=>$user_name,
             "user_surname"=>$user_surname,
             "user_birthday"=>$user_birthday,
