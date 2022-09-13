@@ -34,4 +34,11 @@ class BasicView
         echo '<b>Заполните форму для связи: </b><br><br>';
         echo '<form method="post">Ваше имя: <input type="text" name="contact_name"><br>Ваш email для связи: <input type="email" name="contact_email"><br><input type="text" name="contact_text" value="Введите ваше сообщение"><br><input type="submit" value="Отправить"></form>';
     }
+
+    public function showContactForm()
+    {
+        navi();
+        echo '<b>Форма успешно отправлена:</b><br><br>';
+        echo 'Ваше имя: '.$_POST['contact_name'].'<br>Ваш email для связи: '.$_POST['contact_email'].'<br>Ваше сообщение: '.$_POST['contact_text'].'<br>';
+    }
 }

@@ -29,9 +29,7 @@ class BasicController
 
     public function showContactForm()
     {
-        navi();
-        echo 'The form has been sent:<br>';
-        print_r($_POST);
+        return (new BasicView())->showContactForm();
     }
 
 }
