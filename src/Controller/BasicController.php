@@ -24,9 +24,7 @@ class BasicController
     
     public function sendContactForm()
     {
-        navi();
-        echo 'There is contact-form here';
-        echo '<form method="post"><input type="text" name="test"><input type="submit" value="send"></form>';
+        return (new BasicView())->sendContactForm();   
     }
 
     public function showContactForm()
