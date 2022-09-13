@@ -12,9 +12,9 @@ class CartController
         return (new CartView())->show($user_id, (new CartModel())->showCart($user_id));
     }
 
-    public function order($user_id, $order_id)
+    /*public function order($user_id, $order_id)
     {
         navi();
         echo 'It is an order '.$order_id.' of client '.$user_id.'.<br>';
-    }
+    }*/
 }

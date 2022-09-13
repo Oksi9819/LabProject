@@ -4,7 +4,7 @@ namespace Itechart\InternshipProject\Model;
 
 class CartModel
 {
-    public function showCart($user_id)
+    public function showCart(int $user_id):array
     {
         if($user_id==2256665)
         {
