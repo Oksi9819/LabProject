@@ -1,11 +1,15 @@
 <?php
 
+namespace Itechart\InternshipProject\Controller;
+
+use Itechart\InternshipProject\View\CartView;
+use Itechart\InternshipProject\Model\CartModel;
+
 class CartController
 {
     public function show($user_id)
     {
-        navi();
-        echo 'It is cart of client with id: '.$user_id.'<br>';
+        return (new CartView())->show($user_id, (new CartModel())->showCart($user_id));
     }
 
     public function order($user_id, $order_id)

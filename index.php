@@ -7,6 +7,7 @@ use Steampixel\Route;
 use Itechart\InternshipProject\Controller\ProductController;
 use Itechart\InternshipProject\Controller\UserController;
 use Itechart\InternshipProject\Controller\BasicController;
+use Itechart\InternshipProject\Controller\CartController;
 
 define('BASEPATH','/LabProject/');
 

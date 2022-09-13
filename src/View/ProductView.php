@@ -5,7 +5,8 @@ class ProductView
 {
     public function renderProductsPage($products){
         navi();
-        echo "Все товары каталога: <br>";
+        echo "<br><b>КАТАЛОГ</b><br><br>";
+        echo "<b>Все товары каталога: </b><br>";
         $i=1;
         foreach($products as $product)
         {
@@ -16,7 +17,8 @@ class ProductView
     
     public function renderProductListByCategory($category_id, $products){
         navi();
-        echo "Все товары категории: ".$category_id."<br>";
+        echo "<br><b>КАТАЛОГ</b><br><br>";
+        echo "<b>Все товары категории: <i>".$category_id."</i></b><br>";
         $i=1;
         foreach($products as $product)
         {
