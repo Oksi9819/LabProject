@@ -69,4 +69,20 @@ function createTables()
     } else{
             echo "Ошибка: " . $conn->error;
         }
+
+    //Создание таблицы review
+    $sql = "CREATE TABLE IF NOT EXISTS review (review_id INTEGER AUTO_INCREMENT PRIMARY KEY, user_id INTEGER NOT NULL, review_text VARCHAR(500) NOT NULL, FOREIGN KEY (user_id) REFERENCES user(user_id) ON DELETE CASCADE) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4";
+    if($conn->query($sql)){
+        echo "Таблица review успешно создана.<br><br>";
+    } else{
+            echo "Ошибка: " . $conn->error;
+        }
+
+    //Создание таблицы cart
+    $sql = "CREATE TABLE IF NOT EXISTS cart (order_id INTEGER NOT NULL, product_id INTEGER NOT NULL, amount INTEGER NOT NULL, FOREIGN KEY (order_id) REFERENCES order_product(order_id) ON DELETE CASCADE, PRIMARY KEY(order_id, product_id), FOREIGN KEY (product_id) REFERENCES product(product_id) ON DELETE CASCADE) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4";
+    if($conn->query($sql)){
+        echo "Таблица cart успешно создана.<br><br>";
+    } else{
+            echo "Ошибка: " . $conn->error;
+        }
 }
