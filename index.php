@@ -1,6 +1,7 @@
 <?php
 // Autoload files using composer
 require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/database.php';
 
 // Use this namespace
 use Steampixel\Route;
@@ -8,6 +9,19 @@ use Itechart\InternshipProject\Controller\ProductController;
 use Itechart\InternshipProject\Controller\UserController;
 use Itechart\InternshipProject\Controller\BasicController;
 use Itechart\InternshipProject\Controller\CartController;
+
+//Подключение к серверу
+connectServer();
+
+//Создание БД
+createDB();
+
+//Подключение к БД
+connectDB();
+
+//Создание таблиц
+createTables();
+
 
 define('BASEPATH','/LabProject/');
 
