@@ -49,7 +49,7 @@ class OrderModel
         return $ordersByUserId;
     }
 
-    public function setOrder(string $userName, string $userSurname, string $email, string $phone, string $reviewText):array
+    /*public function setOrder(string $userName, string $userSurname, string $email, string $phone, string $reviewText):array
     {
         $setReview=array(
             "review_id"=>1,
@@ -60,7 +60,7 @@ class OrderModel
             "review_text"=>$reviewText,
         );
         return $setReview;
-    }
+    }*/
 
     /*public function archiveOrder(int $order_id):void
     {
