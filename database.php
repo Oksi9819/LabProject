@@ -6,7 +6,7 @@ function connectServer()
     $conn = new mysqli('localhost', 'root', '1234');
     $conn->set_charset('utf8mb4');
     if ($conn->connect_error) {
-    die('Ошибка: невозможно подключиться к серверу MySQL: '.$conn->connect_error);
+        die('Ошибка: невозможно подключиться к серверу MySQL: '.$conn->connect_error);
     }else echo 'Вы успешно подключились к серверу MySQL!<br><br><br><br>';
 }
 
@@ -14,10 +14,9 @@ function connectServer()
 function createDB()
 {
     $conn = new mysqli('localhost', 'root', '1234');
-    $conn->set_charset('utf8mb4');
-    $sql = "CREATE DATABASE IF NOT EXISTS shop";
+    $sql = "CREATE DATABASE IF NOT EXISTS shop DEFAULT CHARACTER SET utf8mb4";
     if($conn->query($sql)){
-    echo "База данных создана!<br><br>";
+        echo "База данных создана!<br><br>";
     } else{
     echo "База данных не создана<br><br>" . $conn->error;
     }
@@ -29,7 +28,7 @@ function connectDB()
     $conn = new mysqli('localhost', 'root', '1234', 'shop');
     $conn->set_charset('utf8mb4');
     if ($conn->connect_error) {
-    die('Не удалось подлкючиться к базе данных: '.$conn->connect_error);
+        die('Не удалось подлкючиться к базе данных: '.$conn->connect_error);
     }else echo 'Вы успешно подключились к БД "Shop"!<br><br><br><br>';
 }
 
@@ -38,9 +37,27 @@ function createTables()
 {
     $conn = new mysqli('localhost', 'root', '1234', 'shop');
     $conn->set_charset('utf8mb4');
-    $sql = "CREATE TABLE IF NOT EXISTS user (user_id INTEGER AUTO_INCREMENT PRIMARY KEY, user_name VARCHAR(30) NOT NULL, user_surname VARCHAR(30) NOT NULL, user_birthday VARCHAR(30) NOT NULL, user_phone VARCHAR(15) UNIQUE NOT NULL, user_address VARCHAR(50) NOT NULL, user_email VARCHAR(20) NOT NULL, user_password VARCHAR(8) NOT NULL);";
+
+    //Создание таблицы user
+    $sql = "CREATE TABLE IF NOT EXISTS user (user_id INTEGER AUTO_INCREMENT PRIMARY KEY, user_name VARCHAR(30) NOT NULL, user_surname VARCHAR(30) NOT NULL, user_birthday VARCHAR(30) NOT NULL, user_phone VARCHAR(15) UNIQUE NOT NULL, user_address VARCHAR(50) NOT NULL, user_email VARCHAR(20) NOT NULL, user_password VARCHAR(8) NOT NULL) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
     if($conn->query($sql)){
-    echo "Таблица Users успешно создана.<br><br>";
+        echo "Таблица user успешно создана.<br><br>";
+    } else{
+            echo "Ошибка: " . $conn->error;
+        }
+    
+    //Создание таблицы category
+    $sql = "CREATE TABLE IF NOT EXISTS category (category_id INTEGER AUTO_INCREMENT PRIMARY KEY, category_name VARCHAR(30) UNIQUE NOT NULL) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4";
+    if($conn->query($sql)){
+        echo "Таблица category успешно создана.<br><br>";
+    } else{
+            echo "Ошибка: " . $conn->error;
+        }
+
+    //Создание таблицы product
+    $sql = "CREATE TABLE IF NOT EXISTS product (product_id INTEGER AUTO_INCREMENT PRIMARY KEY, product_name VARCHAR(50) NOT NULL, product_desc VARCHAR(450) NOT NULL, product_category INTEGER NOT NULL, product_price DECIMAL(19,2) NOT NULL, FOREIGN KEY (product_category) REFERENCES category(category_id) ON DELETE CASCADE) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
+    if($conn->query($sql)){
+        echo "Таблица product успешно создана.<br><br>";
     } else{
             echo "Ошибка: " . $conn->error;
         }

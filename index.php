@@ -10,8 +10,6 @@ use Itechart\InternshipProject\Controller\UserController;
 use Itechart\InternshipProject\Controller\BasicController;
 use Itechart\InternshipProject\Controller\CartController;
 
-//Подключение к серверу
-connectServer();
 
 //Создание БД
 createDB();

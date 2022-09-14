@@ -26,6 +26,19 @@ class ProductModel
         return $productById;
     }
 
+    /*
+    public function setProduct(int product_id, string product_name, int product_category, string product_desc, float product_price):array
+    {
+        $product=array(
+            "product_id"=>$product_id,
+            "product_name"=>$product_name,
+            "product_desc"=>$product_desc,
+            "product_category"=>$product_category,
+            "product_price"=>$product_price,
+            );
+        return $product;
+    }*/
+
     public function getProductByName(string $product_name):array
     {
         $productByName=array(
