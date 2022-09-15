@@ -4,7 +4,7 @@ namespace Itechart\InternshipProject\Model;
 
 class OrderModel
 {
-    public function getOrders():array
+    public function getOrders(): array
     {
         $orders=array(
             array(
@@ -32,7 +32,7 @@ class OrderModel
         return $orders;
     }
 
-    public function getOrdersByUserId(int $user_id):array
+    public function getOrdersByUserId(int $user_id): array
     {
         $ordersByUserId=array(
             array(

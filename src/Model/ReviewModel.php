@@ -4,19 +4,19 @@ namespace Itechart\InternshipProject\Model;
 
 class ReviewModel
 {
-    public function getReviews():array
+    public function getReviews(): array
     {
         $reviews=array("Xiaomi Mi Robot Vacuum Mop 2 Ultra очень понравился! Шикарный помощник по дому", "Очень приятный персонал. Быстро помогли выбрать нужный товар.", "Большой ассортимент!", "Пароочиститель Deerma Steam Cleaner DEM-ZQ610 очень рекомендую!");
         return $reviews;
     }
 
-    public function getReviewsByUserId(int $user_id):array
+    public function getReviewsByUserId(int $user_id): array
     {
         $reviewsByUserId=array("Xiaomi Mi Robot Vacuum Mop 2 Ultra очень понравился! Шикарный помощник по дому.", "Очень приятный персонал. Быстро помогли выбрать нужный товар.");
         return $reviewsByUserId;
     }
 
-    public function setReview(string $userName, string $userSurname, string $email, string $phone, string $reviewText):array
+    public function setReview(string $userName, string $userSurname, string $email, string $phone, string $reviewText): array
     {
         $setReview=array(
             "review_id"=>1,

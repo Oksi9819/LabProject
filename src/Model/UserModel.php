@@ -4,7 +4,7 @@ namespace Itechart\InternshipProject\Model;
 
 class UserModel
 {
-    public function setUser():array
+    public function setUser(): array
     {
         $registeredUser=array(
             "user_id"=>(int)$_POST['user_password'],
@@ -31,7 +31,7 @@ class UserModel
         unset($user);
     }*/
 
-    public function getUserInfo(int $user_id):array
+    public function getUserInfo(int $user_id): array
     {
             $user=array(
             "user_id"=>$user_id,

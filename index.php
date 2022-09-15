@@ -11,13 +11,13 @@ use Itechart\InternshipProject\Controller\BasicController;
 use Itechart\InternshipProject\Controller\CartController;
 
 
-//Создание БД
+//Create database
 createDB();
 
-//Подключение к БД
+//Connect to the database
 connectDB();
 
-//Создание таблиц
+//Create tables
 createTables();
 
 

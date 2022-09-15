@@ -109,12 +109,10 @@ class UserView
         echo "Адрес заказа      ";
         echo "Телефон заказа        ";
         echo "Email заказа      ";
-        foreach ($orders as $order)
-        {
+        foreach ($orders as $order) {
             echo $i."-ый заказ:<br>";
-            echo $order['order_id']." \t\t";
-            foreach ($order['order_product_list'] as $order_product)
-            {
+            echo $order['order_id']." <br>";
+            foreach ($order['order_product_list'] as $order_product) {
                 echo $order_product." ";
             }
             echo $order['order_sum']." BYN ";
