@@ -20,6 +20,7 @@ connectDB();
 //Create tables
 createTables();
 
+fulfilDB();
 
 define('BASEPATH','/LabProject/');
 
