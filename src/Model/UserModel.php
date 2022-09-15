@@ -62,7 +62,6 @@ class UserModel
         $query = $conn->prepare($sql);
         $query->bind_param('s', $user_login);
         if ($query->execute()) {
-            $query->execute();
             $result = $query->get_result();
             $result = $result->fetch_assoc();
             if (hash('md5', $user_pass) == $result['user_password']) {
@@ -86,9 +85,18 @@ class UserModel
     }*/
 
     //DELETE
-    /*public function deleteUser(array $user):void
+    public function deleteUser()
     {
-        unset($user);
-    }*/
+        $user_id = $_GET['delete_user'];
+        global $conn;
+        $sql = "DELETE * FROM `user` WHERE `user_id` = ?";
+        $query = $conn->prepare($sql);
+        $query->bind_param('i', $user_id);
+        if ($query->execute()) {
+            echo "User deleted.";
+        } else {
+            $conn->error;
+        }
 
+    }
 }
