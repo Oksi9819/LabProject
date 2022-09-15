@@ -29,16 +29,8 @@ class UserController
 
     public function checkUser()
     {
-        if ($_POST['user_email'] === "ksusha-1802@mail.ru") { 
-            if (hash('md5', $_POST['user_password']) === hash('md5', '11111')) {
-                $user_id = 11111;
-                return $this->getUserInfo($user_id);
-            } else {
-                echo "Incorrect password.";
-            }
-        } else {
-            echo "You are not registered yet.";
-        }
+        $user = (new UserModel())->auth();
+        return (new UserView())->renderUserPage($user);
     }
 
     public function getUserInfo(int $user_id)

@@ -48,8 +48,34 @@ class UserModel
         $query = $conn->prepare($sql);
         $query->bind_param('i', $user_id);
         $query->execute();
-        $result = $query->fetchAll(); 
+        $result = $query->get_result();
+        $result = $result->fetch_assoc(); 
+        return $result;
     }
+
+    public function auth(): array
+    {
+        global $conn;
+        $user_login = $_POST['user_email'];
+        $user_pass = $_POST['user_password'];
+        $sql = "SELECT * FROM `user` WHERE `user_email` = ?";
+        $query = $conn->prepare($sql);
+        $query->bind_param('s', $user_login);
+        if ($query->execute()) {
+            $query->execute();
+            $result = $query->get_result();
+            $result = $result->fetch_assoc();
+            if (hash('md5', $user_pass) == $result['user_password']) {
+                return $this->getUserInfo($result['user_id']);
+            } else {
+                echo "Incorrect password.";
+            }
+        } else {
+            echo "You are not registered yet.";
+        }
+    }
+
+
 
     //UPDATE
     /*public function authUser():array
