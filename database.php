@@ -2,20 +2,14 @@
 
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
-
-//Connect to the database
-$conn = new mysqli('localhost', $_ENV['DB_USER'], $_ENV['DB_PASS'], $_ENV['DB_NAME']);
-$conn->set_charset('utf8mb4');
-if ($conn->connect_error) {
-    die('Failed to connect to database: '.$conn->connect_error);
-} else {
-    echo 'You have successfully connected to the database!<br><br><br><br>';
-}
+$dbuser = $_ENV['DB_USER'];
+$dbpassword = $_ENV['DB_PASS']; 
+$dbname = $_ENV['DB_NAME'];
 
 //Connect to server
 function connectServer()
 {
-    $conn = new mysqli('localhost', 'root', '1234');
+    $conn = new mysqli('localhost', $dbuser, $dbpassword);
     $conn->set_charset('utf8mb4');
     if ($conn->connect_error) {
         die('Error: Unable to connect to MySQL server: '.$conn->connect_error);
@@ -27,7 +21,7 @@ function connectServer()
 //Create database
 function createDB()
 {
-    $conn = new mysqli('localhost', 'root', '1234');
+    $conn = new mysqli('localhost', $dbuser, $dbpassword);
     $sql = "CREATE DATABASE IF NOT EXISTS shop DEFAULT CHARACTER SET utf8mb4";
     if ($conn->query($sql)) {
         echo "Database created!<br><br>";
@@ -36,10 +30,23 @@ function createDB()
     }
 }
 
+//Connect to the database
+function connectDB()
+{
+    $conn = new mysqli('localhost', $dbuser, $dbpassword, $dbname);
+    $conn->set_charset('utf8mb4');
+    if ($conn->connect_error) {
+        die('Failed to connect to database: '.$conn->connect_error);
+    } else {
+        echo 'You have successfully connected to the database!<br><br><br><br>';
+        return $conn;
+    }
+}
+
 //Create tables 
 function createTables()
 {
-    $conn = new mysqli('localhost', 'root', '1234', 'shop');
+    $conn = new mysqli('localhost', $dbuser, $dbpassword, $dbname);
     $conn->set_charset('utf8mb4');
 
     //Create table user
@@ -94,8 +101,7 @@ function createTables()
 //Fulfil row of table
 function fulfilRow(string $path, string $values)
 {
-    global $conn;
-    global $are;
+    connectDB();
     echo $are."<br>";
     $sql = "INSERT INTO ".$path." VALUES (".$values.")";
     if ($conn->query($sql)) {
