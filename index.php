@@ -1,7 +1,7 @@
 <?php
 // Autoload files using composer
 require_once __DIR__ . '/vendor/autoload.php';
-require_once __DIR__ . '/database.php';
+/*require_once __DIR__ . '/database.php';*/
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 $dotenv->required(['DB_USER', 'DB_PASS', 'DB_NAME']);
@@ -14,7 +14,13 @@ use Itechart\InternshipProject\Controller\BasicController;
 use Itechart\InternshipProject\Controller\CartController;
 
 //Connect to the database
-connectDB();
+$conn = new mysqli('localhost', $_ENV['DB_USER'], $_ENV['DB_PASS'], $_ENV['DB_NAME']);
+$conn->set_charset('utf8mb4');
+if ($conn->connect_error) {
+    die('Failed to connect to database: '.$conn->connect_error);
+} else {
+    echo 'You have successfully connected to the database!<br><br><br><br>';
+}
 
 define('BASEPATH','/LabProject/');
 

@@ -8,15 +8,15 @@ class UserView
     {
         navi();
         echo '<b>Заполните пожалуйста форму регистрации: </b><br><br>';
-        echo '<form method="post">Введите фамилию: <input type="text" name="user_surname"><br>Введите имя: <input type="text" name="user_name"><br>Введите дату рождения: <input type="date" name="user_birthday"><br>Введите телефон: <input type="tel" name="user_phone"><br>Введите адрес: <input type="text" name="user_address"><br>Введите email: <input type="email" name="user_email" value="Введите email"><br>Введите пароль: <input type="password" name="user_password" maxlength="8"><br><input type="submit" value="Зарегистрироваться"></form>';
+        echo '<form method="post">Введите фамилию: <input type="text" name="user_surname"><br>Введите фамилию: <input type="text" name="user_name"><br>Введите дату рождения: <input type="date" name="user_birthday"><br>Введите телефон: <input type="tel" name="user_phone"><br>Введите адрес: <input type="text" name="user_address"><br>Введите email: <input type="email" name="user_email" value="Введите email"><br>Введите пароль: <input type="password" name="user_password" maxlength="8"><br><input type="submit" name="submit" value="Зарегистрироваться"></form>';
     }
 
-    public function setUser(array $registeredUser)
+    public function setUser(/*array $registeredUser*/)
     {
         navi();
         echo "Вы успешно зарегистрировались!:<br>";
-        print_r($registeredUser);   
-        echo "<br>Далее необходимо авторизоваться!:<br>";
+        /*print_r($registeredUser);   
+        echo "<br>Далее необходимо авторизоваться!:<br>";*/
     }
 
     public function authUser()
