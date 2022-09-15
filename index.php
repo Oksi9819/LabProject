@@ -27,26 +27,38 @@ function navi() {
   echo '
   Навигация:
   <ul>
-      <li><a href="'.BASEPATH.'">Главная</a></li>
-      <li><a href="'.BASEPATH.'catalog">Каталог</a>
-      <ul><li><a href="'.BASEPATH.'catalog/categoryVacuumCleaners">Категория Пылесосы</a></li>
-          <li><a href="'.BASEPATH.'catalog/categoryVacuumCleaners/id111222">Пылесосы id111222</a></li>
-          <li><a href="'.BASEPATH.'catalog/id11122">Продукт id1112222</a></li>
-          <li><a href="'.BASEPATH.'catalog/xiaomi-mi-robot-vacuum-mop-2">Xiaomi Mi Robot Vacuum Mop</a></li></ul></li>
-      <li><a href="'.BASEPATH.'contacts">Контакты</a>
-      <ul><li><a href="'.BASEPATH.'contacts/contact-form">Форма обратной связи</a></li></ul></li>
-      <li><a href="'.BASEPATH.'delivery">Доставка</a></li>
-      <li><a href="'.BASEPATH.'registration-form">Регистрация</a></li>
-      <li><a href="'.BASEPATH.'authorization-form">Авторизация</a></li>
-      <li><a href="'.BASEPATH.'profile/111222">Пользователь id 111222</a>
-      <ul><li><a href="'.BASEPATH.'profile/111222/info">Пользователь id 111222. Информация</a></li>
-          <li><a href="'.BASEPATH.'profile/111222/reviews">Пользователь id 111222. Отзывы</a></li>
-          <li><a href="'.BASEPATH.'profile/111222/orders">Пользователь id 111222. Заказы</a></li></ul></li>
-      <li><a href="'.BASEPATH.'profile/112">Пользователь id 112 = Админ</a>
-      <ul><li><a href="'.BASEPATH.'profile/112/info">Админ id 112. Информация</a></li>
-          <li><a href="'.BASEPATH.'profile/112/reviews">Все отзывы</a></li>
-          <li><a href="'.BASEPATH.'profile/112/orders">Все заказы</a></li></ul></li>
-      <li><a href="'.BASEPATH.'cart/2256665">Корзина пользователя 2256665</a></li>
+    <li><a href="'.BASEPATH.'">Главная</a></li>
+    <li><a href="'.BASEPATH.'catalog">Каталог</a>
+      <ul>
+        <li><a href="'.BASEPATH.'catalog/categoryVacuumCleaners">Категория Пылесосы</a></li>
+        <li><a href="'.BASEPATH.'catalog/categoryVacuumCleaners/id111222">Пылесосы id111222</a></li>
+        <li><a href="'.BASEPATH.'catalog/id11122">Продукт id1112222</a></li>
+        <li><a href="'.BASEPATH.'catalog/xiaomi-mi-robot-vacuum-mop-2">Xiaomi Mi Robot Vacuum Mop</a></li>
+      </ul>
+    </li>
+    <li><a href="'.BASEPATH.'contacts">Контакты</a>
+      <ul>
+        <li><a href="'.BASEPATH.'contacts/contact-form">Форма обратной связи</a></li>
+      </ul>
+    </li>
+    <li><a href="'.BASEPATH.'delivery">Доставка</a></li>
+    <li><a href="'.BASEPATH.'registration-form">Регистрация</a></li>
+    <li><a href="'.BASEPATH.'authorization-form">Авторизация</a></li>
+    <li><a href="'.BASEPATH.'profile/111222">Пользователь id 111222</a>
+      <ul>
+        <li><a href="'.BASEPATH.'profile/111222/info">Пользователь id 111222. Информация</a></li>
+        <li><a href="'.BASEPATH.'profile/111222/reviews">Пользователь id 111222. Отзывы</a></li>
+        <li><a href="'.BASEPATH.'profile/111222/orders">Пользователь id 111222. Заказы</a></li>
+      </ul>
+    </li>
+    <li><a href="'.BASEPATH.'profile/112">Пользователь id 112 = Админ</a>
+      <ul>
+        <li><a href="'.BASEPATH.'profile/112/info">Админ id 112. Информация</a></li>
+        <li><a href="'.BASEPATH.'profile/112/reviews">Все отзывы</a></li>
+        <li><a href="'.BASEPATH.'profile/112/orders">Все заказы</a></li>
+      </ul>
+    </li>
+    <li><a href="'.BASEPATH.'cart/2256665">Корзина пользователя 2256665</a></li>
   </ul>
   ';
 }

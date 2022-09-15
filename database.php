@@ -43,7 +43,7 @@ function createTables()
     $conn->set_charset('utf8mb4');
 
     //Create table user
-    $sql = "CREATE TABLE IF NOT EXISTS user (user_id INTEGER AUTO_INCREMENT PRIMARY KEY, user_name VARCHAR(30) NOT NULL, user_surname VARCHAR(30) NOT NULL, user_birthday VARCHAR(30) NOT NULL, user_phone VARCHAR(15) UNIQUE NOT NULL, user_address VARCHAR(250) NOT NULL, user_email VARCHAR(20) NOT NULL, user_password VARCHAR(8) NOT NULL) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
+    $sql = "CREATE TABLE IF NOT EXISTS user (user_id INTEGER AUTO_INCREMENT PRIMARY KEY, user_name VARCHAR(30) NOT NULL, user_surname VARCHAR(30) NOT NULL, user_birthday VARCHAR(30) NOT NULL, user_phone VARCHAR(15) UNIQUE NOT NULL, user_address VARCHAR(250) NOT NULL, user_email VARCHAR(20) UNIQUE NOT NULL, user_password VARCHAR(100) NOT NULL) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
     if($conn->query($sql)) {
         echo "User table successfully created.<br><br>";
     } else {

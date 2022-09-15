@@ -8,7 +8,7 @@ class ProductView
         navi();
         echo "<br><b>КАТАЛОГ</b><br><br>";
         echo "<b>Все товары каталога: </b><br>";
-        $i=1;
+        $i = 1;
         foreach ($products as $product) {
             echo $i."-ый товар: ".$product."<br>";
             $i++;
@@ -20,7 +20,7 @@ class ProductView
         navi();
         echo "<br><b>КАТАЛОГ</b><br><br>";
         echo "<b>Все товары категории: <i>".$category_id."</i></b><br>";
-        $i=1;
+        $i = 1;
         foreach ($products as $product) {
             echo $i."-ый товар: ".$product."<br>";
             $i++;
