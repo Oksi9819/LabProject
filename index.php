@@ -2,6 +2,9 @@
 // Autoload files using composer
 require_once __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/database.php';
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+$dotenv->required(['DB_USER', 'DB_PASS', 'DB_NAME']);
 
 // Use this namespace
 use Steampixel\Route;
@@ -10,17 +13,8 @@ use Itechart\InternshipProject\Controller\UserController;
 use Itechart\InternshipProject\Controller\BasicController;
 use Itechart\InternshipProject\Controller\CartController;
 
-
-//Create database
-createDB();
-
 //Connect to the database
 connectDB();
-
-//Create tables
-createTables();
-
-fulfilDB();
 
 define('BASEPATH','/LabProject/');
 
