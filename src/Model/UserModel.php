@@ -36,7 +36,9 @@ class UserModel
         $sql = "SELECT * FROM `user`";
         $query = $conn->prepare($sql);
         $query->execute();
-        $result = $query->fetchAll();
+        $result = $query->get_result();
+        $result = $result->fetch_assoc(); 
+        return $result;;
     }
 
     public function getUserInfo(int $user_id): array

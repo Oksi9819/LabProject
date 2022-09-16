@@ -3,50 +3,98 @@ namespace Itechart\InternshipProject\Model;
 
 class ProductModel
 {
-    public function getProducts(): array
+    //CREATE
+    public function setProduct()
     {
-        $products=array("Робот-пылесос моющий Xiaomi Mi Robot Vacuum Mop 2 Ultra", "Электрический чайник Xiaomi Water Kettle 1.5L", "Увлажнитель воздуха Deerma Air Humidifier DEM F628S", "Мультифункциональный пароочиститель Deerma Steam Cleaner DEM-ZQ610");
-        return $products;
+        global $conn;
+        $product_name = (string)$_POST['product_name'];
+        $product_desc = (string)$_POST['product_desc'];
+        $product_category = (int)$_POST['product_category'];
+        $product_price = (float)$_POST['product_price'];
+        if (isset($_POST['submit_set_product'])) {
+            $sql = "INSERT INTO `product`(`product_name`, `product_desc`, `product_category`, `product_price`) VALUES(?,?,?,?)";
+            $query = $conn->prepare($sql);
+            $query->bind_param('ssid', $product_name, $product_desc, $product_category, $product_price);
+            $query->execute();   
+            $result = $query->get_result();
+            $result = $result->fetch_assoc(); 
+            return $result;     
+        } 
     }
 
-    public function getProductsByCategory(string $category_id): array
+    //READ
+    public function getProducts($sort_field): array
     {
-        $productsByCategory=array("Робот-пылесос моющий Xiaomi Mi Robot Vacuum Mop 2 Ultra", "Робот-пылесос моющий Dreame D9 Max Robot Vacuum Cleaner", "Робот-пылесос моющий Dreame Bot Z10 Pro", "Робот-пылесос моющий Trouver Finder Vacuum Mop LDS RLS3");
-        return $productsByCategory;
+        global $conn;
+        if ($sort_field === "по популярности") {
+            $sql = "SELECT product.product_id, product.product_name, product.product_desc, product.product_price FROM product LEFT JOIN cart ON product.product_id = cart.product_id GROUP BY product_id ORDER BY COUNT(*)*cart.amount DESC; ";
+        }
+        if ($sort_field === "по возрастанию цены") {
+            $sql = "SELECT * FROM `product` ORDER BY `product_price`";
+        }
+        if ($sort_field === "по убыванию цены") {
+            $sql = "SELECT * FROM `product` ORDER BY `product_price` DESC";
+        }
+        if ($sort_field === "по названию А-Я") {
+            $sql = "SELECT * FROM `product` ORDER BY `product_name`";
+        }
+        if ($sort_field === "по названию Я-А") {
+            $sql = "SELECT * FROM `product` ORDER BY `product_name` DESC";
+        }
+        $query = $conn->prepare($sql);
+        $query->execute();
+        $result = $query->get_result();
+        $result = $result->fetch_assoc(); 
+        return $result;
+    }
+
+    public function getProductsByCategory(int $category_id): array
+    {
+        if (is_int($category_id)) {
+            global $conn;
+            $sql = "SELECT * FROM `product` WHERE `product_category` = ?";
+            $query = $conn->prepare($sql);
+            $query->bind_param('i', $category_id);
+            $query->execute();
+            $result = $query->get_result();
+            $result = $result->fetch_assoc(); 
+            return $result;
+        } else {
+            echo $conn->error;
+        }
     }
 
     public function getProductById(int $product_id): array
     {
-        $productById=array(
-            "product_id"=>111222,
-            "product_name"=>"Робот-пылесос моющий Xiaomi Mi Robot Vacuum Mop 2 Ultra",
-            "product_desc"=>"Робот-пылесос оснащен передовой технологией лазерной навигации LDS, обеспечивающей максимально точное сканирование помещения.",
-            "product_price"=>900,
-            );
-        return $productById;
+        if (is_int($product_id)) {
+            global $conn;
+            $sql = "SELECT * FROM `product` WHERE `product_id` = ?";
+            $query = $conn->prepare($sql);
+            $query->bind_param('i', $product_id);
+            $query->execute();
+            $result = $query->get_result();
+            $result = $result->fetch_assoc(); 
+            return $result;
+        } else {
+            echo $conn->error;
+        }
     }
 
-    /*
-    public function setProduct(int product_id, string product_name, int product_category, string product_desc, float product_price):array
+    public function getProductByName(): array
     {
-        $product=array(
-            "product_id"=>$product_id,
-            "product_name"=>$product_name,
-            "product_desc"=>$product_desc,
-            "product_category"=>$product_category,
-            "product_price"=>$product_price,
-            );
-        return $product;
-    }*/
-
-    public function getProductByName(string $product_name): array
-    {
-        $productByName=array(
-        "product_id"=>111222,
-        "product_name"=>"Робот-пылесос моющий Xiaomi Mi Robot Vacuum Mop 2 Ultra",
-        "product_desc"=>"Робот-пылесос оснащен передовой технологией лазерной навигации LDS, обеспечивающей максимально точное сканирование помещения.",
-        "product_price"=>900,
-        );
-        return $productByName;
+        if (isset($_POST['search'])) {
+            $product_name = trim((string)$_GET['search_product']);
+            global $conn;
+            $sql = "SELECT * FROM `product` WHERE `product_name` = ?";
+            $query = $conn->prepare($sql);
+            $query->bind_param('s', $product_name);
+            if ($query->execute()) {
+                $result = $query->get_result();
+                $result = $result->fetch_assoc(); 
+                return $result;
+            } else {
+                echo "There is no product with such name.<br>";
+            }
+        }
     }
 }
