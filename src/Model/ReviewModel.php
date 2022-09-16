@@ -5,12 +5,12 @@ namespace Itechart\InternshipProject\Model;
 class ReviewModel
 {
     //CREATE
-    public function setReview(int $user_id, string $reviewText): array
+    public function setReview(): array
     {
         $reviewText = (string)$_POST['reviewText'];
+        $user_id = (int)$_POST['user_id'];
         if (strlen($reviewText) < 501) {
             global $conn;
-            $user_id = (int)$_POST['user_id'];
             if (isset($_POST['submit_setreview'])) {
                 $sql = "INSERT INTO `review`(`user_id`, `review_text`) VALUES(?,?)";
                 $query = $conn->prepare($sql);

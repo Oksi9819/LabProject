@@ -4,69 +4,66 @@ namespace Itechart\InternshipProject\Model;
 
 class OrderModel
 {
+    //CREATE
+    public function setOrder():array
+    {
+        $order_adress = (string)$_POST['order_address'];
+        $user_id = (int)$_POST['user_id'];
+        global $conn;
+        if (isset($_POST['submit_setreview'])) {
+            $sql = "INSERT INTO `order_product`(`user_id`, `order_address`) VALUES(?,?)";
+            $query = $conn->prepare($sql);
+            $query->bind_param('is', $user_id, $order_adress);
+            $query->execute();   
+            $result = $query->get_result();
+            $result = $result->fetch_assoc(); 
+            return $result;     
+        } 
+    }
+
+    //READ
     public function getOrders(): array
     {
-        $orders=array(
-            array(
-                "order_id"=>1,
-                "order_product_list"=>array("Продукт1", "Продукт2", "Продукт3"),
-                "order_sum"=>123,
-                "order_address"=>"тут будет адрес для заказа",
-                "order_phone"=>"+375 (29) 256-98-88",
-                "order_email"=>"sdfuighjkl@gmail.com",),
-            array(
-                "order_id"=>2,
-                "order_product_list"=>array("Продукт1", "Продукт2", "Продукт3"),
-                "order_sum"=>123,
-                "order_address"=>"тут будет адрес для заказа",
-                "order_phone"=>"+375 (29) 256-98-88",
-                "order_email"=>"sdfuighjkl@gmail.com",),
-            array(
-                "order_id"=>3,
-                "order_product_list"=>array("Продукт1", "Продукт2", "Продукт3"),
-                "order_sum"=>123,
-                "order_address"=>"тут будет адрес для заказа",
-                "order_phone"=>"+375 (29) 256-98-88",
-                "order_email"=>"sdfuighjkl@gmail.com",),
-        );
-        return $orders;
+        global $conn;
+        $sql = "SELECT * FROM `order_product`";
+        $query = $conn->prepare($sql);
+        $query->execute();
+        $result = $query->get_result();
+        $result = $result->fetch_assoc(); 
+        return $result;
     }
 
     public function getOrdersByUserId(int $user_id): array
     {
-        $ordersByUserId=array(
-            array(
-                "order_id"=>1,
-                "order_product_list"=>array("Продукт1", "Продукт2", "Продукт3"),
-                "order_sum"=>123,
-                "order_address"=>"тут будет адрес для заказа",),
-            array(
-                "order_id"=>3,
-                "order_product_list"=>array("Продукт1", "Продукт2", "Продукт3"),
-                "order_sum"=>123,
-                "order_address"=>"тут будет адрес для заказа",),
-        );
-        return $ordersByUserId;
+        if (is_int($user_id)) {
+            global $conn;
+            $sql = "SELECT * FROM `order_product` WHERE `user_id` = ?";
+            $query = $conn->prepare($sql);
+            $query->bind_param('i', $user_id);
+            $query->execute();
+            $result = $query->get_result();
+            $result = $result->fetch_assoc(); 
+            return $result;
+        }
     }
 
-    /*public function setOrder(string $userName, string $userSurname, string $email, string $phone, string $reviewText):array
-    {
-        $setReview=array(
-            "review_id"=>1,
-            "review_user_surname"=>$userSurname,
-            "review_user_name"=>$userName,
-            "review_email"=>$email,
-            "review_phone"=>$phone,
-            "review_text"=>$reviewText,
-        );
-        return $setReview;
-    }*/
-
+    //UPDATE
+    
+    
+    //DELETE. Will add fieild "status". Deleted orders will not be deleted in fact, their status will be changed to "canceled" in DB.
     /*public function archiveOrder(int $order_id):void
     {
-        if(order_to_archive['order_id']==$review_id)
-        {
-            unset($order_to_archive);
+        if (isset($_POST['delete_submit'])) {
+            $review_id = (int)$_GET['delete_review'];
+            global $conn;
+            $sql = "DELETE * FROM `user` WHERE `review_id` = ?";
+            $query = $conn->prepare($sql);
+            $query->bind_param('i', $review_id);
+            if ($query->execute()) {
+                echo "Review deleted.";
+            } else {
+                $conn->error;
+            }
         }
     }*/
 }
