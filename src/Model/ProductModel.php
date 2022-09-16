@@ -4,7 +4,7 @@ namespace Itechart\InternshipProject\Model;
 class ProductModel
 {
     //CREATE
-    public function setProduct()
+    public function setProduct(): array
     {
         global $conn;
         $product_name = (string)$_POST['product_name'];
@@ -59,8 +59,6 @@ class ProductModel
             $result = $query->get_result();
             $result = $result->fetch_assoc(); 
             return $result;
-        } else {
-            echo $conn->error;
         }
     }
 
@@ -75,8 +73,6 @@ class ProductModel
             $result = $query->get_result();
             $result = $result->fetch_assoc(); 
             return $result;
-        } else {
-            echo $conn->error;
         }
     }
 
@@ -116,8 +112,6 @@ class ProductModel
                 $result = $result->fetch_assoc(); 
                 return $result;  
             }         
-        } else {
-            echo $conn->error;
         }
     }
 

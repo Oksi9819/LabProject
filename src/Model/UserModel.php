@@ -38,7 +38,7 @@ class UserModel
         $query->execute();
         $result = $query->get_result();
         $result = $result->fetch_assoc(); 
-        return $result;;
+        return $result;
     }
 
     public function getUserInfo(int $user_id): array
@@ -52,8 +52,6 @@ class UserModel
             $result = $query->get_result();
             $result = $result->fetch_assoc(); 
             return $result;
-        } else {
-            echo $conn->error;
         }
     }
 
@@ -98,8 +96,6 @@ class UserModel
                 $result = $result->fetch_assoc(); 
                 return $result;
             }         
-        } else {
-            echo $conn->error;
         }
     }
 
@@ -122,8 +118,6 @@ class UserModel
                     echo "Passwords don't match.<br>";
                 }
             }         
-        } else {
-            echo $conn->error;
         }
     }
 
