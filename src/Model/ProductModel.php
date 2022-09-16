@@ -11,7 +11,7 @@ class ProductModel
         $product_desc = (string)$_POST['product_desc'];
         $product_category = (int)$_POST['product_category'];
         $product_price = (float)$_POST['product_price'];
-        if (isset($_POST['submit_set_product'])) {
+        if (isset($_POST['submit_setproduct'])) {
             $sql = "INSERT INTO `product`(`product_name`, `product_desc`, `product_category`, `product_price`) VALUES(?,?,?,?)";
             $query = $conn->prepare($sql);
             $query->bind_param('ssid', $product_name, $product_desc, $product_category, $product_price);
@@ -94,6 +94,46 @@ class ProductModel
                 return $result;
             } else {
                 echo "There is no product with such name.<br>";
+            }
+        }
+    }
+
+    //UPDATE
+    public function updateProduct(int $product_id):array
+    {
+        global $conn;
+        if (is_int($product_id)) {
+            $product_name = (string)$_POST['product_name'];
+            $product_desc = (string)$_POST['product_desc'];
+            $product_category = (int)$_POST['product_category'];
+            $product_price = (float)$_POST['product_price'];
+            if (isset($_POST['submit_updateproduct'])) {
+                $sql = "UPDATE `product` SET `product_name` = ?, `product_desc` = ?, `product_category` = ?, `product_price` = ? WHERE `product_id` = ?";
+                $query = $conn->prepare($sql);
+                $query->bind_param('ssidi', $product_name, $product_desc, $product_category, $product_price, $product_id);
+                $query->execute();   
+                $result = $query->get_result();
+                $result = $result->fetch_assoc(); 
+                return $result;  
+            }         
+        } else {
+            echo $conn->error;
+        }
+    }
+
+    //DELETE
+    public function deleteProduct()
+    {   
+        if (isset($_POST['delete_submit'])) {
+            $product_id = (int)$_GET['$product_id'];
+            global $conn;
+            $sql = "DELETE * FROM `product` WHERE `product_id` = ?";
+            $query = $conn->prepare($sql);
+            $query->bind_param('i', $product_id);
+            if ($query->execute()) {
+                echo "Product deleted.";
+            } else {
+                $conn->error;
             }
         }
     }
