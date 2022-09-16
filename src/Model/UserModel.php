@@ -106,14 +106,19 @@ class UserModel
         global $conn;
         if (is_int($user_id)) {
             $user_password = (string)$_POST['new_password'];
+            $user_checkpass = (string)$_POST['new_checkpass'];
             if (isset($_POST['updatepass_submit'])) {
-                $sql = "UPDATE `user` SET `user_password` = ? WHERE `user_id` = ?";
-                $query = $conn->prepare($sql);
-                $query->bind_param('si', $user_password, $user_id);
-	            $query->execute();
-                $result = $query->get_result();
-                $result = $result->fetch_assoc(); 
-                return $result;
+                if ($user_password === $user_checkpass) {
+                    $sql = "UPDATE `user` SET `user_password` = ? WHERE `user_id` = ?";
+                    $query = $conn->prepare($sql);
+                    $query->bind_param('si', $user_password, $user_id);
+	                $query->execute();
+                    $result = $query->get_result();
+                    $result = $result->fetch_assoc(); 
+                    return $result;
+                } else {
+                    echo "Passwords don't match.<br>";
+                }
             }         
         } else {
             echo $conn->error;
