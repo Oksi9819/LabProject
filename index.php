@@ -32,6 +32,10 @@ function navi() {
     <li><a href="'.BASEPATH.'catalog">Каталог</a>
       <ul>
         <li><a href="'.BASEPATH.'catalog/categoryVacuumCleaners">Категория Пылесосы</a></li>
+        <li><a href="'.BASEPATH.'catalog/categoryAirCleaners">Категория Очистители воздуха</a></li>
+        <li><a href="'.BASEPATH.'catalog/categoryHumidifiers">Категория Увлажнители воздуха</a></li>
+        <li><a href="'.BASEPATH.'catalog/categoryLamps">Категория Светильники</a></li>
+        <li><a href="'.BASEPATH.'catalog/categoryOther">Категория Другое</a></li>
         <li><a href="'.BASEPATH.'catalog/categoryVacuumCleaners/id111222">Пылесосы id111222</a></li>
         <li><a href="'.BASEPATH.'catalog/id11122">Продукт id1112222</a></li>
         <li><a href="'.BASEPATH.'catalog/xiaomi-mi-robot-vacuum-mop-2">Xiaomi Mi Robot Vacuum Mop</a></li>
@@ -112,11 +116,15 @@ Route::add('/profile/([0-9]*)/reviews', function($user_id) {
 // Route to catalog
 Route::add('/catalog', function() {
   (new ProductController())->getProducts();
-});
+}, 'get');
+
+Route::add('/catalog', function() {
+  (new ProductController())->getProductsSorted();
+}, 'post');
 
 // Route to a particular category of products
-Route::add('/catalog/category([A-Za-z]*)', function($category_id) {
-  (new ProductController())->getProductsByCategory($category_id);
+Route::add('/catalog/category([A-Za-z]*)', function($category) {
+  (new ProductController())->getProductsByCategory($category);
 });
 
 // Route to product card

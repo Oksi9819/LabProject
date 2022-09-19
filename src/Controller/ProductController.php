@@ -8,14 +8,20 @@ class ProductController
 {
     public function getProducts()
     {
-        $products=(new ProductModel())->getProducts();
+        $products=(new ProductModel())->getProducts("по популярности");
         return (new ProductView())->renderProductsPage($products);
     }
 
-    public function getProductsByCategory($category_id)
+    public function getProductsSorted()
     {
-        $products=(new ProductModel())->getProductsByCategory($category_id);
-        return (new ProductView())->renderProductListByCategory($category_id, $products);
+        $products=(new ProductModel())->getProducts($_POST['sort_choice']);
+        return (new ProductView())->renderProductsPage($products);
+    }
+
+    public function getProductsByCategory($category)
+    {
+        $products=(new ProductModel())->getProductsByCategory($category);
+        return (new ProductView())->renderProductListByCategory($category, $products);
     }
 
     public function getProductById($product_id)

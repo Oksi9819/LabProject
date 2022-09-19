@@ -27,7 +27,7 @@ class ProductModel
     {
         global $conn;
         if ($sort_field === "по популярности") {
-            $sql = "SELECT product.product_id AS product_id, product.product_name AS product_name, product.product_desc AS product_desc, product.product_price AS product_price FROM product LEFT JOIN cart ON product.product_id = cart.product_id GROUP BY product_id ORDER BY COUNT(*)*cart.amount DESC; ";
+            $sql = "SELECT product.product_id AS product_id, product.product_name AS product_name, product.product_desc AS product_desc, product.product_price AS product_price FROM product LEFT JOIN cart ON product.product_id = cart.product_id GROUP BY product_id ORDER BY COUNT(*)*cart.amount DESC;";
         }
         if ($sort_field === "по возрастанию цены") {
             $sql = "SELECT * FROM `product` ORDER BY `product_price`";
@@ -44,21 +44,39 @@ class ProductModel
         $query = $conn->prepare($sql);
         $query->execute();
         $result = $query->get_result();
-        $result = $result->fetch_assoc(); 
+        $result = $result->fetch_all(MYSQLI_ASSOC); 
         return $result;
     }
 
-    public function getProductsByCategory(int $category_id): array
+    public function getProductsByCategory(string $category)/*: array*/
     {
-        if (is_int($category_id)) {
+        function selectProducts($category_id) {
             global $conn;
             $sql = "SELECT * FROM `product` WHERE `product_category` = ?";
             $query = $conn->prepare($sql);
             $query->bind_param('i', $category_id);
             $query->execute();
             $result = $query->get_result();
-            $result = $result->fetch_assoc(); 
+            $result = $result->fetch_all(MYSQLI_ASSOC); 
             return $result;
+        }
+        if ($category === "VacuumCleaners") {
+            $category_id = 1;
+            return selectProducts($category_id);
+        } elseif ($category === "AirCleaners") {
+            $category_id = 3;
+            return selectProducts($category_id);
+        } elseif ($category === "Humidifiers") {
+            $category_id = 2;
+            return selectProducts($category_id);
+        } elseif ($category === "Lamps") {
+            $category_id = 4; 
+            return selectProducts($category_id);
+        } elseif ($category === "Other") {
+            $category_id = 5;
+            return selectProducts($category_id);
+        } else {
+            echo "Error: can't find such category!<br>";
         }
     }
 
@@ -94,7 +112,7 @@ class ProductModel
         }
     }
 
-    public function getProductOfOrder(int $order_id): array
+    public function getProductsOfOrder(int $order_id): array
     {
         $order = (int)$order_id;
         global $conn;
@@ -106,7 +124,7 @@ class ProductModel
         $query->bind_param('i', $order);
         if ($query->execute()) {
             $result = $query->get_result();
-            $result = $result->fetch_assoc(); 
+            $result = $result->fetch_all(MYSQLI_ASSOC); 
             return $result;
         } else {
             echo "There is no products.<br>";
