@@ -27,7 +27,7 @@ class ProductModel
     {
         global $conn;
         if ($sort_field === "по популярности") {
-            $sql = "SELECT product.product_id, product.product_name, product.product_desc, product.product_price FROM product LEFT JOIN cart ON product.product_id = cart.product_id GROUP BY product_id ORDER BY COUNT(*)*cart.amount DESC; ";
+            $sql = "SELECT product.product_id AS product_id, product.product_name AS product_name, product.product_desc AS product_desc, product.product_price AS product_price FROM product LEFT JOIN cart ON product.product_id = cart.product_id GROUP BY product_id ORDER BY COUNT(*)*cart.amount DESC; ";
         }
         if ($sort_field === "по возрастанию цены") {
             $sql = "SELECT * FROM `product` ORDER BY `product_price`";
@@ -98,7 +98,7 @@ class ProductModel
     {
         $order = (int)$order_id;
         global $conn;
-        $sql = "SELECT cart.order_id, product.product_id, product.product_name, product.product_price, cart.amount, cart.amount*product.product_price 
+        $sql = "SELECT cart.order_id AS order_id, product.product_id AS product_id, product.product_name AS product_name, product.product_price AS product_price, cart.amount AS amount, cart.amount*product.product_price AS total_price 
         FROM `cart`
         LEFT JOIN product ON product.product_id = cart.product_id
         WHERE cart.order_id = ?;";
