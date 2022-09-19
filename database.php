@@ -21,6 +21,9 @@ function connectServer()
 //Create database
 function createDB()
 {
+    $dbuser = $_ENV['DB_USER'];
+    $dbpassword = $_ENV['DB_PASS']; 
+    $dbname = $_ENV['DB_NAME'];
     $conn = new mysqli('localhost', $dbuser, $dbpassword);
     $sql = "CREATE DATABASE IF NOT EXISTS shop DEFAULT CHARACTER SET utf8mb4";
     if ($conn->query($sql)) {
@@ -33,6 +36,9 @@ function createDB()
 //Connect to the database
 function connectDB()
 {
+    $dbuser = $_ENV['DB_USER'];
+    $dbpassword = $_ENV['DB_PASS']; 
+    $dbname = $_ENV['DB_NAME'];
     $conn = new mysqli('localhost', $dbuser, $dbpassword, $dbname);
     $conn->set_charset('utf8mb4');
     if ($conn->connect_error) {
@@ -46,6 +52,9 @@ function connectDB()
 //Create tables 
 function createTables()
 {
+    $dbuser = $_ENV['DB_USER'];
+    $dbpassword = $_ENV['DB_PASS']; 
+    $dbname = $_ENV['DB_NAME'];
     $conn = new mysqli('localhost', $dbuser, $dbpassword, $dbname);
     $conn->set_charset('utf8mb4');
 
@@ -66,15 +75,23 @@ function createTables()
     }
 
     ////Create table product
-    $sql = "CREATE TABLE IF NOT EXISTS product (product_id INTEGER AUTO_INCREMENT PRIMARY KEY, product_name VARCHAR(50) NOT NULL, product_desc VARCHAR(450) NOT NULL, product_category INTEGER NOT NULL, product_price DECIMAL(19,2) NOT NULL, FOREIGN KEY (product_category) REFERENCES category(category_id) ON DELETE CASCADE) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4";
+    $sql = "CREATE TABLE IF NOT EXISTS product (product_id INTEGER AUTO_INCREMENT PRIMARY KEY, product_name VARCHAR(250) NOT NULL, product_desc VARCHAR(450) NOT NULL, product_category INTEGER NOT NULL, product_price DECIMAL(19,2) NOT NULL, FOREIGN KEY (product_category) REFERENCES category(category_id) ON DELETE CASCADE) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4";
     if ($conn->query($sql)) {
         echo "Product table successfully created.<br><br>";
     } else {
         echo "Error: " . $conn->error;
     }
     
+    //Create table order_status
+    $sql = "CREATE TABLE IF NOT EXISTS order_status (status_id INTEGER AUTO_INCREMENT PRIMARY KEY, status_name VARCHAR(50) NOT NULL) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
+    if ($conn->query($sql)) {
+        echo "User table successfully created.<br><br>";
+    } else {
+        echo "Error: " . $conn->error;
+    }
+
     //Create table order
-    $sql = "CREATE TABLE IF NOT EXISTS order_product (order_id INTEGER AUTO_INCREMENT PRIMARY KEY, user_id INTEGER NOT NULL, order_address VARCHAR(250) NOT NULL, FOREIGN KEY (user_id) REFERENCES user(user_id) ON DELETE CASCADE) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4";
+    $sql = "CREATE TABLE IF NOT EXISTS order_product (order_id INTEGER AUTO_INCREMENT PRIMARY KEY, user_id INTEGER NOT NULL, order_address VARCHAR(250) NOT NULL, status INTEGER NOT NULL, FOREIGN KEY (user_id) REFERENCES user(user_id) ON DELETE CASCADE, FOREIGN KEY (status) REFERENCES order_status(status_id)) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4";
     if ($conn->query($sql)) {
         echo "Order table successfully created.<br><br>";
     } else {
@@ -82,7 +99,7 @@ function createTables()
     }
 
     //Create table review
-    $sql = "CREATE TABLE IF NOT EXISTS review (review_id INTEGER AUTO_INCREMENT PRIMARY KEY, user_id INTEGER NOT NULL, review_text VARCHAR(500) NOT NULL, FOREIGN KEY (user_id) REFERENCES user(user_id) ON DELETE CASCADE) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4";
+    $sql = "CREATE TABLE IF NOT EXISTS review (review_id INTEGER AUTO_INCREMENT PRIMARY KEY, user_id INTEGER, review_text VARCHAR(500) NOT NULL, FOREIGN KEY (user_id) REFERENCES user(user_id) ON DELETE CASCADE) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4";
     if ($conn->query($sql)) {
         echo "Review table successfully created.<br><br>";
     } else {
@@ -101,8 +118,11 @@ function createTables()
 //Fulfil row of table
 function fulfilRow(string $path, string $values)
 {
-    connectDB();
-    echo $are."<br>";
+    $dbuser = $_ENV['DB_USER'];
+    $dbpassword = $_ENV['DB_PASS']; 
+    $dbname = $_ENV['DB_NAME'];
+    $conn = new mysqli('localhost', $dbuser, $dbpassword, $dbname);
+    $conn->set_charset('utf8mb4');
     $sql = "INSERT INTO ".$path." VALUES (".$values.")";
     if ($conn->query($sql)) {
         echo "New row added to the table.<br><br>";
@@ -165,37 +185,47 @@ function fulfilDB()
     //Fulfil table review
     $path = "review(user_id, review_text)";
     $values = array(
-        "3, 'Отличный персонал.'",
-        "4, 'Все прекрасно.'",
-        "5, 'Очень довольны обслуживанием.'",
-        "6, 'Лучшие цены'",
-        "7, 'Очень приятный персонал.'",
+        "1, 'Отличный персонал.'",
+        "2, 'Все прекрасно.'",
+        "3, 'Очень довольны обслуживанием.'",
+        "4, 'Лучшие цены'",
+        "5, 'Очень приятный персонал.'",
+    );
+    fulfilTable($path, $values); 
+
+    //Fulfil table order_status
+    $path = "order_status(status_name)";
+    $values = array(
+        "'Обрабатывается'",
+        "'В пути'",
+        "'Отменен'",
+        "'Выполнен'",
     );
     fulfilTable($path, $values); 
 
     //Fulfil table order_product
-    $path = "order_product(user_id, order_address)";
+    $path = "order_product(user_id, order_address, status)";
     $values = array(
-        "3, 'г. Минск, пр-т Партизанский, 101'",
-        "4, 'г. Минск, пр-т Партизанский, 102'",
-        "5, 'г. Минск, пр-т Партизанский, 105'",
-        "5, 'г. Минск, пр-т Партизанский, 15'",
-        "4, 'г. Минск, пр-т Партизанский, 12'",
+        "1, 'г. Минск, пр-т Партизанский, 101', 1",
+        "2, 'г. Минск, пр-т Партизанский, 102', 1",
+        "3, 'г. Минск, пр-т Партизанский, 105', 1",
+        "3, 'г. Минск, пр-т Партизанский, 15', 1",
+        "4, 'г. Минск, пр-т Партизанский, 12', 1",
     );
     fulfilTable($path, $values); 
 
     //Fulfil table cart
     $path = "cart(order_id, product_id, amount)";
     $values = array(
-        "1, 19, 1",
-        "1, 20, 1",
-        "1, 21, 1",
-        "2, 27, 3",
-        "2, 25, 1",
-        "3, 22, 1",
-        "4, 23, 1",
-        "5, 24, 1",
-        "5, 25, 1",
+        "1, 1, 1",
+        "1, 8, 1",
+        "1, 2, 1",
+        "2, 3, 3",
+        "2, 4, 1",
+        "3, 4, 1",
+        "4, 6, 1",
+        "4, 8, 1",
+        "3, 7, 1",
     );
     fulfilTable($path, $values);
 }

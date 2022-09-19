@@ -54,7 +54,7 @@ class OrderModel
     /*public function archiveOrder(int $order_id):void
     {
         if (isset($_POST['delete_submit'])) {
-            $review_id = (int)$_GET['delete_review'];
+            $review_id = (int)$_GET['cancel_order'];
             global $conn;
             $sql = "DELETE * FROM `user` WHERE `review_id` = ?";
             $query = $conn->prepare($sql);
