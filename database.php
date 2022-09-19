@@ -91,7 +91,7 @@ function createTables()
     }
 
     //Create table order
-    $sql = "CREATE TABLE IF NOT EXISTS order_product (order_id INTEGER AUTO_INCREMENT PRIMARY KEY, user_id INTEGER NOT NULL, order_address VARCHAR(250) NOT NULL, status INTEGER NOT NULL, FOREIGN KEY (user_id) REFERENCES user(user_id) ON DELETE CASCADE, FOREIGN KEY (status) REFERENCES order_status(status_id)) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4";
+    $sql = "CREATE TABLE IF NOT EXISTS order_product (order_id INTEGER AUTO_INCREMENT PRIMARY KEY, user_id INTEGER NOT NULL, order_address VARCHAR(250) NOT NULL, status INTEGER NOT NULL DEFAULT 1, FOREIGN KEY (user_id) REFERENCES user(user_id) ON DELETE CASCADE, FOREIGN KEY (status) REFERENCES order_status(status_id)) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4";
     if ($conn->query($sql)) {
         echo "Order table successfully created.<br><br>";
     } else {
