@@ -91,7 +91,7 @@ class ProductModel
             $result = $query->get_result();
             $result = $result->fetch_assoc(); 
             return $result;
-        }
+        } else echo 'There is problem.';
     }
 
     public function getProductByName(): array

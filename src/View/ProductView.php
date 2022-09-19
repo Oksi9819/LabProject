@@ -51,7 +51,12 @@ class ProductView
     public function renderProductListByName($product)
     {
         navi();
-        echo "Товар с наимениванием: ".$product['product_name']."<br>";
+        echo '
+        <form methode="post"> 
+            <input type="text" name=text" class="search" placeholder="Search here!">
+            <input type="submit" name="submit" class="submit" value="Search">
+        </form>';
+        echo "<br>Товар с наимениванием: ".$product['product_name']."<br>";
         echo "Артикул товара: ".$product['product_id']."<br>";
         echo "Описание товара: ".$product['product_desc']."<br>";
         echo "Цена: ".$product['product_price']." BYN<br>";

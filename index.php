@@ -36,9 +36,9 @@ function navi() {
         <li><a href="'.BASEPATH.'catalog/categoryHumidifiers">Категория Увлажнители воздуха</a></li>
         <li><a href="'.BASEPATH.'catalog/categoryLamps">Категория Светильники</a></li>
         <li><a href="'.BASEPATH.'catalog/categoryOther">Категория Другое</a></li>
-        <li><a href="'.BASEPATH.'catalog/categoryVacuumCleaners/id111222">Пылесосы id111222</a></li>
-        <li><a href="'.BASEPATH.'catalog/id11122">Продукт id1112222</a></li>
-        <li><a href="'.BASEPATH.'catalog/xiaomi-mi-robot-vacuum-mop-2">Xiaomi Mi Robot Vacuum Mop</a></li>
+        <li><a href="'.BASEPATH.'catalog/categoryVacuumCleaners/id1">Пылесосы артикул "1"</a></li>
+        <li><a href="'.BASEPATH.'catalog/id2">Продукт с артикулом "2"</a></li>
+        <li><a href="'.BASEPATH.'catalog/search">Поисковая строка в каталоге</a></li>
       </ul>
     </li>
     <li><a href="'.BASEPATH.'contacts">Контакты</a>
@@ -138,7 +138,7 @@ Route::add('/catalog/id([0-9]*)', function($product_id) {
 });
 
 // Route to product card by product name
-Route::add('/catalog/([a-z-0-9-]*)', function($product_name) {
+Route::add('/catalog/search', function($product_name) {
   (new ProductController())->getProductByName($product_name);
 });
 
