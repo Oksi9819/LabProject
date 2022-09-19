@@ -94,6 +94,25 @@ class ProductModel
         }
     }
 
+    public function getProductOfOrder(int $order_id): array
+    {
+        $order = (int)$order_id;
+        global $conn;
+        $sql = "SELECT cart.order_id, product.product_id, product.product_name, product.product_price, cart.amount, cart.amount*product.product_price 
+        FROM `cart`
+        LEFT JOIN product ON product.product_id = cart.product_id
+        WHERE cart.order_id = ?;";
+        $query = $conn->prepare($sql);
+        $query->bind_param('i', $order);
+        if ($query->execute()) {
+            $result = $query->get_result();
+            $result = $result->fetch_assoc(); 
+            return $result;
+        } else {
+            echo "There is no products.<br>";
+        }
+    }
+
     //UPDATE
     public function updateProduct(int $product_id):array
     {
