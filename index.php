@@ -22,7 +22,7 @@ if ($conn->connect_error) {
     echo 'You have successfully connected to the database!<br><br><br><br>';
 }
 
-define('BASEPATH','/LabProject/');
+define('BASEPATH','/');
 
 function navi() {
   echo '
