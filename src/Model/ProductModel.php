@@ -1,35 +1,30 @@
 <?php
 namespace Itechart\InternshipProject\Model;
 
-class ProductModel
+use Itechart\InternshipProject\Model\BasicModel;
+
+class ProductModel extends BasicModel
 {
-    //CREATE
-    public function setProduct(): array
+    public function __construct()
     {
-        global $conn;
-        $product_name = (string)$_POST['product_name'];
-        $product_desc = (string)$_POST['product_desc'];
-        $product_category = (int)$_POST['product_category'];
-        $product_price = (float)$_POST['product_price'];
-        if (isset($_POST['submit_setproduct'])) {
-            $sql = "INSERT INTO `product`(`product_name`, `product_desc`, `product_category`, `product_price`) VALUES(?,?,?,?)";
-            $query = $conn->prepare($sql);
-            $query->bind_param('ssid', $product_name, $product_desc, $product_category, $product_price);
-            $query->execute();   
-            $result = $query->get_result();
-            $result = $result->fetch_assoc(); 
-            return $result;     
-        } 
+        parent::__construct;
+    }
+
+    //CREATE
+    public function setProduct(array $values): array
+    {
+        $result = parent::setModel("product", [`product_name`, `product_desc`, `product_category`, `product_price`], "ssid", $values);
+        return $result;
     }
 
     //READ
     public function getProducts($sort_field): array
     {
-        global $conn;
         if ($sort_field === "по популярности") {
             $sql = "SELECT product.product_id AS product_id, product.product_name AS product_name, product.product_desc AS product_desc, product.product_price AS product_price FROM product LEFT JOIN cart ON product.product_id = cart.product_id GROUP BY product_id ORDER BY COUNT(*)*cart.amount DESC;";
         }
         if ($sort_field === "по возрастанию цены") {
+            $result = parent::getModel( ,string $table, string $if_clause = NULL, string $if_value = "-1 OR 1=1", string $types = NULL, string $sort = NULL);
             $sql = "SELECT * FROM `product` ORDER BY `product_price`";
         }
         if ($sort_field === "по убыванию цены") {
@@ -41,10 +36,6 @@ class ProductModel
         if ($sort_field === "по названию Я-А") {
             $sql = "SELECT * FROM `product` ORDER BY `product_name` DESC";
         }
-        $query = $conn->prepare($sql);
-        $query->execute();
-        $result = $query->get_result();
-        $result = $result->fetch_all(MYSQLI_ASSOC); 
         return $result;
     }
 

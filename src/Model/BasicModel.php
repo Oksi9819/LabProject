@@ -1,29 +1,42 @@
 <?php
-
 namespace Itechart\InternshipProject\Model;
 
 class BasicModel
 {
-    public function getMainInfo(): array
+    protected $connection;
+
+    public function __construct()
     {
-        $info['topic']="ГЛАВНАЯ";
-        $info['desc']="ЭТО ГЛАВНАЯ СТРАНИЦА! Заполним ее позже:)";
-        return $info;
+        global $conn;
+        $this->connection = $conn;
     }
 
-    public function getDeliveryInfo(): array
+    //CREATE
+    public function setModel(string $table, array $fields, string $types, array $values)
     {
-        $info['topic']="ДОСТАВКА";
-        $info['desc']="Осуществляем доставку по всей Беларуси. Бесплатная доставка в пределах МКАД. Стоимость доставки в регионы от 25 BYN*.";
-        return $info;
+        $val = count($values);
+        $missed = "?";
+        for ($i=1; $i<$val; $i++) {
+            $missed.=", ?";
+        }
+        $sql = "INSERT INTO ".$table."(".$params.") VALUES (".$missed.")";
+        $query = $this->connection->prepare($sql);
+        $query->bind_param($types, $values);
+        $query->execute();   
+        $result = $query->get_result();
+        $result = $result->fetch_assoc(); 
+        return $result;
     }
 
-    public function getContactsInfo(): array
+    //READ
+    public function getModel(string $fields = "*", string $table, string $if_clause = NULL, string $if_value = "-1 OR 1=1", string $types = NULL, string $sort = NULL): array
     {
-        $info['topic']="КОНТАКТЫ";
-        $info['phone_1']="+375 (29) 111-11-11";
-        $info['phone_2']="+375 (29) 222-22-22";
-        $info['addres']="г. Минск, пр-т Независимости, 4; 220030, Республика Беларусь.";
-        return $info;
+        $sql = "SELECT ".$fields." FROM ".$table." WHERE ".$if_clause." = ? ORDER BY ".$sort;
+        $query = $conn->prepare($sql);
+        $query->bind_param($types, $if_value);
+        $query->execute();
+        $result = $query->get_result();
+        $result = $result->fetch_all(MYSQLI_ASSOC); 
+        return $result;
     }
 }

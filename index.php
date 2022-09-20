@@ -70,7 +70,7 @@ function navi() {
 
 // Base route (startpage)
 Route::add('/', function() {
-  (new BasicController())->executeMainPage();
+  (new MainController())->executeMainPage();
 });
 
 // Route to registration form
@@ -154,22 +154,22 @@ Route::add('/cart/([0-9]*)/order/([0-9]*)', function($user_id, $order_id) {
 
 // Route to contacts
 Route::add('/contacts', function() {
-  (new BasicController())->executeContactsPage();
+  (new MainController())->executeContactsPage();
 });
 
 // Route to contact-form
 Route::add('/contacts/contact-form', function() {
-  (new BasicController())->sendContactForm();
+  (new MainController())->sendContactForm();
 }, 'get');
 
 // Post route to contact-form
 Route::add('/contacts/contact-form', function() {
-  (new BasicController())->showContactForm();
+  (new MainController())->showContactForm();
 }, 'post');
 
 // Route to delivery page
 Route::add('/delivery', function() {
-  (new BasicController())->executeDeliveryPage();
+  (new MainController())->executeDeliveryPage();
 });
 
 Route::run(BASEPATH);
