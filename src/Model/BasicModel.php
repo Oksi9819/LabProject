@@ -29,14 +29,37 @@ class BasicModel
     }
 
     //READ
-    public function getModel(string $fields = "*", string $table, string $if_clause = NULL, string $if_value = "-1 OR 1=1", string $types = NULL, string $sort = NULL): array
+    public function getModel(string $fields = "*", string $table, string $ifclause = NULL, string $ifvalue = NULL, string $sort = NULL, string $types = NULL): array
     {
-        $sql = "SELECT ".$fields." FROM ".$table." WHERE ".$if_clause." = ? ORDER BY ".$sort;
-        $query = $conn->prepare($sql);
-        $query->bind_param($types, $if_value);
+        if ($sort===NULL && $ifclause===NULL && $ifvalue===NULL && $types===NULL) {
+            $sql = "SELECT ".$fields." FROM ".$table;
+            $query = $this->connection->prepare($sql);
+        } elseif ($ifclause===NULL && $ifvalue===NULL && $types===NULL) {
+            $sql = "SELECT ".$fields." FROM ".$table." ORDER BY ".$sort;
+            $query = $this->connection->prepare($sql);
+        } elseif ($sort===NULL) {
+            $value_arr = explode(" ", $ifvalue);
+            $missed = "?";
+            for ($i=1; $i<count($value_arr); $i++) {
+                $missed.=", ?";
+            }
+            $sql = "SELECT ".$fields." FROM ".$table." WHERE ".$ifclause." = ".$missed;
+            $query = $this->connection->prepare($sql);
+            $query->bind_param($types, $ifvalue);
+        } else {
+            $value_arr = explode(" ", $ifvalue);
+            echo count($value_arr)."<br>";
+            $missed = "?";
+            for ($i=1; $i<count($value_arr); $i++) {
+                $missed.=", ?";
+            }
+            $sql = "SELECT ".$fields." FROM ".$table." WHERE ".$ifclause." = ".$missed." ORDER BY ".$sort;
+            $query = $this->connection->prepare($sql);
+            $query->bind_param($types, $ifvalue);
+        }
         $query->execute();
         $result = $query->get_result();
-        $result = $result->fetch_all(MYSQLI_ASSOC); 
+        $result = $result->fetch_all(MYSQLI_ASSOC);
         return $result;
     }
 }

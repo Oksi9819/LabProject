@@ -1,20 +1,24 @@
 <?php
 namespace Itechart\InternshipProject\View;
 
-class ProductView
+use Itechart\InternshipProject\View\BasicView;
+
+class ProductView extends BasicView
 {
+
+
     public function renderProductsPage($products)
     {
-        navi();
+        parent::navi();
         echo '<br><b>КАТАЛОГ</b><br><br>';
         echo '<b>Все товары каталога: </b><br>
         <form method="post">
             <select name="sort_choice">
-                <option selected>по популярности</option>
-                <option>по возрастанию цены</option>
-                <option>по убыванию цены</option>
-                <option>по названию А-Я</option>
-                <option>по названию Я-А</option>
+                <option value="popularity">по популярности</option>
+                <option value="pricelowhigh">по возрастанию цены</option>
+                <option value="pricehighlow">по убыванию цены</option>
+                <option value="az">по названию А-Я</option>
+                <option value="za">по названию Я-А</option>
             </select>
             <input type="submit">
         </form>
@@ -27,9 +31,20 @@ class ProductView
     
     public function renderProductListByCategory($category, $products)
     {
-        navi();
+        parent::navi();
         echo '<br><b>КАТАЛОГ</b><br><br>';
-        echo '<b>Все товары категории: <i>'.$category.'</i></b><br><table><tr><td>Артикул</td><td>Наименование товара</td><td>Описание</td><td>Цена</td></tr>';
+        echo '<b>Все товары категории: </b>'.$category.'<br>
+        <form method="post">
+            <select name="sort_choice">
+                <option value="popularity">по популярности</option>
+                <option value="pricelowhigh">по возрастанию цены</option>
+                <option value="pricehighlow">по убыванию цены</option>
+                <option value="az">по названию А-Я</option>
+                <option value="za">по названию Я-А</option>
+            </select>
+            <input type="submit">
+        </form><br>
+        <table><tr><td>Артикул</td><td>Наименование товара</td><td>Описание</td><td>Цена</td></tr>';
         if (is_array($products)) {
             foreach ($products as $product) {
                 echo '<tr><td>'.$product['product_id'].'</td><td>'.$product['product_name'].'</td><td>'.$product['product_desc'].'</td><td>'.$product['product_price'].'</td></tr><br>';
@@ -41,7 +56,7 @@ class ProductView
 
     public function renderProductListById($product)
     {
-        navi();
+        parent::navi();
         echo "Товар с id: ".$product['product_id']."<br>";
         echo "Наименование товара: ".$product['product_name']."<br>";
         echo "Описание товара: ".$product['product_desc']."<br>";
@@ -50,7 +65,7 @@ class ProductView
 
     public function renderProductListByName($product)
     {
-        navi();
+        parent::navi();
         echo '
         <form methode="post"> 
             <input type="text" name=text" class="search" placeholder="Search here!">

@@ -2,8 +2,8 @@
 
 namespace Itechart\InternshipProject\Controller;
 
-use Itechart\InternshipProject\Model\BasicModel;
-use Itechart\InternshipProject\View\BasicView;
+use Itechart\InternshipProject\Model\MainModel;
+use Itechart\InternshipProject\View\MainView;
 
 class MainController
 {

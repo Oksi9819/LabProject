@@ -5,9 +5,10 @@ use Itechart\InternshipProject\Model\BasicModel;
 
 class ProductModel extends BasicModel
 {
+    
     public function __construct()
     {
-        parent::__construct;
+        parent::__construct();
     }
 
     //CREATE
@@ -18,57 +19,46 @@ class ProductModel extends BasicModel
     }
 
     //READ
-    public function getProducts($sort_field): array
+    public function getProducts(string $sort_field): array
     {
-        if ($sort_field === "по популярности") {
-            $sql = "SELECT product.product_id AS product_id, product.product_name AS product_name, product.product_desc AS product_desc, product.product_price AS product_price FROM product LEFT JOIN cart ON product.product_id = cart.product_id GROUP BY product_id ORDER BY COUNT(*)*cart.amount DESC;";
+        global $conn;
+        if ($sort_field === "popularity") {
+            $result = parent::getModel("product.product_id AS product_id, product.product_name AS product_name, product.product_desc AS product_desc, product.product_price AS product_price", "product LEFT JOIN cart ON product.product_id = cart.product_id GROUP BY product_id", NULL, NULL, "COUNT(*)*cart.amount DESC", NULL);
         }
-        if ($sort_field === "по возрастанию цены") {
-            $result = parent::getModel( ,string $table, string $if_clause = NULL, string $if_value = "-1 OR 1=1", string $types = NULL, string $sort = NULL);
-            $sql = "SELECT * FROM `product` ORDER BY `product_price`";
+        if ($sort_field === "pricelowhigh") {
+            $result = parent::getModel("*", "product", NULL, NULL, "product_price", NULL);
         }
-        if ($sort_field === "по убыванию цены") {
-            $sql = "SELECT * FROM `product` ORDER BY `product_price` DESC";
+        if ($sort_field === "pricehighlow") {
+            $result = parent::getModel("*", "product", NULL, NULL, "product_price DESC", NULL);
         }
-        if ($sort_field === "по названию А-Я") {
-            $sql = "SELECT * FROM `product` ORDER BY `product_name`";
+        if ($sort_field === "az") {
+            $result = parent::getModel("*", "product", NULL, NULL, "product_name", NULL);
         }
-        if ($sort_field === "по названию Я-А") {
-            $sql = "SELECT * FROM `product` ORDER BY `product_name` DESC";
+        if ($sort_field === "za") {
+            $result = parent::getModel("*", "product", NULL, NULL, "product_name DESC", NULL);
         }
         return $result;
     }
 
-    public function getProductsByCategory(string $category)/*: array*/
+    public function getProductsByCategory(int $category_id, string $sort_field): array
     {
-        function selectProducts($category_id) {
-            global $conn;
-            $sql = "SELECT * FROM `product` WHERE `product_category` = ?";
-            $query = $conn->prepare($sql);
-            $query->bind_param('i', $category_id);
-            $query->execute();
-            $result = $query->get_result();
-            $result = $result->fetch_all(MYSQLI_ASSOC); 
-            return $result;
+        if ($sort_field === "popularity") {
+            $table = "product LEFT JOIN cart ON product.product_id = cart.product_id WHERE product.product_category = ".$category_id." GROUP BY product_id";
+            $result = parent::getModel("product.product_id AS product_id, product.product_name AS product_name, product.product_desc AS product_desc, product.product_price AS product_price", $table, NULL, NULL, "COUNT(*)*cart.amount DESC", NULL);
         }
-        if ($category === "VacuumCleaners") {
-            $category_id = 1;
-            return selectProducts($category_id);
-        } elseif ($category === "AirCleaners") {
-            $category_id = 3;
-            return selectProducts($category_id);
-        } elseif ($category === "Humidifiers") {
-            $category_id = 2;
-            return selectProducts($category_id);
-        } elseif ($category === "Lamps") {
-            $category_id = 4; 
-            return selectProducts($category_id);
-        } elseif ($category === "Other") {
-            $category_id = 5;
-            return selectProducts($category_id);
-        } else {
-            echo "Error: can't find such category!<br>";
+        if ($sort_field === "pricelowhigh") {
+            $result = parent::getModel("*", "product", "product_category", $category_id, "product_price, product_name",  "i");
         }
+        if ($sort_field === "pricehighlow") {
+            $result = parent::getModel("*", "product", "product_category", $category_id, "product_price DESC, product_name", "i");
+        }
+        if ($sort_field === "az") {
+            $result = parent::getModel("*", "product", "product_category", $category_id, "product_name", "i");
+        }
+        if ($sort_field === "za") {
+            $result = parent::getModel("*", "product", "product_category", $category_id, "product_name DESC", "i");
+        }
+        return $result;
     }
 
     public function getProductById(int $product_id): array
