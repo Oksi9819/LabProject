@@ -57,10 +57,10 @@ class ProductView extends BasicView
     public function renderProductListById($product)
     {
         parent::navi();
-        echo "Товар с id: ".$product['product_id']."<br>";
-        echo "Наименование товара: ".$product['product_name']."<br>";
-        echo "Описание товара: ".$product['product_desc']."<br>";
-        echo "Цена: ".$product['product_price']." BYN<br>";
+        echo "Товар с id: ".$product[0]['product_id']."<br>";
+        echo "Наименование товара: ".$product[0]['product_name']."<br>";
+        echo "Описание товара: ".$product[0]['product_desc']."<br>";
+        echo "Цена: ".$product[0]['product_price']." BYN<br>";
     }
 
     public function renderProductListByName($product)

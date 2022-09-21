@@ -64,16 +64,8 @@ class ProductModel extends BasicModel
 
     public function getProductById(int $product_id): array
     {
-        if (is_int($product_id)) {
-            global $conn;
-            $sql = "SELECT * FROM `product` WHERE `product_id` = ?";
-            $query = $conn->prepare($sql);
-            $query->bind_param('i', $product_id);
-            $query->execute();
-            $result = $query->get_result();
-            $result = $result->fetch_assoc(); 
-            return $result;
-        } else echo 'There is problem.';
+        $result = parent::getModel("*", "product", "product_id", $product_id, NULL, NULL, NULL, "i");
+        return $result;
     }
 
     public function getProductByName(): array
