@@ -113,19 +113,9 @@ class ProductModel extends BasicModel
     }
 
     //DELETE
-    public function deleteProduct()
+    public function deleteProduct($product_id): array
     {   
-        if (isset($_POST['delete_submit'])) {
-            $product_id = (int)$_GET['$product_id'];
-            global $conn;
-            $sql = "DELETE * FROM `product` WHERE `product_id` = ?";
-            $query = $conn->prepare($sql);
-            $query->bind_param('i', $product_id);
-            if ($query->execute()) {
-                echo "Product deleted.";
-            } else {
-                $conn->error;
-            }
-        }
+        $result = parent::deleteModelItem("product", "product_id", $product_id, NULL, "i");
+        return $result;
     }
 }

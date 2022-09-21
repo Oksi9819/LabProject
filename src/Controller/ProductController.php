@@ -89,6 +89,16 @@ class ProductController extends BasicController
             $product_category = (int)$_POST['product_category'];
             $product_price = (float)$_POST['product_price'];
         }
-        
+        $product=$this->productModel->updateProduct($product_id, $product_name, $product_desc, $product_category, $product_price);
+        return $this->productView->renderProductListById($product);
+    }
+
+    public function deleteProduct()
+    {
+        if (isset($_POST['delete_submit'])) {
+            $product_id = (int)$_GET['$product_id'];
+        }
+        $product=$this->productModel->deleteProduct($product_id);
+        return $this->productView->renderProductListById($product);
     }
 }

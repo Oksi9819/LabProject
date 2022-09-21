@@ -132,9 +132,29 @@ class BasicModel
         $query->bind_param($types, $ifvalue);
         $query->execute();
         $result = $query->get_result();
-        $result = $result->fetch_all(MYSQLI_ASSOC);
+        $result = $result->fetch_assoc();
         return $result;
     }
 
     //DELETE
+    public function deleteModelItem(string $table, string $ifclause, string $ifvalue, string $ifoperator = NULL, string $types): array
+    {
+        $sql = "DELETE FROM ".$table." WHERE ";
+        $if = explode(", ", $ifclause);
+        if (is_null($ifoperator)) {
+            for ($i=0; $i<count($if); $i++) {
+                $sql.=$if[$i]." = ? ";
+            }
+        } else {
+            for ($i=0; $i<count($if); $i++) {
+                $sql.=$ifclause[$i]." = ? ".$ifoperator." ";
+            }
+        }
+        $query = $this->connection->prepare($sql);
+        $query->bind_param($types, $ifvalue);
+        $query->execute();
+        $result = $query->get_result();
+        $result = $result->fetch_assoc();
+        return $result;
+    }
 }
