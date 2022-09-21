@@ -23,19 +23,19 @@ class ProductModel extends BasicModel
     {
         global $conn;
         if ($sort_field === "popularity") {
-            $result = parent::getModel("product.product_id AS product_id, product.product_name AS product_name, product.product_desc AS product_desc, product.product_price AS product_price", "product LEFT JOIN cart ON product.product_id = cart.product_id GROUP BY product_id", NULL, NULL, "COUNT(*)*cart.amount DESC", NULL);
+            $result = parent::getModel("product.product_id AS product_id, product.product_name AS product_name, product.product_desc AS product_desc, product.product_price AS product_price", "product LEFT JOIN cart ON product.product_id = cart.product_id",  NULL, NULL, NULL, "product_id", "COUNT(*)*cart.amount DESC", NULL);
         }
         if ($sort_field === "pricelowhigh") {
-            $result = parent::getModel("*", "product", NULL, NULL, "product_price", NULL);
+            $result = parent::getModel("*", "product", NULL, NULL, NULL, NULL, "product_price", NULL);
         }
         if ($sort_field === "pricehighlow") {
-            $result = parent::getModel("*", "product", NULL, NULL, "product_price DESC", NULL);
+            $result = parent::getModel("*", "product", NULL, NULL, NULL, NULL, "product_price DESC", NULL);
         }
         if ($sort_field === "az") {
-            $result = parent::getModel("*", "product", NULL, NULL, "product_name", NULL);
+            $result = parent::getModel("*", "product", NULL, NULL, NULL, NULL, "product_name", NULL);
         }
         if ($sort_field === "za") {
-            $result = parent::getModel("*", "product", NULL, NULL, "product_name DESC", NULL);
+            $result = parent::getModel("*", "product", NULL, NULL, NULL, NULL, "product_name DESC", NULL);
         }
         return $result;
     }
@@ -43,20 +43,21 @@ class ProductModel extends BasicModel
     public function getProductsByCategory(int $category_id, string $sort_field): array
     {
         if ($sort_field === "popularity") {
-            $table = "product LEFT JOIN cart ON product.product_id = cart.product_id WHERE product.product_category = ".$category_id." GROUP BY product_id";
-            $result = parent::getModel("product.product_id AS product_id, product.product_name AS product_name, product.product_desc AS product_desc, product.product_price AS product_price", $table, NULL, NULL, "COUNT(*)*cart.amount DESC", NULL);
+            $table = "product LEFT JOIN cart ON product.product_id = cart.product_id";
+             /*WHERE product.product_category = ".$category_id." GROUP BY product_id";*/
+            $result = parent::getModel("product.product_id AS product_id, product.product_name AS product_name, product.product_desc AS product_desc, product.product_price AS product_price", $table, "product.product_category", $category_id, NULL, NULL, "COUNT(*)*cart.amount DESC", "i");
         }
         if ($sort_field === "pricelowhigh") {
-            $result = parent::getModel("*", "product", "product_category", $category_id, "product_price, product_name",  "i");
+            $result = parent::getModel("*", "product", "product_category", $category_id, NULL, NULL, "product_price, product_name",  "i");
         }
         if ($sort_field === "pricehighlow") {
-            $result = parent::getModel("*", "product", "product_category", $category_id, "product_price DESC, product_name", "i");
+            $result = parent::getModel("*", "product", "product_category", $category_id, NULL, NULL, "product_price DESC, product_name", "i");
         }
         if ($sort_field === "az") {
-            $result = parent::getModel("*", "product", "product_category", $category_id, "product_name", "i");
+            $result = parent::getModel("*", "product", "product_category", $category_id, NULL, NULL, "product_name", "i");
         }
         if ($sort_field === "za") {
-            $result = parent::getModel("*", "product", "product_category", $category_id, "product_name DESC", "i");
+            $result = parent::getModel("*", "product", "product_category", $category_id, NULL, NULL, "product_name DESC", "i");
         }
         return $result;
     }

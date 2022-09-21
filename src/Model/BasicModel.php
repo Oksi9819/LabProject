@@ -29,31 +29,77 @@ class BasicModel
     }
 
     //READ
-    public function getModel(string $fields = "*", string $table, string $ifclause = NULL, string $ifvalue = NULL, string $sort = NULL, string $types = NULL): array
+    public function getModel(string $fields = "*", string $table, string $ifclause = NULL, string $ifvalue = NULL, string $ifoperator = NULL, string $group = NULL, string $sort = NULL, string $types = NULL): array
     {
-        if ($sort===NULL && $ifclause===NULL && $ifvalue===NULL && $types===NULL) {
+        if ($sort===NULL && $ifclause===NULL && $ifvalue===NULL && $types===NULL && $group===NULL) {
             $sql = "SELECT ".$fields." FROM ".$table;
             $query = $this->connection->prepare($sql);
-        } elseif ($ifclause===NULL && $ifvalue===NULL && $types===NULL) {
+        } elseif ($sort===NULL && $ifclause===NULL && $ifvalue===NULL && $types===NULL) {
+            $sql = "SELECT ".$fields." FROM ".$table." GROUP BY ".$group;
+            $query = $this->connection->prepare($sql);
+        } elseif ($ifclause===NULL && $ifvalue===NULL && $types===NULL && $group===NULL) {
             $sql = "SELECT ".$fields." FROM ".$table." ORDER BY ".$sort;
             $query = $this->connection->prepare($sql);
-        } elseif ($sort===NULL) {
-            $value_arr = explode(" ", $ifvalue);
-            $missed = "?";
-            for ($i=1; $i<count($value_arr); $i++) {
-                $missed.=", ?";
+        } elseif ($ifclause===NULL && $ifvalue===NULL && $types===NULL) {
+            $sql = "SELECT ".$fields." FROM ".$table." GROUP BY ".$group." ORDER BY ".$sort;
+            $query = $this->connection->prepare($sql);
+        } elseif ($sort===NULL && $group===NULL) {
+            $if = explode(", ", $ifclause);
+            $sql = "SELECT ".$fields." FROM ".$table." WHERE ";
+            if (is_null($ifoperator)) {
+                for ($i=0; $i<count($if); $i++) {
+                    $sql.=$if[$i]." = ? ";
+                }
+            } else {
+                for ($i=0; $i<count($if); $i++) {
+                    $sql.=$if[$i]." = ? ".$ifoperator." ";
+                }
             }
-            $sql = "SELECT ".$fields." FROM ".$table." WHERE ".$ifclause." = ".$missed;
+            $query = $this->connection->prepare($sql);
+            $query->bind_param($types, $ifvalue);
+        } elseif ($sort===NULL) {
+            $sql = "SELECT ".$fields." FROM ".$table." WHERE ";
+            $if = explode(", ", $ifclause);
+            if (is_null($ifoperator)) {
+                for ($i=0; $i<count($if); $i++) {
+                    $sql.=$if[$i]." = ? ";
+                }
+            } else {
+                for ($i=0; $i<count($if); $i++) {
+                    $sql.=$if[$i]." = ? ".$ifoperator." ";
+                }
+            }
+            $sql.= "GROUP BY ".$group;
+            $query = $this->connection->prepare($sql);
+            $query->bind_param($types, $ifvalue);
+        }  elseif ($group===NULL) {
+            $sql = "SELECT ".$fields." FROM ".$table." WHERE ";
+            $if = explode(", ", $ifclause);
+            if (is_null($ifoperator)) {
+                for ($i=0; $i<count($if); $i++) {
+                    $sql.=$if[$i]." = ? ";
+                }
+            } else {
+                for ($i=0; $i<count($if); $i++) {
+                    $sql.=$if[$i]." = ? ".$ifoperator." ";
+                }
+            }
+            $sql.= "ORDER BY ".$sort;
             $query = $this->connection->prepare($sql);
             $query->bind_param($types, $ifvalue);
         } else {
-            $value_arr = explode(" ", $ifvalue);
-            echo count($value_arr)."<br>";
-            $missed = "?";
-            for ($i=1; $i<count($value_arr); $i++) {
-                $missed.=", ?";
+            $sql = "SELECT ".$fields." FROM ".$table." WHERE ";
+            $if = explode(", ", $ifclause);
+            if (is_null($ifoperator)) {
+                for ($i=0; $i<count($if); $i++) {
+                    $sql.=$if[$i]." = ? ";
+                }
+            } else {
+                for ($i=0; $i<count($if); $i++) {
+                    $sql.=$ifclause[$i]." = ? ".$ifoperator." ";
+                }
             }
-            $sql = "SELECT ".$fields." FROM ".$table." WHERE ".$ifclause." = ".$missed." ORDER BY ".$sort;
+            $sql.= "GROUP BY ".$group."ORDER BY ".$sort;
             $query = $this->connection->prepare($sql);
             $query->bind_param($types, $ifvalue);
         }
