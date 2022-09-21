@@ -79,4 +79,16 @@ class ProductController extends BasicController
         $product=(new ProductModel())->getProductByName($product_name);
         return (new ProductView())->renderProductListByName($product);
     }
+
+    public function updateProduct()
+    {
+        $product_id = (int)$product_id;
+        if (isset($_POST['submit_updateproduct'])) {
+            $product_name = (string)$_POST['product_name'];
+            $product_desc = (string)$_POST['product_desc'];
+            $product_category = (int)$_POST['product_category'];
+            $product_price = (float)$_POST['product_price'];
+        }
+        
+    }
 }

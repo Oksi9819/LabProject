@@ -106,24 +106,10 @@ class ProductModel extends BasicModel
     }
 
     //UPDATE
-    public function updateProduct(int $product_id):array
+    public function updateProduct(int $product_id, string $product_name, string $product_desc, int $product_category, float $product_price):array
     {
-        global $conn;
-        if (is_int($product_id)) {
-            $product_name = (string)$_POST['product_name'];
-            $product_desc = (string)$_POST['product_desc'];
-            $product_category = (int)$_POST['product_category'];
-            $product_price = (float)$_POST['product_price'];
-            if (isset($_POST['submit_updateproduct'])) {
-                $sql = "UPDATE `product` SET `product_name` = ?, `product_desc` = ?, `product_category` = ?, `product_price` = ? WHERE `product_id` = ?";
-                $query = $conn->prepare($sql);
-                $query->bind_param('ssidi', $product_name, $product_desc, $product_category, $product_price, $product_id);
-                $query->execute();   
-                $result = $query->get_result();
-                $result = $result->fetch_assoc(); 
-                return $result;  
-            }         
-        }
+        $result = parent::updateModel("product_name, product_desc, product_category, product_price", "product", "product_id", $product_id, NULL, "ssidi");
+        return $result;           
     }
 
     //DELETE
