@@ -56,8 +56,7 @@ class UserController extends BasicController
         $user_login = trim($_POST['user_email']);
         $user_pass = trim($_POST['user_password']);
         $user = $this->userModel->auth($user_login, $user_pass);
-        header('Location: '.BASEPATH.'profile/'.$user[0]['user_id']);
-        return $this->userView->renderUserPage($user);
+        return header('Location: '.BASEPATH.'profile/'.$user[0]['user_id']);
     }
 
     public function getUserInfo(int $user_id)
