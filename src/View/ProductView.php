@@ -20,7 +20,7 @@ class ProductView extends BasicView
                 <option value="az">по названию А-Я</option>
                 <option value="za">по названию Я-А</option>
             </select>
-            <input type="submit_sort">
+            <input type="submit">
         </form>
         <br><b>Все товары каталога: </b><br><table><tr><td>Артикул</td><td>Наименование товара</td><td>Описание</td><td>Цена</td></tr>';
         foreach ($products as $product) {

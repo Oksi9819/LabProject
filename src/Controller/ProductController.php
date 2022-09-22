@@ -109,7 +109,7 @@ class ProductController extends BasicController
             $types.="i";
             //echo $types."<br>";
             $fields = implode(", ", $field);
-            $values = implode(", ", $value);
+            //$values = implode(", ", $value);
             //echo $fields."<br>";
             //echo $values."<br>";
             $product=$this->productModel->updateProduct($fields, $product_id, $value, $types);

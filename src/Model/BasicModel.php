@@ -12,7 +12,7 @@ class BasicModel
     }
 
     //CREATE
-    public function setModel(string $table, array $fields, string $types, array $values)
+    public function setModel(string $table, array $fields, string $types, array $values): array
     {
         $val = count($values);
         $missed = "?";
@@ -21,7 +21,7 @@ class BasicModel
         }
         $sql = "INSERT INTO ".$table."(".$params.") VALUES (".$missed.")";
         $query = $this->connection->prepare($sql);
-        $query->bind_param($types, $values);
+        $query->bind_param($types, ...$values);
         $query->execute();   
         $result = $query->get_result();
         $result = $result->fetch_assoc(); 
@@ -31,9 +31,10 @@ class BasicModel
     //READ
     public function getModel(string $fields = "*", string $table, string $ifclause = NULL, string $ifvalue = NULL, string $ifoperator = NULL, string $group = NULL, string $sort = NULL, string $types = NULL): array
     {
+        $ifvalues = explode(", ", $ifvalue);
         if ($sort===NULL && $ifclause===NULL && $ifvalue===NULL && $types===NULL && $group===NULL) {
             $sql = "SELECT ".$fields." FROM ".$table;
-            $query = $this->connection->prepare($sql);
+            
         } elseif ($sort===NULL && $ifclause===NULL && $ifvalue===NULL && $types===NULL) {
             $sql = "SELECT ".$fields." FROM ".$table." GROUP BY ".$group;
             $query = $this->connection->prepare($sql);
@@ -56,7 +57,7 @@ class BasicModel
                 }
             }
             $query = $this->connection->prepare($sql);
-            $query->bind_param($types, $ifvalue);
+            $query->bind_param($types, ...$ifvalues);
         } elseif ($sort===NULL) {
             $sql = "SELECT ".$fields." FROM ".$table." WHERE ";
             $if = explode(", ", $ifclause);
@@ -71,7 +72,7 @@ class BasicModel
             }
             $sql.= "GROUP BY ".$group;
             $query = $this->connection->prepare($sql);
-            $query->bind_param($types, $ifvalue);
+            $query->bind_param($types, ...$ifvalues);
         }  elseif ($group===NULL) {
             $sql = "SELECT ".$fields." FROM ".$table." WHERE ";
             $if = explode(", ", $ifclause);
@@ -86,7 +87,7 @@ class BasicModel
             }
             $sql.= "ORDER BY ".$sort;
             $query = $this->connection->prepare($sql);
-            $query->bind_param($types, $ifvalue);
+            $query->bind_param($types, ...$ifvalues);
         } else {
             $sql = "SELECT ".$fields." FROM ".$table." WHERE ";
             $if = explode(", ", $ifclause);
@@ -101,7 +102,7 @@ class BasicModel
             }
             $sql.= "GROUP BY ".$group."ORDER BY ".$sort;
             $query = $this->connection->prepare($sql);
-            $query->bind_param($types, $ifvalue);
+            $query->bind_param($types, ...$ifvalues);
         }
         $query->execute();
         $result = $query->get_result();
@@ -110,7 +111,7 @@ class BasicModel
     }
 
     //UPDATE
-    public function updateModel(string $fields, string $table, string $ifclause, string $ifvalue, string $values, string $ifoperator = NULL, string $types)
+    public function updateModel(string $fields, string $table, string $ifclause, string $ifvalue, array $values, string $ifoperator = NULL, string $types)
     {
         $field = explode(", ", $fields);
         $sql = "UPDATE ".$table." SET ";
@@ -129,11 +130,10 @@ class BasicModel
             }
         }
         $query = $this->connection->prepare($sql);
-        echo $types."<br>";
-        echo $values."<br>";
-        echo $ifvalue."<br>";
-        $query->bind_param($types, $values);
+        array_push($values, $ifvalue);
+        $query->bind_param($types, ...$values);
         $query->execute();
+        $query->get_result();
         $types = "";
         if (is_int($ifvalue)) {
             $types = "i";
@@ -149,7 +149,7 @@ class BasicModel
     }
 
     //DELETE
-    public function deleteModelItem(string $table, string $ifclause, string $ifvalue, string $ifoperator = NULL, string $types): array
+    public function deleteModelItem(string $table, string $ifclause, array $ifvalue, string $ifoperator = NULL, string $types): array
     {
         $sql = "DELETE FROM ".$table." WHERE ";
         $if = explode(", ", $ifclause);
@@ -163,7 +163,7 @@ class BasicModel
             }
         }
         $query = $this->connection->prepare($sql);
-        $query->bind_param($types, $ifvalue);
+        $query->bind_param($types, ...$ifvalue);
         $query->execute();
         $result = $query->get_result();
         $result = $result->fetch_assoc();
