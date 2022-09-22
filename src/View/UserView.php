@@ -6,17 +6,13 @@ class UserView
 {
     public function sendUser()
     {
-        navi();
         echo '<b>Заполните пожалуйста форму регистрации: </b><br><br>';
-        echo '<form method="post">Введите фамилию: <input type="text" name="user_surname"><br>Введите фамилию: <input type="text" name="user_name"><br>Введите дату рождения: <input type="date" name="user_birthday"><br>Введите телефон: <input type="tel" name="user_phone"><br>Введите адрес: <input type="text" name="user_address"><br>Введите email: <input type="email" name="user_email" value="Введите email"><br>Введите пароль: <input type="password" name="user_password" maxlength="8"><br><input type="submit" name="submit" value="Зарегистрироваться"></form>';
+        echo '<form method="post">Введите фамилию: <input type="text" name="user_surname" required="required"><br>Введите фамилию: <input type="text" name="user_name" required="required"><br>Введите дату рождения: <input type="date" name="user_birthday" required="required"><br>Введите телефон: <input type="tel" name="user_phone" required="required"><br>Введите адрес: <input type="text" name="user_address" required="required"><br>Введите email: <input type="email" name="user_email" value="Введите email" required="required"><br>Введите пароль: <input type="password" name="user_password" maxlength="8" required="required"><br><input type="submit" name="submit_reg_user" value="Зарегистрироваться"></form>';
     }
 
-    public function setUser(/*array $registeredUser*/)
+    public function setUser($result)
     {
-        navi();
-        echo "Вы успешно зарегистрировались!:<br>";
-        /*print_r($registeredUser);   
-        echo "<br>Далее необходимо авторизоваться!:<br>";*/
+        echo $result." Вы успешно зарегистрировались!:<br>Далее необходимо <a href='/authorization-form'>авторизоваться!</a><br>";
     }
 
     public function authUser()

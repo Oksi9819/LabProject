@@ -2,31 +2,21 @@
 
 namespace Itechart\InternshipProject\Model;
 
-/*require_once 'C:\wamp64\www\LabProject\database.php';*/
+use Itechart\InternshipProject\Model\BasicModel;
 
-class UserModel
+class UserModel extends BasicModel
 {
-    //CREATE
-    public function setUser()
+    public function __construct()
     {
-        global $conn;
-        $user_surname = (string)$_POST['user_surname'];
-        $user_name = (string)$_POST['user_name'];
-        $user_birthday = (string)$_POST['user_birthday'];
-        $user_phone = (string)$_POST['user_phone'];
-        $user_address = (string)$_POST['user_address'];
-        $user_email = (string)$_POST['user_email'];
-        $user_password = hash('md5', (string)$_POST['user_password']);
-        if (isset($_POST['submit'])) {
-            if (strlen($_POST['user_password']) < 9) {
-                $sql = "INSERT INTO `user`(`user_surname`, `user_name`, `user_birthday`, `user_phone`, `user_address`, `user_email`, `user_password`) VALUES(?,?,?,?,?,?,?)";
-                $query = $conn->prepare($sql);
-                $query->bind_param('sssssss', $user_surname, $user_name, $user_birthday, $user_phone, $user_address, $user_email, $user_password);
-	            $query->execute();
-            } else {
-                echo "Password length should be less than 9 characters.";
-            }        
-        } 
+        parent::__construct();
+    }
+
+    //CREATE
+    public function setUser(array $values): string
+    {
+        $fields = array('user_surname', 'user_name', 'user_birthday', 'user_phone', 'user_address', 'user_email', 'user_password');
+	    $result = parent::setModel("user", $fields, "sssssss", $values); 
+        return $result;  
     }
 
     //READ

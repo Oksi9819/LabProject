@@ -12,19 +12,20 @@ class BasicModel
     }
 
     //CREATE
-    public function setModel(string $table, array $fields, string $types, array $values): array
+    public function setModel(string $table, array $fields, string $types, array $values): string
     {
         $val = count($values);
         $missed = "?";
         for ($i=1; $i<$val; $i++) {
             $missed.=", ?";
         }
-        $sql = "INSERT INTO ".$table."(".$params.") VALUES (".$missed.")";
+        $params = implode(", ",$fields);
+        $sql = "INSERT INTO ".$table." (".$params.") VALUES (".$missed.")";
         $query = $this->connection->prepare($sql);
         $query->bind_param($types, ...$values);
         $query->execute();   
-        $result = $query->get_result();
-        $result = $result->fetch_assoc(); 
+        $query->get_result();
+        $result = "Success!";
         return $result;
     }
 
