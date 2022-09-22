@@ -2,6 +2,7 @@
 
 namespace Itechart\InternshipProject\Model;
 
+use Exception;
 use Itechart\InternshipProject\Model\BasicModel;
 
 class UserModel extends BasicModel
@@ -34,35 +35,22 @@ class UserModel extends BasicModel
     public function getUserInfo(int $user_id): array
     {
         if (is_int($user_id)) {
-            global $conn;
-            $sql = "SELECT * FROM `user` WHERE `user_id` = ?";
-            $query = $conn->prepare($sql);
-            $query->bind_param('i', $user_id);
-            $query->execute();
-            $result = $query->get_result();
-            $result = $result->fetch_assoc(); 
+            $result = parent::getModel("*", "user", "user_id", $user_id, NULL, NULL, NULL, "i");
             return $result;
         }
     }
 
-    public function auth(): array
+    public function auth(string $login, string $pass): array
     {
-        global $conn;
-        $user_login = $_POST['user_email'];
-        $user_pass = $_POST['user_password'];
-        $sql = "SELECT * FROM `user` WHERE `user_email` = ?";
-        $query = $conn->prepare($sql);
-        $query->bind_param('s', $user_login);
-        if ($query->execute()) {
-            $result = $query->get_result();
-            $result = $result->fetch_assoc();
-            if (hash('md5', $user_pass) == $result['user_password']) {
-                return $this->getUserInfo($result['user_id']);
+        $result = parent::getModel("*", "user", "user_email", $login, NULL, NULL, NULL, "s");
+        if ($result) {
+            if (hash('md5', $pass) == $result[0]['user_password']) {
+                return $this->getUserInfo($result[0]['user_id']);
             } else {
-                echo "Incorrect password.";
+                throw new Exception("Incorrect password.");
             }
         } else {
-            echo "You are not registered yet.";
+            throw new Exception("You are not registered yet.");
         }
     }
 

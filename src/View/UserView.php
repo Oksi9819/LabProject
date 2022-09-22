@@ -17,22 +17,20 @@ class UserView
 
     public function authUser()
     {
-        navi();
         echo '<b>Заполните пожалуйста поля авторизации: </b><br><br>';
         echo '<form method="post">Введите email: <input type="email" name="user_email"><br>Введите пароль: <input type="password" name="user_password" maxlength="8"><br><input type="submit" value="Зарегистрироваться"></form>';
     }
 
     public function renderUserPage(array $user)
     {
-        navi();
         echo "Данные о пользователе: <br>";
-        echo "Id: ".$user['user_id']."<br>";
-        echo "Фамилия: ".$user['user_name']."<br>";
-        echo "Имя: ".$user['user_surname']."<br>";
-        echo "День рождения: ".$user['user_birthday']."<br>";
-        echo "Номер телефона: ".$user['user_phone']."<br>";
-        echo "Адрес: ".$user['user_address']."<br>";
-        echo "Email: ".$user['user_email']."<br>";
+        echo "Id: ".$user[0]['user_id']."<br>";
+        echo "Фамилия: ".$user[0]['user_name']."<br>";
+        echo "Имя: ".$user[0]['user_surname']."<br>";
+        echo "День рождения: ".$user[0]['user_birthday']."<br>";
+        echo "Номер телефона: ".$user[0]['user_phone']."<br>";
+        echo "Адрес: ".$user[0]['user_address']."<br>";
+        echo "Email: ".$user[0]['user_email']."<br>";
     }
 
     public function renderUserReviewsPage(array $reviews)

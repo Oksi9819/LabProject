@@ -46,13 +46,15 @@ class UserController extends BasicController
 
     public function authUser()
     {
-       return (new UserView())->authUser();
+        return $this->userView->authUser();
     }
 
     public function checkUser()
     {
-        $user = (new UserModel())->auth();
-        return (new UserView())->renderUserPage($user);
+        $user_login = trim($_POST['user_email']);
+        $user_pass = trim($_POST['user_password']);
+        $user = $this->userModel->auth($user_login, $user_pass);
+        return $this->userView->renderUserPage($user);
     }
 
     public function getUserInfo(int $user_id)
