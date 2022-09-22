@@ -112,7 +112,7 @@ class BasicModel
     }
 
     //UPDATE
-    public function updateModel(string $fields, string $table, string $ifclause, string $ifvalue, array $values, string $ifoperator = NULL, string $types)
+    public function updateModel(string $fields, string $table, string $ifclause, string $ifvalue, array $values, string $ifoperator = NULL, string $types): array
     {
         $field = explode(", ", $fields);
         $sql = "UPDATE ".$table." SET ";

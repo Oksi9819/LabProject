@@ -53,12 +53,29 @@ Route::add('/authorization-form', function() {
 // Route to profile page
 Route::add('/profile/([0-9]*)', function($user_id) {
   (new UserController())->getUserInfo($user_id);
-});
+}, 'get');
+
+// Route to profile page
+Route::add('/profile/([0-9]*)', function($user_id) {
+  (new UserController())->getUserInfo($user_id);
+  (new UserController())->updateUser($user_id);
+  (new UserController())->updateUserPass($user_id);
+  (new UserController())->deleteUser($user_id);
+
+}, 'post');
 
 // Route to profile page->info about user
 Route::add('/profile/([0-9]*)/info', function($user_id) {
   (new UserController())->getUserInfo($user_id);
-});
+}, 'get');
+
+// Route to profile page->info about user
+Route::add('/profile/([0-9]*)/info', function($user_id) {
+  (new UserController())->getUserInfo($user_id);
+  (new UserController())->updateUser($user_id);
+  (new UserController())->updateUserPass($user_id);
+  (new UserController())->deleteUser($user_id);
+}, 'post');
 
 // Route to profile page->info about user's orders
 Route::add('/profile/([0-9]*)/orders', function($user_id) {

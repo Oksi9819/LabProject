@@ -5,8 +5,6 @@ use Itechart\InternshipProject\View\BasicView;
 
 class ProductView extends BasicView
 {
-
-
     public function renderProductsPage($products)
     {
         parent::navi();

@@ -2,11 +2,12 @@
 
 namespace Itechart\InternshipProject\Controller;
 
-use Itechart\InternshipProject\Controller\BasicController;
-use Itechart\InternshipProject\Model\UserModel;
-use Itechart\InternshipProject\Model\ReviewModel;
-use Itechart\InternshipProject\Model\OrderModel;
+use Exception;
 use Itechart\InternshipProject\View\UserView;
+use Itechart\InternshipProject\Model\UserModel;
+use Itechart\InternshipProject\Model\OrderModel;
+use Itechart\InternshipProject\Model\ReviewModel;
+use Itechart\InternshipProject\Controller\BasicController;
 
 class UserController extends BasicController
 {
@@ -51,20 +52,22 @@ class UserController extends BasicController
 
     public function checkUser()
     {
+        global $BASEPATH;
         $user_login = trim($_POST['user_email']);
         $user_pass = trim($_POST['user_password']);
         $user = $this->userModel->auth($user_login, $user_pass);
+        header('Location: '.BASEPATH.'profile/'.$user[0]['user_id']);
         return $this->userView->renderUserPage($user);
     }
 
     public function getUserInfo(int $user_id)
     {
-        if ($user_id === '111' || $user_id === '112' || $user_id ==='113') {
-            $user = (new UserModel())->getUserInfo($user_id);
-            return (new UserView())->renderAdminPage($user);
+        if ($user_id === '1' || $user_id === '7' || $user_id ==='3') {
+            $user = $this->userModel->getUserInfo($user_id);
+            return $this->userView->renderAdminPage($user);
         } else {
-            $user = (new UserModel())->getUserInfo($user_id);
-            return (new UserView())->renderUserPage($user);
+            $user = $this->userModel->getUserInfo($user_id);
+            return $this->userView->renderUserPage($user);
         }
     }
 
@@ -87,6 +90,89 @@ class UserController extends BasicController
         } else {
             $orders = (new OrderModel())->getOrdersByUserId($user_id);
             return (new UserView())->renderUserOrdersPage($orders);
+        }
+    }
+
+    public function updateUser(int $user_id) {
+        $user_id = (int)$user_id;
+        $field = array();
+        $value = array();
+        $types = "";
+        if (isset($_POST['submit_update_user'])) {
+            if (isset($_POST['new_surname'])) {
+                $new_surname = (string)$_POST['new_surname'];
+                array_push($field, "user_surname");
+                array_push($value, $new_surname);
+                $types.="s";
+            }
+            if (isset($_POST['new_name'])) {
+                $new_name = (string)$_POST['new_name'];
+                array_push($field, "user_name");
+                array_push($value, $new_name);
+                $types.="s";
+            }
+            if (isset($_POST['new_birthday'])) {
+                $new_birthday = (string)$_POST['new_birthday'];
+                array_push($field, "user_birthday");
+                array_push($value, $new_birthday);
+                $types.="s";
+            }
+            if (isset($_POST['new_phone'])) {
+                $new_phone = (string)$_POST['new_phone'];
+                array_push($field, "user_phone");
+                array_push($value, $new_phone);
+                $types.="s";
+            }
+            if (isset($_POST['new_address'])) {
+                $new_address = (string)$_POST['new_address'];
+                array_push($field, "user_address");
+                array_push($value, $new_address);
+                $types.="s";
+            }
+            if (isset($_POST['new_email'])) {
+                $new_email = (string)$_POST['new_email'];
+                array_push($field, "user_email");
+                array_push($value, $new_email);
+                $types.="s";
+            }
+            if (!empty($value)) {
+                $types.="i";
+                $fields = implode(", ", $field);
+                $user = $this->userModel->updateUser($fields, $user_id, $value, $types);
+                return $this->userView->renderUserPage($user);
+            }     
+        }   
+    }
+
+    public function updateUserPass(int $user_id) {
+        $user_id = (int)$user_id;
+        $field = array();
+        $value = array();
+        $types = "";
+        if (isset($_POST['submit_update_pass'])) {
+            $user_password = (string)$_POST['user_pass'];
+            $user_checkpass = (string)$_POST['user_pass_check'];
+            if ($user_password === $user_checkpass) {
+                array_push($field, "user_password");
+                array_push($value, $user_password);
+                $types.="s";
+                if (!empty($value)) {
+                    $types.="i";
+                    $fields = implode(", ", $field);
+                    $user = $this->userModel->updateUser($fields, $user_id, $value, $types);
+                    return $this->userView->renderUserPage($user);;
+                }  
+            } else {
+                throw new Exception("Passwords don't match");
+            }
+        }    
+    }
+    
+    public function deleteUser(int $user_id)
+    {
+        if (isset($_POST['submit_delete_user'])) {
+            $result=$this->userModel->deleteUser($user_id);
+            return $this->userView->renderUserDeletedPage($result, $user_id);
         }
     }
 }

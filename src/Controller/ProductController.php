@@ -87,7 +87,7 @@ class ProductController extends BasicController
         $field = array();
         $value = array();
         $types = "";
-        if (isset($_POST['submit_delete_product'])) {
+        if (isset($_POST['submit_update_product'])) {
             if (isset($_POST['product_name'])) {
                 $product_name = (string)$_POST['product_name'];
                 array_push($field, "product_name");
@@ -111,7 +111,7 @@ class ProductController extends BasicController
                 $fields = implode(", ", $field);
                 $product=$this->productModel->updateProduct($fields, $product_id, $value, $types);
                 return $this->productView->renderProductListById($product);
-            }
+            } 
         } else throw new Exception("Error Processing Request", 1);
     }
 

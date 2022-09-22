@@ -2,27 +2,33 @@
 
 namespace Itechart\InternshipProject\View;
 
-class UserView
+use Itechart\InternshipProject\View\BasicView;
+
+class UserView extends BasicView
 {
     public function sendUser()
     {
+        parent::navi();
         echo '<b>Заполните пожалуйста форму регистрации: </b><br><br>';
         echo '<form method="post">Введите фамилию: <input type="text" name="user_surname" required="required"><br>Введите фамилию: <input type="text" name="user_name" required="required"><br>Введите дату рождения: <input type="date" name="user_birthday" required="required"><br>Введите телефон: <input type="tel" name="user_phone" required="required"><br>Введите адрес: <input type="text" name="user_address" required="required"><br>Введите email: <input type="email" name="user_email" value="Введите email" required="required"><br>Введите пароль: <input type="password" name="user_password" maxlength="8" required="required"><br><input type="submit" name="submit_reg_user" value="Зарегистрироваться"></form>';
     }
 
     public function setUser($result)
     {
+        parent::navi();
         echo $result." Вы успешно зарегистрировались!:<br>Далее необходимо <a href='/authorization-form'>авторизоваться!</a><br>";
     }
 
     public function authUser()
     {
+        parent::navi();
         echo '<b>Заполните пожалуйста поля авторизации: </b><br><br>';
         echo '<form method="post">Введите email: <input type="email" name="user_email"><br>Введите пароль: <input type="password" name="user_password" maxlength="8"><br><input type="submit" value="Зарегистрироваться"></form>';
     }
 
     public function renderUserPage(array $user)
     {
+        parent::navi();
         echo "Данные о пользователе: <br>";
         echo "Id: ".$user[0]['user_id']."<br>";
         echo "Фамилия: ".$user[0]['user_name']."<br>";
@@ -30,12 +36,40 @@ class UserView
         echo "День рождения: ".$user[0]['user_birthday']."<br>";
         echo "Номер телефона: ".$user[0]['user_phone']."<br>";
         echo "Адрес: ".$user[0]['user_address']."<br>";
-        echo "Email: ".$user[0]['user_email']."<br>";
+        echo "Email: ".$user[0]['user_email']."<br><br>";
+        //Перейти в <a href='/profile/".$user[0]['user_id']."/info'>профиль!</a>";
+        echo "Перейти в <a href='/profile/".$user[0]['user_id']."/orders'>заказы.</a><br>";
+        echo "Перейти в <a href='/profile/".$user[0]['user_id']."/reviews'>отзывы.</a><br><br>";
+        echo '<b>Изменить сведения о пользователе:</b><br>
+        <form method="post" name="update_user_info">
+            Введите фамилию: <input type="text" name="new_surname" required="required"><br>
+            Введите фамилию: <input type="text" name="new_name" required="required"><br>
+            Введите дату рождения: <input type="date" name="new_birthday" required="required"><br>
+            Введите телефон: <input type="tel" name="new_phone" required="required"><br>
+            Введите адрес: <input type="text" name="new_address" required="required"><br>
+            Введите email: <input type="email" name="new_email" value="Введите email" required="required"><br>
+            <input type="submit" name="submit_update_user"><br>
+        </form><br>
+        <b>Изменить пароль:</b><br>
+        <form method="post" name="update_user_pass">
+            Введите пароль: <input type="password" name="user_pass" maxlength="8"><br>
+            повторите пароль: <input type="password" name="user_pass_check" maxlength="8"><br>
+            <input type="submit" name="submit_update_pass"><br>
+        </form><br>
+        <b>Удалить пользователя:</b><br>
+        <form method="post" name="delete_user_form">
+            <input type="submit" name="submit_delete_user" value = DELETE><br>
+        </form><br>';
+    }
+
+    public function renderUserDeletedPage( string $result, int $user_id)
+    {
+        parent::navi();
+        echo $result.' Пользователь с id: '.$user_id.' был удален.<br>';
     }
 
     public function renderUserReviewsPage(array $reviews)
     {
-        navi();
         $i=1;
         foreach ($reviews as $review) {
             echo $i."-ый отзыв:".$review."<br>";
@@ -45,7 +79,6 @@ class UserView
 
     public function renderUserOrdersPage(array $orders)
     {
-        navi();
         $i=1;
         echo "Код заказа        ";
         echo "Список товаров заказа     ";
@@ -65,7 +98,6 @@ class UserView
 
     public function renderAdminPage(array $user)
     {
-        navi();
         echo "Данные об Администраторе: <br>";
         echo "Id: ".$user['user_id']."<br>";
         echo "Фамилия: ".$user['user_name']."<br>";
@@ -78,7 +110,6 @@ class UserView
 
     public function renderAdminReviewsPage(array $reviews)
     {
-        navi();
         $i=1;
         foreach ($reviews as $review) {
             echo $i."-ый отзыв:".$review."<br>";
@@ -88,7 +119,6 @@ class UserView
 
     public function renderAdminOrdersPage(array $orders)
     {
-        navi();
         $i=1;
         echo "Все Заказы<br>";
         echo "Код заказа        ";
