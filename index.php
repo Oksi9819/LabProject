@@ -97,6 +97,7 @@ Route::add('/catalog/category([A-Za-z]*)/id([0-9]*)', function($category_id, $pr
 // Route to product card
 Route::add('/catalog/category([A-Za-z]*)/id([0-9]*)', function($category_id, $product_id) {
   (new ProductController())->updateProduct($product_id);
+  (new ProductController())->deleteProduct($product_id);
 }, 'post');
 
 // Route to product card by product Id
@@ -107,6 +108,7 @@ Route::add('/catalog/id([0-9]*)', function($product_id) {
 // Route to product card by product Id
 Route::add('/catalog/id([0-9]*)', function($product_id) {
   (new ProductController())->updateProduct($product_id);
+  (new ProductController())->deleteProduct($product_id);
 }, 'post');
 
 // Route to product card by product name

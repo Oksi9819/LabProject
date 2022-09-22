@@ -84,45 +84,42 @@ class ProductController extends BasicController
     public function updateProduct($product_id)
     {
         $product_id = (int)$product_id;
-        //if (isset($_POST['submit_updateproduct'])) {
-            $field = array();
-            $value = array();
-            $types = "";
-            if ($_POST['product_name']) {
+        $field = array();
+        $value = array();
+        $types = "";
+        if (isset($_POST['submit_delete_product'])) {
+            if (isset($_POST['product_name'])) {
                 $product_name = (string)$_POST['product_name'];
                 array_push($field, "product_name");
                 array_push($value, $product_name);
                 $types.="s";
             }
-            if ($_POST['product_desc']) {
+            if (isset($_POST['product_desc'])) {
                 $product_desc = (string)$_POST['product_desc'];
                 array_push($field, "product_desc");
                 array_push($value, $product_desc);
                 $types.="s";
             }
-            if ($_POST['product_price']) {
+            if (isset($_POST['product_price'])) {
                 $product_price = (float)$_POST['product_price'];
                 array_push($field, "product_price");
                 array_push($value, $product_price);
                 $types.="d";
             }
-            $types.="i";
-            //echo $types."<br>";
-            $fields = implode(", ", $field);
-            //$values = implode(", ", $value);
-            //echo $fields."<br>";
-            //echo $values."<br>";
-            $product=$this->productModel->updateProduct($fields, $product_id, $value, $types);
-            return $this->productView->renderProductListById($product);
-        //}
+            if (!empty($value)) {
+                $types.="i";
+                $fields = implode(", ", $field);
+                $product=$this->productModel->updateProduct($fields, $product_id, $value, $types);
+                return $this->productView->renderProductListById($product);
+            }
+        } else throw new Exception("Error Processing Request", 1);
     }
 
-    public function deleteProduct()
+    public function deleteProduct($product_id)
     {
-        if (isset($_POST['delete_submit'])) {
-            $product_id = (int)$_GET['$product_id'];
-        }
-        $product=$this->productModel->deleteProduct($product_id);
-        return $this->productView->renderProductListById($product);
+        if (isset($_POST['submit_delete_product'])) {
+            $result=$this->productModel->deleteProduct($product_id);
+            return $this->productView->renderProductDeletedPage($result, $product_id);
+        } else throw new Exception("Error Processing Request", 1);
     }
 }

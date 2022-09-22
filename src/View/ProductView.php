@@ -67,6 +67,10 @@ class ProductView extends BasicView
             Новое описание: <input type="text" name="product_desc"><br>
             Новая цена: <input type="number" min="1" name="product_price" step="0.01"><br>
             <input type="submit" name="submit_update_product"><br>
+        </form><br>
+        <b>Удалить товар:</b><br>
+        <form method="post" name="delete_product_form">
+            <input type="submit" name="submit_delete_product" value = DELETE><br>
         </form>';
     }
 
@@ -82,5 +86,11 @@ class ProductView extends BasicView
         echo "Артикул товара: ".$product['product_id']."<br>";
         echo "Описание товара: ".$product['product_desc']."<br>";
         echo "Цена: ".$product['product_price']." BYN<br>";
+    }
+
+    public function renderProductDeletedPage(string $result, int $product_id)
+    {
+        parent::navi();
+        echo $result.' Товар с id: '.$product_id.' был удален.<br>';
     }
 }

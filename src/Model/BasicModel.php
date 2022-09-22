@@ -149,8 +149,9 @@ class BasicModel
     }
 
     //DELETE
-    public function deleteModelItem(string $table, string $ifclause, array $ifvalue, string $ifoperator = NULL, string $types): array
+    public function deleteModelItem(string $table, string $ifclause, string $ifvalue, string $ifoperator = NULL, string $types): string
     {
+        $ifvalues = explode(", ", $ifvalue);
         $sql = "DELETE FROM ".$table." WHERE ";
         $if = explode(", ", $ifclause);
         if (is_null($ifoperator)) {
@@ -163,10 +164,10 @@ class BasicModel
             }
         }
         $query = $this->connection->prepare($sql);
-        $query->bind_param($types, ...$ifvalue);
+        $query->bind_param($types, ...$ifvalues);
         $query->execute();
-        $result = $query->get_result();
-        $result = $result->fetch_assoc();
+        $query->get_result();
+        $result = "Success!";
         return $result;
     }
 }

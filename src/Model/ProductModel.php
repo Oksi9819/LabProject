@@ -68,7 +68,7 @@ class ProductModel extends BasicModel
         return $result;
     }
 
-    public function getProductByName(): array
+    /*public function getProductByName(): array
     {
         if (isset($_POST['search'])) {
             $product_name = trim((string)$_GET['search_product']);
@@ -84,7 +84,7 @@ class ProductModel extends BasicModel
                 echo "There is no product with such name.<br>";
             }
         }
-    }
+    }*/
 
     public function getProductsOfOrder(int $order_id): array
     {
@@ -113,7 +113,7 @@ class ProductModel extends BasicModel
     }
 
     //DELETE
-    public function deleteProduct($product_id): array
+    public function deleteProduct($product_id): string
     {   
         $result = parent::deleteModelItem("product", "product_id", $product_id, NULL, "i");
         return $result;
