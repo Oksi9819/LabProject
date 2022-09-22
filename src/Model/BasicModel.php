@@ -110,7 +110,7 @@ class BasicModel
     }
 
     //UPDATE
-    public function updateModel(string $fields, string $table, string $ifclause, string $ifvalue, string $ifoperator = NULL, string $types): array
+    public function updateModel(string $fields, string $table, string $ifclause, string $ifvalue, string $values, string $ifoperator = NULL, string $types)
     {
         $field = explode(", ", $fields);
         $sql = "UPDATE ".$table." SET ";
@@ -129,10 +129,22 @@ class BasicModel
             }
         }
         $query = $this->connection->prepare($sql);
-        $query->bind_param($types, $ifvalue);
+        echo $types."<br>";
+        echo $values."<br>";
+        echo $ifvalue."<br>";
+        $query->bind_param($types, $values);
         $query->execute();
-        $result = $query->get_result();
-        $result = $result->fetch_assoc();
+        $types = "";
+        if (is_int($ifvalue)) {
+            $types = "i";
+        }
+        if (is_string($ifvalue)) {
+            $types = "s";
+        }
+        if (is_float($ifvalue)) {
+            $types = "d";
+        }
+        $result = $this->getModel("*", $table, $ifclause, $ifvalue, $ifoperator, NULL, NULL, $types);
         return $result;
     }
 

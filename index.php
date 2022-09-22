@@ -92,12 +92,22 @@ Route::add('/catalog/category([A-Za-z]*)', function($category) {
 // Route to product card
 Route::add('/catalog/category([A-Za-z]*)/id([0-9]*)', function($category_id, $product_id) {
   (new ProductController())->getProductById($product_id);
-});
+}, 'get');
+
+// Route to product card
+Route::add('/catalog/category([A-Za-z]*)/id([0-9]*)', function($category_id, $product_id) {
+  (new ProductController())->updateProduct($product_id);
+}, 'post');
 
 // Route to product card by product Id
 Route::add('/catalog/id([0-9]*)', function($product_id) {
   (new ProductController())->getProductById($product_id);
-});
+}, 'get');
+
+// Route to product card by product Id
+Route::add('/catalog/id([0-9]*)', function($product_id) {
+  (new ProductController())->updateProduct($product_id);
+}, 'post');
 
 // Route to product card by product name
 Route::add('/catalog/search', function($product_name) {

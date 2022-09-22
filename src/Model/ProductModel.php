@@ -106,9 +106,9 @@ class ProductModel extends BasicModel
     }
 
     //UPDATE
-    public function updateProduct(int $product_id, string $product_name, string $product_desc, int $product_category, float $product_price):array
+    public function updateProduct(string $fields, int $product_id, string $values, string $types)
     {
-        $result = parent::updateModel("product_name, product_desc, product_category, product_price", "product", "product_id", $product_id, NULL, "ssidi");
+        $result = parent::updateModel($fields, "product", "product_id", $product_id, $values, NULL, $types);
         return $result;           
     }
 

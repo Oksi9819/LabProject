@@ -52,6 +52,7 @@ class ProductController extends BasicController
 
     public function getProductsByCategorySorted($category)
     {
+
         $sort = $_POST['sort_choice'];
         if ($category === "VacuumCleaners") {
             $category_id = 1;;
@@ -80,17 +81,40 @@ class ProductController extends BasicController
         return (new ProductView())->renderProductListByName($product);
     }
 
-    public function updateProduct()
+    public function updateProduct($product_id)
     {
         $product_id = (int)$product_id;
-        if (isset($_POST['submit_updateproduct'])) {
-            $product_name = (string)$_POST['product_name'];
-            $product_desc = (string)$_POST['product_desc'];
-            $product_category = (int)$_POST['product_category'];
-            $product_price = (float)$_POST['product_price'];
-        }
-        $product=$this->productModel->updateProduct($product_id, $product_name, $product_desc, $product_category, $product_price);
-        return $this->productView->renderProductListById($product);
+        //if (isset($_POST['submit_updateproduct'])) {
+            $field = array();
+            $value = array();
+            $types = "";
+            if ($_POST['product_name']) {
+                $product_name = (string)$_POST['product_name'];
+                array_push($field, "product_name");
+                array_push($value, $product_name);
+                $types.="s";
+            }
+            if ($_POST['product_desc']) {
+                $product_desc = (string)$_POST['product_desc'];
+                array_push($field, "product_desc");
+                array_push($value, $product_desc);
+                $types.="s";
+            }
+            if ($_POST['product_price']) {
+                $product_price = (float)$_POST['product_price'];
+                array_push($field, "product_price");
+                array_push($value, $product_price);
+                $types.="d";
+            }
+            $types.="i";
+            //echo $types."<br>";
+            $fields = implode(", ", $field);
+            $values = implode(", ", $value);
+            //echo $fields."<br>";
+            //echo $values."<br>";
+            $product=$this->productModel->updateProduct($fields, $product_id, $value, $types);
+            return $this->productView->renderProductListById($product);
+        //}
     }
 
     public function deleteProduct()
