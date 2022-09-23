@@ -98,37 +98,37 @@ class UserController extends BasicController
         $value = array();
         $types = "";
         if (isset($_POST['submit_update_user'])) {
-            if (isset($_POST['new_surname'])) {
+            if (!empty($_POST['new_surname'])) {
                 $new_surname = (string)$_POST['new_surname'];
                 array_push($field, "user_surname");
                 array_push($value, $new_surname);
                 $types.="s";
             }
-            if (isset($_POST['new_name'])) {
+            if (!empty($_POST['new_name'])) {
                 $new_name = (string)$_POST['new_name'];
                 array_push($field, "user_name");
                 array_push($value, $new_name);
                 $types.="s";
             }
-            if (isset($_POST['new_birthday'])) {
+            if (!empty($_POST['new_birthday'])) {
                 $new_birthday = (string)$_POST['new_birthday'];
                 array_push($field, "user_birthday");
                 array_push($value, $new_birthday);
                 $types.="s";
             }
-            if (isset($_POST['new_phone'])) {
+            if (!empty($_POST['new_phone'])) {
                 $new_phone = (string)$_POST['new_phone'];
                 array_push($field, "user_phone");
                 array_push($value, $new_phone);
                 $types.="s";
             }
-            if (isset($_POST['new_address'])) {
+            if (!empty($_POST['new_address'])) {
                 $new_address = (string)$_POST['new_address'];
                 array_push($field, "user_address");
                 array_push($value, $new_address);
                 $types.="s";
             }
-            if (isset($_POST['new_email'])) {
+            if (!empty($_POST['new_email'])) {
                 $new_email = (string)$_POST['new_email'];
                 array_push($field, "user_email");
                 array_push($value, $new_email);
@@ -137,8 +137,7 @@ class UserController extends BasicController
             if (!empty($value)) {
                 $types.="i";
                 $fields = implode(", ", $field);
-                $user = $this->userModel->updateUser($fields, $user_id, $value, $types);
-                return $this->userView->renderUserPage($user);
+                return $user = $this->userModel->updateUser($fields, $user_id, $value, $types);
             }     
         }   
     }
@@ -153,13 +152,13 @@ class UserController extends BasicController
             $user_checkpass = (string)$_POST['user_pass_check'];
             if ($user_password === $user_checkpass) {
                 array_push($field, "user_password");
+                $user_password = hash('md5', $user_password);
                 array_push($value, $user_password);
                 $types.="s";
                 if (!empty($value)) {
                     $types.="i";
                     $fields = implode(", ", $field);
-                    $user = $this->userModel->updateUser($fields, $user_id, $value, $types);
-                    return $this->userView->renderUserPage($user);;
+                    return $user = $this->userModel->updateUser($fields, $user_id, $value, $types);
                 }  
             } else {
                 throw new Exception("Passwords don't match");

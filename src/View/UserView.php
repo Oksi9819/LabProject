@@ -42,12 +42,12 @@ class UserView extends BasicView
         echo "Перейти в <a href='/profile/".$user[0]['user_id']."/reviews'>отзывы.</a><br><br>";
         echo '<b>Изменить сведения о пользователе:</b><br>
         <form method="post" name="update_user_info">
-            Введите фамилию: <input type="text" name="new_surname" required="required"><br>
-            Введите фамилию: <input type="text" name="new_name" required="required"><br>
-            Введите дату рождения: <input type="date" name="new_birthday" required="required"><br>
-            Введите телефон: <input type="tel" name="new_phone" required="required"><br>
-            Введите адрес: <input type="text" name="new_address" required="required"><br>
-            Введите email: <input type="email" name="new_email" value="Введите email" required="required"><br>
+            Введите фамилию: <input type="text" name="new_surname"><br>
+            Введите имя: <input type="text" name="new_name"><br>
+            Введите дату рождения: <input type="date" name="new_birthday"><br>
+            Введите телефон: <input type="tel" name="new_phone"><br>
+            Введите адрес: <input type="text" name="new_address"><br>
+            Введите email: <input type="email" name="new_email"><br>
             <input type="submit" name="submit_update_user"><br>
         </form><br>
         <b>Изменить пароль:</b><br>
