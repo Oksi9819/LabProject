@@ -65,7 +65,7 @@ class UserModel extends BasicModel
     //DELETE
     public function deleteUser(int $user_id)
     {   
-        $result = parent::deleteModelItem("user", "user_id", $user_id, $value, NULL, $types);
+        $result = parent::deleteModelItem("user", "user_id", $user_id, NULL, "i");
         return $result;   
     }
 }
