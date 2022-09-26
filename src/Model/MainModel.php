@@ -2,28 +2,58 @@
 
 namespace Itechart\InternshipProject\Model;
 
-class MainModel
+use Itechart\InternshipProject\Model\BasicModel;
+
+class MainModel extends BasicModel
 {
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
+    //CREATE
+    public function setContact(): array
+    {
+        if(!empty($_POST['contact_name']) && !empty($_POST['contact_email']) && !empty($_POST['contact_text'])) {
+            $result = array(
+                'contact_name'=>trim($_POST['contact_name']),
+                'contact_email'=>trim($_POST['contact_email']),
+                'contact_text'=>trim($_POST['contact_text']),
+            );
+            return $result;
+        }
+    }
+
+    //READ
     public function getMainInfo(): array
     {
-        $info['topic']="ГЛАВНАЯ";
-        $info['desc']="ЭТО ГЛАВНАЯ СТРАНИЦА! Заполним ее позже:)";
-        return $info;
+        $result = parent::getModel("*", "page_info", "page_name", "main", NULL, NULL, NULL, "s");
+        return $result;
     }
 
     public function getDeliveryInfo(): array
     {
-        $info['topic']="ДОСТАВКА";
-        $info['desc']="Осуществляем доставку по всей Беларуси. Бесплатная доставка в пределах МКАД. Стоимость доставки в регионы от 25 BYN*.";
-        return $info;
+        $result = parent::getModel("*", "page_info", "page_name", "delivery", NULL, NULL, NULL, "s");
+        return $result;
     }
 
     public function getContactsInfo(): array
     {
-        $info['topic']="КОНТАКТЫ";
-        $info['phone_1']="+375 (29) 111-11-11";
-        $info['phone_2']="+375 (29) 222-22-22";
-        $info['addres']="г. Минск, пр-т Независимости, 4; 220030, Республика Беларусь.";
-        return $info;
+        $result = parent::getModel("*", "page_info", "page_name", "contacts", NULL, NULL, NULL, "s");
+        return $result;
+    }
+
+    //UPDATE
+    public function updatePageInfo(string $fields, int $page_id, array $values, string $types)
+    {
+        $result = parent::updateModel($fields, "page_info", "page_id", $page_id, $values, NULL, $types);
+        return $result;           
+    }
+
+    //DELETE
+    public function deletePage(int $page_id): string
+    {   
+        $result = parent::deleteModelItem("page_info", "page_id", $page_id, NULL, "i");
+        return $result;
     }
 }

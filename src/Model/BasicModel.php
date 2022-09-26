@@ -34,7 +34,7 @@ class BasicModel
     {
         //echo $ifvalue."<br><br><br>";
         $ifvalues = explode(", ", $ifvalue);
-        if ($sort===NULL && $ifclause===NULL && $ifvalue===NULL && $types===NULL && $group===NULL) {
+        if ($sort===NULL && $ifclause===NULL && $ifvalue===NULL && $ifoperator === NULL && $types===NULL && $group===NULL) {
             $sql = "SELECT ".$fields." FROM ".$table;
             $query = $this->connection->prepare($sql);
         } elseif ($sort===NULL && $ifclause===NULL && $ifvalue===NULL && $types===NULL) {
