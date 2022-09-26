@@ -88,19 +88,19 @@ class ProductController extends BasicController
         $value = array();
         $types = "";
         if (isset($_POST['submit_update_product'])) {
-            if (isset($_POST['product_name'])) {
+            if (!empty($_POST['product_name'])) {
                 $product_name = (string)$_POST['product_name'];
                 array_push($field, "product_name");
                 array_push($value, $product_name);
                 $types.="s";
             }
-            if (isset($_POST['product_desc'])) {
+            if (!empty($_POST['product_desc'])) {
                 $product_desc = (string)$_POST['product_desc'];
                 array_push($field, "product_desc");
                 array_push($value, $product_desc);
                 $types.="s";
             }
-            if (isset($_POST['product_price'])) {
+            if (!empty($_POST['product_price'])) {
                 $product_price = (float)$_POST['product_price'];
                 array_push($field, "product_price");
                 array_push($value, $product_price);
@@ -112,7 +112,7 @@ class ProductController extends BasicController
                 $product=$this->productModel->updateProduct($fields, $product_id, $value, $types);
                 return $this->productView->renderProductListById($product);
             } 
-        } else throw new Exception("Error Processing Request", 1);
+        }
     }
 
     public function deleteProduct($product_id)
@@ -120,6 +120,6 @@ class ProductController extends BasicController
         if (isset($_POST['submit_delete_product'])) {
             $result=$this->productModel->deleteProduct($product_id);
             return $this->productView->renderProductDeletedPage($result, $product_id);
-        } else throw new Exception("Error Processing Request", 1);
+        }
     }
 }

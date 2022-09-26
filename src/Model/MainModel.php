@@ -44,9 +44,9 @@ class MainModel extends BasicModel
     }
 
     //UPDATE
-    public function updatePageInfo(string $fields, int $page_id, array $values, string $types)
+    public function updatePageInfo(string $fields, string $page_name, array $values, string $types)
     {
-        $result = parent::updateModel($fields, "page_info", "page_id", $page_id, $values, NULL, $types);
+        $result = parent::updateModel($fields, "page_info", "page_name", $page_name, $values, NULL, $types);
         return $result;           
     }
 
