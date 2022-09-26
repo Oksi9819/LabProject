@@ -2,93 +2,67 @@
 
 namespace Itechart\InternshipProject\Model;
 
-class ReviewModel
+use Itechart\InternshipProject\Model\BasicModel;
+
+class ReviewModel extends BasicModel
 {
-    //CREATE
-    public function setReview(): array
+    public function __construct()
     {
-        $reviewText = (string)$_POST['reviewText'];
-        $user_id = (int)$_POST['user_id'];
-        if (strlen($reviewText) < 501) {
-            global $conn;
-            if (isset($_POST['submit_setreview'])) {
-                $sql = "INSERT INTO `review`(`user_id`, `review_text`) VALUES(?,?)";
-                $query = $conn->prepare($sql);
-                $query->bind_param('is', $user_id, $reviewText);
-                $query->execute();   
-                $result = $query->get_result();
-                $result = $result->fetch_assoc(); 
+        parent::__construct();
+    }
+
+    //CREATE
+    public function setReview(array $values): array
+    {
+        /*if (isset($_POST['submit_setreview'])) {
+            $reviewText = (string)$_POST['reviewText'];
+            $user_id = (int)$_POST['user_id'];
+            if (strlen($reviewText) < 501) {
+                $values = array();
+                array_push($values, $user_id);
+                array_push($values, $reviewText);*/
+                $fields = array('user_id', 'review_text');
+                $result = parent::setModel("review", $fields, "is", $values);
                 return $result;     
-            } 
-        } else {
-            echo "Review is too long. Length must be less than 500 characters.<br>";
-        }
+            /*}  echo "Review is too long. Length must be less than 500 characters.<br>";
+        }*/
     }
 
     //READ
     public function getReviews(): array
     {
-        global $conn;
-        $sql = "SELECT * FROM `review`";
-        $query = $conn->prepare($sql);
-        $query->execute();
-        $result = $query->get_result();
-        $result = $result->fetch_assoc(); 
+        $result = parent::getModel("r.review_id AS review_id, u.user_name AS user_name, u.user_surname AS user_surname, r.review_text As review_text", "review AS r LEFT JOIN shop.user AS u ON u.user_id=r.user_id", NULL, NULL, NULL, NULL, NULL, NULL);
         return $result;
     }
 
     public function getReviewsByUserId(int $user_id): array
     {
-        if (is_int($user_id)) {
-            global $conn;
-            $sql = "SELECT * FROM `review` WHERE `user_id` = ?";
-            $query = $conn->prepare($sql);
-            $query->bind_param('i', $user_id);
-            $query->execute();
-            $result = $query->get_result();
-            $result = $result->fetch_assoc(); 
-            return $result;
-        }
+        $result = parent::getModel("*", "review", "user_id", $user_id, NULL, NULL, NULL, "i");
+        return $result;
     }
 
     //UPDATE
-    public function updateReview(int $review_id): array
+    public function updateReview(int $review_id, array $values): array
     {
-        $reviewText = (string)$_POST['reviewText'];
-        global $conn;
-        if (strlen($reviewText) < 501) {
-            if (is_int($review_id)) {
-                global $conn;
-                $review_id = (int)$review_id;
-                if (isset($_POST['submit_setreview'])) {
-                    $sql = "UPDATE `review` SET `review_text`= ? WHERE `review_id` = ?";
-                    $query = $conn->prepare($sql);
-                    $query->bind_param('si', $reviewText, $user_id);
-                    $query->execute();   
-                    $result = $query->get_result();
-                    $result = $result->fetch_assoc(); 
-                    return $result;     
-                } 
+        /*
+        if (isset($_POST['submit_setreview'])) {
+            $reviewText = (string)$_POST['reviewText'];
+            if (strlen($reviewText) < 501) {
+                $sql = "UPDATE `review` SET `review_text`= ? WHERE `review_id` = ?";*/
+                $result = parent::updateModel("review_text", "review", "review_id", $review_id, $values, NULL, "si");
+                return $result;     /*        
+            } else {
+                echo "Review is too long. Length must be less than 500 characters.<br>";
             }
-        } else {
-            echo "Review is too long. Length must be less than 500 characters.<br>";
-        }
+        }*/ 
     }
 
     //DELETE
     public function deleteReview(int $review_id)
     {
-        if (isset($_POST['delete_submit'])) {
-            $review_id = (int)$_GET['delete_review'];
-            global $conn;
-            $sql = "DELETE * FROM `user` WHERE `review_id` = ?";
-            $query = $conn->prepare($sql);
-            $query->bind_param('i', $review_id);
-            if ($query->execute()) {
-                echo "Review deleted.";
-            } else {
-                $conn->error;
-            }
-        }
+        /*if (isset($_POST['delete_submit'])) {
+            $review_id = (int)$_GET['delete_review'];*/
+            $result = deleteModelItem("review", "review_id", $review_id, NULL, "s");
+        /*}*/
     }
 }

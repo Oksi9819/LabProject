@@ -73,7 +73,8 @@ class UserView extends BasicView
         parent::navi();
         $i=1;
         foreach ($reviews as $review) {
-            echo $i."-ый отзыв:".$review."<br>";
+            echo $i."-ый отзыв<br>";
+            echo "Код отзыва: ".$review['review_id']."<br>Текст отзыва: ".$review['review_text']."<br><br>";
             $i++;
         }
     }
@@ -118,7 +119,8 @@ class UserView extends BasicView
         parent::navi();
         $i=1;
         foreach ($reviews as $review) {
-            echo $i."-ый отзыв:".$review."<br>";
+            echo $i."-ый отзыв<br>";
+            echo "Код отзыва: ".$review['review_id']."<br> Пользователь: ".$review['user_name']." ".$review['user_surname']."<br>Текст отзыва: ".$review['review_text']."<br><br>";
             $i++;
         }
     }

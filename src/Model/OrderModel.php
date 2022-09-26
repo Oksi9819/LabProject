@@ -15,7 +15,7 @@ class OrderModel extends BasicModel
     public function setOrder(string $address, int $user_id):array
     {
         //if (isset($_POST['submit_setreview']))
-        $order_adress = (string)$_POST['order_address'];
+        //$order_adress = (string)$_POST['order_address'];
         $sql = "INSERT INTO order_product (user_id, order_address) VALUES (?, ?) WHERE user_id = ?";
         $query = $this->connection->prepare($sql);
         $query->bind_param('isi', $user_id, $address, $user_id);

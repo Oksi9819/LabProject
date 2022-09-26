@@ -36,7 +36,7 @@ class BasicModel
         $ifvalues = explode(", ", $ifvalue);
         if ($sort===NULL && $ifclause===NULL && $ifvalue===NULL && $types===NULL && $group===NULL) {
             $sql = "SELECT ".$fields." FROM ".$table;
-            
+            $query = $this->connection->prepare($sql);
         } elseif ($sort===NULL && $ifclause===NULL && $ifvalue===NULL && $types===NULL) {
             $sql = "SELECT ".$fields." FROM ".$table." GROUP BY ".$group;
             $query = $this->connection->prepare($sql);

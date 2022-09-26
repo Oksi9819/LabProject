@@ -61,7 +61,7 @@ class UserController extends BasicController
 
     public function getUserInfo(int $user_id)
     {
-        if ($user_id === '1' || $user_id === '7' || $user_id ==='3') {
+        if ($user_id === '1' || $user_id ==='2') {
             $user = $this->userModel->getUserInfo($user_id);
             return $this->userView->renderAdminPage($user);
         } else {
@@ -72,18 +72,19 @@ class UserController extends BasicController
 
     public function getUserReviews(int $user_id)
     {
-        if ($user_id === '111' || $user_id === '112' || $user_id === '113') {
+        if ($user_id == '1' || $user_id == '2') {
+            echo "YOU ARE ADMIN";
             $reviews = (new ReviewModel())->getReviews();
-            return (new UserView())->renderAdminReviewsPage($reviews);
+            return $this->userView->renderAdminReviewsPage($reviews);
         } else {
             $reviews = (new ReviewModel())->getReviewsByUserId($user_id);
-            return (new UserView())->renderUserReviewsPage($reviews);
+            return $this->userView->renderUserReviewsPage($reviews);
         }
     }
 
     public function getUserOrders(int $user_id)
     {
-        if ($user_id == '1' || $user_id == '2') {
+        if ($user_id === '1' || $user_id === '2') {
             echo "YOU ARE ADMIN";
             $orders = (new OrderModel())->getOrders();
             $order_details = (new OrderModel())->getOrdersDetails();
