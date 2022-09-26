@@ -70,6 +70,7 @@ class UserView extends BasicView
 
     public function renderUserReviewsPage(array $reviews)
     {
+        parent::navi();
         $i=1;
         foreach ($reviews as $review) {
             echo $i."-ый отзыв:".$review."<br>";
@@ -77,27 +78,31 @@ class UserView extends BasicView
         }
     }
 
-    public function renderUserOrdersPage(array $orders)
+    public function renderUserOrdersPage(array $orders, array $order_details, int $user_id)
     {
-        $i=1;
-        echo "Код заказа        ";
-        echo "Список товаров заказа     ";
-        echo "Сумма заказа      ";
-        echo "Адрес заказа<br>";
-        foreach ($orders as $order) {
-            echo $i."-ый заказ:<br>";
-            echo $order['order_id']." \t\t";
-            foreach ($order['order_product_list'] as $order_product) {
-                echo $order_product." ";
+        parent::navi();
+        echo "<br><br><br><br><br>";
+        echo "Заказы пользователя ".$user_id."<br>";
+        echo "<table><tr><td>Код заказа</td><td>Адрес заказа</td><td>Сумма заказа</td><td>Статус заказа</td><td>Детали заказа</td></tr>";
+        for($i=0; $i<count($orders); $i++) {
+            echo "<tr><td>".$orders[$i]['order_id']."</td>";
+            echo "<td>".$orders[$i]['address']." </td>";
+            echo "<td>".$orders[$i]['price']." BYN </td>";
+            echo "<td>".$orders[$i]['status']."</td>";
+            echo "<td><table><tr>";
+            for ($j=0; $j<count($order_details); $j++) {
+                if ($order_details[$j]['order_id']==$orders[$i]['order_id']) {
+                    echo "<td>".$order_details[$j]['product_id']."</td><td>".$order_details[$j]['product_name']."</td><td>".$order_details[$j]['product_price']." BYN</td></tr>";
+                }
             }
-            echo $order['order_sum']." BYN ";
-            echo $order['order_address']."<br>";
-            $i++;
+            echo "</table></td></tr>";
         }
+        echo "</table>";
     }
 
     public function renderAdminPage(array $user)
     {
+        parent::navi();
         echo "Данные об Администраторе: <br>";
         echo "Id: ".$user['user_id']."<br>";
         echo "Фамилия: ".$user['user_name']."<br>";
@@ -110,6 +115,7 @@ class UserView extends BasicView
 
     public function renderAdminReviewsPage(array $reviews)
     {
+        parent::navi();
         $i=1;
         foreach ($reviews as $review) {
             echo $i."-ый отзыв:".$review."<br>";
@@ -117,27 +123,29 @@ class UserView extends BasicView
         }
     }
 
-    public function renderAdminOrdersPage(array $orders)
+    public function renderAdminOrdersPage(array $orders, array $order_details)
     {
-        $i=1;
+        parent::navi();
+        echo "<br><br><br><br><br>";
         echo "Все Заказы<br>";
-        echo "Код заказа        ";
-        echo "Список товаров заказа     ";
-        echo "Сумма заказа      ";
-        echo "Адрес заказа      ";
-        echo "Телефон заказа        ";
-        echo "Email заказа      ";
-        foreach ($orders as $order) {
-            echo $i."-ый заказ:<br>";
-            echo $order['order_id']." <br>";
-            foreach ($order['order_product_list'] as $order_product) {
-                echo $order_product." ";
+        echo "<table><tr><td>Код заказа</td><td>Фамилия заказчика</td><td>Имя заказчика</td><td>Адрес заказа</td><td>Телефон заказа</td><td>Email заказа</td><td>Сумма заказа</td><td>Статус заказа</td><td>Детали заказа</td></tr>";
+        for($i=0; $i<count($orders); $i++) {
+            echo "<tr><td>".$orders[$i]['order_id']."</td>";
+            echo "<td>".$orders[$i]['user_surname']."</td>";
+            echo "<td>".$orders[$i]['user_name']."</td>";
+            echo "<td>".$orders[$i]['address']." </td>";
+            echo "<td>".$orders[$i]['user_phone']." </td>";
+            echo "<td>".$orders[$i]['user_email']."</td>";
+            echo "<td>".$orders[$i]['price']." BYN </td>";
+            echo "<td>".$orders[$i]['status']."</td>";
+            echo "<td><table><tr>";
+            for ($j=0; $j<count($order_details); $j++) {
+                if ($order_details[$j]['order_id']==$orders[$i]['order_id']) {
+                    echo "<td>".$order_details[$j]['product_id']."</td><td>".$order_details[$j]['product_name']."</td><td>".$order_details[$j]['product_price']." BYN</td></tr>";
+                }
             }
-            echo $order['order_sum']." BYN ";
-            echo $order['order_address']." ";
-            echo $order['order_phone']." ";
-            echo $order['order_email']."<br>";
-            $i++;
+            echo "</table></td></tr>";
         }
+        echo "</table>";
     }
 }

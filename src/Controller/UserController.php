@@ -83,12 +83,16 @@ class UserController extends BasicController
 
     public function getUserOrders(int $user_id)
     {
-        if ($user_id === '111' || $user_id === '112' || $user_id === '113') {
+        if ($user_id == '1' || $user_id == '2') {
+            echo "YOU ARE ADMIN";
             $orders = (new OrderModel())->getOrders();
-            return (new UserView())->renderAdminOrdersPage($orders);
+            $order_details = (new OrderModel())->getOrdersDetails();
+            return $this->userView->renderAdminOrdersPage($orders, $order_details);
         } else {
+            //echo "YOU ARE NOT ADMIN";
             $orders = (new OrderModel())->getOrdersByUserId($user_id);
-            return (new UserView())->renderUserOrdersPage($orders);
+            $order_details = (new OrderModel())->getOrderDetails($user_id);
+            return $this->userView->renderUserOrdersPage($orders, $order_details, $user_id);
         }
     }
 

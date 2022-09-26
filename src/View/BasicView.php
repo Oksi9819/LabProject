@@ -32,9 +32,9 @@ class BasicView
           <li><a href="'.BASEPATH.'authorization-form">Авторизация</a></li>
           <li><a href="'.BASEPATH.'profile/111222">Пользователь id 111222</a>
             <ul>
-              <li><a href="'.BASEPATH.'profile/111222/info">Пользователь id 111222. Информация</a></li>
-              <li><a href="'.BASEPATH.'profile/111222/reviews">Пользователь id 111222. Отзывы</a></li>
-              <li><a href="'.BASEPATH.'profile/111222/orders">Пользователь id 111222. Заказы</a></li>
+              <li><a href="'.BASEPATH.'profile/1/info">Пользователь id 1. Информация</a></li>
+              <li><a href="'.BASEPATH.'profile/2/reviews">Пользователь id 2. Отзывы</a></li>
+              <li><a href="'.BASEPATH.'profile/3/orders">Пользователь id 3. Заказы</a></li>
             </ul>
           </li>
           <li><a href="'.BASEPATH.'profile/112">Пользователь id 112 = Админ</a>

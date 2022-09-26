@@ -75,11 +75,11 @@ class ProductController extends BasicController
         return $this->productView->renderProductListById($product);
     }
 
-    public function getProductByName($product_name)
+    /*public function getProductByName($product_name)
     {
         $product=(new ProductModel())->getProductByName($product_name);
         return (new ProductView())->renderProductListByName($product);
-    }
+    }*/
 
     public function updateProduct($product_id)
     {

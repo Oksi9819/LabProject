@@ -32,6 +32,7 @@ class BasicModel
     //READ
     public function getModel(string $fields = "*", string $table, string $ifclause = NULL, string $ifvalue = NULL, string $ifoperator = NULL, string $group = NULL, string $sort = NULL, string $types = NULL): array
     {
+        //echo $ifvalue."<br><br><br>";
         $ifvalues = explode(", ", $ifvalue);
         if ($sort===NULL && $ifclause===NULL && $ifvalue===NULL && $types===NULL && $group===NULL) {
             $sql = "SELECT ".$fields." FROM ".$table;
@@ -72,6 +73,7 @@ class BasicModel
                 }
             }
             $sql.= "GROUP BY ".$group;
+            
             $query = $this->connection->prepare($sql);
             $query->bind_param($types, ...$ifvalues);
         }  elseif ($group===NULL) {
@@ -105,6 +107,7 @@ class BasicModel
             $query = $this->connection->prepare($sql);
             $query->bind_param($types, ...$ifvalues);
         }
+        //echo $sql."<br><br><br>";
         $query->execute();
         $result = $query->get_result();
         $result = $result->fetch_all(MYSQLI_ASSOC);
