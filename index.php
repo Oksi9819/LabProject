@@ -95,8 +95,14 @@ Route::add('/catalog', function() {
   (new ProductController())->getProducts();
 }, 'get');
 
-Route::add('/catalog', function() {
+// Route to catalog->sorted
+Route::add('/catalog/sort', function() {
   (new ProductController())->getProductsSorted();
+}, 'post');
+
+// Route to catalog->admin functions
+Route::add('/([A-Za-z]*)/catalog', function($method) {
+  (new ProductController())->$method();
 }, 'post');
 
 // Route to a particular category of products
@@ -129,12 +135,12 @@ Route::add('/catalog/search', function($product_name) {
   (new ProductController())->getProductByName($product_name);
 });
 
-// Route to cart
+/* Route to cart
 Route::add('/cart/([0-9]*)', function($user_id) {
   (new CartController())->show($user_id);
 });
 
-/*Route to make an order
+Route to make an order
 Route::add('/cart/([0-9]*)/order/([0-9]*)', function($user_id, $order_id) {
   (new CartController())->order($user_id, $order_id);
 });*/

@@ -14,7 +14,8 @@ class ProductModel extends BasicModel
     //CREATE
     public function setProduct(array $values): array
     {
-        $result = $this->setModel("product", [`product_name`, `product_desc`, `product_category`, `product_price`], "ssid", $values);
+        $fields = array('product_name', 'product_desc', 'product_category', 'product_price');
+        $result = $this->setModel("product", $fields, "ssid", $values);
         return $result;
     }
 

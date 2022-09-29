@@ -4,6 +4,7 @@ namespace Itechart\InternshipProject\Controller;
 use Itechart\InternshipProject\Controller\BasicController;
 use Itechart\InternshipProject\View\ProductView;
 use Itechart\InternshipProject\Model\ProductModel;
+use Itechart\InternshipProject\Model\CategoryModel;
 
 class ProductController extends BasicController
 {
@@ -81,6 +82,27 @@ class ProductController extends BasicController
         return (new ProductView())->renderProductListByName($product);
     }*/
 
+    //Admin functions
+    public function addProduct()
+    {
+        global $BASEPATH;
+        $values = array();
+        if (!empty($_POST['submit_update_product'])) {
+            if (!empty($_POST['prod_name']) && !empty($_POST['prod_desc']) && !empty($_POST['prod_price']) && !empty($_POST['id_new_prod_category'])) {
+                $product_name = (string)$_POST['prod_name'];
+                array_push($values, $product_name);
+                $product_desc = (string)$_POST['prod_desc'];
+                array_push($values, $product_desc);
+                $product_category = (int)$_POST['id_new_prod_category'];
+                array_push($values, $product_category);
+                $product_price = (float)$_POST['prod_price'];
+                array_push($values, $product_price);
+                $product=$this->productModel->setProduct($values);
+                return header('Location: '.BASEPATH.'catalog');
+            }  
+        }
+    }
+
     public function updateProduct(int $product_id)
     {
         global $BASEPATH;
@@ -118,9 +140,39 @@ class ProductController extends BasicController
 
     public function deleteProduct(int $product_id)
     {
-        if (isset($_POST['submit_delete_product'])) {
+        if (!empty($_POST['submit_delete_product'])) {
             $result=$this->productModel->deleteProduct($product_id);
             return $this->productView->renderProductDeletedPage($result, $product_id);
         }
     }
+
+    public function addProductCategory() {
+        global $BASEPATH;
+        if (!empty($_POST['submit_add_category'])) {
+                $new_category = trim((string)$_POST['category_name']);
+                $new_category_eng = trim((string)$_POST['category_eng']);
+                $result = (new CategoryModel())->setCategory($new_category, $new_category_eng);
+                return header('Location: '.BASEPATH.'catalog');
+        }
+    }
+
+    public function updateProductCategory() {
+        global $BASEPATH;
+        if (!empty($_POST['submit_update_category'])) {
+            $category_id = $_POST['update_id_category'];
+            $new_category = trim((string)$_POST['new_category']);
+            $new_category_eng = trim((string)$_POST['new_category_eng']);
+            $result = (new CategoryModel())->updateCategory($category_id, $new_category, $new_category_eng);
+            return header('Location: '.BASEPATH.'catalog');
+        }   
+    }
+
+    public function deleteProductCategory()
+    {
+        if (!empty($_POST['submit_delete_category'])) {
+            $category_id = $_POST['id_del_category'];
+            $result = (new CategoryModel())->deleteCategory($category_id);
+            return header('Location: '.BASEPATH.'catalog');
+        } 
+    } 
 }

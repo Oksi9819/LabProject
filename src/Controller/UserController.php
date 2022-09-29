@@ -129,6 +129,25 @@ class UserController extends BasicController
         }
     }
 
+    public function addNewAdmin(int $user_id) {
+        if (!empty($_POST['submit_reg_admin'])) {
+            if (strlen($_POST['admin_password']) < 9) {
+                $user_surname = (string)$_POST['admin_surname'];
+                $user_name = (string)$_POST['admin_name'];
+                $user_birthday = (string)$_POST['admin_birthday'];
+                $user_phone = (string)$_POST['admin_phone'];
+                $user_address = (string)$_POST['admin_address'];
+                $user_email = (string)$_POST['admin_email'];
+                $user_password = hash('md5', (string)$_POST['user_password']);
+                $values = array ($user_surname, $user_name, $user_birthday, $user_phone, $user_address, $user_email, $user_password, "2");
+                $result = $this->userModel->setAdmin($values);
+                return header('Location: '.BASEPATH.'profile/'.$user_id);
+            } else {
+                echo "Password length should be not less than 9 characters.";
+            }   
+        }
+    }   
+
     public function updateUser(int $user_id) {
         global $BASEPATH;
         $user_id = (int)$user_id;

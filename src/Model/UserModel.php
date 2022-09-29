@@ -20,6 +20,13 @@ class UserModel extends BasicModel
         return $result;  
     }
 
+    public function setAdmin(array $values): string
+    {
+        $fields = array('user_surname', 'user_name', 'user_birthday', 'user_phone', 'user_address', 'user_email', 'user_password', 'user_role');
+	    $result = $this->setModel("user", $fields, "sssssssi", $values); 
+        return $result;  
+    }
+
     //READ
     public function getUsers(): array
     {

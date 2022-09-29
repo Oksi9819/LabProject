@@ -138,6 +138,39 @@ class UserView extends BasicView
         echo "Номер телефона: ".$user['user_phone']."<br>";
         echo "Адрес: ".$user['user_address']."<br>";
         echo "Email: ".$user['user_email']."<br>";
+        echo "Перейти в <a href='/profile/".$user[0]['user_id']."/orders'>заказы.</a><br>";
+        echo "Перейти в <a href='/profile/".$user[0]['user_id']."/reviews'>отзывы.</a><br><br>";
+        echo '<b>Изменить сведения о пользователе:</b><br>
+        <form method="post" name="update_user_info" action="'.BASEPATH.'updateUser/profile/'.$user[0]['user_id'].'">
+            Введите фамилию: <input type="text" name="new_surname"><br>
+            Введите имя: <input type="text" name="new_name"><br>
+            Введите дату рождения: <input type="date" name="new_birthday"><br>
+            Введите телефон: <input type="tel" name="new_phone"><br>
+            Введите адрес: <input type="text" name="new_address"><br>
+            Введите email: <input type="email" name="new_email"><br>
+            <input type="submit" name="submit_update_user"><br>
+        </form><br>
+        <b>Изменить пароль:</b><br>
+        <form method="post" name="update_user_pass" action="'.BASEPATH.'updateUserPass/profile/'.$user[0]['user_id'].'">
+            Введите пароль: <input type="password" name="user_pass" maxlength="8"><br>
+            повторите пароль: <input type="password" name="user_pass_check" maxlength="8"><br>
+            <input type="submit" name="submit_update_pass"><br>
+        </form><br>
+        <b>Удалить текущего администратора:</b><br>
+        <form method="post" name="delete_user_form" action="'.BASEPATH.'deleteUser/profile/'.$user[0]['user_id'].'">
+            <input type="submit" name="submit_delete_user" value = DELETE><br>
+        </form><br>
+        <b>Добавить нового администратора:</b><br>
+        <form method="post" name="add_admin" action="'.BASEPATH.'addNewAdmin/profile/'.$user[0]['user_id'].'">
+            Введите фамилию: <input type="text" name="user_surname" required="required"><br>
+            Введите фамилию: <input type="text" name="user_name" required="required"><br>
+            Введите дату рождения: <input type="date" name="user_birthday" required="required"><br>
+            Введите телефон: <input type="tel" name="user_phone" required="required"><br>
+            Введите адрес: <input type="text" name="user_address" required="required"><br>
+            Введите email: <input type="email" name="user_email" value="Введите email" required="required"><br>
+            Введите пароль: <input type="password" name="user_password" maxlength="8" required="required"><br>
+            <input type="submit" name="submit_reg_admin" value="Зарегистрировать администратора">
+        </form><br>';
     }
 
     public function renderAdminReviewsPage(array $reviews)
