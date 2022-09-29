@@ -85,7 +85,22 @@ Route::add('/profile/([0-9]*)/orders', function($user_id) {
 // Route to profile page->info about user's reviews
 Route::add('/profile/([0-9]*)/reviews', function($user_id) {
   (new UserController())->getUserReviews($user_id);
-});
+}, 'get');
+
+// Route to profile page->add new review
+Route::add('/profile/([0-9]*)/reviews/set-review', function($user_id) {
+  (new UserController())->setReview($user_id);
+}, 'post');
+
+// Route to profile page->edit review text
+Route::add('/profile/([0-9]*)/reviews/update-review-text', function($user_id) {
+  (new UserController())->setReview($user_id);
+}, 'post');
+
+// Route to profile page->edit review text
+Route::add('/profile/([0-9]*)/reviews/delete-review', function($user_id) {
+  (new UserController())->deleteReview($user_id);
+}, 'post');
 
 // Route to catalog
 Route::add('/catalog', function() {
@@ -97,7 +112,7 @@ Route::add('/catalog', function() {
 }, 'post');
 
 // Route to a particular category of products
-Route::add('/catalog/category([A-Za-z]*)', function($category) {
+Route::add('/catalog/category/([A-Za-z]*)', function($category) {
   (new ProductController())->getProductsByCategory($category);
 }, 'get');
 

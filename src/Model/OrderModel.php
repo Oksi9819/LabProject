@@ -30,7 +30,7 @@ class OrderModel extends BasicModel
     {
         $fields = "order_product.order_id AS order_id, shop.user.user_name AS user_name, shop.user.user_surname AS user_surname, shop.user.user_phone AS user_phone, shop.user.user_email AS user_email, order_product.order_address AS address, order_status.status_name AS status, SUM(cart.amount*product.product_price) AS price";
         $table = "order_product INNER JOIN user ON user.user_id=order_product.user_id INNER JOIN order_status ON order_status.status_id=order_product.status INNER JOIN cart ON cart.order_id=order_product.order_id LEFT JOIN product ON product.product_id=cart.product_id";
-        $result = parent::getModel($fields, $table, NULL, NULL, NULL, "order_product.order_id", NULL, NULL);
+        $result = getModel($fields, $table, NULL, NULL, NULL, "order_product.order_id", NULL, NULL);
         return $result;
     }
 
@@ -38,7 +38,7 @@ class OrderModel extends BasicModel
     {
         $fields = "cart.order_id AS order_id, product.product_id AS product_id, product.product_name AS product_name, product.product_price AS product_price";
         $table = "cart LEFT JOIN product ON product.product_id=cart.product_id";
-        $result = parent::getModel($fields, $table, NULL, NULL, NULL, NULL, "order_id, product_id", NULL);
+        $result = getModel($fields, $table, NULL, NULL, NULL, NULL, "order_id, product_id", NULL);
         return $result;
     }
 
@@ -47,7 +47,7 @@ class OrderModel extends BasicModel
         if (is_int($user_id)) {
             $fields = "order_product.order_id AS order_id, order_product.order_address AS address, order_status.status_name AS status, SUM(cart.amount*product.product_price)AS price";
             $table = "order_product INNER JOIN user ON user.user_id=order_product.user_id INNER JOIN order_status ON order_status.status_id=order_product.status INNER JOIN cart ON cart.order_id=order_product.order_id LEFT JOIN product ON product.product_id=cart.product_id";
-            $result = parent::getModel($fields, $table, "shop.user.user_id", $user_id, NULL, "order_product.order_id", NULL, "i");
+            $result = getModel($fields, $table, "shop.user.user_id", $user_id, NULL, "order_product.order_id", NULL, "i");
             return $result;
         }
     }
@@ -56,23 +56,16 @@ class OrderModel extends BasicModel
     {
         $fields = "c.order_id AS order_id, p.product_id AS product_id, p.product_name AS product_name, p.product_price AS product_price";
         $table = "cart AS c LEFT JOIN product AS p ON p.product_id=c.product_id LEFT JOIN order_product AS op ON op.order_id=c.order_id";
-        $result = parent::getModel($fields, $table, "op.user_id", $user_id, NULL, NULL, "order_id, product_id", "i");
+        $result = getModel($fields, $table, "op.user_id", $user_id, NULL, NULL, "order_id, product_id", "i");
         return $result;
     }
 
     //UPDATE
-    public function updateOrderAddress(int $order_id):void
+    public function updateOrderAddress(int $order_id, string $new_order_address):void
     {
-        $new_order_address = trim((string)$_POST['new_order_address']);
-        global $conn;
-        $sql = "UPDATE `order_product` SET `order_address` = ? WHERE `order_id` = ?";
-        $query = $conn->prepare($sql);
-        $query->bind_param('si', $new_order_address, $order_id);
-        if ($query->execute()) {
-            echo "Order address changed";
-        } else {
-            $conn->error;
-        }        
+        //$new_order_address = trim((string)$_POST['new_order_address']);
+        $values = array($new_order_address);
+        $result = updateModel("order_address", "order_product", "order_id", $order_id, $values, NULL, "si");       
     }
 
     //Function available only for admin
@@ -81,25 +74,25 @@ class OrderModel extends BasicModel
         /*$order_id = (int)$_GET['cancel_order'];*/
         //$new_order_status = (int)$_POST['new_order_status'];
         $values = array($new_order_status);
-        $result = parent::updateModel("order_status", "order_product", "order_id", $order_id, $values, NULL, "ii");
+        $result = updateModel("order_status", "order_product", "order_id", $order_id, $values, NULL, "ii");
     }
     
     //DELETE
     public function cancelOrder(int $order_id):void
     {
         $values = array(3);
-        $result = parent::updateModel("order_status", "order_product", "order_id", $order_id, $values, NULL, "ii");    
+        $result = updateModel("order_status", "order_product", "order_id", $order_id, $values, NULL, "ii");    
     }
 
     public function archiveOrder(int $order_id):void
     {
         $values = array(4);
-        $result = parent::updateModel("order_status", "order_product", "order_id", $order_id, $values, NULL, "ii");      
+        $result = updateModel("order_status", "order_product", "order_id", $order_id, $values, NULL, "ii");      
     }
 
     public function deleteOrder(int $order_id):void
     {
         $values = array(4);
-        $result = parent::deleteModelItem("order_product", "order_id", $order_id, NULL, "i");      
+        $result = deleteModelItem("order_product", "order_id", $order_id, NULL, "i");      
     }
 }

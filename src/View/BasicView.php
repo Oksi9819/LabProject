@@ -3,7 +3,7 @@ namespace Itechart\InternshipProject\View;
 
 class BasicView
 {
-    public function navi()
+    protected function navi()
     {
         global $BASEPATH;
         echo '
@@ -12,12 +12,12 @@ class BasicView
           <li><a href="'.BASEPATH.'">Главная</a></li>
           <li><a href="'.BASEPATH.'catalog">Каталог</a>
             <ul>
-              <li><a href="'.BASEPATH.'catalog/categoryVacuumCleaners">Категория Пылесосы</a></li>
-              <li><a href="'.BASEPATH.'catalog/categoryAirCleaners">Категория Очистители воздуха</a></li>
-              <li><a href="'.BASEPATH.'catalog/categoryHumidifiers">Категория Увлажнители воздуха</a></li>
-              <li><a href="'.BASEPATH.'catalog/categoryLamps">Категория Светильники</a></li>
-              <li><a href="'.BASEPATH.'catalog/categoryOther">Категория Другое</a></li>
-              <li><a href="'.BASEPATH.'catalog/categoryVacuumCleaners/id1">Пылесосы артикул "1"</a></li>
+              <li><a href="'.BASEPATH.'catalog/category/VacuumCleaners">Категория Пылесосы</a></li>
+              <li><a href="'.BASEPATH.'catalog/category/AirCleaners">Категория Очистители воздуха</a></li>
+              <li><a href="'.BASEPATH.'catalog/category/Humidifiers">Категория Увлажнители воздуха</a></li>
+              <li><a href="'.BASEPATH.'catalog/category/Lamps">Категория Светильники</a></li>
+              <li><a href="'.BASEPATH.'catalog/category/Other">Категория Другое</a></li>
+              <li><a href="'.BASEPATH.'catalog/category/VacuumCleaners/id1">Пылесосы артикул "1"</a></li>
               <li><a href="'.BASEPATH.'catalog/id2">Продукт с артикулом "2"</a></li>
               <li><a href="'.BASEPATH.'catalog/search">Поисковая строка в каталоге</a></li>
             </ul>

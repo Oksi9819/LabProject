@@ -7,7 +7,7 @@ class BasicController
 {
     protected $basicView;
 
-    public function __construct()
+    protected function __construct()
     {
         $this->basicView = new BasicView;
     }

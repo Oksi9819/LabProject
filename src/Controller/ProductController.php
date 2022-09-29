@@ -87,7 +87,7 @@ class ProductController extends BasicController
         $field = array();
         $value = array();
         $types = "";
-        if (isset($_POST['submit_update_product'])) {
+        if (!empty($_POST['submit_update_product'])) {
             if (!empty($_POST['product_name'])) {
                 $product_name = (string)$_POST['product_name'];
                 array_push($field, "product_name");

@@ -8,27 +8,27 @@ class UserView extends BasicView
 {
     public function sendUser()
     {
-        parent::navi();
+        navi();
         echo '<b>Заполните пожалуйста форму регистрации: </b><br><br>';
         echo '<form method="post">Введите фамилию: <input type="text" name="user_surname" required="required"><br>Введите фамилию: <input type="text" name="user_name" required="required"><br>Введите дату рождения: <input type="date" name="user_birthday" required="required"><br>Введите телефон: <input type="tel" name="user_phone" required="required"><br>Введите адрес: <input type="text" name="user_address" required="required"><br>Введите email: <input type="email" name="user_email" value="Введите email" required="required"><br>Введите пароль: <input type="password" name="user_password" maxlength="8" required="required"><br><input type="submit" name="submit_reg_user" value="Зарегистрироваться"></form>';
     }
 
     public function setUser($result)
     {
-        parent::navi();
+        navi();
         echo $result." Вы успешно зарегистрировались!:<br>Далее необходимо <a href='/authorization-form'>авторизоваться!</a><br>";
     }
 
     public function authUser()
     {
-        parent::navi();
+        navi();
         echo '<b>Заполните пожалуйста поля авторизации: </b><br><br>';
         echo '<form method="post">Введите email: <input type="email" name="user_email"><br>Введите пароль: <input type="password" name="user_password" maxlength="8"><br><input type="submit" value="Зарегистрироваться"></form>';
     }
 
     public function renderUserPage(array $user)
     {
-        parent::navi();
+        navi();
         echo "Данные о пользователе: <br>";
         echo "Id: ".$user[0]['user_id']."<br>";
         echo "Фамилия: ".$user[0]['user_name']."<br>";
@@ -37,7 +37,6 @@ class UserView extends BasicView
         echo "Номер телефона: ".$user[0]['user_phone']."<br>";
         echo "Адрес: ".$user[0]['user_address']."<br>";
         echo "Email: ".$user[0]['user_email']."<br><br>";
-        //Перейти в <a href='/profile/".$user[0]['user_id']."/info'>профиль!</a>";
         echo "Перейти в <a href='/profile/".$user[0]['user_id']."/orders'>заказы.</a><br>";
         echo "Перейти в <a href='/profile/".$user[0]['user_id']."/reviews'>отзывы.</a><br><br>";
         echo '<b>Изменить сведения о пользователе:</b><br>
@@ -64,24 +63,50 @@ class UserView extends BasicView
 
     public function renderUserDeletedPage( string $result, int $user_id)
     {
-        parent::navi();
+        navi();
         echo $result.' Пользователь с id: '.$user_id.' был удален.<br>';
     }
 
-    public function renderUserReviewsPage(array $reviews)
+    public function renderUserReviewsPage(array $reviews, int $user_id)
     {
-        parent::navi();
+        global $BASEPATH;
+        navi();
         $i=1;
         foreach ($reviews as $review) {
             echo $i."-ый отзыв<br>";
             echo "Код отзыва: ".$review['review_id']."<br>Текст отзыва: ".$review['review_text']."<br><br>";
             $i++;
         }
+        echo '
+        <b>Оставить отзыв:</b><br>
+        <form method="post" name="set_review" action="'.$BASEPATH.'profile/'.$user_id.'/reviews/set-review">
+            Ваш отзыв: <input type="text" name="reviewText" maxlength="501"><br>
+            <input type="submit" name="submit_set_review"><br>
+        </form><br><br>
+        <b>Изменить текст отзыва:</b><br>
+        <form method="post" name="update_review_text" action="'.$BASEPATH.'profile/'.$user_id.'/reviews/update-review-text">
+            Id отзыва: <select name="id_review">';
+            foreach ($reviews as $review) {
+                echo '<option value="'.$review['review_id'].'">'.$review['review_id'].'</option>';
+            } 
+            echo '</select><br>
+            Новый текст отзыва: <input type="text" name="newReviewText" maxlength="501"><br>
+            <input type="submit" name="submit_update_review_text"><br>
+        </form><br>
+        <b>Удалить отзыв:</b><br>
+        <form method="post" name="delete_review" action="'.$BASEPATH.'profile/'.$user_id.'/reviews/delete-review">
+            Id отзыва: <select name="id_review_delete">';
+            foreach ($reviews as $review) {
+                echo '<option value="'.$review['review_id'].'">'.$review['review_id'].'</option>';
+            } 
+            echo '</select><br>
+            <input type="submit" name="submit_delete_review"><br>
+        </form><br>';
     }
 
     public function renderUserOrdersPage(array $orders, array $order_details, int $user_id)
     {
-        parent::navi();
+        navi();
         echo "<br><br><br><br><br>";
         echo "Заказы пользователя ".$user_id."<br>";
         echo "<table><tr><td>Код заказа</td><td>Адрес заказа</td><td>Сумма заказа</td><td>Статус заказа</td><td>Детали заказа</td></tr>";
@@ -103,7 +128,7 @@ class UserView extends BasicView
 
     public function renderAdminPage(array $user)
     {
-        parent::navi();
+        navi();
         echo "Данные об Администраторе: <br>";
         echo "Id: ".$user['user_id']."<br>";
         echo "Фамилия: ".$user['user_name']."<br>";
@@ -116,7 +141,7 @@ class UserView extends BasicView
 
     public function renderAdminReviewsPage(array $reviews)
     {
-        parent::navi();
+        navi();
         $i=1;
         foreach ($reviews as $review) {
             echo $i."-ый отзыв<br>";
@@ -127,7 +152,7 @@ class UserView extends BasicView
 
     public function renderAdminOrdersPage(array $orders, array $order_details)
     {
-        parent::navi();
+        navi();
         echo "<br><br><br><br><br>";
         echo "Все Заказы<br>";
         echo "<table><tr><td>Код заказа</td><td>Фамилия заказчика</td><td>Имя заказчика</td><td>Адрес заказа</td><td>Телефон заказа</td><td>Email заказа</td><td>Сумма заказа</td><td>Статус заказа</td><td>Детали заказа</td></tr>";

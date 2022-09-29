@@ -39,7 +39,12 @@ class MainController extends BasicController
 
     public function showContactForm()
     {
-        return $this->mainView->showContactForm($this->mainModel->setContact());
+        if(!empty($_POST['contact_name']) && !empty($_POST['contact_email']) && !empty($_POST['contact_text'])) {
+            $contact_name = trim($_POST['contact_name']);
+            $contact_email = trim($_POST['contact_email']);
+            $contact_text = trim($_POST['contact_text']);
+            return $this->mainView->showContactForm($this->mainModel->setContact($contact_name, $contact_email, $contact_text));
+        }
     }
 
     public function editPageInfo()
@@ -47,7 +52,7 @@ class MainController extends BasicController
         $field = array();
         $value = array();
         $types = "";
-        if (isset($_POST['submit_update_page_info'])) {
+        if (!empty($_POST['submit_update_page_info'])) {
             $page_name = trim($_POST['page_to_edit']);
             if (!empty($_POST['page_name'])) {
                 $page_name = (string)$_POST['page_name'];

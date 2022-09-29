@@ -40,7 +40,7 @@ class UserController extends BasicController
                 $result = $this->userModel->setUser($values);
                 return $this->userView->setUser($result);
             } else {
-                echo "Password length should be less than 9 characters.";
+                echo "Password length should be not less than 9 characters.";
             }   
         } 
     }
@@ -82,6 +82,34 @@ class UserController extends BasicController
         }
     }
 
+    public function setReview(int $user_id)
+    {
+        if (!empty($_POST['submit_set_review'])) {
+            $reviewText = (string)$_POST['reviewText'];
+            $new_review = (new ReviewModel())->setReview($user_id, $reviewText);
+            return header('Location: '.BASEPATH.'profile/'.$user_id.'/reviews');
+        }
+    }
+
+    public function editReviewText(int $user_id)
+    {
+        if (!empty($_POST['submit_update_review_text'])) {
+            $review_id = (int)$_POST['id_review'];
+            $review_text = (string)$_POST['newReviewText'];
+            $updated_review = (new ReviewModel())->updateReview($review_id, $review_text);
+            return header('Location: '.BASEPATH.'profile/'.$user_id.'/reviews');
+        }
+    }
+
+    public function deleteReview(int $user_id)
+    {
+        if (!empty($_POST['submit_delete_review'])) {
+            $review_id = (int)$_POST['id_review_delete'];
+            $result = (new ReviewModel())->deleteReview($review_id);
+            return header('Location: '.BASEPATH.'profile/'.$user_id.'/reviews');
+        }
+    }
+
     public function getUserOrders(int $user_id)
     {
         if ($user_id === '1' || $user_id === '2') {
@@ -102,7 +130,7 @@ class UserController extends BasicController
         $field = array();
         $value = array();
         $types = "";
-        if (isset($_POST['submit_update_user'])) {
+        if (!empty($_POST['submit_update_user'])) {
             if (!empty($_POST['new_surname'])) {
                 $new_surname = (string)$_POST['new_surname'];
                 array_push($field, "user_surname");
@@ -152,7 +180,7 @@ class UserController extends BasicController
         $field = array();
         $value = array();
         $types = "";
-        if (isset($_POST['submit_update_pass'])) {
+        if (!empty($_POST['submit_update_pass'])) {
             $user_password = (string)$_POST['user_pass'];
             $user_checkpass = (string)$_POST['user_pass_check'];
             if ($user_password === $user_checkpass) {
