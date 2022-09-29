@@ -131,13 +131,13 @@ class UserView extends BasicView
     {
         $this->navi();
         echo "Данные об Администраторе: <br>";
-        echo "Id: ".$user['user_id']."<br>";
-        echo "Фамилия: ".$user['user_name']."<br>";
-        echo "Имя: ".$user['user_surname']."<br>";
-        echo "День рождения: ".$user['user_birthday']."<br>";
-        echo "Номер телефона: ".$user['user_phone']."<br>";
-        echo "Адрес: ".$user['user_address']."<br>";
-        echo "Email: ".$user['user_email']."<br>";
+        echo "Id: ".$user[0]['user_id']."<br>";
+        echo "Фамилия: ".$user[0]['user_name']."<br>";
+        echo "Имя: ".$user[0]['user_surname']."<br>";
+        echo "День рождения: ".$user[0]['user_birthday']."<br>";
+        echo "Номер телефона: ".$user[0]['user_phone']."<br>";
+        echo "Адрес: ".$user[0]['user_address']."<br>";
+        echo "Email: ".$user[0]['user_email']."<br>";
         echo "Перейти в <a href='/profile/".$user[0]['user_id']."/orders'>заказы.</a><br>";
         echo "Перейти в <a href='/profile/".$user[0]['user_id']."/reviews'>отзывы.</a><br><br>";
         echo '<b>Изменить сведения о пользователе:</b><br>

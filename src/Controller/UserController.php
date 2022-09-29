@@ -61,7 +61,7 @@ class UserController extends BasicController
 
     public function getUserInfo(int $user_id)
     {
-        if ($user_id === '1' || $user_id ==='2') {
+        if ($user_id == '1' || $user_id =='2') {
             $user = $this->userModel->getUserInfo($user_id);
             return $this->userView->renderAdminPage($user);
         } else {
