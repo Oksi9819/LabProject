@@ -30,18 +30,18 @@ class BasicView
           <li><a href="'.BASEPATH.'delivery">Доставка</a></li>
           <li><a href="'.BASEPATH.'registration-form">Регистрация</a></li>
           <li><a href="'.BASEPATH.'authorization-form">Авторизация</a></li>
-          <li><a href="'.BASEPATH.'profile/111222">Пользователь id 111222</a>
+          <li><a href="'.BASEPATH.'profile/3">Пользователь id 3</a>
             <ul>
-              <li><a href="'.BASEPATH.'profile/1/info">Пользователь id 1. Информация</a></li>
-              <li><a href="'.BASEPATH.'profile/2/reviews">Пользователь id 2. Отзывы</a></li>
+              <li><a href="'.BASEPATH.'profile/3/info">Пользователь id 3. Информация</a></li>
+              <li><a href="'.BASEPATH.'profile/5/reviews">Пользователь id 5. Отзывы</a></li>
               <li><a href="'.BASEPATH.'profile/3/orders">Пользователь id 3. Заказы</a></li>
             </ul>
           </li>
-          <li><a href="'.BASEPATH.'profile/112">Пользователь id 112 = Админ</a>
+          <li><a href="'.BASEPATH.'profile/1">Пользователь id 1 = Админ</a>
             <ul>
-              <li><a href="'.BASEPATH.'profile/112/info">Админ id 112. Информация</a></li>
-              <li><a href="'.BASEPATH.'profile/112/reviews">Все отзывы</a></li>
-              <li><a href="'.BASEPATH.'profile/112/orders">Все заказы</a></li>
+              <li><a href="'.BASEPATH.'profile/1/info">Админ id 1. Информация</a></li>
+              <li><a href="'.BASEPATH.'profile/1/reviews">Все отзывы</a></li>
+              <li><a href="'.BASEPATH.'profile/1/orders">Все заказы</a></li>
             </ul>
           </li>
           <li><a href="'.BASEPATH.'cart/2256665">Корзина пользователя 2256665</a></li>

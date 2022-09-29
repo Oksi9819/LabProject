@@ -31,8 +31,8 @@ class UserView extends BasicView
         $this->navi();
         echo "Данные о пользователе: <br>";
         echo "Id: ".$user[0]['user_id']."<br>";
-        echo "Фамилия: ".$user[0]['user_name']."<br>";
-        echo "Имя: ".$user[0]['user_surname']."<br>";
+        echo "Имя: ".$user[0]['user_name']."<br>";
+        echo "Фамилия: ".$user[0]['user_surname']."<br>";
         echo "День рождения: ".$user[0]['user_birthday']."<br>";
         echo "Номер телефона: ".$user[0]['user_phone']."<br>";
         echo "Адрес: ".$user[0]['user_address']."<br>";
@@ -40,7 +40,7 @@ class UserView extends BasicView
         echo "Перейти в <a href='/profile/".$user[0]['user_id']."/orders'>заказы.</a><br>";
         echo "Перейти в <a href='/profile/".$user[0]['user_id']."/reviews'>отзывы.</a><br><br>";
         echo '<b>Изменить сведения о пользователе:</b><br>
-        <form method="post" name="update_user_info">
+        <form method="post" name="update_user_info" action="'.BASEPATH.'updateUser/profile/'.$user[0]['user_id'].'">
             Введите фамилию: <input type="text" name="new_surname"><br>
             Введите имя: <input type="text" name="new_name"><br>
             Введите дату рождения: <input type="date" name="new_birthday"><br>
@@ -50,13 +50,13 @@ class UserView extends BasicView
             <input type="submit" name="submit_update_user"><br>
         </form><br>
         <b>Изменить пароль:</b><br>
-        <form method="post" name="update_user_pass">
+        <form method="post" name="update_user_pass" action="'.BASEPATH.'updateUserPass/profile/'.$user[0]['user_id'].'">
             Введите пароль: <input type="password" name="user_pass" maxlength="8"><br>
             повторите пароль: <input type="password" name="user_pass_check" maxlength="8"><br>
             <input type="submit" name="submit_update_pass"><br>
         </form><br>
         <b>Удалить пользователя:</b><br>
-        <form method="post" name="delete_user_form">
+        <form method="post" name="delete_user_form" action="'.BASEPATH.'deleteUser/profile/'.$user[0]['user_id'].'">
             <input type="submit" name="submit_delete_user" value = DELETE><br>
         </form><br>';
     }

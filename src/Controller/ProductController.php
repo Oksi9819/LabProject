@@ -69,7 +69,7 @@ class ProductController extends BasicController
         return $this->productView->renderProductListByCategory($category, $products);
     }
 
-    public function getProductById($product_id)
+    public function getProductById(int $product_id)
     {
         $product=$this->productModel->getProductById($product_id);
         return $this->productView->renderProductListById($product);
@@ -81,8 +81,9 @@ class ProductController extends BasicController
         return (new ProductView())->renderProductListByName($product);
     }*/
 
-    public function updateProduct($product_id)
+    public function updateProduct(int $product_id)
     {
+        global $BASEPATH;
         $product_id = (int)$product_id;
         $field = array();
         $value = array();
@@ -110,12 +111,12 @@ class ProductController extends BasicController
                 $types.="i";
                 $fields = implode(", ", $field);
                 $product=$this->productModel->updateProduct($fields, $product_id, $value, $types);
-                return $this->productView->renderProductListById($product);
+                return header('Location: '.BASEPATH.'catalog/id'.$product_id);
             } 
         }
     }
 
-    public function deleteProduct($product_id)
+    public function deleteProduct(int $product_id)
     {
         if (isset($_POST['submit_delete_product'])) {
             $result=$this->productModel->deleteProduct($product_id);

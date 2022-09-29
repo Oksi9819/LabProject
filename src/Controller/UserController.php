@@ -116,7 +116,7 @@ class UserController extends BasicController
 
     public function getUserOrders(int $user_id)
     {
-        if ($user_id === '1' || $user_id === '2') {
+        if ($user_id == '1' || $user_id == '2') {
             echo "YOU ARE ADMIN";
             $orders = (new OrderModel())->getOrders();
             $order_details = (new OrderModel())->getOrdersDetails();
@@ -130,6 +130,7 @@ class UserController extends BasicController
     }
 
     public function updateUser(int $user_id) {
+        global $BASEPATH;
         $user_id = (int)$user_id;
         $field = array();
         $value = array();
@@ -174,12 +175,14 @@ class UserController extends BasicController
             if (!empty($value)) {
                 $types.="i";
                 $fields = implode(", ", $field);
-                return $user = $this->userModel->updateUser($fields, $user_id, $value, $types);
+                $user = $this->userModel->updateUser($fields, $user_id, $value, $types);
+                return header('Location: '.BASEPATH.'profile/'.$user_id);
             }     
         }   
     }
 
     public function updateUserPass(int $user_id) {
+        global $BASEPATH;
         $user_id = (int)$user_id;
         $field = array();
         $value = array();
@@ -195,7 +198,8 @@ class UserController extends BasicController
                 if (!empty($value)) {
                     $types.="i";
                     $fields = implode(", ", $field);
-                    return $user = $this->userModel->updateUser($fields, $user_id, $value, $types);
+                    $user = $this->userModel->updateUser($fields, $user_id, $value, $types);
+                    return header('Location: '.BASEPATH.'profile/'.$user_id);
                 }  
             } else {
                 throw new Exception("Passwords don't match");

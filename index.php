@@ -50,6 +50,11 @@ Route::add('/authorization-form', function() {
   (new UserController())->checkUser();
 }, 'post');
 
+// Route to profile page->info about user
+Route::add('/profile/([0-9]*)/info', function($user_id) {
+  (new UserController())->getUserInfo($user_id);
+}, 'get');
+
 // Route to profile page
 Route::add('/profile/([0-9]*)', function($user_id) {
   (new UserController())->getUserInfo($user_id);
@@ -58,24 +63,6 @@ Route::add('/profile/([0-9]*)', function($user_id) {
 // Route to profile page
 Route::add('/([A-Za-z]*)/profile/([0-9]*)', function($method, $user_id) {
   (new UserController())->$method($user_id);
-  /*(new UserController())->getUserInfo($user_id);
-  (new UserController())->updateUser($user_id);
-  (new UserController())->updateUserPass($user_id);
-  (new UserController())->deleteUser($user_id);*/
-}, 'post');
-
-// Route to profile page->info about user
-Route::add('/profile/([0-9]*)/info', function($user_id) {
-  (new UserController())->getUserInfo($user_id);
-}, 'get');
-
-// Route to profile page->info about user
-Route::add('/([A-Za-z]*)/profile/([0-9]*)/info', function($method, $user_id) {
-  (new UserController())->$method($user_id);
-  /*(new UserController())->getUserInfo($user_id);
-  (new UserController())->updateUser($user_id);
-  (new UserController())->updateUserPass($user_id);
-  (new UserController())->deleteUser($user_id);*/
 }, 'post');
 
 // Route to profile page->info about user's orders
@@ -118,20 +105,14 @@ Route::add('/catalog/category/([A-Za-z]*)', function($category) {
 }, 'get');
 
 // Route to a particular category of products
-Route::add('/catalog/category([A-Za-z]*)', function($category) {
+Route::add('/catalog/category/([A-Za-z]*)', function($category) {
   (new ProductController())->getProductsByCategorySorted($category);
 }, 'post');
 
 // Route to product card
-Route::add('/catalog/category([A-Za-z]*)/id([0-9]*)', function($category_id, $product_id) {
+Route::add('/catalog/category/([A-Za-z]*)/id([0-9]*)', function($category_id, $product_id) {
   (new ProductController())->getProductById($product_id);
 }, 'get');
-
-// Route to product card
-Route::add('/catalog/category([A-Za-z]*)/id([0-9]*)', function($category_id, $product_id) {
-  (new ProductController())->updateProduct($product_id);
-  (new ProductController())->deleteProduct($product_id);
-}, 'post');
 
 // Route to product card by product Id
 Route::add('/catalog/id([0-9]*)', function($product_id) {
@@ -139,9 +120,8 @@ Route::add('/catalog/id([0-9]*)', function($product_id) {
 }, 'get');
 
 // Route to product card by product Id
-Route::add('/catalog/id([0-9]*)', function($product_id) {
-  (new ProductController())->updateProduct($product_id);
-  (new ProductController())->deleteProduct($product_id);
+Route::add('/catalog/([A-Za-z]*)/id([0-9]*)', function($method, $product_id) {
+  (new ProductController())->$method($product_id);
 }, 'post');
 
 // Route to product card by product name
