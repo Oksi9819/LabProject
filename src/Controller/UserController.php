@@ -78,14 +78,16 @@ class UserController extends BasicController
             return $this->userView->renderAdminReviewsPage($reviews);
         } else {
             $reviews = (new ReviewModel())->getReviewsByUserId($user_id);
-            return $this->userView->renderUserReviewsPage($reviews);
+            return $this->userView->renderUserReviewsPage($reviews, $user_id);
         }
     }
 
     public function setReview(int $user_id)
     {
+        global $BASEPATH;
         if (!empty($_POST['submit_set_review'])) {
             $reviewText = (string)$_POST['reviewText'];
+            echo $reviewText."<br>".$user_id;
             $new_review = (new ReviewModel())->setReview($user_id, $reviewText);
             return header('Location: '.BASEPATH.'profile/'.$user_id.'/reviews');
         }
@@ -93,6 +95,7 @@ class UserController extends BasicController
 
     public function editReviewText(int $user_id)
     {
+        global $BASEPATH;
         if (!empty($_POST['submit_update_review_text'])) {
             $review_id = (int)$_POST['id_review'];
             $review_text = (string)$_POST['newReviewText'];
@@ -103,6 +106,7 @@ class UserController extends BasicController
 
     public function deleteReview(int $user_id)
     {
+        global $BASEPATH;
         if (!empty($_POST['submit_delete_review'])) {
             $review_id = (int)$_POST['id_review_delete'];
             $result = (new ReviewModel())->deleteReview($review_id);

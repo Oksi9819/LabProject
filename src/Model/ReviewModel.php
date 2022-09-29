@@ -17,8 +17,11 @@ class ReviewModel extends BasicModel
     {
         if (strlen($review_text) < 501) {
             $fields = array('user_id', 'review_text');
-            $values = array($review_text);
-            $result = setModel("review", $fields, "is", $values);
+            $values = array();
+            array_push($values, $user_id);
+            array_push($values, $review_text);
+            print_r($values);
+            $result = $this->setModel("review", $fields, "is", $values);
         } else {
             throw new Exception("Review is too long. Length must be less than 500 characters.<br>", 1);
         } 
@@ -27,13 +30,13 @@ class ReviewModel extends BasicModel
     //READ
     public function getReviews(): array
     {
-        $result = getModel("r.review_id AS review_id, u.user_name AS user_name, u.user_surname AS user_surname, r.review_text As review_text", "review AS r LEFT JOIN shop.user AS u ON u.user_id=r.user_id", NULL, NULL, NULL, NULL, NULL, NULL);
+        $result = $this->getModel("r.review_id AS review_id, u.user_name AS user_name, u.user_surname AS user_surname, r.review_text As review_text", "review AS r LEFT JOIN shop.user AS u ON u.user_id=r.user_id", NULL, NULL, NULL, NULL, NULL, NULL);
         return $result;
     }
 
     public function getReviewsByUserId(int $user_id): array
     {
-        $result = getModel("*", "review", "user_id", $user_id, NULL, NULL, NULL, "i");
+        $result = $this->getModel("*", "review", "user_id", $user_id, NULL, NULL, NULL, "i");
         return $result;
     }
 
@@ -42,7 +45,7 @@ class ReviewModel extends BasicModel
     {
         if (strlen($review_text) < 501) {
             $values = array($review_text);
-            $result = updateModel("review_text", "review", "review_id", $review_id, $values, NULL, "si");      
+            $result = $this->updateModel("review_text", "review", "review_id", $review_id, $values, NULL, "si");      
         } else {
             throw new Exception("Review is too long. Length must be less than 500 characters.<br>", 1);
         }
@@ -51,6 +54,6 @@ class ReviewModel extends BasicModel
     //DELETE
     public function deleteReview(int $review_id)
     {
-        $result = deleteModelItem("review", "review_id", $review_id, NULL, "s");
+        $result = $this->deleteModelItem("review", "review_id", $review_id, NULL, "s");
     }
 }

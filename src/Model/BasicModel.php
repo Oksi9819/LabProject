@@ -15,13 +15,16 @@ class BasicModel
     protected function setModel(string $table, array $fields, string $types, array $values): string
     {
         $val = count($values);
+        echo $val;
         $missed = "?";
         for ($i=1; $i<$val; $i++) {
             $missed.=", ?";
         }
         $params = implode(", ",$fields);
         $sql = "INSERT INTO ".$table." (".$params.") VALUES (".$missed.")";
+        echo $sql;
         $query = $this->connection->prepare($sql);
+        echo $types;
         $query->bind_param($types, ...$values);
         $query->execute();   
         $query->get_result();

@@ -16,21 +16,21 @@ class UserModel extends BasicModel
     public function setUser(array $values): string
     {
         $fields = array('user_surname', 'user_name', 'user_birthday', 'user_phone', 'user_address', 'user_email', 'user_password');
-	    $result = setModel("user", $fields, "sssssss", $values); 
+	    $result = $this->setModel("user", $fields, "sssssss", $values); 
         return $result;  
     }
 
     //READ
     public function getUsers(): array
     {
-        $result = getModel("*", "user", NULL, NULL, NULL, NULL, NULL, NULL);
+        $result = $this->getModel("*", "user", NULL, NULL, NULL, NULL, NULL, NULL);
         return $result;
     }
 
     public function getUserInfo(int $user_id): array
     {
         if (is_int($user_id)) {
-            $result = getModel("*", "user", "user_id", $user_id, NULL, NULL, NULL, "i");
+            $result = $this->getModel("*", "user", "user_id", $user_id, NULL, NULL, NULL, "i");
             return $result;
         }
     }
@@ -52,20 +52,20 @@ class UserModel extends BasicModel
     //UPDATE
     public function updateUser($fields, $user_id, $value, $types):array
     {
-        $result = updateModel($fields, "user", "user_id", $user_id, $value, NULL, $types);
+        $result = $this->updateModel($fields, "user", "user_id", $user_id, $value, NULL, $types);
         return $result;        
     }
 
     public function updateUserPasword(int $user_id)
     {
-        $result = updateModel($fields, "user", "user_id", $user_id, $value, NULL, $types);
+        $result = $this->updateModel($fields, "user", "user_id", $user_id, $value, NULL, $types);
         return $result;                     
     }
 
     //DELETE
     public function deleteUser(int $user_id)
     {   
-        $result = deleteModelItem("user", "user_id", $user_id, NULL, "i");
+        $result = $this->deleteModelItem("user", "user_id", $user_id, NULL, "i");
         return $result;   
     }
 }

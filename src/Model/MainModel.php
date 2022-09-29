@@ -25,33 +25,33 @@ class MainModel extends BasicModel
     //READ
     public function getMainInfo(): array
     {
-        $result = getModel("*", "page_info", "page_name", "main", NULL, NULL, NULL, "s");
+        $result = $this->getModel("*", "page_info", "page_name", "main", NULL, NULL, NULL, "s");
         return $result;
     }
 
     public function getDeliveryInfo(): array
     {
-        $result = getModel("*", "page_info", "page_name", "delivery", NULL, NULL, NULL, "s");
+        $result = $this->getModel("*", "page_info", "page_name", "delivery", NULL, NULL, NULL, "s");
         return $result;
     }
 
     public function getContactsInfo(): array
     {
-        $result = getModel("*", "page_info", "page_name", "contacts", NULL, NULL, NULL, "s");
+        $result = $this->getModel("*", "page_info", "page_name", "contacts", NULL, NULL, NULL, "s");
         return $result;
     }
 
     //UPDATE
     public function updatePageInfo(string $fields, string $page_name, array $values, string $types)
     {
-        $result = updateModel($fields, "page_info", "page_name", $page_name, $values, NULL, $types);
+        $result = $this->updateModel($fields, "page_info", "page_name", $page_name, $values, NULL, $types);
         return $result;           
     }
 
     //DELETE
     public function deletePage(int $page_id): string
     {   
-        $result = deleteModelItem("page_info", "page_id", $page_id, NULL, "i");
+        $result = $this->deleteModelItem("page_info", "page_id", $page_id, NULL, "i");
         return $result;
     }
 }

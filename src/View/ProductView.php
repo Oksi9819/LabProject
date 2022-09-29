@@ -7,7 +7,7 @@ class ProductView extends BasicView
 {
     public function renderProductsPage($products)
     {
-        navi();
+        $this->navi();
         echo '<br><b>КАТАЛОГ</b><br><br>';
         echo '<b>Все товары каталога: </b><br>
         <form method="post" name="sort_form">
@@ -29,7 +29,7 @@ class ProductView extends BasicView
     
     public function renderProductListByCategory($category, $products)
     {
-        navi();
+        $this->navi();
         echo '<br><b>КАТАЛОГ</b><br><br>';
         echo '<b>Все товары категории: </b>'.$category.'<br>
         <form method="post">
@@ -54,7 +54,7 @@ class ProductView extends BasicView
 
     public function renderProductListById($product)
     {
-        navi();
+        $this->navi();
         echo 'Товар с id: '.$product[0]['product_id'].'<br>';
         echo 'Наименование товара: '.$product[0]['product_name'].'<br>';
         echo 'Описание товара: '.$product[0]['product_desc'].'<br>';
@@ -74,7 +74,7 @@ class ProductView extends BasicView
 
     public function renderProductListByName($product)
     {
-        navi();
+        $this->navi();
         echo '
         <form methode="post"> 
             <input type="text" name=text" class="search" placeholder="Search here!">
@@ -88,7 +88,7 @@ class ProductView extends BasicView
 
     public function renderProductDeletedPage(string $result, int $product_id)
     {
-        navi();
+        $this->navi();
         echo $result.' Товар с id: '.$product_id.' был удален.<br>';
     }
 }

@@ -56,12 +56,12 @@ Route::add('/profile/([0-9]*)', function($user_id) {
 }, 'get');
 
 // Route to profile page
-Route::add('/profile/([0-9]*)', function($user_id) {
-  (new UserController())->getUserInfo($user_id);
+Route::add('/([A-Za-z]*)/profile/([0-9]*)', function($method, $user_id) {
+  (new UserController())->$method($user_id);
+  /*(new UserController())->getUserInfo($user_id);
   (new UserController())->updateUser($user_id);
   (new UserController())->updateUserPass($user_id);
-  (new UserController())->deleteUser($user_id);
-
+  (new UserController())->deleteUser($user_id);*/
 }, 'post');
 
 // Route to profile page->info about user
@@ -70,11 +70,12 @@ Route::add('/profile/([0-9]*)/info', function($user_id) {
 }, 'get');
 
 // Route to profile page->info about user
-Route::add('/profile/([0-9]*)/info', function($user_id) {
-  (new UserController())->getUserInfo($user_id);
+Route::add('/([A-Za-z]*)/profile/([0-9]*)/info', function($method, $user_id) {
+  (new UserController())->$method($user_id);
+  /*(new UserController())->getUserInfo($user_id);
   (new UserController())->updateUser($user_id);
   (new UserController())->updateUserPass($user_id);
-  (new UserController())->deleteUser($user_id);
+  (new UserController())->deleteUser($user_id);*/
 }, 'post');
 
 // Route to profile page->info about user's orders
@@ -94,7 +95,7 @@ Route::add('/profile/([0-9]*)/reviews/set-review', function($user_id) {
 
 // Route to profile page->edit review text
 Route::add('/profile/([0-9]*)/reviews/update-review-text', function($user_id) {
-  (new UserController())->setReview($user_id);
+  (new UserController())->editReviewText($user_id);
 }, 'post');
 
 // Route to profile page->edit review text
