@@ -27,9 +27,6 @@ if ($conn->connect_error) {
     echo 'You have successfully connected to the database!<br><br><br><br>';
 }
 
-$created_at = date("Y-m-d h:i:s");
-echo $created_at;
-var_dump($created_at);
 define('BASEPATH','/');
 
 // Base route (startpage)
