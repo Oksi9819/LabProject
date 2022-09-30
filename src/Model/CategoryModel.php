@@ -16,8 +16,9 @@ class CategoryModel extends BasicModel
     {
         $values = array();
         if (strlen($new_category) < 31 && strlen($new_category_eng) < 31) {
-            array_push($values, $new_category, $new_category_eng);
-            $result = $this->setModel("category", ['category_name', 'name_eng'], "ss", $values);
+            $created_at = date("Y-m-d h:i:s");
+            array_push($values, $new_category, $new_category_eng, $created_at);
+            $result = $this->setModel("category", ['category_name', 'name_eng', 'created_at'], "sss", $values);
             return $result;
         } else {
             throw new Exception("Length of category names should be shorter than 31 characters.");

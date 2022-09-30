@@ -36,8 +36,7 @@ class UserController extends BasicController
                 $user_address = (string)$_POST['user_address'];
                 $user_email = (string)$_POST['user_email'];
                 $user_password = hash('md5', (string)$_POST['user_password']);
-                $values = array ($user_surname, $user_name, $user_birthday, $user_phone, $user_address, $user_email, $user_password);
-                $result = $this->userModel->setUser($values);
+                $result = $this->userModel->setUser($user_surname, $user_name, $user_birthday, $user_phone, $user_address, $user_email, $user_password);
                 return $this->userView->setUser($result);
             } else {
                 echo "Password length should be not less than 9 characters.";
@@ -192,9 +191,7 @@ class UserController extends BasicController
                 $types.="s";
             }
             if (!empty($value)) {
-                $types.="i";
-                $fields = implode(", ", $field);
-                $user = $this->userModel->updateUser($fields, $user_id, $value, $types);
+                $user = $this->userModel->updateUser($field, $user_id, $value, $types);
                 return header('Location: '.BASEPATH.'profile/'.$user_id);
             }     
         }   
@@ -215,9 +212,7 @@ class UserController extends BasicController
                 array_push($value, $user_password);
                 $types.="s";
                 if (!empty($value)) {
-                    $types.="i";
-                    $fields = implode(", ", $field);
-                    $user = $this->userModel->updateUser($fields, $user_id, $value, $types);
+                    $user = $this->userModel->updateUser($field, $user_id, $value, $types);
                     return header('Location: '.BASEPATH.'profile/'.$user_id);
                 }  
             } else {

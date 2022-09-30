@@ -16,9 +16,11 @@ class OrderModel extends BasicModel
     {
         //if (isset($_POST['submit_setreview']))
         //$order_adress = (string)$_POST['order_address'];
-        $sql = "INSERT INTO order_product (user_id, order_address) VALUES (?, ?) WHERE user_id = ?";
+        $created_at = date("Y-m-d h:i:s");
+        $values = array($user_id, $address, $created_at);
+        $sql = "INSERT INTO order_product (user_id, order_address, created_at) VALUES (?, ?, ?)";
         $query = $this->connection->prepare($sql);
-        $query->bind_param('isi', $user_id, $address, $user_id);
+        $query->bind_param('iss', ...$values);
         $query->execute();   
         $query->get_result();
         $result = "Success!";
@@ -64,8 +66,9 @@ class OrderModel extends BasicModel
     public function updateOrderAddress(int $order_id, string $new_order_address):void
     {
         //$new_order_address = trim((string)$_POST['new_order_address']);
-        $values = array($new_order_address);
-        $result = $this->updateModel("order_address", "order_product", "order_id", $order_id, $values, NULL, "si");       
+        $updated_at = date("Y-m-d h:i:s");
+        $values = array($new_order_address, $updated_at);
+        $result = $this->updateModel("order_address, updated_at", "order_product", "order_id", $order_id, $values, NULL, "ssi");       
     }
 
     //Function available only for admin
@@ -73,8 +76,9 @@ class OrderModel extends BasicModel
     {
         /*$order_id = (int)$_GET['cancel_order'];*/
         //$new_order_status = (int)$_POST['new_order_status'];
-        $values = array($new_order_status);
-        $result = $this->updateModel("order_status", "order_product", "order_id", $order_id, $values, NULL, "ii");
+        $updated_at = date("Y-m-d h:i:s");
+        $values = array($new_order_status, $updated_at);
+        $result = $this->updateModel("order_status, updated_at", "order_product", "order_id", $order_id, $values, NULL, "isi");
     }
     
     //DELETE

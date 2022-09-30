@@ -90,14 +90,10 @@ class ProductController extends BasicController
         if (!empty($_POST['submit_update_product'])) {
             if (!empty($_POST['prod_name']) && !empty($_POST['prod_desc']) && !empty($_POST['prod_price']) && !empty($_POST['id_new_prod_category'])) {
                 $product_name = (string)$_POST['prod_name'];
-                array_push($values, $product_name);
                 $product_desc = (string)$_POST['prod_desc'];
-                array_push($values, $product_desc);
                 $product_category = (int)$_POST['id_new_prod_category'];
-                array_push($values, $product_category);
                 $product_price = (float)$_POST['prod_price'];
-                array_push($values, $product_price);
-                $product=$this->productModel->setProduct($values);
+                $product=$this->productModel->setProduct($product_name, $product_desc, $product_category, $product_price);
                 return header('Location: '.BASEPATH.'catalog');
             }  
         }
@@ -130,9 +126,7 @@ class ProductController extends BasicController
                 $types.="d";
             }
             if (!empty($value)) {
-                $types.="i";
-                $fields = implode(", ", $field);
-                $product=$this->productModel->updateProduct($fields, $product_id, $value, $types);
+                $product=$this->productModel->updateProduct($field, $product_id, $value, $types);
                 return header('Location: '.BASEPATH.'catalog/id'.$product_id);
             } 
         }

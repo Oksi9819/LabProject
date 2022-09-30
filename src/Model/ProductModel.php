@@ -12,10 +12,12 @@ class ProductModel extends BasicModel
     }
 
     //CREATE
-    public function setProduct(array $values): array
+    public function setProduct(string $product_name, string $product_desc, int $product_category, float $product_price): array
     {
-        $fields = array('product_name', 'product_desc', 'product_category', 'product_price');
-        $result = $this->setModel("product", $fields, "ssid", $values);
+        $fields = array('product_name', 'product_desc', 'product_category', 'product_price', 'created_at');
+        $created_at = date("Y-m-d h:i:s");
+        $values = array($product_name, $product_desc, $product_category, $product_price, $created_at);
+        $result = $this->setModel("product", $fields, "ssids", $values);
         return $result;
     }
 
@@ -107,9 +109,14 @@ class ProductModel extends BasicModel
     }
 
     //UPDATE
-    public function updateProduct(string $fields, int $product_id, array $values, string $types)
+    public function updateProduct(array $fields, int $product_id, array $values, string $types)
     {
-        $result = $this->updateModel($fields, "product", "product_id", $product_id, $values, NULL, $types);
+        $updated_at = date("Y-m-d h:i:s");
+        array_push($fields, 'updated_at');
+        array_push($values, $updated_at);
+        $field = implode(", ", $fields);
+        $types.="si";
+        $result = $this->updateModel($field, "product", "product_id", $product_id, $values, NULL, $types);
         return $result;           
     }
 

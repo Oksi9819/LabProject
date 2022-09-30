@@ -85,8 +85,6 @@ class MainController extends BasicController
                 $types.="s";
             }
             if (!empty($value)) {
-                $types.="s";
-                $fields = implode(", ", $field);
                 $new_info = $this->mainModel->updatePageInfo($fields, $page_name, $values, $types);
                 return $this->mainView->showContactForm();
             } 

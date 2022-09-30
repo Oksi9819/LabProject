@@ -42,9 +42,14 @@ class MainModel extends BasicModel
     }
 
     //UPDATE
-    public function updatePageInfo(string $fields, string $page_name, array $values, string $types)
+    public function updatePageInfo(array $fields, string $page_name, array $values, string $types)
     {
-        $result = $this->updateModel($fields, "page_info", "page_name", $page_name, $values, NULL, $types);
+        $updated_at = date("Y-m-d h:i:s");
+        array_push($fields, 'updated_at');
+        array_push($value, $updated_at);
+        $types.="ss";
+        $field = implode(", ", $fields);
+        $result = $this->updateModel($field, "page_info", "page_name", $page_name, $values, NULL, $types);
         return $result;           
     }
 

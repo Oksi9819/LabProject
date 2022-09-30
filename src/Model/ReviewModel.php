@@ -16,12 +16,14 @@ class ReviewModel extends BasicModel
     public function setReview(int $user_id, string $review_text)
     {
         if (strlen($review_text) < 501) {
-            $fields = array('user_id', 'review_text');
+            $fields = array('user_id', 'review_text', 'created_at');
             $values = array();
+            $created_at = date("Y-m-d h:i:s");
             array_push($values, $user_id);
             array_push($values, $review_text);
+            array_push($values, $created_at);
             print_r($values);
-            $result = $this->setModel("review", $fields, "is", $values);
+            $result = $this->setModel("review", $fields, "iss", $values);
         } else {
             throw new Exception("Review is too long. Length must be less than 500 characters.<br>", 1);
         } 
@@ -44,8 +46,9 @@ class ReviewModel extends BasicModel
     public function updateReview(int $review_id, string $review_text)
     {
         if (strlen($review_text) < 501) {
-            $values = array($review_text);
-            $result = $this->updateModel("review_text", "review", "review_id", $review_id, $values, NULL, "si");      
+            $updated_at = date("Y-m-d h:i:s");
+            $values = array($review_text, $updated_at);
+            $result = $this->updateModel("review_text, updated_at", "review", "review_id", $review_id, $values, NULL, "ssi");      
         } else {
             throw new Exception("Review is too long. Length must be less than 500 characters.<br>", 1);
         }

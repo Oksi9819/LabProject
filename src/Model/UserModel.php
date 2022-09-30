@@ -13,10 +13,12 @@ class UserModel extends BasicModel
     }
 
     //CREATE
-    public function setUser(array $values): string
+    public function setUser(string $user_surname, string $user_name, string $user_birthday, string $user_phone, string $user_address, string $user_email, string $user_password): string
     {
-        $fields = array('user_surname', 'user_name', 'user_birthday', 'user_phone', 'user_address', 'user_email', 'user_password');
-	    $result = $this->setModel("user", $fields, "sssssss", $values); 
+        $fields = array('user_surname', 'user_name', 'user_birthday', 'user_phone', 'user_address', 'user_email', 'user_password', 'created_at');
+        $created_at = date("Y-m-d h:i:s");
+        $values = array($user_surname, $user_name, $user_birthday, $user_phone, $user_address, $user_email, $user_password, $created_at);
+	    $result = $this->setModel("user", $fields, "ssssssss", $values); 
         return $result;  
     }
 
@@ -57,16 +59,15 @@ class UserModel extends BasicModel
     }
 
     //UPDATE
-    public function updateUser($fields, $user_id, $value, $types):array
+    public function updateUser(array $fields, int $user_id, array $value, $types):array
     {
-        $result = $this->updateModel($fields, "user", "user_id", $user_id, $value, NULL, $types);
+        $updated_at = date("Y-m-d h:i:s");
+        array_push($fields, 'updated_at');
+        array_push($value, $updated_at);
+        $field = implode(", ", $fields);
+        $types.="si";
+        $result = $this->updateModel($field, "user", "user_id", $user_id, $value, NULL, $types);
         return $result;        
-    }
-
-    public function updateUserPasword(int $user_id)
-    {
-        $result = $this->updateModel($fields, "user", "user_id", $user_id, $value, NULL, $types);
-        return $result;                     
     }
 
     //DELETE
