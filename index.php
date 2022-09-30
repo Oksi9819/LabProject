@@ -14,6 +14,10 @@ use Itechart\InternshipProject\Controller\BasicController;
 use Itechart\InternshipProject\Controller\MainController;
 use Itechart\InternshipProject\Controller\CartController;
 
+/*createDB();
+createTables();
+fulfilTables();*/
+
 //Connect to the database
 $conn = new mysqli('localhost', $_ENV['DB_USER'], $_ENV['DB_PASS'], $_ENV['DB_NAME']);
 $conn->set_charset('utf8mb4');

@@ -185,7 +185,8 @@ function createTables()
         `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
         `updated_at` datetime DEFAULT NULL,
         PRIMARY KEY (`order_id`,`product_id`),
-        FOREIGN KEY (product_id) REFERENCES product(product_id) ON DELETE CASCADE) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4";
+        FOREIGN KEY (product_id) REFERENCES product(product_id) ON DELETE CASCADE,
+        FOREIGN KEY (order_id) REFERENCES order_product(order_id) ON DELETE CASCADE) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4";
     if ($conn->query($sql)) {
         echo "Cart table successfully created.<br><br>";
     } else {
