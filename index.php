@@ -1,7 +1,7 @@
 <?php
 // Autoload files using composer
 require_once __DIR__ . '/vendor/autoload.php';
-/*require_once __DIR__ . '/database.php';*/
+//require_once __DIR__ . '/database.php';
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 $dotenv->required(['DB_USER', 'DB_PASS', 'DB_NAME']);
