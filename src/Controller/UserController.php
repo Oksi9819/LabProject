@@ -34,18 +34,35 @@ class UserController extends BasicController
     {
         if(!$_SESSION['user']) {
             if (isset($_POST['submit_reg_user'])) {
-                if (strlen($_POST['user_password']) < 9) {
-                    $user_surname = (string)$_POST['user_surname'];
-                    $user_name = (string)$_POST['user_name'];
-                    $user_birthday = (string)$_POST['user_birthday'];
-                    $user_phone = (string)$_POST['user_phone'];
-                    $user_address = (string)$_POST['user_address'];
-                    $user_email = (string)$_POST['user_email'];
-                    $user_password = hash('md5', (string)$_POST['user_password']);
-                    $result = $this->userModel->setUser($user_surname, $user_name, $user_birthday, $user_phone, $user_address, $user_email, $user_password);
-                    return $this->userView->setUser($result);
+                if (preg_match("/^[a-zA-z](?=.*\d)[a-zA-z\d]{8,}$/", $_POST['user_password'])) {
+                    if (preg_match("/([a-z0-9]+\.)*[a-z0-9]+@[a-z0-9]+(\.[a-z0-9]+)*\.[a-z]{2,4}$/", trim((string)$_POST['user_email']))) {
+                        if (preg_match("/[0-9]{4}-[0-9]{2}-[0-9]{2}/", trim((string)$_POST['user_birthday']))) {
+                            $format = 'Y-m-d';
+                            $user_birthday = DateTimeImmutable::createFromFormat($format, trim((string)$_POST['user_birthday']));   
+                            if ($user_birthday->format($format) === trim((string)$_POST['user_birthday'])) {
+                                if (preg_match("/(\+375)[\(](29|33|25|44)[\)](\d{3})-(\d{2})-(\d{2})$/", trim((string)$_POST['user_phone']))) {
+                                    $user_surname = trim((string)$_POST['user_surname']);
+                                    $user_name = trim((string)$_POST['user_name']);
+                                    $user_phone = trim((string)$_POST['user_phone']);
+                                    $user_address = trim((string)$_POST['user_address']);
+                                    $user_email = trim((string)$_POST['user_email']);
+                                    $user_password = hash('md5', (string)$_POST['user_password']);
+                                    $result = $this->userModel->setUser($user_surname, $user_name, $user_birthday, $user_phone, $user_address, $user_email, $user_password);
+                                    return $this->userView->setUser($result);
+                                } else {
+                                    echo "Phone number should be in format '+375(29/33/..)111-11-11'.";
+                                } 
+                            } else {
+                                echo "Birthday does not follow the Gregorian calendar.";
+                            }
+                        } else {
+                            echo "Birthday should be in format 'YYYY-MM-DD'.";
+                        }
+                    } else {
+                        echo "Your email looks invalid.";
+                    } 
                 } else {
-                    echo "Password length should be not less than 9 characters.";
+                    echo "Password length must be at least 8 characters. It should start with a letter and contain at least 1 number.";
                 }   
             } 
 		} else {
