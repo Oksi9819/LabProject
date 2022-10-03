@@ -2,6 +2,7 @@
 
 namespace Itechart\InternshipProject\Model;
 
+use Exception;
 use Itechart\InternshipProject\Model\BasicModel;
 
 class CategoryModel extends BasicModel

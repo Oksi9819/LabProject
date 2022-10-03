@@ -1,8 +1,6 @@
 <?php
 namespace Itechart\InternshipProject\Controller;
 
-session_start();
-
 use Itechart\InternshipProject\Controller\BasicController;
 use Itechart\InternshipProject\View\ProductView;
 use Itechart\InternshipProject\Model\ProductModel;
@@ -87,7 +85,7 @@ class ProductController extends BasicController
     //Admin functions
     public function addProduct()
     {
-        if(!$_SESSION['user']) {
+        if(!isset($_SESSION['user'])) {
             echo "You have no permissions to do this action. Available only for administrators.";
 		} else {
             if($_SESSION['user']['role'] === "Admin") {
@@ -111,7 +109,7 @@ class ProductController extends BasicController
 
     public function updateProduct(int $product_id)
     {
-        if(!$_SESSION['user']) {
+        if(!isset($_SESSION['user'])) {
             echo "You have no permissions to do this action. Available only for administrators.";
 		} else {
             if($_SESSION['user']['role'] === "Admin") {
@@ -152,7 +150,7 @@ class ProductController extends BasicController
 
     public function deleteProduct(int $product_id)
     {
-        if(!$_SESSION['user']) {
+        if(!isset($_SESSION['user'])) {
             echo "You have no permissions to do this action. Available only for administrators.";
 		} else {
             if($_SESSION['user']['role'] === "Admin") {
@@ -168,7 +166,7 @@ class ProductController extends BasicController
 
     public function addProductCategory() 
     {
-        if(!$_SESSION['user']) {
+        if(!isset($_SESSION['user'])) {
             echo "You have no permissions to do this action. Available only for administrators.";
 		} else {
             if($_SESSION['user']['role'] === "Admin") {
@@ -187,7 +185,7 @@ class ProductController extends BasicController
 
     public function updateProductCategory() 
     {
-        if(!$_SESSION['user']) {
+        if(!isset($_SESSION['user'])) {
             echo "You have no permissions to do this action. Available only for administrators.";
 		} else {
             if($_SESSION['user']['role'] === "Admin") {
@@ -207,7 +205,7 @@ class ProductController extends BasicController
 
     public function deleteProductCategory()
     {
-        if(!$_SESSION['user']) {
+        if(!isset($_SESSION['user'])) {
             echo "You have no permissions to do this action. Available only for administrators.";
 		} else {
             if($_SESSION['user']['role'] === "Admin") {

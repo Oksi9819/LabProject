@@ -10,14 +10,14 @@ class UserView extends BasicView
     {
         $this->navi();
         echo '<b>Заполните пожалуйста форму регистрации: </b><br><br>';
-        echo '<form method="post">Введите фамилию: <input type="text" name="user_surname" required="required"><br>Введите фамилию: <input type="text" name="user_name" required="required"><br>Введите дату рождения: <input type="date" name="user_birthday" required="required"><br>Введите телефон: <input type="tel" name="user_phone" required="required"><br>Введите адрес: <input type="text" name="user_address" required="required"><br>Введите email: <input type="email" name="user_email" value="Введите email" required="required"><br>Введите пароль: <input type="password" name="user_password" maxlength="8" required="required"><br><input type="submit" name="submit_reg_user" value="Зарегистрироваться"></form>';
+        echo '<form method="post">Введите фамилию: <input type="text" name="user_surname" required="required"><br>Введите имя: <input type="text" name="user_name" required="required"><br>Введите дату рождения: <input type="date" name="user_birthday" required="required"><br>Введите телефон: <input type="tel" name="user_phone" required="required"><br>Введите адрес: <input type="text" name="user_address" required="required"><br>Введите email: <input type="email" name="user_email" value="Введите email" required="required"><br>Введите пароль: <input type="password" name="user_password" maxlength="8" required="required"><br><input type="submit" name="submit_reg_user" value="Зарегистрироваться"></form>';
     }
 
-    public function setUser($result)
+    /*public function setUser($result)
     {
         $this->navi();
         echo $result." Вы успешно зарегистрировались!:<br>Далее необходимо <a href='/authorization-form'>авторизоваться!</a><br>";
-    }
+    }***/
 
     public function authUser()
     {
@@ -58,7 +58,8 @@ class UserView extends BasicView
         <b>Удалить пользователя:</b><br>
         <form method="post" name="delete_user_form" action="'.BASEPATH.'deleteUser/profile/'.$user[0]['user_id'].'">
             <input type="submit" name="submit_delete_user" value = DELETE><br>
-        </form><br>';
+        </form><br>
+        <a href="'.BASEPATH.'exit/profile/'.$user[0]['user_id'].'">Выйти</a><br>';
     }
 
     public function renderUserDeletedPage( string $result, int $user_id)

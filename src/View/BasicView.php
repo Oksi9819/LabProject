@@ -48,4 +48,10 @@ class BasicView
         </ul>
         ';
     }
+
+    public function errorView(string $message)
+    {
+        $this->navi();
+        echo "Oops! There seems to be an error. Details: $message.";
+    }
 }

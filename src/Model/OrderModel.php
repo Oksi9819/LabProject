@@ -2,6 +2,7 @@
 
 namespace Itechart\InternshipProject\Model;
 
+use Exception;
 use Itechart\InternshipProject\Model\BasicModel;
 
 class OrderModel extends BasicModel
@@ -41,7 +42,11 @@ class OrderModel extends BasicModel
         $fields = "cart.order_id AS order_id, product.product_id AS product_id, product.product_name AS product_name, product.product_price AS product_price";
         $table = "cart LEFT JOIN product ON product.product_id=cart.product_id";
         $result = $this->getModel($fields, $table, NULL, NULL, NULL, NULL, "order_id, product_id", NULL);
-        return $result;
+        if (!empty($result)) {
+            return $result;
+        } else {
+            throw new Exception("There are no orders yet :(");
+        }
     }
 
     public function getOrdersByUserId(int $user_id): array
@@ -50,7 +55,11 @@ class OrderModel extends BasicModel
             $fields = "order_product.order_id AS order_id, order_product.order_address AS address, order_status.status_name AS status, SUM(cart.amount*product.product_price)AS price";
             $table = "order_product INNER JOIN user ON user.user_id=order_product.user_id INNER JOIN order_status ON order_status.status_id=order_product.status INNER JOIN cart ON cart.order_id=order_product.order_id LEFT JOIN product ON product.product_id=cart.product_id";
             $result = $this->getModel($fields, $table, "shop.user.user_id", $user_id, NULL, "order_product.order_id", NULL, "i");
-            return $result;
+            if (!empty($result)) {
+                return $result;
+            } else {
+                throw new Exception("You don't have orders yet.");
+            }
         }
     }
 
@@ -96,7 +105,6 @@ class OrderModel extends BasicModel
 
     public function deleteOrder(int $order_id):void
     {
-        $values = array(4);
         $result = $this->deleteModelItem("order_product", "order_id", $order_id, NULL, "i");      
     }
 }

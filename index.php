@@ -70,6 +70,11 @@ Route::add('/([A-Za-z]*)/profile/([0-9]*)', function($method, $user_id) {
   (new UserController())->$method($user_id);
 }, 'post');
 
+// Route to profile page
+Route::add('/([A-Za-z]*)/profile/([0-9]*)', function($method, $user_id) {
+  (new UserController())->$method($user_id);
+}, 'get');
+
 // Route to profile page->info about user's orders
 Route::add('/profile/([0-9]*)/orders', function($user_id) {
   (new UserController())->getUserOrders($user_id);

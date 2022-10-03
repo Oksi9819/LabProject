@@ -25,7 +25,7 @@ class ReviewModel extends BasicModel
             print_r($values);
             $result = $this->setModel("review", $fields, "iss", $values);
         } else {
-            throw new Exception("Review is too long. Length must be less than 500 characters.<br>", 1);
+            throw new Exception("Review is too long. Length must be less than 500 characters.<br>");
         } 
     }
 
@@ -33,13 +33,21 @@ class ReviewModel extends BasicModel
     public function getReviews(): array
     {
         $result = $this->getModel("r.review_id AS review_id, u.user_name AS user_name, u.user_surname AS user_surname, r.review_text As review_text", "review AS r LEFT JOIN shop.user AS u ON u.user_id=r.user_id", NULL, NULL, NULL, NULL, NULL, NULL);
-        return $result;
+        if (!empty($result)) {
+            return $result;
+        }  else {
+            throw new Exception("There are no reviews yet :(");
+        }
     }
 
     public function getReviewsByUserId(int $user_id): array
     {
         $result = $this->getModel("*", "review", "user_id", $user_id, NULL, NULL, NULL, "i");
-        return $result;
+        if (!empty($result)) {
+            return $result;
+        }  else {
+            throw new Exception("You haven't posted any reviews yet :(");
+        }
     }
 
     //UPDATE
