@@ -43,14 +43,25 @@ class BasicView
             </ul>
           </li>-->';
           if (isset($_SESSION['user'])) {
-            echo '<li><a href="'.BASEPATH.'profile/'.$_SESSION['user']['id'].'">Привет, '.$_SESSION['user']['name'].'</a>
-            <ul>
-              <li><a href="'.BASEPATH.'profile/'.$_SESSION['user']['id'].'/info">Информация о пользователе id'.$_SESSION['user']['id'].'</a></li>
-              <li><a href="'.BASEPATH.'profile/'.$_SESSION['user']['id'].'/reviews">Все отзывы пользователя id'.$_SESSION['user']['id'].'</a></li>
-              <li><a href="'.BASEPATH.'profile/'.$_SESSION['user']['id'].'/orders">Все заказы пользователя id'.$_SESSION['user']['id'].'</a></li>
-              <!--<li><a href="'.BASEPATH.'cart/2256665">Корзина пользователя 2256665</a></li>-->
-            </ul>
-          </li><br><br>';
+            if ($_SESSION['user']['role'] === "Admin") {
+              echo '<li><a href="'.BASEPATH.'profile/'.$_SESSION['user']['id'].'">Привет, Администатор '.$_SESSION['user']['name'].'</a>
+              <ul>
+                <li><a href="'.BASEPATH.'profile/'.$_SESSION['user']['id'].'/info">Информация об администаторе id'.$_SESSION['user']['id'].'</a></li>
+                <li><a href="'.BASEPATH.'profile/'.$_SESSION['user']['id'].'/reviews">Отзывы</a></li>
+                <li><a href="'.BASEPATH.'profile/'.$_SESSION['user']['id'].'/orders">Заказы</a></li>
+                <!--<li><a href="'.BASEPATH.'cart/2256665">Корзина пользователя 2256665</a></li>-->
+              </ul>
+            </li><br><br>';
+            } else {
+              echo '<li><a href="'.BASEPATH.'profile/'.$_SESSION['user']['id'].'">Привет, '.$_SESSION['user']['name'].'</a>
+              <ul>
+                <li><a href="'.BASEPATH.'profile/'.$_SESSION['user']['id'].'/info">Информация о пользователе id'.$_SESSION['user']['id'].'</a></li>
+                <li><a href="'.BASEPATH.'profile/'.$_SESSION['user']['id'].'/reviews">Все отзывы пользователя id'.$_SESSION['user']['id'].'</a></li>
+                <li><a href="'.BASEPATH.'profile/'.$_SESSION['user']['id'].'/orders">Все заказы пользователя id'.$_SESSION['user']['id'].'</a></li>
+                <!--<li><a href="'.BASEPATH.'cart/2256665">Корзина пользователя 2256665</a></li>-->
+              </ul>
+            </li><br><br>';              
+            }
           }
     }
 
