@@ -6,12 +6,12 @@ use Itechart\InternshipProject\View\BasicView;
 class ProductView extends BasicView
 {
     //User functions
-    public function renderProductsPage(array $products)
+    public function renderProductsPage(array $products, array $categories)
     {
-        $this->navi();
+        $this->navi($categories);
         echo '<br><b>КАТАЛОГ</b><br><br>';
         echo '<b>Все товары каталога: </b><br>
-        <form method="post" name="sort_form">
+        <form method="post" name="sort_form" action="'.BASEPATH.'catalog/sort">
             <select name="sort_choice">
                 <option value="popularity">по популярности</option>
                 <option value="pricelowhigh">по возрастанию цены</option>
@@ -28,12 +28,12 @@ class ProductView extends BasicView
         echo '</table>';
     }
     
-    public function renderProductListByCategory(string $category_name, array $products)
+    public function renderProductListByCategory(string $category_name, array $products, array $categories)
     {
-        $this->navi();
+        $this->navi($categories);
         echo '<br><b>КАТАЛОГ</b><br><br>';
         echo '<b>Все товары категории: </b>'.$category_name.'<br>
-        <form method="post" action="'.BASEPATH.'catalog/sort">
+        <form method="post" action="'.BASEPATH.'catalog/category/'.$category_name.'/sort">
             <select name="sort_choice">
                 <option value="popularity">по популярности</option>
                 <option value="pricelowhigh">по возрастанию цены</option>
@@ -53,9 +53,9 @@ class ProductView extends BasicView
         
     }
 
-    public function renderProductListById(array $product)
+    public function renderProductListById(array $product, array $categories)
     {
-        $this->navi();
+        $this->navi($categories);
         global $BASEPATH;
         echo 'Товар с id: '.$product[0]['product_id'].'<br>';
         echo 'Наименование товара: '.$product[0]['product_name'].'<br>';
@@ -129,7 +129,7 @@ class ProductView extends BasicView
         $this->adminCatalogFunctions($categories);
     }
     
-    public function renderProductListByCategoryAdmin(string $category_name, array $products, array $categories)
+    public function renderProductListByCategoryAdmin(string $category_name, array $products)
     {
         $this->renderProductListByCategory($category_name, $products);
         $this->adminCatalogFunctions($categories);
@@ -153,9 +153,9 @@ class ProductView extends BasicView
         </form>';
     }
 
-    public function renderProductDeletedPage(string $result, int $product_id)
+    public function renderProductDeletedPage(string $result, int $product_id, array $categories)
     {
-        $this->navi();
+        $this->navi($categories);
         echo $result.' Товар с id: '.$product_id.' был удален.<br>';
     }
 }

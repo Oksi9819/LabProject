@@ -4,6 +4,7 @@ namespace Itechart\InternshipProject\Controller;
 
 use Itechart\InternshipProject\View\MainView;
 use Itechart\InternshipProject\Model\MainModel;
+use Itechart\InternshipProject\Model\CategoryModel;
 use Itechart\InternshipProject\Controller\BasicController;
 
 class MainController extends BasicController
@@ -19,31 +20,36 @@ class MainController extends BasicController
     
     public function executeMainPage()
     {
-        return $this->mainView->getMainPage($this->mainModel->getMainInfo());
+        $categories = (new CategoryModel())->getCategories();
+        return $this->mainView->getMainPage($this->mainModel->getMainInfo(), $categories);
     }
 
     public function executeContactsPage()
     {
-        return $this->mainView->getContactsPage($this->mainModel->getContactsInfo());
+        $categories = (new CategoryModel())->getCategories();
+        return $this->mainView->getContactsPage($this->mainModel->getContactsInfo(), $categories);
     }
 
     public function executeDeliveryPage()
     {
-        return $this->mainView->getDeliveryPage($this->mainModel->getDeliveryInfo());
+        $categories = (new CategoryModel())->getCategories();
+        return $this->mainView->getDeliveryPage($this->mainModel->getDeliveryInfo(), $categories);
     }
     
     public function sendContactForm()
     {
-        return $this->mainView->sendContactForm();   
+        $categories = (new CategoryModel())->getCategories();
+        return $this->mainView->sendContactForm($categories);   
     }
 
     public function showContactForm()
     {
         if(!empty($_POST['contact_name']) && !empty($_POST['contact_email']) && !empty($_POST['contact_text'])) {
+            $categories = (new CategoryModel())->getCategories();
             $contact_name = trim($_POST['contact_name']);
             $contact_email = trim($_POST['contact_email']);
             $contact_text = trim($_POST['contact_text']);
-            return $this->mainView->showContactForm($this->mainModel->setContact($contact_name, $contact_email, $contact_text));
+            return $this->mainView->showContactForm($this->mainModel->setContact($contact_name, $contact_email, $contact_text), $categories);
         }
     }
 
@@ -85,14 +91,16 @@ class MainController extends BasicController
                 $types.="s";
             }
             if (!empty($value)) {
+                $categories = (new CategoryModel())->getCategories();
                 $new_info = $this->mainModel->updatePageInfo($fields, $page_name, $values, $types);
-                return $this->mainView->showContactForm();
+                return $this->mainView->showContactForm($categories);
             } 
         }
     }
 
     public function deletePage()
     {
-        return $this->mainView->showContactForm($this->mainModel->deletePage($page_id));
+        $categories = (new CategoryModel())->getCategories();
+        return $this->mainView->showContactForm($this->mainModel->deletePage($page_id), $categories);
     }
 }

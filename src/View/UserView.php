@@ -6,9 +6,9 @@ use Itechart\InternshipProject\View\BasicView;
 
 class UserView extends BasicView
 {
-    public function sendUser()
+    public function sendUser(array $categories)
     {
-        $this->navi();
+        $this->navi($categories);
         echo '<b>Заполните пожалуйста форму регистрации: </b><br><br>';
         echo '<form method="post">Введите фамилию: <input type="text" name="user_surname" required="required"><br>Введите имя: <input type="text" name="user_name" required="required"><br>Введите дату рождения: <input type="date" name="user_birthday" required="required"><br>Введите телефон: <input type="tel" name="user_phone" required="required"><br>Введите адрес: <input type="text" name="user_address" required="required"><br>Введите email: <input type="email" name="user_email" value="Введите email" required="required"><br>Введите пароль: <input type="password" name="user_password" maxlength="8" required="required"><br><input type="submit" name="submit_reg_user" value="Зарегистрироваться"></form>';
     }
@@ -19,16 +19,16 @@ class UserView extends BasicView
         echo $result." Вы успешно зарегистрировались!:<br>Далее необходимо <a href='/authorization-form'>авторизоваться!</a><br>";
     }***/
 
-    public function authUser()
+    public function authUser(array $categories)
     {
-        $this->navi();
+        $this->navi($categories);
         echo '<b>Заполните пожалуйста поля авторизации: </b><br><br>';
         echo '<form method="post">Введите email: <input type="email" name="user_email"><br>Введите пароль: <input type="password" name="user_password" maxlength="8"><br><input type="submit" value="Зарегистрироваться"></form>';
     }
 
-    public function renderUserPage(array $user)
+    public function renderUserPage(array $user, array $categories)
     {
-        $this->navi();
+        $this->navi($categories);
         echo "Данные о пользователе: <br>";
         echo "Id: ".$user[0]['user_id']."<br>";
         echo "Имя: ".$user[0]['user_name']."<br>";
@@ -62,17 +62,17 @@ class UserView extends BasicView
         <a href="'.BASEPATH.'exit/profile/'.$user[0]['user_id'].'">Выйти</a><br>';
     }
 
-    public function renderUserDeletedPage( string $result, int $user_id)
+    public function renderUserDeletedPage( string $result, int $user_id, array $categories)
     {
-        $this->navi();
+        $this->navi($categories);
         echo $result.' Пользователь с id: '.$user_id.' был удален.<br>';
     }
 
-    public function renderUserReviewsPage(array $reviews, int $user_id)
+    public function renderUserReviewsPage(array $reviews, int $user_id, array $categories)
     {
         global $BASEPATH;
         echo BASEPATH;
-        $this->navi();
+        $this->navi($categories);
         $i=1;
         foreach ($reviews as $review) {
             echo $i."-ый отзыв<br>";
@@ -106,9 +106,9 @@ class UserView extends BasicView
         </form><br>';
     }
 
-    public function renderUserOrdersPage(array $orders, array $order_details, int $user_id)
+    public function renderUserOrdersPage(array $orders, array $order_details, int $user_id, array $categories)
     {
-        $this->navi();
+        $this->navi($categories);
         echo "<br><br><br><br><br>";
         echo "Заказы пользователя ".$user_id."<br>";
         echo "<table><tr><td>Код заказа</td><td>Адрес заказа</td><td>Сумма заказа</td><td>Статус заказа</td><td>Детали заказа</td></tr>";
@@ -128,9 +128,9 @@ class UserView extends BasicView
         echo "</table>";
     }
 
-    public function renderAdminPage(array $user)
+    public function renderAdminPage(array $user, array $categories)
     {
-        $this->navi();
+        $this->navi($categories);
         echo "Данные об Администраторе: <br>";
         echo "Id: ".$user[0]['user_id']."<br>";
         echo "Фамилия: ".$user[0]['user_name']."<br>";
@@ -174,9 +174,9 @@ class UserView extends BasicView
         </form><br>';
     }
 
-    public function renderAdminReviewsPage(array $reviews)
+    public function renderAdminReviewsPage(array $reviews, array $categories)
     {
-        $this->navi();
+        $this->navi($categories);
         $i=1;
         foreach ($reviews as $review) {
             echo $i."-ый отзыв<br>";
@@ -185,9 +185,9 @@ class UserView extends BasicView
         }
     }
 
-    public function renderAdminOrdersPage(array $orders, array $order_details)
+    public function renderAdminOrdersPage(array $orders, array $order_details, array $categories)
     {
-        $this->navi();
+        $this->navi($categories);
         echo "<br><br><br><br><br>";
         echo "Все Заказы<br>";
         echo "<table><tr><td>Код заказа</td><td>Фамилия заказчика</td><td>Имя заказчика</td><td>Адрес заказа</td><td>Телефон заказа</td><td>Email заказа</td><td>Сумма заказа</td><td>Статус заказа</td><td>Детали заказа</td></tr>";

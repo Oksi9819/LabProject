@@ -1,7 +1,9 @@
 <?php
 namespace Itechart\InternshipProject\Model;
 
+use Exception;
 use Itechart\InternshipProject\Model\BasicModel;
+use Itechart\InternshipProject\Model\CategoryModel;
 
 class ProductModel extends BasicModel
 {
@@ -24,7 +26,6 @@ class ProductModel extends BasicModel
     //READ
     public function getProducts(string $sort_field): array
     {
-        global $conn;
         if ($sort_field === "popularity") {
             $result = $this->getModel("product.product_id AS product_id, product.product_name AS product_name, product.product_desc AS product_desc, product.product_price AS product_price", "product LEFT JOIN cart ON product.product_id = cart.product_id",  NULL, NULL, NULL, "product_id", "COUNT(*)*cart.amount DESC", NULL);
         }
@@ -43,26 +44,48 @@ class ProductModel extends BasicModel
         return $result;
     }
 
-    public function getProductsByCategory(int $category_id, string $sort_field): array
+    public function getProductsByCategory(string $category_name, string $sort_field): array
     {
-        if ($sort_field === "popularity") {
-            $table = "product LEFT JOIN cart ON product.product_id = cart.product_id";
-             /*WHERE product.product_category = ".$category_id." GROUP BY product_id";*/
-            $result = $this->getModel("product.product_id AS product_id, product.product_name AS product_name, product.product_desc AS product_desc, product.product_price AS product_price", $table, "product.product_category", $category_id, NULL, NULL, "COUNT(*)*cart.amount DESC", "i");
+        //echo $category_name."<br><br>";
+        $categories = (new categoryModel())->getCategories();
+        //print_r($categories);
+        $category_id = NULL;
+        for ($i=0; $i < count($categories); $i++) { 
+            if ($categories[$i]['name_eng'] === $category_name) {
+                $category_id = $categories[$i]['category_id'];
+            }
         }
-        if ($sort_field === "pricelowhigh") {
-            $result = $this->getModel("*", "product", "product_category", $category_id, NULL, NULL, "product_price, product_name",  "i");
+        if (!empty($category_id)) {
+            if ($sort_field === "popularity") {
+                $table = "product LEFT JOIN cart ON product.product_id = cart.product_id";
+                $sort_clause = "COUNT(*)*cart.amount DESC";
+                 /*WHERE product.product_category = ".$category_id." GROUP BY product_id";*/
+                $result = $this->getModel("product.product_id AS product_id, product.product_name AS product_name, product.product_desc AS product_desc, product.product_price AS product_price", $table, "product.product_category", $category_id, NULL, NULL, $sort_clause, "i");
+            }
+            if ($sort_field === "pricelowhigh") {
+                $sort_clause = "product_price, product_name";
+                $result = $this->getModel("*", "product", "product_category", $category_id, NULL, NULL, $sort_clause,  "i");
+            }
+            if ($sort_field === "pricehighlow") {
+                $sort_clause = "product_price DESC, product_name";
+                $result = $this->getModel("*", "product", "product_category", $category_id, NULL, NULL, $sort_clause, "i");
+            }
+            if ($sort_field === "az") {
+                $sort_clause = "product_name";
+                $result = $this->getModel("*", "product", "product_category", $category_id, NULL, NULL, $sort_clause, "i");
+            }
+            if ($sort_field === "za") {
+                $sort_clause = "product_name DESC";
+                $result = $this->getModel("*", "product", "product_category", $category_id, NULL, NULL, $sort_clause, "i");
+            }
+            if (!empty($result)) {
+                return $result;
+            } else {
+                throw new Exception("There are no products of such category.");
+            }
+        } else {
+            throw new Exception("Such category was not found.");
         }
-        if ($sort_field === "pricehighlow") {
-            $result = $this->getModel("*", "product", "product_category", $category_id, NULL, NULL, "product_price DESC, product_name", "i");
-        }
-        if ($sort_field === "az") {
-            $result = $this->getModel("*", "product", "product_category", $category_id, NULL, NULL, "product_name", "i");
-        }
-        if ($sort_field === "za") {
-            $result = $this->getModel("*", "product", "product_category", $category_id, NULL, NULL, "product_name DESC", "i");
-        }
-        return $result;
     }
 
     public function getProductById(int $product_id): array

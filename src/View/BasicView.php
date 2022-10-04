@@ -3,7 +3,7 @@ namespace Itechart\InternshipProject\View;
 
 class BasicView
 {
-    protected function navi()
+    protected function navi(array $categories)
     {
         global $BASEPATH;
         echo '
@@ -11,13 +11,11 @@ class BasicView
         <ul>
           <li><a href="'.BASEPATH.'">Главная</a></li>
           <li><a href="'.BASEPATH.'catalog">Каталог</a>
-            <ul>
-              <li><a href="'.BASEPATH.'catalog/category/VacuumCleaners">Категория Пылесосы</a></li>
-              <li><a href="'.BASEPATH.'catalog/category/AirCleaners">Категория Очистители воздуха</a></li>
-              <li><a href="'.BASEPATH.'catalog/category/Humidifiers">Категория Увлажнители воздуха</a></li>
-              <li><a href="'.BASEPATH.'catalog/category/Lamps">Категория Светильники</a></li>
-              <li><a href="'.BASEPATH.'catalog/category/Other">Категория Другое</a></li>
-              <li><a href="'.BASEPATH.'catalog/category/VacuumCleaners/id1">Пылесосы артикул "1"</a></li>
+            <ul>';
+            foreach ($categories as $category) {
+              echo '<li><a href="'.BASEPATH.'catalog/category/'.$category['name_eng'].'">Категория '.$category['category_name'].'</a></li>';
+            }
+              echo '<li><a href="'.BASEPATH.'catalog/category/VacuumCleaners/id1">Пылесосы артикул "1"</a></li>
               <li><a href="'.BASEPATH.'catalog/id2">Продукт с артикулом "2"</a></li>
               <li><a href="'.BASEPATH.'catalog/search">Поисковая строка в каталоге</a></li>
             </ul>
@@ -43,15 +41,22 @@ class BasicView
               <li><a href="'.BASEPATH.'profile/1/reviews">Все отзывы</a></li>
               <li><a href="'.BASEPATH.'profile/1/orders">Все заказы</a></li>
             </ul>
-          </li>
-          <li><a href="'.BASEPATH.'cart/2256665">Корзина пользователя 2256665</a></li>
-        </ul>
-        ';
+          </li>';
+          if (isset($_SESSION['user'])) {
+            echo '<li><a href="'.BASEPATH.'profile/'.$_SESSION['user']['id'].'">Привет, '.$_SESSION['user']['name'].'</a>
+            <ul>
+              <li><a href="'.BASEPATH.'profile/'.$_SESSION['user']['id'].'/info">Информация о пользователе id'.$_SESSION['user']['id'].'</a></li>
+              <li><a href="'.BASEPATH.'profile/'.$_SESSION['user']['id'].'/reviews">Все отзывы пользователя id'.$_SESSION['user']['id'].'</a></li>
+              <li><a href="'.BASEPATH.'profile/'.$_SESSION['user']['id'].'/orders">Все заказы пользователя id'.$_SESSION['user']['id'].'</a></li>
+              <!--<li><a href="'.BASEPATH.'cart/2256665">Корзина пользователя 2256665</a></li>-->
+            </ul>
+          </li>';
+          }
     }
 
-    public function errorView(string $message)
+    public function errorView(string $message, array $categories)
     {
-        $this->navi();
+        $this->navi($categories);
         echo "Oops! There seems to be an error. Details: $message.";
     }
 }

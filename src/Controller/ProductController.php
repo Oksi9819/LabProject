@@ -20,60 +20,50 @@ class ProductController extends BasicController
     public function getProducts()
     {
         $products = $this->productModel->getProducts("popularity");
-        return $this->productView->renderProductsPage($products);
+        $categories = (new CategoryModel())->getCategories();
+        return $this->productView->renderProductsPage($products, $categories);
     }
 
     public function getProductsSorted()
     {
         $sort = $_POST['sort_choice'];
         $products = $this->productModel->getProducts($sort);
-        return $this->productView->renderProductsPage($products);
+        $categories = (new CategoryModel())->getCategories();
+        return $this->productView->renderProductsPage($products, $categories);
     }
 
-    public function getProductsByCategory($category)
+    public function getProductsByCategory($category_name)
     {
-        if ($category == "VacuumCleaners") {
-            $category_id = 1;
+        try {
+            $products = $this->productModel->getProductsByCategory($category_name, "pricelowhigh");
+            $categories = (new CategoryModel())->getCategories();
+            return $this->productView->renderProductListByCategory($category_name, $products, $categories); 
+        } catch (Exception $e) {
+            return $this->productView->errorView($e->getMessage());
         }
-        if ($category == "AirCleaners") {
-            $category_id = 3;
-        }    
-        if ($category == "Humidifiers") {
-            $category_id = 2;
-        } 
-        if ($category == "Lamps") {
-            $category_id = 4; 
-        } 
-        if ($category == "Other") {
-            $category_id = 5;
-        }
-        $products = $this->productModel->getProductsByCategory($category_id, "pricelowhigh");
-        return $this->productView->renderProductListByCategory($category, $products);
     }
 
-    public function getProductsByCategorySorted($category)
+    public function getProductsByCategorySorted($category_name)
     {
-
-        $sort = $_POST['sort_choice'];
-        if ($category === "VacuumCleaners") {
-            $category_id = 1;;
-        } elseif ($category === "AirCleaners") {
-            $category_id = 3;
-        } elseif ($category === "Humidifiers") {
-            $category_id = 2;
-        } elseif ($category === "Lamps") {
-            $category_id = 4; 
-        } elseif ($category === "Other") {
-            $category_id = 5;
-        }
-        $products = $this->productModel->getProductsByCategory($category_id, $sort);
-        return $this->productView->renderProductListByCategory($category, $products);
+        if (!empty($_POST['sort_choice'])) {
+            $sort = (string)$_POST['sort_choice'];
+            try {
+                $products = $this->productModel->getProductsByCategory($category_name, $sort);
+                $categories = (new CategoryModel())->getCategories();
+                return $this->productView->renderProductListByCategory($category_name, $products, $categories);
+            } catch (Exception $e) {
+                return $this->productView->errorView($e->getMessage());
+            }
+        } else {
+            return header('Location: '.BASEPATH.'profile/'.$user[0]['user_id']);
+        }  
     }
 
     public function getProductById(int $product_id)
     {
         $product=$this->productModel->getProductById($product_id);
-        return $this->productView->renderProductListById($product);
+        $categories = (new CategoryModel())->getCategories();
+        return $this->productView->renderProductListById($product, $categories);
     }
 
     /*public function getProductByName($product_name)
@@ -86,7 +76,7 @@ class ProductController extends BasicController
     public function addProduct()
     {
         if(!isset($_SESSION['user'])) {
-            echo "You have no permissions to do this action. Available only for administrators.";
+            return $this->productView->errorView("You have no permissions to do this action. Available only for administrators.");
 		} else {
             if($_SESSION['user']['role'] === "Admin") {
                 global $BASEPATH;
@@ -102,7 +92,7 @@ class ProductController extends BasicController
                     }  
                 }               
             } else {
-                echo "You have no permissions to do this action. Available only for administrators.";   
+                return $this->productView->errorView("You have no permissions to do this action. Available only for administrators.");   
             }
         }
     }
@@ -110,7 +100,7 @@ class ProductController extends BasicController
     public function updateProduct(int $product_id)
     {
         if(!isset($_SESSION['user'])) {
-            echo "You have no permissions to do this action. Available only for administrators.";
+            return $this->productView->errorView("You have no permissions to do this action. Available only for administrators.");
 		} else {
             if($_SESSION['user']['role'] === "Admin") {
                 global $BASEPATH;
@@ -143,7 +133,7 @@ class ProductController extends BasicController
                     }
                 }           
             } else {
-                echo "You have no permissions to do this action. Available only for administrators.";   
+                return $this->productView->errorView("You have no permissions to do this action. Available only for administrators.");   
             }
         }
     }
@@ -151,15 +141,16 @@ class ProductController extends BasicController
     public function deleteProduct(int $product_id)
     {
         if(!isset($_SESSION['user'])) {
-            echo "You have no permissions to do this action. Available only for administrators.";
+            return $this->productView->errorView("You have no permissions to do this action. Available only for administrators.");
 		} else {
             if($_SESSION['user']['role'] === "Admin") {
                 if (!empty($_POST['submit_delete_product'])) {
                     $result=$this->productModel->deleteProduct($product_id);
-                    return $this->productView->renderProductDeletedPage($result, $product_id);
+                    $categories = (new CategoryModel())->getCategories();
+                    return $this->productView->renderProductDeletedPage($result, $product_id, $categories);
                 }           
             } else {
-                echo "You have no permissions to do this action. Available only for administrators.";   
+                return $this->productView->errorView("You have no permissions to do this action. Available only for administrators.");
             }
         }
     }
@@ -167,7 +158,7 @@ class ProductController extends BasicController
     public function addProductCategory() 
     {
         if(!isset($_SESSION['user'])) {
-            echo "You have no permissions to do this action. Available only for administrators.";
+            return $this->productView->errorView("You have no permissions to do this action. Available only for administrators.");
 		} else {
             if($_SESSION['user']['role'] === "Admin") {
                 global $BASEPATH;
@@ -178,7 +169,7 @@ class ProductController extends BasicController
                         return header('Location: '.BASEPATH.'catalog');
                 }           
             } else {
-                echo "You have no permissions to do this action. Available only for administrators.";   
+                return $this->productView->errorView("You have no permissions to do this action. Available only for administrators.");
             }
         }
     }
@@ -186,7 +177,7 @@ class ProductController extends BasicController
     public function updateProductCategory() 
     {
         if(!isset($_SESSION['user'])) {
-            echo "You have no permissions to do this action. Available only for administrators.";
+            return $this->productView->errorView("You have no permissions to do this action. Available only for administrators.");
 		} else {
             if($_SESSION['user']['role'] === "Admin") {
                 global $BASEPATH;
@@ -198,7 +189,7 @@ class ProductController extends BasicController
                     return header('Location: '.BASEPATH.'catalog');
                 }              
             } else {
-                echo "You have no permissions to do this action. Available only for administrators.";   
+                return $this->productView->errorView("You have no permissions to do this action. Available only for administrators.");  
             }
         }  
     }
@@ -206,7 +197,7 @@ class ProductController extends BasicController
     public function deleteProductCategory()
     {
         if(!isset($_SESSION['user'])) {
-            echo "You have no permissions to do this action. Available only for administrators.";
+            return $this->productView->errorView("You have no permissions to do this action. Available only for administrators.");
 		} else {
             if($_SESSION['user']['role'] === "Admin") {
                 if (!empty($_POST['submit_delete_category'])) {
@@ -215,7 +206,7 @@ class ProductController extends BasicController
                     return header('Location: '.BASEPATH.'catalog');
                 }               
             } else {
-                echo "You have no permissions to do this action. Available only for administrators.";   
+                return $this->productView->errorView("You have no permissions to do this action. Available only for administrators.");  
             }
         }  
     } 
