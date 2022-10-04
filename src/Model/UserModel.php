@@ -70,15 +70,14 @@ class UserModel extends BasicModel
     }
 
     //READ
-    public function getUsers(): array
+    public function getUsers(string $fields, string $ifvalue): array
     {
-        $result = $this->getModel("*", "user", NULL, NULL, NULL, NULL, NULL, NULL);
+        $result = $this->getModel($fields, "user AS u LEFT JOIN user_role AS ur ON ur.role_id=u.user_role", "ur.role_name", $ifvalue, NULL, NULL, "u.user_name, u.user_surname", "s");
         if (!empty($result)) {
             return $result;
         } else {
-            throw new Exception("There are no users yet.");
+            throw new Exception("There are no users.");
         }
-        
     }
 
     public function getUserInfo(int $user_id): array

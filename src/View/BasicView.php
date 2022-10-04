@@ -49,6 +49,8 @@ class BasicView
                 <li><a href="'.BASEPATH.'profile/'.$_SESSION['user']['id'].'/info">Информация об администаторе id'.$_SESSION['user']['id'].'</a></li>
                 <li><a href="'.BASEPATH.'profile/'.$_SESSION['user']['id'].'/reviews">Отзывы</a></li>
                 <li><a href="'.BASEPATH.'profile/'.$_SESSION['user']['id'].'/orders">Заказы</a></li>
+                <li><a href="'.BASEPATH.'profile/'.$_SESSION['user']['id'].'/users">Все пользователи</a></li>
+                <li><a href="'.BASEPATH.'profile/'.$_SESSION['user']['id'].'/admins">Все администраторы</a></li>
                 <!--<li><a href="'.BASEPATH.'cart/2256665">Корзина пользователя 2256665</a></li>-->
               </ul>
             </li><br><br>';

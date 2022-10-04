@@ -238,6 +238,54 @@ class UserController extends BasicController
         }
     }
 
+    public function getUsers(int $user_id)
+    {
+        $categories = (new CategoryModel())->getCategories();
+        if(!isset($_SESSION['user'])) {
+			header("Location: /");
+		} elseif ($_SESSION['user']['id'] == $user_id) {
+            if ($_SESSION['user']['role'] === "Admin") {
+                echo "YOU ARE ADMIN";
+                try {  
+                    $fields = "u.user_id, u.user_name, u.user_surname, u.user_birthday, u.user_phone, u.user_address, u.user_email, u.created_at, u.updated_at";
+                    $ifvalue = "User";
+                    $users = $this->userModel->getUsers($fields, $ifvalue);
+                    return $this->userView->renderAdminUsersPage($users, $categories);
+                } catch (Exception $e) {
+                    return $this->userView->errorView($e->getMessage(), $categories);
+                }
+            } else {
+                header("Location: /");
+            }
+        } else {
+            header("Location: /");
+        }
+    }
+
+    public function getAdmins(int $user_id)
+    {
+        $categories = (new CategoryModel())->getCategories();
+        if(!isset($_SESSION['user'])) {
+			header("Location: /");
+		} elseif ($_SESSION['user']['id'] == $user_id) {
+            if ($_SESSION['user']['role'] === "Admin") {
+                echo "YOU ARE ADMIN";
+                try {  
+                    $fields = "u.user_id, u.user_name, u.user_surname, u.user_birthday, u.user_phone, u.user_address, u.user_email, u.created_at, u.updated_at";
+                    $ifvalue = "Admin";
+                    $admins = $this->userModel->getUsers($fields, $ifvalue);
+                    return $this->userView->renderAdminUsersPage($admins, $categories);
+                } catch (Exception $e) {
+                    return $this->userView->errorView($e->getMessage(), $categories);
+                }
+            } else {
+                header("Location: /");
+            }
+        } else {
+            header("Location: /");
+        }
+    }
+
     public function addNewAdmin(int $user_id) 
     {
         $categories = (new CategoryModel())->getCategories();

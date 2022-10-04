@@ -210,4 +210,14 @@ class UserView extends BasicView
         }
         echo "</table>";
     }
+
+    public function renderAdminUsersPage(array $users, array $categories)
+    {
+        $this->navi($categories);
+        $i=1;
+        foreach ($users as $user) {
+            echo "Id: ".$user['user_id']." Имя: ".$user['user_name']." Фамилия: ".$user['user_surname']." День рождения: ".$user['user_birthday']." Адрес: ".$user['user_address']." Телефон: ".$user['user_phone']." Почта: ".$user['user_email']." Создан: ".$user['created_at']."<br>";
+            $i++;
+        }
+    }
 }

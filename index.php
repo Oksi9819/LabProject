@@ -83,6 +83,16 @@ Route::add('/profile/([0-9]*)/reviews', function($user_id) {
   (new UserController())->getUserReviews($user_id);
 }, 'get');
 
+// Route to profile page->info about all users
+Route::add('/profile/([0-9]*)/users', function($user_id) {
+  (new UserController())->getUsers($user_id);
+}, 'get');
+
+// Route to profile page->info about all admins
+Route::add('/profile/([0-9]*)/admins', function($user_id) {
+  (new UserController())->getAdmins($user_id);
+}, 'get');
+
 // Route to profile page->add new review
 Route::add('/profile/([0-9]*)/reviews/set-review', function($user_id) {
   (new UserController())->setReview($user_id);
