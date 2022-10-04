@@ -75,7 +75,7 @@ class UserController extends BasicController
     {
         $categories = (new CategoryModel())->getCategories();
         if(!isset($_SESSION['user'])) {
-            return $this->userView->authUser( );
+            return $this->userView->authUser($categories);
 		} else {
             return $this->userView->errorView("You're already authorized! Log out.", $categories);
         }
@@ -244,8 +244,9 @@ class UserController extends BasicController
         if(!isset($_SESSION['user'])) {
 			header("Location: /");
 		} elseif ($_SESSION['user']['id'] == $user_id) {
-            if ($_SESSION['user']['role'] === "Admin") {
+            if ($_SESSION['user']['role'] == "Admin") {
                 if (!empty($_POST['submit_reg_admin'])) {
+                    echo "OKAY";
                     if (preg_match("/^[a-zA-z](?=.*\d)[a-zA-z\d]{8,}$/", (string)$_POST['admin_password']) < 9) {
                         $user_surname = (string)$_POST['admin_surname'];
                         $user_name = (string)$_POST['admin_name'];
@@ -253,7 +254,7 @@ class UserController extends BasicController
                         $user_phone = (string)$_POST['admin_phone'];
                         $user_address = (string)$_POST['admin_address'];
                         $user_email = (string)$_POST['admin_email'];
-                        $user_password = hash('md5', (string)$_POST['user_password']);
+                        $user_password = hash('md5', (string)$_POST['admin_password']);
                         try {
                             $result = $this->userModel->setAdmin($user_surname, $user_name, $user_birthday, $user_phone, $user_address, $user_email, $user_password);
                             return header('Location: '.BASEPATH.'profile/'.$_SESSION['user']['id']); 

@@ -17,7 +17,7 @@ class BasicView
             }
               echo '<li><a href="'.BASEPATH.'catalog/category/VacuumCleaners/id1">Пылесосы артикул "1"</a></li>
               <li><a href="'.BASEPATH.'catalog/id2">Продукт с артикулом "2"</a></li>
-              <li><a href="'.BASEPATH.'catalog/search">Поисковая строка в каталоге</a></li>
+              <!--<li><a href="'.BASEPATH.'catalog/search">Поисковая строка в каталоге</a></li>-->
             </ul>
           </li>
           <li><a href="'.BASEPATH.'contacts">Контакты</a>
@@ -28,7 +28,7 @@ class BasicView
           <li><a href="'.BASEPATH.'delivery">Доставка</a></li>
           <li><a href="'.BASEPATH.'registration-form">Регистрация</a></li>
           <li><a href="'.BASEPATH.'authorization-form">Авторизация</a></li>
-          <li><a href="'.BASEPATH.'profile/3">Пользователь id 3</a>
+          <!--<li><a href="'.BASEPATH.'profile/3">Пользователь id 3</a>
             <ul>
               <li><a href="'.BASEPATH.'profile/3/info">Пользователь id 3. Информация</a></li>
               <li><a href="'.BASEPATH.'profile/5/reviews">Пользователь id 5. Отзывы</a></li>
@@ -41,7 +41,7 @@ class BasicView
               <li><a href="'.BASEPATH.'profile/1/reviews">Все отзывы</a></li>
               <li><a href="'.BASEPATH.'profile/1/orders">Все заказы</a></li>
             </ul>
-          </li>';
+          </li>-->';
           if (isset($_SESSION['user'])) {
             echo '<li><a href="'.BASEPATH.'profile/'.$_SESSION['user']['id'].'">Привет, '.$_SESSION['user']['name'].'</a>
             <ul>
@@ -50,7 +50,7 @@ class BasicView
               <li><a href="'.BASEPATH.'profile/'.$_SESSION['user']['id'].'/orders">Все заказы пользователя id'.$_SESSION['user']['id'].'</a></li>
               <!--<li><a href="'.BASEPATH.'cart/2256665">Корзина пользователя 2256665</a></li>-->
             </ul>
-          </li>';
+          </li><br><br>';
           }
     }
 

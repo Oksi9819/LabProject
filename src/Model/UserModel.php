@@ -53,7 +53,7 @@ class UserModel extends BasicModel
                         $fields = array('user_surname', 'user_name', 'user_birthday', 'user_phone', 'user_address', 'user_email', 'user_password', 'user_role', 'created_at');
                         $created_at = date("Y-m-d h:i:s");
                         $values = array($user_surname, $user_name, $user_birthday, $user_phone, $user_address, $user_email, $user_password, "2", $created_at);
-                        $result = $this->setModel("user", $fields, "ssssssss", $values); 
+                        $result = $this->setModel("user", $fields, "sssssssis", $values); 
                         return $result;
                     } else {
                         throw new Exception("Phone number should be in format '+375(29/33/..)111-11-11'.");
