@@ -6,12 +6,12 @@ use Itechart\InternshipProject\View\BasicView;
 class BasicController
 {
     protected $basicView;
-    protected $blade;
+    protected $template;
 
     protected function __construct()
     {
         global $blade;
         $this->basicView = new BasicView;
-        $this->blade= $blade;
+        $this->template = $blade;
     }
 }
