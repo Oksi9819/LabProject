@@ -6,11 +6,17 @@ use Itechart\InternshipProject\View\BasicView;
 
 class MainView extends BasicView
 {
-    public function getMainPage(array $info, array $categories)
+    public function __construct()
     {
-        $this->navi($categories);
+        parent::__construct();
+    }
+
+    public function getMainPage(/*array $info*/)
+    {
+        /*$this->navi($categories);
         echo "<b>".$info[0]['topic']."</b><br><br>";
-        echo $info[0]['desc']."<br>";
+        echo $info[0]['desc']."<br>";*/
+        $this->basicPage();   
     }
 
     public function getDeliveryPage(array $info, array $categories)

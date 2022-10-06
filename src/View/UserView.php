@@ -6,6 +6,11 @@ use Itechart\InternshipProject\View\BasicView;
 
 class UserView extends BasicView
 {
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
     public function sendUser(array $categories)
     {
         $this->navi($categories);

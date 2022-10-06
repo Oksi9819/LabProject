@@ -10,7 +10,6 @@ $dotenv->required(['DB_USER', 'DB_PASS', 'DB_NAME']);
 // Use this namespace
 use Dotenv\Dotenv;
 use Steampixel\Route;
-use eftec\bladeone\BladeOne;
 use Itechart\InternshipProject\Controller\CartController;
 use Itechart\InternshipProject\Controller\MainController;
 use Itechart\InternshipProject\Controller\UserController;
@@ -27,8 +26,6 @@ $conn->set_charset('utf8mb4');
 if ($conn->connect_error) {
     die('Failed to connect to database: '.$conn->connect_error);
 }
-
-$blade=new BladeOne(__DIR__.'src/views',__DIR__.'/compiles');
 
 define('BASEPATH','/');
 

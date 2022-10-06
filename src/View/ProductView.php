@@ -5,6 +5,11 @@ use Itechart\InternshipProject\View\BasicView;
 
 class ProductView extends BasicView
 {
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
     //User functions
     public function renderProductsPage(array $products, array $categories)
     {

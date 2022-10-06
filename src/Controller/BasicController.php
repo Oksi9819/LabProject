@@ -6,7 +6,6 @@ use Itechart\InternshipProject\View\BasicView;
 class BasicController
 {
     protected $basicView;
-    protected $template;
 
     protected function __construct()
     {

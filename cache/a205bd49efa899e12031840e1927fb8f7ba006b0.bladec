@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<head>
+ <meta charset="utf-8">
+ <title><?php echo \htmlentities($title??'', ENT_QUOTES, 'UTF-8', false); ?></title>
+</head>
+<body>
+ <header>
+ <img src="/logo.png" alt="Логотип">
+ <nav id="menu">Навигация:
+ <ul>
+ <li><a href="<?php echo \htmlentities(BASEPATH??'', ENT_QUOTES, 'UTF-8', false); ?>">Главная</a></li>
+ <li><a href="<?php echo \htmlentities(BASEPATH??'', ENT_QUOTES, 'UTF-8', false); ?>catalog">Каталог</a>
+ <ul>
+ <?php $__currentLoopData = $categories; $this->addLoop($__currentLoopData);$this->getFirstLoop();
+ foreach($__currentLoopData as $category): $loop = $this->incrementLoopIndices();  ?>
+ <li><a href="<?php echo \htmlentities(BASEPATH??'', ENT_QUOTES, 'UTF-8', false); ?>catalog/category/<?php echo \htmlentities($category['name_eng']??'', ENT_QUOTES, 'UTF-8', false); ?>">Категория <?php echo \htmlentities($category['category_name']??'', ENT_QUOTES, 'UTF-8', false); ?></a></li>
+ <?php endforeach; $this->popLoop(); $loop = $this->getFirstLoop(); ?>
+ <li><a href="<?php echo \htmlentities(BASEPATH??'', ENT_QUOTES, 'UTF-8', false); ?>catalog/category/VacuumCleaners/id1">Пылесосы артикул "1"</a></li>
+ <li><a href="<?php echo \htmlentities(BASEPATH??'', ENT_QUOTES, 'UTF-8', false); ?>catalog/id2">Продукт с артикулом "2"</a></li>
+ <!--<li><a href="'.BASEPATH.'catalog/search">Поисковая строка в каталоге</a></li>-->
+ </ul>
+ </li>
+ <li><a href="<?php echo \htmlentities(BASEPATH??'', ENT_QUOTES, 'UTF-8', false); ?>contacts">Контакты</a>
+ <ul>
+ <li><a href="<?php echo \htmlentities(BASEPATH??'', ENT_QUOTES, 'UTF-8', false); ?>contacts/contact-form">Форма обратной связи</a></li>
+ </ul>
+ </li>
+ <li><a href="<?php echo \htmlentities(BASEPATH??'', ENT_QUOTES, 'UTF-8', false); ?>delivery">Доставка</a></li>
+ <li><a href="<?php echo \htmlentities(BASEPATH??'', ENT_QUOTES, 'UTF-8', false); ?>registration-form">Регистрация</a></li>
+ <li><a href="<?php echo \htmlentities(BASEPATH??'', ENT_QUOTES, 'UTF-8', false); ?>authorization-form">Авторизация</a></li>
+ <?php if(isset($SESSION)): ?>
+ <?php if($SESSION['role'] === "Admin"): ?>
+ <li><a href="<?php echo \htmlentities(BASEPATH??'', ENT_QUOTES, 'UTF-8', false); ?>profile/<?php echo \htmlentities($SESSION['id']??'', ENT_QUOTES, 'UTF-8', false); ?>">Привет, Администатор <?php echo \htmlentities($SESSION['name']??'', ENT_QUOTES, 'UTF-8', false); ?></a>
+ <ul>
+ <li><a href="<?php echo \htmlentities(BASEPATH??'', ENT_QUOTES, 'UTF-8', false); ?>profile/<?php echo \htmlentities($SESSION['id']??'', ENT_QUOTES, 'UTF-8', false); ?>/info">Информация об администаторе id<?php echo \htmlentities($SESSION['id']??'', ENT_QUOTES, 'UTF-8', false); ?></a></li>
+ <li><a href="<?php echo \htmlentities(BASEPATH??'', ENT_QUOTES, 'UTF-8', false); ?>profile/<?php echo \htmlentities($SESSION['id']??'', ENT_QUOTES, 'UTF-8', false); ?>/reviews">Отзывы</a></li>
+ <li><a href="<?php echo \htmlentities(BASEPATH??'', ENT_QUOTES, 'UTF-8', false); ?>profile/<?php echo \htmlentities($SESSION['id']??'', ENT_QUOTES, 'UTF-8', false); ?>/orders">Заказы</a></li>
+ <li><a href="<?php echo \htmlentities(BASEPATH??'', ENT_QUOTES, 'UTF-8', false); ?>profile/<?php echo \htmlentities($SESSION['id']??'', ENT_QUOTES, 'UTF-8', false); ?>/users">Все пользователи</a></li>
+ <li><a href="<?php echo \htmlentities(BASEPATH??'', ENT_QUOTES, 'UTF-8', false); ?>profile/<?php echo \htmlentities($SESSION['id']??'', ENT_QUOTES, 'UTF-8', false); ?>/admins">Все администраторы</a></li>
+ <!--<li><a href="<?php echo \htmlentities(BASEPATH??'', ENT_QUOTES, 'UTF-8', false); ?>cart/2256665">Корзина пользователя 2256665</a></li>-->
+ </ul>
+ </li><br><br>
+ <?php else: ?>
+ <li><a href="<?php echo \htmlentities(BASEPATH??'', ENT_QUOTES, 'UTF-8', false); ?>profile/<?php echo \htmlentities($SESSION['id']??'', ENT_QUOTES, 'UTF-8', false); ?>">Привет, <?php echo \htmlentities($SESSION['name']??'', ENT_QUOTES, 'UTF-8', false); ?></a>
+ <ul>
+ <li><a href="<?php echo \htmlentities(BASEPATH??'', ENT_QUOTES, 'UTF-8', false); ?>profile/<?php echo \htmlentities($SESSION['id']??'', ENT_QUOTES, 'UTF-8', false); ?>/info">Информация о пользователе id<?php echo \htmlentities($SESSION['id']??'', ENT_QUOTES, 'UTF-8', false); ?></a></li>
+ <li><a href="<?php echo \htmlentities(BASEPATH??'', ENT_QUOTES, 'UTF-8', false); ?>profile/<?php echo \htmlentities($SESSION['id']??'', ENT_QUOTES, 'UTF-8', false); ?>/reviews">Все отзывы пользователя id<?php echo \htmlentities($SESSION['id']??'', ENT_QUOTES, 'UTF-8', false); ?></a></li>
+ <li><a href="<?php echo \htmlentities(BASEPATH??'', ENT_QUOTES, 'UTF-8', false); ?>profile/<?php echo \htmlentities($SESSION['id']??'', ENT_QUOTES, 'UTF-8', false); ?>/orders">Все заказы пользователя id<?php echo \htmlentities($SESSION['id']??'', ENT_QUOTES, 'UTF-8', false); ?></a></li>
+ <!--<li><a href="<?php echo \htmlentities(BASEPATH??'', ENT_QUOTES, 'UTF-8', false); ?>profile/cart/<?php echo \htmlentities($SESSION['id']??'', ENT_QUOTES, 'UTF-8', false); ?>">Корзина пользователя <?php echo \htmlentities($SESSION['id']??'', ENT_QUOTES, 'UTF-8', false); ?></a></li>-->
+ </ul>
+ </li><br><br>            
+ <?php endif; ?>
+ <?php endif; ?>
+ </nav>
+ </header>
+ <main>
+ <article>
+ <?php echo $this->yieldContent('article'); ?>
+ </article>
+ </main>
+ <footer>
+ <p>This is ProjectShop</p>
+ <p>Constructed by Oksi</p>
+ <p>Belarus, 2022</p>
+ </footer>
+</body>
+</html>
