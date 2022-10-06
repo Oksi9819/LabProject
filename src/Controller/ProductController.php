@@ -20,7 +20,6 @@ class ProductController extends BasicController
     public function getProducts()
     {
         $products = $this->productModel->getProducts("popularity");
-        $categories = (new CategoryModel())->getCategories();
         //$blade->run("products.catalog",['products'=>$products,'categories'=>$categories]);
         return $this->productView->renderProductsPage($products, $categories);
     }

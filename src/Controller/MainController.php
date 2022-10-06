@@ -20,8 +20,7 @@ class MainController extends BasicController
     
     public function executeMainPage()
     {
-        //$categories = (new CategoryModel())->getCategories();
-    return $this->mainView->getMainPage(/*$this->mainModel->getMainInfo(), $categories*/);
+        return $this->mainView->getMainPage($this->mainModel->getMainInfo());
     }
 
     public function executeContactsPage()

@@ -3,6 +3,8 @@
 namespace Itechart\InternshipProject\View;
 
 use Itechart\InternshipProject\View\BasicView;
+use Itechart\InternshipProject\Model\CategoryModel;
+use eftec\bladeone\BladeOne;
 
 class MainView extends BasicView
 {
@@ -11,12 +13,10 @@ class MainView extends BasicView
         parent::__construct();
     }
 
-    public function getMainPage(/*array $info*/)
+    public function getMainPage(array $info)
     {
-        /*$this->navi($categories);
-        echo "<b>".$info[0]['topic']."</b><br><br>";
-        echo $info[0]['desc']."<br>";*/
-        $this->basicPage();   
+        $title = "Main Page"; 
+        echo $this->template->run("main.main", ['categories'=>$this->categories,'SESSION'=>$this->session, 'BASEPATH'=>BASEPATH, 'title'=>$title, 'info'=>$info[0]]);  
     }
 
     public function getDeliveryPage(array $info, array $categories)
