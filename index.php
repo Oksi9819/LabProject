@@ -174,11 +174,6 @@ Route::add('/contacts', function() {
   (new MainController())->executeContactsPage();
 });
 
-// Route to contact-form
-/*Route::add('/contacts/contact-form', function() {
-  (new MainController())->sendContactForm();
-}, 'get');*/
-
 // Post route to contact-form
 Route::add('/contacts/contact-form', function() {
   (new MainController())->showContactForm();

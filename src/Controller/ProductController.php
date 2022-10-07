@@ -95,7 +95,6 @@ class ProductController extends BasicController
                                 'new_product'=> $product_name,
                             );
                             return header('Location: '.BASEPATH.'catalog');
-                            //return $this->productView->renderProductAddedPage($product_name);
                         }                        
                     }  
                 }               
@@ -137,7 +136,6 @@ class ProductController extends BasicController
                     }
                     if (!empty($value)) {
                         $product=$this->productModel->updateProduct($field, $product_id, $value, $types);
-                        //return $this->productView->renderProductUpdatedPage($product_id, $product);
                         $_SESSION['response'] = array (
                             'updated_product'=> $product_id,
                         );
@@ -159,7 +157,6 @@ class ProductController extends BasicController
                 if (!empty($_POST['submit_delete_product'])) {
                     $result=$this->productModel->deleteProduct($product_id);
                     $categories = (new CategoryModel())->getCategories();
-                    //return $this->productView->renderProductDeletedPage($product_id);
                     $_SESSION['response'] = array (
                         'deleted_product'=> $product_name,
                     );
@@ -182,7 +179,6 @@ class ProductController extends BasicController
                         $new_category = trim((string)$_POST['category_name']);
                         $new_category_eng = trim((string)$_POST['category_eng']);
                         $result = (new CategoryModel())->setCategory($new_category, $new_category_eng);
-                        //return $this->productView->renderCategoryAddedPage($new_category);
                         $_SESSION['response'] = array (
                             'new_category'=> $new_category,
                         );
@@ -206,7 +202,6 @@ class ProductController extends BasicController
                     $new_category = trim((string)$_POST['new_category']);
                     $new_category_eng = trim((string)$_POST['new_category_eng']);
                     $result = (new CategoryModel())->updateCategory($category_id, $new_category, $new_category_eng);
-                    //return $this->productView->renderCategoryUpdatedPage($category_id);
                     $_SESSION['response'] = array (
                         'updated_category'=> $category_id,
                     );
@@ -227,7 +222,6 @@ class ProductController extends BasicController
                 if (!empty($_POST['submit_delete_category'])) {
                     $category_id = $_POST['id_del_category'];
                     $result = (new CategoryModel())->deleteCategory($category_id);
-                    //return $this->productView->renderCategoryDeletedPage($category_id);
                     $_SESSION['response'] = array (
                         'deleted_category'=> $category_id,
                     );
