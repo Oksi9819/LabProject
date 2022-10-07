@@ -5,7 +5,7 @@
 </head>
 <body>
     <header>
-      <img src="/logo.png" alt="Логотип">
+      <img src="/src/pics/basicpic.jpg" width="50" height="50" alt="Logo">
       <nav id="menu">Навигация {{$title}}:
         <ul>
           <li><a href="{{BASEPATH}}">Главная</a></li>

@@ -20,8 +20,7 @@ class ProductController extends BasicController
     public function getProducts()
     {
         $products = $this->productModel->getProducts("popularity");
-        //$blade->run("products.catalog",['products'=>$products,'categories'=>$categories]);
-        return $this->productView->renderProductsPage($products, $categories);
+        return $this->productView->renderProductsPage($products);
     }
 
     public function getProductsSorted()
@@ -87,8 +86,13 @@ class ProductController extends BasicController
                         $product_desc = (string)$_POST['prod_desc'];
                         $product_category = (int)$_POST['id_new_prod_category'];
                         $product_price = (float)$_POST['prod_price'];
-                        $product=$this->productModel->setProduct($product_name, $product_desc, $product_category, $product_price);
-                        return header('Location: '.BASEPATH.'catalog');
+                        $result=$this->productModel->setProduct($product_name, $product_desc, $product_category, $product_price);
+                        if (empty($result))
+                        {
+                            return header('Location: '.BASEPATH.'catalog');
+                        } else {
+                            return $this->productView->renderProductAddedPage($product_name);
+                        }                        
                     }  
                 }               
             } else {
@@ -129,7 +133,8 @@ class ProductController extends BasicController
                     }
                     if (!empty($value)) {
                         $product=$this->productModel->updateProduct($field, $product_id, $value, $types);
-                        return header('Location: '.BASEPATH.'catalog/id'.$product_id);
+                        return $this->productView->renderProductUpdatedPage($product_id, $product);
+                        //header('Location: '.BASEPATH.'catalog/id'.$product_id);
                     }
                 }           
             } else {
@@ -147,7 +152,7 @@ class ProductController extends BasicController
                 if (!empty($_POST['submit_delete_product'])) {
                     $result=$this->productModel->deleteProduct($product_id);
                     $categories = (new CategoryModel())->getCategories();
-                    return $this->productView->renderProductDeletedPage($result, $product_id, $categories);
+                    return $this->productView->renderProductDeletedPage($product_id);
                 }           
             } else {
                 return $this->productView->errorView("You have no permissions to do this action. Available only for administrators.");
@@ -166,7 +171,8 @@ class ProductController extends BasicController
                         $new_category = trim((string)$_POST['category_name']);
                         $new_category_eng = trim((string)$_POST['category_eng']);
                         $result = (new CategoryModel())->setCategory($new_category, $new_category_eng);
-                        return header('Location: '.BASEPATH.'catalog');
+                        return $this->productView->renderCategoryAddedPage($new_category);
+                        //header('Location: '.BASEPATH.'catalog');
                 }           
             } else {
                 return $this->productView->errorView("You have no permissions to do this action. Available only for administrators.");
@@ -186,7 +192,8 @@ class ProductController extends BasicController
                     $new_category = trim((string)$_POST['new_category']);
                     $new_category_eng = trim((string)$_POST['new_category_eng']);
                     $result = (new CategoryModel())->updateCategory($category_id, $new_category, $new_category_eng);
-                    return header('Location: '.BASEPATH.'catalog');
+                    return $this->productView->renderCategoryUpdatedPage($category_id);
+                    //header('Location: '.BASEPATH.'catalog');
                 }              
             } else {
                 return $this->productView->errorView("You have no permissions to do this action. Available only for administrators.");  
@@ -203,7 +210,8 @@ class ProductController extends BasicController
                 if (!empty($_POST['submit_delete_category'])) {
                     $category_id = $_POST['id_del_category'];
                     $result = (new CategoryModel())->deleteCategory($category_id);
-                    return header('Location: '.BASEPATH.'catalog');
+                    return $this->productView->renderCategoryDeletedPage($category_id);
+                    //header('Location: '.BASEPATH.'catalog');
                 }               
             } else {
                 return $this->productView->errorView("You have no permissions to do this action. Available only for administrators.");  

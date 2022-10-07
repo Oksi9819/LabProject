@@ -2,6 +2,7 @@
 namespace Itechart\InternshipProject\View;
 
 use Itechart\InternshipProject\View\BasicView;
+use eftec\bladeone\BladeOne;
 
 class ProductView extends BasicView
 {
@@ -11,61 +12,58 @@ class ProductView extends BasicView
     }
 
     //User functions
-    public function renderProductsPage(array $products, array $categories)
+    public function renderProductsPage(array $products)
     {
-        $this->navi($categories);
-        echo '<br><b>КАТАЛОГ</b><br><br>';
-        echo '<b>Все товары каталога: </b><br>
-        <form method="post" name="sort_form" action="'.BASEPATH.'catalog/sort">
-            <select name="sort_choice">
-                <option value="popularity">по популярности</option>
-                <option value="pricelowhigh">по возрастанию цены</option>
-                <option value="pricehighlow">по убыванию цены</option>
-                <option value="az">по названию А-Я</option>
-                <option value="za">по названию Я-А</option>
-            </select>
-            <input type="submit">
-        </form>
-        <br><b>Все товары каталога: </b><br><table><tr><td>Артикул</td><td>Наименование товара</td><td>Описание</td><td>Цена</td></tr>';
-        foreach ($products as $product) {
-            echo '<tr><td>'.$product['product_id'].'</td><td>'.$product['product_name'].'</td><td>'.$product['product_desc'].'</td><td>'.$product['product_price'].'</td></tr><br>';
-        }
-        echo '</table>';
+        $title = "catalog"; 
+        echo $this->template->run("products.catalog", ['categories'=>$this->categories,'SESSION'=>$this->session, 'BASEPATH'=>BASEPATH, 'title'=>$title, 'products'=>$products]);
     }
     
-    public function renderProductListByCategory(string $category_name, array $products, array $categories)
+    public function renderProductListByCategory(string $category_name, array $products)
     {
-        $this->navi($categories);
-        echo '<br><b>КАТАЛОГ</b><br><br>';
-        echo '<b>Все товары категории: </b>'.$category_name.'<br>
-        <form method="post" action="'.BASEPATH.'catalog/category/'.$category_name.'/sort">
-            <select name="sort_choice">
-                <option value="popularity">по популярности</option>
-                <option value="pricelowhigh">по возрастанию цены</option>
-                <option value="pricehighlow">по убыванию цены</option>
-                <option value="az">по названию А-Я</option>
-                <option value="za">по названию Я-А</option>
-            </select>
-            <input type="submit">
-        </form><br>
-        <table><tr><td>Артикул</td><td>Наименование товара</td><td>Описание</td><td>Цена</td></tr>';
-        if (is_array($products)) {
-            foreach ($products as $product) {
-                echo '<tr><td>'.$product['product_id'].'</td><td>'.$product['product_name'].'</td><td>'.$product['product_desc'].'</td><td>'.$product['product_price'].'</td></tr><br>';
-            }
-            echo '</table>';
-        }
-        
+        $title = "catalog"; 
+        echo $this->template->run("products.catalog", ['categories'=>$this->categories,'SESSION'=>$this->session, 'BASEPATH'=>BASEPATH, 'title'=>$title, 'category_name'=>$category_name, 'products'=>$products]);
     }
 
-    public function renderProductListById(array $product, array $categories)
+    public function renderProductListById(array $product)
     {
-        $this->navi($categories);
-        global $BASEPATH;
-        echo 'Товар с id: '.$product[0]['product_id'].'<br>';
-        echo 'Наименование товара: '.$product[0]['product_name'].'<br>';
-        echo 'Описание товара: '.$product[0]['product_desc'].'<br>';
-        echo 'Цена: '.$product[0]['product_price'].' BYN<br><br>';
+        $title = "product_card"; 
+        echo $this->template->run("products.card", ['categories'=>$this->categories,'SESSION'=>$this->session, 'BASEPATH'=>BASEPATH, 'title'=>$title, 'product'=>$product[0]]);
+    }
+
+    public function renderProductAddedPage(string $new_prod_name)
+    {
+        $title = "catalog"; 
+        echo $this->template->run("products.catalog", ['categories'=>$this->categories,'SESSION'=>$this->session, 'BASEPATH'=>BASEPATH, 'title'=>$title, 'products'=>$products, 'response["new_product"]'=>$new_prod_name]);
+    }
+
+    public function renderProductUpdatedPage(int $product_id, array $product)
+    {
+        $title = "product_card"; 
+        echo $this->template->run("products.card", ['categories'=>$this->categories,'SESSION'=>$this->session, 'BASEPATH'=>BASEPATH, 'title'=>$title, 'product'=>$product[0], 'response["updated_product"]'=>$product_id]);
+    }
+
+    public function renderProductDeletedPage(int $product_id)
+    {
+        $title = "catalog"; 
+        echo $this->template->run("products.catalog", ['categories'=>$this->categories,'SESSION'=>$this->session, 'BASEPATH'=>BASEPATH, 'title'=>$title, 'products'=>$products, 'response["deleted_product"]'=>$product_id]);
+    }
+
+    public function renderCategoryAddedPage(string $new_category_name)
+    {
+        $title = "catalog"; 
+        echo $this->template->run("products.catalog", ['categories'=>$this->categories,'SESSION'=>$this->session, 'BASEPATH'=>BASEPATH, 'title'=>$title, 'products'=>$products, 'response["new_category"]'=>$new_category_name]);
+    }
+
+    public function renderCategoryUpdatedPage(int $category_id)
+    {
+        $title = "product_card"; 
+        echo $this->template->run("products.catalog", ['categories'=>$this->categories,'SESSION'=>$this->session, 'BASEPATH'=>BASEPATH, 'title'=>$title, 'products'=>$products, 'response["updated_category"]'=>$category_id]);
+    }
+
+    public function renderCategoryDeletedPage(int $category_id)
+    {
+        $title = "product_card"; 
+        echo $this->template->run("products.catalog", ['categories'=>$this->categories,'SESSION'=>$this->session, 'BASEPATH'=>BASEPATH, 'title'=>$title, 'products'=>$products, 'response["deleted_category"]'=>$category_id]);  
     }
 
     /*public function renderProductListByName($product)
@@ -81,86 +79,4 @@ class ProductView extends BasicView
         echo "Описание товара: ".$product['product_desc']."<br>";
         echo "Цена: ".$product['product_price']." BYN<br>";
     }*/
-
-
-    //Admin functions
-    public function adminCatalogFunctions(array $categories)
-    {
-        echo '
-        <b>Добавить товар:</b><br>
-        <form method="post" name="add_product" action="'.BASEPATH.'addProduct/catalog">
-            Наименование: <input type="text" name="prod_name" required><br>
-            Описание: <input type="text" name="prod_desc" required><br>
-            Цена: <input type="number" min="1" name="prod_price" step="0.01" required><br>
-            Категория: <select name="id_new_prod_category" required>';
-            foreach ($categories as $category) {
-                echo '<option value="'.$category['category_id'].'">'.$category['category_id'].' - '.$category['category_name'].'</option>';
-            } 
-            echo '</select><br>
-            <input type="submit" name="submit_add_product"><br>
-        </form><br>
-        </form><br>
-        <b>Добавить категорию:</b><br>
-        <form method="post" name="add_category" action="'.BASEPATH.'addProductCategory/catalog">
-            Введите название категории: <input type="text" name="category_name" required><br>
-            Введите название категории на английском без пробела и знаков препинания: <input type="text" name="category_eng" required><br>
-            <input type="submit" name="submit_add_category"><br>
-        </form><br>
-        <b>Изменить категорию:</b><br>
-        <form method="post" name="update_category" action="'.BASEPATH.'updateProductCategorycatalog">
-            Id категории: <select name="update_id_category" required>';
-            foreach ($categories as $category) {
-                echo '<option value="'.$category['category_id'].'">'.$category['category_id'].' - '.$category['category_name'].'</option>';
-            } 
-            echo '</select><br>
-            Новое название категории: <input type="text" name="new_category" required><br>
-            Новое название категории на английском без пробела и знаков препинания: <input type="text" name="new_category_eng" required><br>
-            <input type="submit" name="submit_update_category"><br>
-        </form><br>
-        <b>Удалить категорию:</b><br>
-        <form method="post" name="delete_category" action="'.BASEPATH.'deleteProductCategory/catalog">
-            Id категории: <select name="id_del_category" required>';
-            foreach ($categories as $category) {
-                echo '<option value="'.$category['category_id'].'">'.$category['category_id'].' - '.$category['category_name'].'</option>';
-            } 
-            echo '</select><br>
-            <input type="submit" name="submit_delete_category"><br>
-        </form><br>';
-    }
-
-    public function renderProductsPageAdmin(array $products, array $categories)
-    {
-        $this->renderProductsPage($products);
-        $this->adminCatalogFunctions($categories);
-    }
-    
-    public function renderProductListByCategoryAdmin(string $category_name, array $products)
-    {
-        $this->renderProductListByCategory($category_name, $products);
-        $this->adminCatalogFunctions($categories);
-    }
-
-    public function renderProductListByIdAdmin(array $product, array $categories)
-    {
-        $this->renderProductListById($product);
-        $this->adminCatalogFunctions($categories);
-        echo '
-        <b>Изменить данные о товаре:</b><br>
-        <form method="post" name="update_product_form" action="'.BASEPATH.'catalog/updateProduct/id'.$product[0]['product_id'].'">
-            Новое наименование: <input type="text" name="product_name"><br>
-            Новое описание: <input type="text" name="product_desc"><br>
-            Новая цена: <input type="number" min="1" name="product_price" step="0.01"><br>
-            <input type="submit" name="submit_update_product"><br>
-        </form><br>
-        <b>Удалить товар:</b><br>
-        <form method="post" name="delete_product_form" action="'.BASEPATH.'catalog/deleteProduct/id'.$product[0]['product_id'].'">
-            <input type="submit" name="submit_delete_product" value = DELETE><br>
-        </form>';
-    }
-
-    public function renderProductDeletedPage(string $result, int $product_id, array $categories)
-    {
-        $this->navi($categories);
-        echo $result.' Товар с id: '.$product_id.' был удален.<br>';
-    }
 }

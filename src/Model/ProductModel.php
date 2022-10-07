@@ -14,7 +14,7 @@ class ProductModel extends BasicModel
     }
 
     //CREATE
-    public function setProduct(string $product_name, string $product_desc, int $product_category, float $product_price): array
+    public function setProduct(string $product_name, string $product_desc, int $product_category, float $product_price): string
     {
         $fields = array('product_name', 'product_desc', 'product_category', 'product_price', 'created_at');
         $created_at = date("Y-m-d h:i:s");
@@ -27,7 +27,7 @@ class ProductModel extends BasicModel
     public function getProducts(string $sort_field): array
     {
         if ($sort_field === "popularity") {
-            $result = $this->getModel("product.product_id AS product_id, product.product_name AS product_name, product.product_desc AS product_desc, product.product_price AS product_price", "product LEFT JOIN cart ON product.product_id = cart.product_id",  NULL, NULL, NULL, "product_id", "COUNT(*)*cart.amount DESC", NULL);
+            $result = $this->getModel("product.product_id AS product_id, product.product_name AS product_name, product.product_desc AS product_desc, product.product_price AS product_price, product.product_image AS product_image", "product LEFT JOIN cart ON product.product_id = cart.product_id",  NULL, NULL, NULL, "product_id", "COUNT(*)*cart.amount DESC", NULL);
         }
         if ($sort_field === "pricelowhigh") {
             $result = $this->getModel("*", "product", NULL, NULL, NULL, NULL, "product_price", NULL);
@@ -94,7 +94,7 @@ class ProductModel extends BasicModel
         return $result;
     }
 
-    /*public function getProductByName(): array
+   /* public function getProductByName(string $product_name): array
     {
         if (isset($_POST['search'])) {
             $product_name = trim((string)$_GET['search_product']);

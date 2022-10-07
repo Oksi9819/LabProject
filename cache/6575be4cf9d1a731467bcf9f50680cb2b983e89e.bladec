@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<?php $_shouldextend[1]=1; ?>
+
+<?php $this->startSection('article'); ?>
+ <div>
+ <p>Артикул : <?php echo \htmlentities($product['product_id']??'', ENT_QUOTES, 'UTF-8', false); ?></p>
+ <img src="<?php echo \htmlentities(BASEPATH??'', ENT_QUOTES, 'UTF-8', false); ?>src/pics/<?php echo \htmlentities($product['product_image']??'', ENT_QUOTES, 'UTF-8', false); ?>.jpg" width="300" height="300" alt="<?php echo \htmlentities($product['product_name']??'', ENT_QUOTES, 'UTF-8', false); ?>">
+ <div style="display:inline-block">
+ <p>Наименование товара: <?php echo \htmlentities($product['product_name']??'', ENT_QUOTES, 'UTF-8', false); ?></p>
+ <p>Описание товара: <?php echo \htmlentities($product['product_desc']??'', ENT_QUOTES, 'UTF-8', false); ?></p>
+ <p>Цена: <?php echo \htmlentities($product['product_price']??'', ENT_QUOTES, 'UTF-8', false); ?> BYN</p>
+ </div>
+ </div>
+ <div>
+ <?php if(isset($response['updated_product'])): ?>
+ <p>Информация о товаре <?php echo \htmlentities($response['updated_product']??'', ENT_QUOTES, 'UTF-8', false); ?> была успешно изменена.</p>
+ <?php endif; ?>
+ </div>
+ <?php if($SESSION['role'] === "Admin"): ?>
+ <div>
+ <p><b>Изменить данные о товаре</b></p>
+ <form method="post" name="update_product_form" action="<?php echo \htmlentities(BASEPATH??'', ENT_QUOTES, 'UTF-8', false); ?>catalog/updateProduct/id<?php echo \htmlentities($product['product_id']??'', ENT_QUOTES, 'UTF-8', false); ?>">
+ Новое наименование: <input type="text" name="product_name"><br>
+ Новое описание: <input type="text" name="product_desc"><br>
+ Новая цена: <input type="number" min="1" name="product_price" step="0.01"><br>
+ <input type="submit" name="submit_update_product"><br>
+ </form><br>
+ </div>
+ <div>
+ <p><b>Удалить товар</b></p>
+ <form method="post" name="delete_product_form" action="'.BASEPATH.'catalog/deleteProduct/id<?php echo \htmlentities($product['product_id']??'', ENT_QUOTES, 'UTF-8', false); ?>">
+ <input type="submit" name="submit_delete_product" value = DELETE><br>
+ </form>
+ </div>
+ <?php endif; ?>
+<?php $this->stopSection(); ?>
+<?php if (isset($_shouldextend[1])) { echo $this->runChild('basic.basic'); } ?>
