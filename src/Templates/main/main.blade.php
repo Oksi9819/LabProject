@@ -3,9 +3,9 @@
 
 @section('article')
     <div>
-        {{$info['topic']}}
+        <p>{{$info['topic']}}</p>
     </div>
     <div>
-        {{$info['desc']}}
+        <p>{{$info['desc']}}</p>
     </div>
 @endsection

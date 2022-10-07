@@ -25,30 +25,27 @@ class MainController extends BasicController
 
     public function executeContactsPage()
     {
-        $categories = (new CategoryModel())->getCategories();
-        return $this->mainView->getContactsPage($this->mainModel->getContactsInfo(), $categories);
+        return $this->mainView->getContactsPage($this->mainModel->getContactsInfo());
     }
 
     public function executeDeliveryPage()
     {
-        $categories = (new CategoryModel())->getCategories();
-        return $this->mainView->getDeliveryPage($this->mainModel->getDeliveryInfo(), $categories);
+        return $this->mainView->getDeliveryPage($this->mainModel->getDeliveryInfo());
     }
     
     public function sendContactForm()
     {
-        $categories = (new CategoryModel())->getCategories();
-        return $this->mainView->sendContactForm($categories);   
+        return $this->mainView->sendContactForm();   
     }
 
     public function showContactForm()
     {
+        $info = $this->mainModel->getContactsInfo();
         if(!empty($_POST['contact_name']) && !empty($_POST['contact_email']) && !empty($_POST['contact_text'])) {
-            $categories = (new CategoryModel())->getCategories();
             $contact_name = trim($_POST['contact_name']);
             $contact_email = trim($_POST['contact_email']);
             $contact_text = trim($_POST['contact_text']);
-            return $this->mainView->showContactForm($this->mainModel->setContact($contact_name, $contact_email, $contact_text), $categories);
+            return $this->mainView->showContactForm($info, $this->mainModel->setContact($contact_name, $contact_email, $contact_text));
         }
     }
 
@@ -90,16 +87,14 @@ class MainController extends BasicController
                 $types.="s";
             }
             if (!empty($value)) {
-                $categories = (new CategoryModel())->getCategories();
                 $new_info = $this->mainModel->updatePageInfo($fields, $page_name, $values, $types);
-                return $this->mainView->showContactForm($categories);
+                return $this->mainView->showContactForm();
             } 
         }
     }
 
     public function deletePage()
     {
-        $categories = (new CategoryModel())->getCategories();
-        return $this->mainView->showContactForm($this->mainModel->deletePage($page_id), $categories);
+        return $this->mainView->showContactForm($this->mainModel->deletePage($page_id));
     }
 }

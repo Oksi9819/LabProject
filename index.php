@@ -175,9 +175,9 @@ Route::add('/contacts', function() {
 });
 
 // Route to contact-form
-Route::add('/contacts/contact-form', function() {
+/*Route::add('/contacts/contact-form', function() {
   (new MainController())->sendContactForm();
-}, 'get');
+}, 'get');*/
 
 // Post route to contact-form
 Route::add('/contacts/contact-form', function() {
