@@ -7,7 +7,7 @@ use Itechart\InternshipProject\Model\CategoryModel;
 class BasicView
 {
     protected $template;
-    protected $session;
+    protected $session_user;
     protected $categories;
 
     protected function __construct()

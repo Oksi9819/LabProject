@@ -3,20 +3,22 @@
 
 @section('article')
     <div>
-        @isset($response['deleted_product'])
-            <p>Товар с id: {{$response['deleted_product']}} был удален.</p>
-        @endisset
-        @isset($response['new_product'])
-            <p>Добавлен новый товар : {{$response['new_product']}}.</p>
-        @endisset
-        @isset($response['new_category'])
-            <p>Добавлена новая категория: {{$response['new_category']}}.</p>
-        @endisset
-        @isset($response['updated_category'])
-            <p>Изменена категория id: {{$response['updated_category']}}.</p>
-        @endisset
-        @isset($response['deleted_category'])
-            <p>Удалена категория id: {{$response['deleted_category']}}.</p>
+        @isset($response)
+            @isset($response['deleted_product'])
+                <p>Товар с id: {{$response['deleted_product']}} был удален.</p>
+            @endisset
+            @isset($response['new_product'])
+                <p>Добавлен новый товар : {{$response['new_product']}}.</p>
+            @endisset
+            @isset($response['new_category'])
+                <p>Добавлена новая категория: {{$response['new_category']}}.</p>
+            @endisset
+            @isset($response['updated_category'])
+                <p>Изменена категория id: {{$response['updated_category']}}.</p>
+            @endisset
+            @isset($response['deleted_category'])
+                <p>Удалена категория id: {{$response['deleted_category']}}.</p>
+            @endisset
         @endisset
     </div>
     @empty($category_name)
