@@ -24,11 +24,10 @@ class UserController extends BasicController
 
     public function sendUser()
     {
-        $categories = (new CategoryModel())->getCategories();
         if(!isset($_SESSION['user'])) {
-            return $this->userView->sendUser($categories);
+            return $this->userView->sendUser();
 		} else {
-            return $this->userView->errorView("You're already authorized! Log out.", $categories);
+            return $this->userView->errorView("You're already authorized! Log out.");
         }
     }
 

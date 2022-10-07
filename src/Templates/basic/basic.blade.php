@@ -30,25 +30,25 @@
           @isset($SESSION)
             @if ($SESSION['role'] === "Admin")
               <li><a href="{{BASEPATH}}profile/{{$SESSION['id']}}">Привет, Администатор {{$SESSION['name']}}</a>
-              <ul>
-                <li><a href="{{BASEPATH}}profile/{{$SESSION['id']}}/info">Информация об администаторе id{{$SESSION['id']}}</a></li>
-                <li><a href="{{BASEPATH}}profile/{{$SESSION['id']}}/reviews">Отзывы</a></li>
-                <li><a href="{{BASEPATH}}profile/{{$SESSION['id']}}/orders">Заказы</a></li>
-                <li><a href="{{BASEPATH}}profile/{{$SESSION['id']}}/users">Все пользователи</a></li>
-                <li><a href="{{BASEPATH}}profile/{{$SESSION['id']}}/admins">Все администраторы</a></li>
-                <!--<li><a href="{{BASEPATH}}cart/2256665">Корзина пользователя 2256665</a></li>-->
-              </ul>
-            </li><br><br>
+                <ul>
+                  <li><a href="{{BASEPATH}}profile/{{$SESSION['id']}}/info">Информация об администаторе id{{$SESSION['id']}}</a></li>
+                  <li><a href="{{BASEPATH}}profile/{{$SESSION['id']}}/reviews">Отзывы</a></li>
+                  <li><a href="{{BASEPATH}}profile/{{$SESSION['id']}}/orders">Заказы</a></li>
+                  <li><a href="{{BASEPATH}}profile/{{$SESSION['id']}}/users">Все пользователи</a></li>
+                  <li><a href="{{BASEPATH}}profile/{{$SESSION['id']}}/admins">Все администраторы</a></li>
+                  <!--<li><a href="{{BASEPATH}}cart/2256665">Корзина пользователя 2256665</a></li>-->
+                </ul>
+              </li>
             @else
               <li><a href="{{BASEPATH}}profile/{{$SESSION['id']}}">Привет, {{$SESSION['name']}}</a>
-              <ul>
-                <li><a href="{{BASEPATH}}profile/{{$SESSION['id']}}/info">Информация о пользователе id{{$SESSION['id']}}</a></li>
-                <li><a href="{{BASEPATH}}profile/{{$SESSION['id']}}/reviews">Все отзывы пользователя id{{$SESSION['id']}}</a></li>
-                <li><a href="{{BASEPATH}}profile/{{$SESSION['id']}}/orders">Все заказы пользователя id{{$SESSION['id']}}</a></li>
-                <!--<li><a href="{{BASEPATH}}profile/cart/{{$SESSION['id']}}">Корзина пользователя {{$SESSION['id']}}</a></li>-->
-              </ul>
-            </li><br><br>            
+                <ul>
+                  <li><a href="{{BASEPATH}}profile/{{$SESSION['id']}}/info">Информация о пользователе id{{$SESSION['id']}}</a></li>
+                  <li><a href="{{BASEPATH}}profile/{{$SESSION['id']}}/reviews">Все отзывы пользователя id{{$SESSION['id']}}</a></li>
+                  <li><a href="{{BASEPATH}}profile/{{$SESSION['id']}}/orders">Все заказы пользователя id{{$SESSION['id']}}</a></li>
+                </ul>
+              </li>            
             @endif
+              <li><a href="{{BASEPATH}}exit/profile/{{$SESSION['id']}}">Выйти</a></li><br><br>
           @endisset
       </nav>
     </header>
