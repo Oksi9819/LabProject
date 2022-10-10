@@ -19,7 +19,6 @@ class UserController extends BasicController
     {
         $this->userModel = new UserModel();
         $categories = (new CategoryModel())->getCategories();
-        $this->userView = new UserView($categories);
     }
 
     public function sendUser()
@@ -33,7 +32,6 @@ class UserController extends BasicController
 
     public function setUser()
     {
-        $categories = (new CategoryModel())->getCategories();
         if(!isset($_SESSION['user'])) {
             if (!empty($_POST['submit_reg_user'])) {
                 if (preg_match("/^[a-zA-z]{1}(?=.*\d)[a-zA-z\d]{7,}$/", trim((string)$_POST['user_password']))) {
@@ -46,7 +44,7 @@ class UserController extends BasicController
                     $user_password = hash('md5', (string)$_POST['user_password']);
                     try {
                         $setUser = $this->userModel->setUser($user_surname, $user_name, $user_birthday, $user_phone, $user_address, $user_email, $user_password);
-                        $user = $this->userModel->getUserInfoByEmail($user_email, $categories);
+                        $user = $this->userModel->getUserInfoByEmail($user_email);
                         $_SESSION['user'] = array (
                             'id'=> $user[0]['user_id'],
                             'name'=> $user[0]['user_name'],
@@ -59,30 +57,28 @@ class UserController extends BasicController
                         }
                         return header('Location: '.BASEPATH.'profile/'.$user[0]['user_id']);
                     } catch (Exception $e) {
-                        return $this->userView->errorView($e->getMessage(), $categories);
+                        return $this->userView->errorView($e->getMessage());
                     }  
                 }else {
-                    return $this->userView->errorView("Password length must be at least 8 characters. It should start with a letter and contain at least 1 number.", $categories);
+                    return $this->userView->errorView("Password length must be at least 8 characters. It should start with a letter and contain at least 1 number.");
                 }
             } 
 		} else {
-            return $this->userView->errorView("You're already authorized! Log out.", $categories);
+            return $this->userView->errorView("You're already authorized! Log out.");
         }
     }
 
     public function authUser()
     {
-        $categories = (new CategoryModel())->getCategories();
         if(!isset($_SESSION['user'])) {
-            return $this->userView->authUser($categories);
+            return $this->userView->authUser();
 		} else {
-            return $this->userView->errorView("You're already authorized! Log out.", $categories);
+            return $this->userView->errorView("You're already authorized! Log out.");
         }
     }
 
     public function checkUser()
     {
-        $categories = (new CategoryModel())->getCategories();
         if(!isset($_SESSION['user'])) {
             global $BASEPATH;
             $user_login = trim($_POST['user_email']);
@@ -101,25 +97,24 @@ class UserController extends BasicController
                 }
                 return header('Location: '.BASEPATH.'profile/'.$user[0]['user_id']);
             } catch (Exception $e) {
-                return $this->userView->errorView($e->getMessage(), $categories);
+                return $this->userView->errorView($e->getMessage());
             }
 		} else {
-            return $this->userView->errorView("You're already authorized! Log out.", $categories);
+            return $this->userView->errorView("You're already authorized! Log out.");
         }
     }
 
     public function getUserInfo(int $user_id)
     {
-        $categories = (new CategoryModel())->getCategories();
         if(!isset($_SESSION['user'])) {
 			header("Location: /");
 		} elseif ($_SESSION['user']['id'] == $user_id) {
             if ($_SESSION['user']['role'] === "Admin") {
                 $user = $this->userModel->getUserInfo($_SESSION['user']['id']);
-                return $this->userView->renderAdminPage($user, $categories);
+                return $this->userView->renderAdminPage($user);
             } else {
                 $user = $this->userModel->getUserInfo($_SESSION['user']['id']);
-                return $this->userView->renderUserPage($user, $categories);
+                return $this->userView->renderUserPage($user);
             }
         } else {
             header("Location: /");
@@ -128,7 +123,6 @@ class UserController extends BasicController
 
     public function getUserReviews(int $user_id)
     {
-        $categories = (new CategoryModel())->getCategories();
         if(!isset($_SESSION['user'])) {
 			header("Location: /");
 		} elseif ($_SESSION['user']['id'] == $user_id) {
@@ -136,16 +130,16 @@ class UserController extends BasicController
                 echo "YOU ARE ADMIN";
                 try {
                     $reviews = (new ReviewModel())->getReviews();
-                    return $this->userView->renderAdminReviewsPage($reviews, $categories);
+                    return $this->userView->renderAdminReviewsPage($reviews);
                 } catch (Exception $e) {
-                    return $this->userView->errorView($e->getMessage(), $categories);
+                    return $this->userView->errorView($e->getMessage());
                 }
             } else {
                 try {
                     $reviews = (new ReviewModel())->getReviewsByUserId($_SESSION['user']['id']);
-                    return $this->userView->renderUserReviewsPage($reviews, $_SESSION['user']['id'], $categories);
+                    return $this->userView->renderUserReviewsPage($reviews);
                 } catch (Exception $e) {
-                    return $this->userView->errorView($e->getMessage(), $categories);
+                    return $this->userView->errorView($e->getMessage());
                 }
             }    
         } else {
@@ -155,7 +149,6 @@ class UserController extends BasicController
 
     public function setReview(int $user_id)
     {
-        $categories = (new CategoryModel())->getCategories();
         if(!isset($_SESSION['user'])) {
 			header("Location: /");
 		} elseif ($_SESSION['user']['id'] == $user_id) {
@@ -166,7 +159,7 @@ class UserController extends BasicController
                     $new_review = (new ReviewModel())->setReview($_SESSION['user']['id'], $reviewText);
                     return header('Location: '.BASEPATH.'profile/'.$_SESSION['user']['id'].'/reviews');
                 } catch (Exception $e) {
-                    return $this->userView->errorView($e->getMessage(), $categories);
+                    return $this->userView->errorView($e->getMessage());
                 }   
             }
         } else {
@@ -209,7 +202,6 @@ class UserController extends BasicController
 
     public function getUserOrders(int $user_id)
     {
-        $categories = (new CategoryModel())->getCategories();
         if(!isset($_SESSION['user'])) {
 			header("Location: /");
 		} elseif ($_SESSION['user']['id'] == $user_id) {
@@ -218,18 +210,18 @@ class UserController extends BasicController
                 try {  
                     $orders = (new OrderModel())->getOrders();
                     $order_details = (new OrderModel())->getOrdersDetails();
-                    return $this->userView->renderAdminOrdersPage($orders, $order_details, $categories);
+                    return $this->userView->renderAdminOrdersPage($orders, $order_details);
                 } catch (Exception $e) {
-                    return $this->userView->errorView($e->getMessage(), $categories);
+                    return $this->userView->errorView($e->getMessage());
                 }
             } else {
                 echo "YOU ARE NOT ADMIN";
                 try {
                     $orders = (new OrderModel())->getOrdersByUserId($_SESSION['user']['id']);
                     $order_details = (new OrderModel())->getOrderDetails($_SESSION['user']['id']);
-                    return $this->userView->renderUserOrdersPage($orders, $order_details, $_SESSION['user']['id'], $categories);
+                    return $this->userView->renderUserOrdersPage($orders, $order_details, $_SESSION['user']['id']);
                 } catch (Exception $e) {
-                    return $this->userView->errorView($e->getMessage(), $categories);
+                    return $this->userView->errorView($e->getMessage());
                 }
             }
         } else {
@@ -239,7 +231,6 @@ class UserController extends BasicController
 
     public function getUsers(int $user_id)
     {
-        $categories = (new CategoryModel())->getCategories();
         if(!isset($_SESSION['user'])) {
 			header("Location: /");
 		} elseif ($_SESSION['user']['id'] == $user_id) {
@@ -249,9 +240,9 @@ class UserController extends BasicController
                     $fields = "u.user_id, u.user_name, u.user_surname, u.user_birthday, u.user_phone, u.user_address, u.user_email, u.created_at, u.updated_at";
                     $ifvalue = "User";
                     $users = $this->userModel->getUsers($fields, $ifvalue);
-                    return $this->userView->renderAdminUsersPage($users, $categories);
+                    return $this->userView->renderAdminUsersPage($users);
                 } catch (Exception $e) {
-                    return $this->userView->errorView($e->getMessage(), $categories);
+                    return $this->userView->errorView($e->getMessage());
                 }
             } else {
                 header("Location: /");
@@ -263,7 +254,6 @@ class UserController extends BasicController
 
     public function getAdmins(int $user_id)
     {
-        $categories = (new CategoryModel())->getCategories();
         if(!isset($_SESSION['user'])) {
 			header("Location: /");
 		} elseif ($_SESSION['user']['id'] == $user_id) {
@@ -273,9 +263,9 @@ class UserController extends BasicController
                     $fields = "u.user_id, u.user_name, u.user_surname, u.user_birthday, u.user_phone, u.user_address, u.user_email, u.created_at, u.updated_at";
                     $ifvalue = "Admin";
                     $admins = $this->userModel->getUsers($fields, $ifvalue);
-                    return $this->userView->renderAdminUsersPage($admins, $categories);
+                    return $this->userView->renderAdminUsersPage($admins);
                 } catch (Exception $e) {
-                    return $this->userView->errorView($e->getMessage(), $categories);
+                    return $this->userView->errorView($e->getMessage());
                 }
             } else {
                 header("Location: /");
@@ -287,7 +277,6 @@ class UserController extends BasicController
 
     public function addNewAdmin(int $user_id) 
     {
-        $categories = (new CategoryModel())->getCategories();
         if(!isset($_SESSION['user'])) {
 			header("Location: /");
 		} elseif ($_SESSION['user']['id'] == $user_id) {
@@ -306,10 +295,10 @@ class UserController extends BasicController
                             $result = $this->userModel->setAdmin($user_surname, $user_name, $user_birthday, $user_phone, $user_address, $user_email, $user_password);
                             return header('Location: '.BASEPATH.'profile/'.$_SESSION['user']['id']); 
                         } catch (Exception $e) {
-                            return $this->userView->errorView($e->getMessage(), $categories);
+                            return $this->userView->errorView($e->getMessage());
                         }
                     } else {
-                        return $this->userView->errorView("Password length must be at least 8 characters. It should start with a letter and contain at least 1 number.", $categories);
+                        return $this->userView->errorView("Password length must be at least 8 characters. It should start with a letter and contain at least 1 number.");
                     }   
                 }
             } else {
@@ -322,7 +311,6 @@ class UserController extends BasicController
         
     public function updateUser(int $user_id) 
     {
-        $categories = (new CategoryModel())->getCategories();
         if(!isset($_SESSION['user'])) {
 			header("Location: /");
 		} elseif ($_SESSION['user']['id'] == $user_id) {
@@ -353,10 +341,10 @@ class UserController extends BasicController
                             array_push($value, $new_birthday);
                             $types.="s";
                         } else {
-                            return $this->userView->errorView("Birthday does not follow the Gregorian calendar.", $categories);
+                            return $this->userView->errorView("Birthday does not follow the Gregorian calendar.");
                         }
                     } else {
-                        return $this->userView->errorView("Birthday should be in format 'YYYY-MM-DD'.", $categories);
+                        return $this->userView->errorView("Birthday should be in format 'YYYY-MM-DD'.");
                     }
                 }
                 if (!empty($_POST['new_phone'])) {
@@ -366,7 +354,7 @@ class UserController extends BasicController
                         array_push($value, $new_phone);
                         $types.="s";
                     } else {
-                        return $this->userView->errorView("Phone number should be in format '+375(29/33/..)111-11-11'.", $categories);
+                        return $this->userView->errorView("Phone number should be in format '+375(29/33/..)111-11-11'.");
                     }
                 }
                 if (!empty($_POST['new_address'])) {
@@ -382,7 +370,7 @@ class UserController extends BasicController
                         array_push($value, $new_email);
                         $types.="s";
                     } else {
-                        return $this->userView->errorView("Your email looks invalid.", $categories);
+                        return $this->userView->errorView("Your email looks invalid.");
                     }
                 }
                 if (!empty($value)) {
@@ -397,7 +385,6 @@ class UserController extends BasicController
         
     public function updateUserPass(int $user_id) 
     {
-        $categories = (new CategoryModel())->getCategories();
         if(!isset($_SESSION['user'])) {
 			header("Location: /");
 		} elseif ($_SESSION['user']['id'] == $user_id) {
@@ -419,10 +406,10 @@ class UserController extends BasicController
                             return header('Location: '.BASEPATH.'profile/'.$_SESSION['user']['id']);
                         }  
                     } else {
-                        return $this->userView->errorView("Passwords don't match", $categories);
+                        return $this->userView->errorView("Passwords don't match.");
                     }
                 } else {
-                    return $this->userView->errorView("Password length must be at least 8 characters. It should start with a letter and contain at least 1 number.", $categories);
+                    return $this->userView->errorView("Password length must be at least 8 characters. It should start with a letter and contain at least 1 number.");
                 }
             }
         }  else {
@@ -445,14 +432,16 @@ class UserController extends BasicController
 
     public function deleteUser(int $user_id)
     {
-        $categories = (new CategoryModel())->getCategories();
         if(!isset($_SESSION['user'])) {
 			header("Location: /");
 		} elseif ($_SESSION['user']['id'] == $user_id) {
             if (!empty($_POST['submit_delete_user'])) {
                 $result=$this->userModel->deleteUser($_SESSION['user']['id']);
                 session_destroy();
-                return $this->userView->renderUserDeletedPage($result, $user_id, $categories);
+                $_SESSION['response'] = array (
+                    'deleted_user'=> $user_id,
+                );
+                return $this->userView->renderUserDeletedPage($user_id);
             }
         } else {
             header("Location: /");

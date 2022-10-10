@@ -2,7 +2,9 @@
 @extends('basic.basic')
 
 @section('article')
-    <b>Данные о пользователе: <b></p>
+    @section('title_1')
+        <p>Данные о пользователе: <b></p>
+    @endsection
     <p>Id: {{$user['user_id']}}</p>
     <p>Имя: {{$user['user_name']}}</p>
     <p>Фамилия: {{$user['user_surname']}}</p>
@@ -28,9 +30,12 @@
         Повторите пароль: <input type="password" name="user_pass_check"><br>
         <input type="submit" name="submit_update_pass"><br>
     </form><br>
-    <p><b>Удалить пользователя:</b></p>
+    @section('title_2')
+        <p><b>Удалить пользователя:</b></p>
+    @endsection
     <form method="post" name="delete_user_form" action="{{BASEPATH}}deleteUser/profile/{{$user['user_id']}}">
         <input type="submit" name="submit_delete_user" value = DELETE><br>
     </form>
+    @yield('admin_functions')
     <p><a href="{{BASEPATH}}exit/profile/{{$user['user_id']}}">Выйти</a></p>
 @endsection
