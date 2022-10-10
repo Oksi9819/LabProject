@@ -2,7 +2,7 @@
 @extends('basic.basic')
 
 @section('article')
-    <b>Заполните пожалуйста форму регистрации: </b><br><br>
+    <p><b>Заполните пожалуйста форму регистрации: </b></p><br>
     <form method="post">
         Введите фамилию: <input type="text" name="user_surname" required="required"><br>
         Введите имя: <input type="text" name="user_name" required="required"><br>

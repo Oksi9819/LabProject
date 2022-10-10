@@ -3,6 +3,7 @@
 namespace Itechart\InternshipProject\View;
 
 use Itechart\InternshipProject\View\BasicView;
+use eftec\bladeone\BladeOne;
 
 class UserView extends BasicView
 {
@@ -17,53 +18,16 @@ class UserView extends BasicView
         echo $this->template->run("user.registration", ['categories'=>$this->categories,'SESSION'=>$this->session, 'BASEPATH'=>BASEPATH, 'title'=>$title]);
     }
 
-    /*public function setUser($result)
+    public function authUser()
     {
-        $this->navi();
-        echo $result." Вы успешно зарегистрировались!:<br>Далее необходимо <a href='/authorization-form'>авторизоваться!</a><br>";
-    }***/
-
-    public function authUser(array $categories)
-    {
-        $this->navi($categories);
-        echo '<b>Заполните пожалуйста поля авторизации: </b><br><br>';
-        echo '<form method="post">Введите email: <input type="email" name="user_email"><br>Введите пароль: <input type="password" name="user_password"><br><input type="submit" value="Зарегистрироваться"></form>';
+        $title = "authorization"; 
+        echo $this->template->run("user.auth", ['categories'=>$this->categories,'SESSION'=>$this->session, 'BASEPATH'=>BASEPATH, 'title'=>$title]);
     }
 
-    public function renderUserPage(array $user, array $categories)
+    public function renderUserPage(array $user)
     {
-        $this->navi($categories);
-        echo "Данные о пользователе: <br>";
-        echo "Id: ".$user[0]['user_id']."<br>";
-        echo "Имя: ".$user[0]['user_name']."<br>";
-        echo "Фамилия: ".$user[0]['user_surname']."<br>";
-        echo "День рождения: ".$user[0]['user_birthday']."<br>";
-        echo "Номер телефона: ".$user[0]['user_phone']."<br>";
-        echo "Адрес: ".$user[0]['user_address']."<br>";
-        echo "Email: ".$user[0]['user_email']."<br><br>";
-        echo "Перейти в <a href='/profile/".$user[0]['user_id']."/orders'>заказы.</a><br>";
-        echo "Перейти в <a href='/profile/".$user[0]['user_id']."/reviews'>отзывы.</a><br><br>";
-        echo '<b>Изменить сведения о пользователе:</b><br>
-        <form method="post" name="update_user_info" action="'.BASEPATH.'updateUser/profile/'.$user[0]['user_id'].'">
-            Введите фамилию: <input type="text" name="new_surname"><br>
-            Введите имя: <input type="text" name="new_name"><br>
-            Введите дату рождения: <input type="date" name="new_birthday"><br>
-            Введите телефон: <input type="tel" name="new_phone"><br>
-            Введите адрес: <input type="text" name="new_address"><br>
-            Введите email: <input type="email" name="new_email"><br>
-            <input type="submit" name="submit_update_user"><br>
-        </form><br>
-        <b>Изменить пароль:</b><br>
-        <form method="post" name="update_user_pass" action="'.BASEPATH.'updateUserPass/profile/'.$user[0]['user_id'].'">
-            Введите пароль: <input type="password" name="user_pass"><br>
-            повторите пароль: <input type="password" name="user_pass_check"><br>
-            <input type="submit" name="submit_update_pass"><br>
-        </form><br>
-        <b>Удалить пользователя:</b><br>
-        <form method="post" name="delete_user_form" action="'.BASEPATH.'deleteUser/profile/'.$user[0]['user_id'].'">
-            <input type="submit" name="submit_delete_user" value = DELETE><br>
-        </form><br>
-        <a href="'.BASEPATH.'exit/profile/'.$user[0]['user_id'].'">Выйти</a><br>';
+        $title = "user profile"; 
+        echo $this->template->run("user.profile", ['categories'=>$this->categories,'SESSION'=>$this->session, 'BASEPATH'=>BASEPATH, 'title'=>$title, 'user'=>$user[0]]);
     }
 
     public function renderUserDeletedPage( string $result, int $user_id, array $categories)
