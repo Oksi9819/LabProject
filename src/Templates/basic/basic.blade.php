@@ -5,7 +5,7 @@
 </head>
 <body>
     <header>
-      <img src="/src/pics/basicpic.jpg" width="100" height="100" alt="Logo">
+      <img src="src/pics/basicpic.jpg" width="100" height="100" alt="Logo">
       <nav id="menu">Навигация {{$title}}:
         <ul>
           <li><a href="{{BASEPATH}}">Главная</a></li>
