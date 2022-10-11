@@ -2,6 +2,13 @@
 @extends('basic.basic')
 
 @section('article')
+    <div>
+        @isset($response)
+            @isset($response['new_status']['order_id'])
+                <p>Статус заказа id: {{$response['new_status']['order_id']}} обновлен.</p>
+            @endisset
+        @endisset
+    </div>
     <p>Все заказы</p>
     <table>
         <tr>
@@ -13,6 +20,7 @@
             <td>Email заказа</td>
             <td>Сумма заказа</td>
             <td>Статус заказа</td>
+            <td></td>
             <td>Детали заказа</td>
         </tr>
     @foreach($orders as $order)
@@ -25,6 +33,16 @@
             <td>{{$order['user_email']}}</td>
             <td>{{$order['price']}} BYN </td>
             <td>{{$order['status']}}</td>
+            <td>
+                <form method="post" name="set_order" action="{{BASEPATH}}profile/{{SESSION['id'}}/orders/edit-order-status/{{$order['order_id']}}">
+                    <select name="new_status" required>
+                    @foreach ($order_statuses as $order_status)
+                        <option value="{{$order_status['status_id']}}">{{$order_status['status_id']}} - {{$order_status['status_name']}}</option>
+                    @endforeach
+                    </select>
+                    <input type="submit" name="submit_new_order_status" value="Изменить статус">
+                </form>
+            </td>
             <td>
                 <table>
                     @foreach ($order_details as $order_detail)

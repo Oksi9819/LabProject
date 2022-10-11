@@ -77,7 +77,7 @@ Route::add('/([A-Za-z]*)/profile/([0-9]*)', function($method, $user_id) {
 // Route to profile page->info about user's orders
 Route::add('/profile/([0-9]*)/orders', function($user_id) {
   (new UserController())->getUserOrders($user_id);
-});
+}, 'get');
 
 // Route to profile page->info about user's reviews
 Route::add('/profile/([0-9]*)/reviews', function($user_id) {
@@ -107,6 +107,26 @@ Route::add('/profile/([0-9]*)/reviews/update-review-text', function($user_id) {
 // Route to profile page->edit review text
 Route::add('/profile/([0-9]*)/reviews/delete-review', function($user_id) {
   (new UserController())->deleteReview($user_id);
+}, 'post');
+
+// Route to profile page->set new order
+Route::add('/profile/([0-9]*)/orders/set-order', function($user_id) {
+  (new UserController())->setOrder($user_id);
+}, 'post');
+
+// Route to profile page->edit order address
+Route::add('/profile/([0-9]*)/orders/edit-order-address/([0-9]*)', function($user_id, $order_id) {
+  (new UserController())->editOrderAddress($user_id, $order_id);
+}, 'post');
+
+// Route to profile page->edit order status
+Route::add('/profile/([0-9]*)/orders/edit-order-status/([0-9]*)', function($user_id, $order_id) {
+  (new UserController())->editOrderStatus($user_id, $order_id);
+}, 'post');
+
+// Route to profile page->cancel order
+Route::add('/profile/([0-9]*)/orders/cancel-order/([0-9]*)', function($user_id, $order_id) {
+  (new UserController())->cancelOrder($user_id, $order_id);
 }, 'post');
 
 // Route to catalog

@@ -15,8 +15,20 @@ class OrderModel extends BasicModel
     //CREATE
     public function setOrder(string $address, int $user_id):array
     {
-        //if (isset($_POST['submit_setreview']))
-        //$order_adress = (string)$_POST['order_address'];
+        $cart = array(
+            array(
+                "prod_id"=>1,
+                "amount"=>1
+            ),
+            array(
+                "prod_id"=>2,
+                "amount"=>1
+            ),
+            array(
+                "prod_id"=>3,
+                "amount"=>1,
+            )
+        );
         $created_at = date("Y-m-d h:i:s");
         $values = array($user_id, $address, $created_at);
         $sql = "INSERT INTO order_product (user_id, order_address, created_at) VALUES (?, ?, ?)";
@@ -24,7 +36,17 @@ class OrderModel extends BasicModel
         $query->bind_param('iss', ...$values);
         $query->execute();   
         $query->get_result();
-        $result = "Success!";
+        $order_id = $this->connection->insert_id;
+        $total_amount = count($cart);
+        for($i=0; $i<$total_amount; $i++) {
+            $product = $cart[$i];
+            $sql = "INSERT INTO cart (order_id, product_id, amount) VALUES (?, ?, ?)";
+            $query = $this->connection->prepare($sql);
+            $query->bind_param('iii', $order_id, $product['prod_id'], $product['amount']);
+            $query->execute();   
+            $query->get_result();
+        }
+        $result = $this->getOrderDetails($order_id);
         return $result;
     }
 
@@ -37,7 +59,7 @@ class OrderModel extends BasicModel
         return $result;
     }
 
-    public function getOrdersDetails(): array
+    public function getOrdersDetailsByAdmin(): array
     {
         $fields = "cart.order_id AS order_id, product.product_id AS product_id, product.product_name AS product_name, product.product_price AS product_price";
         $table = "cart LEFT JOIN product ON product.product_id=cart.product_id";
@@ -63,11 +85,25 @@ class OrderModel extends BasicModel
         }
     }
 
-    public function getOrderDetails(int $user_id): array
+    public function getOrdersDetailsByUser(int $user_id): array
     {
         $fields = "c.order_id AS order_id, p.product_id AS product_id, p.product_name AS product_name, p.product_price AS product_price";
         $table = "cart AS c LEFT JOIN product AS p ON p.product_id=c.product_id LEFT JOIN order_product AS op ON op.order_id=c.order_id";
         $result = $this->getModel($fields, $table, "op.user_id", $user_id, NULL, NULL, "order_id, product_id", "i");
+        return $result;
+    }
+
+    public function getOrderDetails(int $order_id): array
+    {
+        $fields = "c.order_id AS order_id, p.product_id AS product_id, p.product_name AS product_name, p.product_price AS product_price, c.amount AS amount";
+        $table = "cart AS c LEFT JOIN product AS p ON p.product_id=c.product_id LEFT JOIN order_product AS op ON op.order_id=c.order_id";
+        $result = $this->getModel($fields, $table, "c.order_id", $order_id, NULL, NULL, "product_id", "i");
+        return $result;
+    }
+
+    public function getOrderStatuses(): array
+    {
+        $result = $this->getModel("*", "order_status", NULL, NULL, NULL, NULL, "status_id", NULL);
         return $result;
     }
 
@@ -83,8 +119,6 @@ class OrderModel extends BasicModel
     //Function available only for admin
     public function updateOrderStatus(int $order_id, int $new_order_status):void
     {
-        /*$order_id = (int)$_GET['cancel_order'];*/
-        //$new_order_status = (int)$_POST['new_order_status'];
         $updated_at = date("Y-m-d h:i:s");
         $values = array($new_order_status, $updated_at);
         $result = $this->updateModel("order_status, updated_at", "order_product", "order_id", $order_id, $values, NULL, "isi");
@@ -93,14 +127,8 @@ class OrderModel extends BasicModel
     //DELETE
     public function cancelOrder(int $order_id):void
     {
-        $values = array(3);
+        $values = array("3");
         $result = $this->updateModel("order_status", "order_product", "order_id", $order_id, $values, NULL, "ii");    
-    }
-
-    public function archiveOrder(int $order_id):void
-    {
-        $values = array(4);
-        $result = $this->updateModel("order_status", "order_product", "order_id", $order_id, $values, NULL, "ii");      
     }
 
     public function deleteOrder(int $order_id):void

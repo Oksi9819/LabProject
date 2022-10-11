@@ -73,7 +73,7 @@
         <div>
             <b>Изменить категорию</b><br>
             <form method="post" name="update_category" action="{{BASEPATH}}updateProductCategory/catalog">
-                Id категории: <select name="update_id_category" required>';
+                Id категории: <select name="update_id_category" required>
                 @foreach ($categories as $category)
                     <option value="{{$category['category_id']}}">{{$category['category_id']}} - {{$category['category_name']}}</option>
                 @endforeach

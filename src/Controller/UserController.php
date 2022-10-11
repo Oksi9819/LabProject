@@ -109,8 +109,9 @@ class UserController extends BasicController
         if(!isset($_SESSION['user'])) {
 			header("Location: /");
 		} elseif ($_SESSION['user']['id'] == $user_id) {
-            if ($_SESSION['user']['role'] === "Admin") {
+            if ($_SESSION['user']['role'] == "Admin") {
                 $user = $this->userModel->getUserInfo($_SESSION['user']['id']);
+                print_r($user);
                 return $this->userView->renderAdminPage($user);
             } else {
                 $user = $this->userModel->getUserInfo($_SESSION['user']['id']);
@@ -121,6 +122,7 @@ class UserController extends BasicController
         }
     }
 
+    //Reviews
     public function getUserReviews(int $user_id)
     {
         if(!isset($_SESSION['user'])) {
@@ -200,6 +202,7 @@ class UserController extends BasicController
         }
     }
 
+    //Orders
     public function getUserOrders(int $user_id)
     {
         if(!isset($_SESSION['user'])) {
@@ -209,8 +212,9 @@ class UserController extends BasicController
                 echo "YOU ARE ADMIN";
                 try {  
                     $orders = (new OrderModel())->getOrders();
-                    $order_details = (new OrderModel())->getOrdersDetails();
-                    return $this->userView->renderAdminOrdersPage($orders, $order_details);
+                    $statuses = (new OrderModel())->getOrderStatuses();
+                    $order_details = (new OrderModel())->getOrdersDetailsByAdmin();
+                    return $this->userView->renderAdminOrdersPage($orders, $order_details, $statuses);
                 } catch (Exception $e) {
                     return $this->userView->errorView($e->getMessage());
                 }
@@ -218,7 +222,7 @@ class UserController extends BasicController
                 echo "YOU ARE NOT ADMIN";
                 try {
                     $orders = (new OrderModel())->getOrdersByUserId($_SESSION['user']['id']);
-                    $order_details = (new OrderModel())->getOrderDetails($_SESSION['user']['id']);
+                    $order_details = (new OrderModel())->getOrderDetailsByUser($_SESSION['user']['id']);
                     return $this->userView->renderUserOrdersPage($orders, $order_details, $_SESSION['user']['id']);
                 } catch (Exception $e) {
                     return $this->userView->errorView($e->getMessage());
@@ -229,6 +233,93 @@ class UserController extends BasicController
         }
     }
 
+    public function setOrder(int $user_id)
+    {
+        if(!isset($_SESSION['user'])) {
+			header("Location: /");
+		} elseif ($_SESSION['user']['id'] == $user_id) {
+            global $BASEPATH;
+            if (!empty($_POST['submit_set_order']) && !empty($_POST['order_address'])) {
+                $order_adress = trim($_POST['order_address']);
+                $new_order = (new OrderModel())->setOrder($order_adress, $_SESSION['user']['id']);
+                if (isset($_SESSION['response'])) {
+                    unset ($_SESSION['response']);
+                } 
+                $_SESSION['response']['new_order'] = $new_order;
+                return header('Location: '.BASEPATH.'profile/'.$_SESSION['user']['id'].'/orders');   
+            }
+        } else {
+            header("Location: /");
+        }
+    }
+
+    public function editOrderAddress(int $user_id, int $order_id)
+    {
+        if(!isset($_SESSION['user'])) {
+			header("Location: /");
+		} elseif ($_SESSION['user']['id'] == $user_id) {
+            global $BASEPATH;
+            if (!empty($_POST['submit_new_order_address']) && (int)$order_id) {
+                $new_address = (string)$_POST['new_order_address'];
+                $updated_order_address = (new OrderModel())->updateOrderAddress($order_id, $new_address);
+                if (isset($_SESSION['response'])) {
+                    unset ($_SESSION['response']);
+                } 
+                $_SESSION['response']['new_order_address'] = array (
+                    ['order_id'] => $order_id,
+                    ['new_address'] => $new_address
+                );
+                return header('Location: '.BASEPATH.'profile/'.$_SESSION['user']['id'].'/orders');
+            }
+        } else {
+            header("Location: /");
+        }
+    }
+
+    public function editOrderStatus(int $user_id, int $order_id)
+    {
+        if(!isset($_SESSION['user'])) {
+			header("Location: /");
+		} elseif ($_SESSION['user']['id'] == $user_id) {
+            if($_SESSION['user']['id'] === "Admin") {
+                global $BASEPATH;
+                if (!empty($_POST['submit_new_order_status'])) {
+                    $new_status = (int)$_POST['new_status'];
+                    $result = (new OrderModel())->updateOrderStatus($order_id, $new_status);
+                    if (isset($_SESSION['response'])) {
+                        unset ($_SESSION['response']);
+                    } 
+                    $_SESSION['response']['new_status']['order_id'];
+                    return header('Location: '.BASEPATH.'profile/'.$_SESSION['user']['id'].'/orders');
+                }
+            } else {
+                header("Location: /");
+            }
+        } else {
+            header("Location: /");
+        }
+    }
+
+    public function cancelOrder(int $user_id, int $order_id)
+    {
+        if(!isset($_SESSION['user'])) {
+			header("Location: /");
+		} elseif ($_SESSION['user']['id'] == $user_id) {
+            global $BASEPATH;
+            if (!empty($_POST['submit_cancel_order'])) {
+                $result = (new OrderModel())->cancelOrder($order_id);
+                if (isset($_SESSION['response'])) {
+                    unset ($_SESSION['response']);
+                } 
+                $_SESSION['response']['canceled_order'] = $order_id;
+                return header('Location: '.BASEPATH.'profile/'.$_SESSION['user']['id'].'/orders');
+            }
+        } else {
+            header("Location: /");
+        }
+    }
+
+    //Admin get users
     public function getUsers(int $user_id)
     {
         if(!isset($_SESSION['user'])) {
@@ -438,9 +529,7 @@ class UserController extends BasicController
             if (!empty($_POST['submit_delete_user'])) {
                 $result=$this->userModel->deleteUser($_SESSION['user']['id']);
                 session_destroy();
-                $_SESSION['response'] = array (
-                    'deleted_user'=> $user_id,
-                );
+                $_SESSION['response']['deleted_user'] = $user_id;
                 return $this->userView->renderUserDeletedPage($user_id);
             }
         } else {
