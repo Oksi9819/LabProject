@@ -47,6 +47,7 @@
                 @endforeach
             </table><br>     
         </div>
+    @isset($SESSION)
     @if ($SESSION['role'] === "Admin")
         <div>
             <b>Добавить товар</b><br>
@@ -95,6 +96,7 @@
             </form><br>
         </div>
     @endif
+    @endisset
 @endsection
 
 

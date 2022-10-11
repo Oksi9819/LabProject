@@ -75,8 +75,8 @@ class BasicModel
                     $sql.=$if[$i]." = ? ".$ifoperator." ";
                 }
             }
-            $sql.= "GROUP BY ".$group;
-            
+            $sql.= " GROUP BY ".$group;
+            //echo $sql."<br>";
             $query = $this->connection->prepare($sql);
             $query->bind_param($types, ...$ifvalues);
         }  elseif ($group===NULL) {
@@ -91,7 +91,7 @@ class BasicModel
                     $sql.=$if[$i]." = ? ".$ifoperator." ";
                 }
             }
-            $sql.= "ORDER BY ".$sort;
+            $sql.= " ORDER BY ".$sort;
             $query = $this->connection->prepare($sql);
             $query->bind_param($types, ...$ifvalues);
         } else {
@@ -106,7 +106,8 @@ class BasicModel
                     $sql.=$ifclause[$i]." = ? ".$ifoperator." ";
                 }
             }
-            $sql.= "GROUP BY ".$group."ORDER BY ".$sort;
+            $sql.= " GROUP BY ".$group." ORDER BY ".$sort;
+            //echo $sql."<br>";
             $query = $this->connection->prepare($sql);
             $query->bind_param($types, ...$ifvalues);
         }

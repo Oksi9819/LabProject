@@ -10,7 +10,7 @@
         @endisset
     </div>
     <p>Все заказы</p>
-    <table>
+    <table style="border: 3px solid black">
         <tr>
             <td>Код заказа</td>
             <td>Фамилия заказчика</td>
@@ -34,17 +34,17 @@
             <td>{{$order['price']}} BYN </td>
             <td>{{$order['status']}}</td>
             <td>
-                <form method="post" name="set_order" action="{{BASEPATH}}profile/{{SESSION['id'}}/orders/edit-order-status/{{$order['order_id']}}">
-                    <select name="new_status" required>
+                <form method="post" name="set_order_{{$order['order_id']}}" action="{{BASEPATH}}profile/{{SESSION['id']}}/orders/edit-order-status/{{$order['order_id']}}">
+                    <select name="new_status_{{$order['order_id']}}" required>
                     @foreach ($order_statuses as $order_status)
                         <option value="{{$order_status['status_id']}}">{{$order_status['status_id']}} - {{$order_status['status_name']}}</option>
                     @endforeach
                     </select>
-                    <input type="submit" name="submit_new_order_status" value="Изменить статус">
+                    <input type="submit" name="submit_new_status_{{$order['order_id']}}" value="Изменить статус">
                 </form>
             </td>
             <td>
-                <table>
+                <table style="border: 1px solid black">
                     @foreach ($order_details as $order_detail)
                         @if ($order_detail['order_id'] == $order['order_id'])
                             <tr>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<?php $_shouldextend[1]=1; ?>
+
+<?php $this->startSection('title_1'); ?>
+ <p>Данные об Администраторе: <b></p>
+<?php $this->stopSection(); ?>
+
+<?php $this->startSection('title_2'); ?>
+ <p><b>Удалить текущего администратора:</b></p>
+<?php $this->stopSection(); ?>
+
+<?php $this->startSection('admin_functions'); ?>
+ <p><b>Добавить нового администратора:</b></p>
+ <form method="post" name="add_admin" action="<?php echo \htmlentities(BASEPATH??'', ENT_QUOTES, 'UTF-8', false); ?>addNewAdmin/profile/<?php echo \htmlentities($user['user_id']??'', ENT_QUOTES, 'UTF-8', false); ?>">
+ Введите фамилию: <input type="text" name="admin_surname" required="required"><br>
+ Введите фамилию: <input type="text" name="admin_name" required="required"><br>
+ Введите дату рождения: <input type="date" name="admin_birthday" required="required"><br>
+ Введите телефон: <input type="tel" name="admin_phone" required="required"><br>
+ Введите адрес: <input type="text" name="admin_address" required="required"><br>
+ Введите email: <input type="email" name="admin_email" required="required"><br>
+ Введите пароль: <input type="password" name="admin_password" required="required"><br>
+ <input type="submit" name="submit_reg_admin" value="Зарегистрировать администратора">
+ </form><br>
+<?php $this->stopSection(); ?>
+<?php if (isset($_shouldextend[1])) { echo $this->runChild('user.user_profile'); } ?>

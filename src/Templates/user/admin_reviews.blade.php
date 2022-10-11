@@ -3,7 +3,7 @@
 
 @section('article')
     <table>
-    @foreach ($reviews as $review) {
+    @foreach ($reviews as $review)
         <tr>
             <td>Код отзыва: {{$review['review_id']}}</td>
             <td>Пользователь: {{$review['user_name']}} {{$review['user_surname']}}</td>

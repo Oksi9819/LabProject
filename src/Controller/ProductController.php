@@ -25,7 +25,7 @@ class ProductController extends BasicController
 
     public function getProductsSorted()
     {
-        $sort = $_POST['sort_choice'];
+        $sort = htmlspecialchars($_POST['sort_choice'], ENT_QUOTES);
         $products = $this->productModel->getProducts($sort);
         $categories = (new CategoryModel())->getCategories();
         return $this->productView->renderProductsPage($products, $categories);
@@ -45,7 +45,7 @@ class ProductController extends BasicController
     public function getProductsByCategorySorted($category_name)
     {
         if (!empty($_POST['sort_choice'])) {
-            $sort = (string)$_POST['sort_choice'];
+            $sort = htmlspecialchars($_POST['sort_choice'], ENT_QUOTES);
             try {
                 $products = $this->productModel->getProductsByCategory($category_name, $sort);
                 $categories = (new CategoryModel())->getCategories();
@@ -82,10 +82,10 @@ class ProductController extends BasicController
                 $values = array();
                 if (!empty($_POST['submit_update_product'])) {
                     if (!empty($_POST['prod_name']) && !empty($_POST['prod_desc']) && !empty($_POST['prod_price']) && !empty($_POST['id_new_prod_category'])) {
-                        $product_name = (string)$_POST['prod_name'];
-                        $product_desc = (string)$_POST['prod_desc'];
-                        $product_category = (int)$_POST['id_new_prod_category'];
-                        $product_price = (float)$_POST['prod_price'];
+                        $product_name = htmlspecialchars($_POST['prod_name'], ENT_QUOTES);
+                        $product_desc = htmlspecialchars($_POST['prod_desc'], ENT_QUOTES);
+                        $product_category = (int)(htmlspecialchars($_POST['id_new_prod_category'], ENT_QUOTES));
+                        $product_price = (float)(htmlspecialchars($_POST['prod_price'], ENT_QUOTES));
                         $result=$this->productModel->setProduct($product_name, $product_desc, $product_category, $product_price);
                         if (empty($result))
                         {
@@ -117,19 +117,19 @@ class ProductController extends BasicController
                 $types = "";
                 if (!empty($_POST['submit_update_product'])) {
                     if (!empty($_POST['product_name'])) {
-                        $product_name = (string)$_POST['product_name'];
+                        $product_name = htmlspecialchars($_POST['product_name'], ENT_QUOTES);
                         array_push($field, "product_name");
                         array_push($value, $product_name);
                         $types.="s";
                     }
                     if (!empty($_POST['product_desc'])) {
-                        $product_desc = (string)$_POST['product_desc'];
+                        $product_desc = htmlspecialchars($_POST['product_desc'], ENT_QUOTES);
                         array_push($field, "product_desc");
                         array_push($value, $product_desc);
                         $types.="s";
                     }
                     if (!empty($_POST['product_price'])) {
-                        $product_price = (float)$_POST['product_price'];
+                        $product_price = (float)(htmlspecialchars($_POST['product_price'], ENT_QUOTES));
                         array_push($field, "product_price");
                         array_push($value, $product_price);
                         $types.="d";
@@ -176,8 +176,8 @@ class ProductController extends BasicController
             if($_SESSION['user']['role'] === "Admin") {
                 global $BASEPATH;
                 if (!empty($_POST['submit_add_category'])) {
-                        $new_category = trim((string)$_POST['category_name']);
-                        $new_category_eng = trim((string)$_POST['category_eng']);
+                        $new_category = trim(htmlspecialchars($_POST['category_name'], ENT_QUOTES));
+                        $new_category_eng = trim(htmlspecialchars($_POST['category_eng'], ENT_QUOTES));
                         $result = (new CategoryModel())->setCategory($new_category, $new_category_eng);
                         $_SESSION['response'] = array (
                             'new_category'=> $new_category,
@@ -199,8 +199,8 @@ class ProductController extends BasicController
                 global $BASEPATH;
                 if (!empty($_POST['submit_update_category'])) {
                     $category_id = $_POST['update_id_category'];
-                    $new_category = trim((string)$_POST['new_category']);
-                    $new_category_eng = trim((string)$_POST['new_category_eng']);
+                    $new_category = trim(htmlspecialchars($_POST['new_category'], ENT_QUOTES));
+                    $new_category_eng = trim(htmlspecialchars($_POST['new_category_eng'], ENT_QUOTES));
                     $result = (new CategoryModel())->updateCategory($category_id, $new_category, $new_category_eng);
                     $_SESSION['response'] = array (
                         'updated_category'=> $category_id,
@@ -220,7 +220,7 @@ class ProductController extends BasicController
 		} else {
             if($_SESSION['user']['role'] === "Admin") {
                 if (!empty($_POST['submit_delete_category'])) {
-                    $category_id = $_POST['id_del_category'];
+                    $category_id = htmlspecialchars($_POST['id_del_category'], ENT_QUOTES);
                     $result = (new CategoryModel())->deleteCategory($category_id);
                     $_SESSION['response'] = array (
                         'deleted_category'=> $category_id,

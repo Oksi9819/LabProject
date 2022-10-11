@@ -22,14 +22,14 @@ class BasicView
         $this->template = new BladeOne($templates, $cache, BladeOne::MODE_AUTO);
     }
 
-    protected function main($title)
+    /*protected function main($title)
     {
         return $this->template->run("basic.basic", ['categories'=>$this->categories,'SESSION'=>$this->session, 'BASEPATH'=>BASEPATH, 'title'=>$title]);
-    }
+    }*/
 
-    public function errorView(string $message, array $categories)
+    public function errorView(string $message)
     {
-        $this->navi($categories);
-        echo "Oops! There seems to be an error. Details: $message.";
+        $title = "error page"; 
+        echo $this->template->run("basic.error", ['categories'=>$this->categories,'SESSION'=>$this->session, 'BASEPATH'=>BASEPATH, 'title'=>$title, 'message'=>$message]);  
     }
 }

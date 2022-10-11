@@ -5,7 +5,7 @@
 </head>
 <body>
     <header>
-      <img src="/src/pics/basicpic.jpg" width="50" height="50" alt="Logo">
+      <img src="/src/pics/basicpic.jpg" width="100" height="100" alt="Logo">
       <nav id="menu">Навигация {{$title}}:
         <ul>
           <li><a href="{{BASEPATH}}">Главная</a></li>
@@ -19,11 +19,7 @@
               <!--<li><a href="'.BASEPATH.'catalog/search">Поисковая строка в каталоге</a></li>-->
             </ul>
           </li>
-          <li><a href="{{BASEPATH}}contacts">Контакты</a>
-            <ul>
-              <li><a href="{{BASEPATH}}contacts/contact-form">Форма обратной связи</a></li>
-            </ul>
-          </li>
+          <li><a href="{{BASEPATH}}contacts">Контакты</a></li>
           <li><a href="{{BASEPATH}}delivery">Доставка</a></li>
           <li><a href="{{BASEPATH}}registration-form">Регистрация</a></li>
           <li><a href="{{BASEPATH}}authorization-form">Авторизация</a></li>

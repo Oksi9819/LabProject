@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-@extends('user.user.profile')
+@extends('user.user_profile')
 
 @section('title_1')
     <p>Данные об Администраторе: <b></p>

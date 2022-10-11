@@ -18,7 +18,7 @@ class UserController extends BasicController
     public function __construct()
     {
         $this->userModel = new UserModel();
-        $categories = (new CategoryModel())->getCategories();
+        $this->userView = new UserView();
     }
 
     public function sendUser()
@@ -35,13 +35,13 @@ class UserController extends BasicController
         if(!isset($_SESSION['user'])) {
             if (!empty($_POST['submit_reg_user'])) {
                 if (preg_match("/^[a-zA-z]{1}(?=.*\d)[a-zA-z\d]{7,}$/", trim((string)$_POST['user_password']))) {
-                    $user_surname = trim((string)$_POST['user_surname']);
-                    $user_name = trim((string)$_POST['user_name']);
-                    $user_phone = trim((string)$_POST['user_phone']);
-                    $user_birthday = trim((string)$_POST['user_birthday']);
-                    $user_address = trim((string)$_POST['user_address']);
-                    $user_email = trim((string)$_POST['user_email']);
-                    $user_password = hash('md5', (string)$_POST['user_password']);
+                    $user_surname = trim(htmlspecialchars($_POST['user_surname'], ENT_QUOTES));
+                    $user_name = trim(htmlspecialchars($_POST['user_name'], ENT_QUOTES));
+                    $user_phone = trim(htmlspecialchars($_POST['user_phone'], ENT_QUOTES));
+                    $user_birthday = trim(htmlspecialchars($_POST['user_birthday'], ENT_QUOTES));
+                    $user_address = trim(htmlspecialchars($_POST['user_address'], ENT_QUOTES));
+                    $user_email = trim(htmlspecialchars($_POST['user_email'], ENT_QUOTES));
+                    $user_password = hash('md5', htmlspecialchars($_POST['user_password'], ENT_QUOTES));
                     try {
                         $setUser = $this->userModel->setUser($user_surname, $user_name, $user_birthday, $user_phone, $user_address, $user_email, $user_password);
                         $user = $this->userModel->getUserInfoByEmail($user_email);
@@ -81,8 +81,8 @@ class UserController extends BasicController
     {
         if(!isset($_SESSION['user'])) {
             global $BASEPATH;
-            $user_login = trim($_POST['user_email']);
-            $user_pass = trim($_POST['user_password']);
+            $user_login = trim(htmlspecialchars($_POST['user_email'], ENT_QUOTES));
+            $user_pass = trim(htmlspecialchars($_POST['user_password'], ENT_QUOTES));
             try {
                 $user = $this->userModel->auth($user_login, $user_pass);
                 $_SESSION['user'] = array (
@@ -111,7 +111,6 @@ class UserController extends BasicController
 		} elseif ($_SESSION['user']['id'] == $user_id) {
             if ($_SESSION['user']['role'] == "Admin") {
                 $user = $this->userModel->getUserInfo($_SESSION['user']['id']);
-                print_r($user);
                 return $this->userView->renderAdminPage($user);
             } else {
                 $user = $this->userModel->getUserInfo($_SESSION['user']['id']);
@@ -156,7 +155,7 @@ class UserController extends BasicController
 		} elseif ($_SESSION['user']['id'] == $user_id) {
             global $BASEPATH;
             if (!empty($_POST['submit_set_review'])) {
-                $reviewText = (string)$_POST['reviewText'];
+                $reviewText = htmlspecialchars($_POST['reviewText'], ENT_QUOTES);
                 try {
                     $new_review = (new ReviewModel())->setReview($_SESSION['user']['id'], $reviewText);
                     return header('Location: '.BASEPATH.'profile/'.$_SESSION['user']['id'].'/reviews');
@@ -176,8 +175,8 @@ class UserController extends BasicController
 		} elseif ($_SESSION['user']['id'] == $user_id) {
             global $BASEPATH;
             if (!empty($_POST['submit_update_review_text'])) {
-                $review_id = (int)$_POST['id_review'];
-                $review_text = (string)$_POST['newReviewText'];
+                $review_id = (int)(htmlspecialchars($_POST['id_review'], ENT_QUOTES));
+                $review_text = htmlspecialchars($_POST['newReviewText'], ENT_QUOTES);
                 $updated_review = (new ReviewModel())->updateReview($review_id, $review_text);
                 return header('Location: '.BASEPATH.'profile/'.$_SESSION['user']['id'].'/reviews');
             }
@@ -193,7 +192,7 @@ class UserController extends BasicController
 		} elseif ($_SESSION['user']['id'] == $user_id) {
             global $BASEPATH;
             if (!empty($_POST['submit_delete_review'])) {
-                $review_id = (int)$_POST['id_review_delete'];
+                $review_id = (int)(htmlspecialchars($_POST['id_review_delete'], ENT_QUOTES));
                 $result = (new ReviewModel())->deleteReview($review_id);
                 return header('Location: '.BASEPATH.'profile/'.$_SESSION['user']['id'].'/reviews');
             }
@@ -240,7 +239,7 @@ class UserController extends BasicController
 		} elseif ($_SESSION['user']['id'] == $user_id) {
             global $BASEPATH;
             if (!empty($_POST['submit_set_order']) && !empty($_POST['order_address'])) {
-                $order_adress = trim($_POST['order_address']);
+                $order_adress = trim(htmlspecialchars($_POST['order_address'], ENT_QUOTES));
                 $new_order = (new OrderModel())->setOrder($order_adress, $_SESSION['user']['id']);
                 if (isset($_SESSION['response'])) {
                     unset ($_SESSION['response']);
@@ -260,7 +259,7 @@ class UserController extends BasicController
 		} elseif ($_SESSION['user']['id'] == $user_id) {
             global $BASEPATH;
             if (!empty($_POST['submit_new_order_address']) && (int)$order_id) {
-                $new_address = (string)$_POST['new_order_address'];
+                $new_address = htmlspecialchars($_POST['new_order_address'], ENT_QUOTES);
                 $updated_order_address = (new OrderModel())->updateOrderAddress($order_id, $new_address);
                 if (isset($_SESSION['response'])) {
                     unset ($_SESSION['response']);
@@ -283,8 +282,11 @@ class UserController extends BasicController
 		} elseif ($_SESSION['user']['id'] == $user_id) {
             if($_SESSION['user']['id'] === "Admin") {
                 global $BASEPATH;
-                if (!empty($_POST['submit_new_order_status'])) {
-                    $new_status = (int)$_POST['new_status'];
+                $a = "submit_new_status_".$order_id;
+                $b = "new_status_".$order_id;
+                if (!empty($_POST['.$a.'])) {
+                    $new_status = (int)(htmlspecialchars($_POST['.$b.'], ENT_QUOTES));
+                    //echo $new_status."<br>";
                     $result = (new OrderModel())->updateOrderStatus($order_id, $new_status);
                     if (isset($_SESSION['response'])) {
                         unset ($_SESSION['response']);
@@ -373,15 +375,15 @@ class UserController extends BasicController
 		} elseif ($_SESSION['user']['id'] == $user_id) {
             if ($_SESSION['user']['role'] == "Admin") {
                 if (!empty($_POST['submit_reg_admin'])) {
-                    echo "OKAY";
+                    //echo "OKAY";
                     if (preg_match("/^[a-zA-z](?=.*\d)[a-zA-z\d]{8,}$/", (string)$_POST['admin_password']) < 9) {
-                        $user_surname = (string)$_POST['admin_surname'];
-                        $user_name = (string)$_POST['admin_name'];
-                        $user_birthday = (string)$_POST['admin_birthday'];
-                        $user_phone = (string)$_POST['admin_phone'];
-                        $user_address = (string)$_POST['admin_address'];
-                        $user_email = (string)$_POST['admin_email'];
-                        $user_password = hash('md5', (string)$_POST['admin_password']);
+                        $user_surname = htmlspecialchars($_POST['admin_surname'], ENT_QUOTES);
+                        $user_name = htmlspecialchars($_POST['admin_name'], ENT_QUOTES);
+                        $user_birthday = htmlspecialchars($_POST['admin_birthday'], ENT_QUOTES);
+                        $user_phone = htmlspecialchars($_POST['admin_phone'], ENT_QUOTES);
+                        $user_address = htmlspecialchars($_POST['admin_address'], ENT_QUOTES);
+                        $user_email = htmlspecialchars($_POST['admin_email'], ENT_QUOTES);
+                        $user_password = hash('md5', htmlspecialchars($_POST['admin_password'], ENT_QUOTES));
                         try {
                             $result = $this->userModel->setAdmin($user_surname, $user_name, $user_birthday, $user_phone, $user_address, $user_email, $user_password);
                             return header('Location: '.BASEPATH.'profile/'.$_SESSION['user']['id']); 
@@ -411,19 +413,19 @@ class UserController extends BasicController
             $types = "";
             if (!empty($_POST['submit_update_user'])) {
                 if (!empty($_POST['new_surname'])) {
-                    $new_surname = trim((string)$_POST['new_surname']);
+                    $new_surname = trim(htmlspecialchars($_POST['new_surname'], ENT_QUOTES));
                     array_push($field, "user_surname");
                     array_push($value, $new_surname);
                     $types.="s";
                 }
                 if (!empty($_POST['new_name'])) {
-                    $new_name = trim((string)$_POST['new_name']);
+                    $new_name = trim(htmlspecialchars($_POST['new_name'], ENT_QUOTES));
                     array_push($field, "user_name");
                     array_push($value, $new_name);
                     $types.="s";
                 }
                 if (!empty($_POST['new_birthday'])) {
-                    $new_birthday = trim((string)$_POST['new_birthday']);
+                    $new_birthday = trim(htmlspecialchars($_POST['new_birthday'], ENT_QUOTES));
                     if (preg_match("/[0-9]{4}-[0-9]{2}-[0-9]{2}/", $new_birthday)) {
                         $format = 'Y-m-d';
                         $user_bday = DateTimeImmutable::createFromFormat($format, $new_birthday);   
@@ -439,7 +441,7 @@ class UserController extends BasicController
                     }
                 }
                 if (!empty($_POST['new_phone'])) {
-                    $new_phone = trim((string)$_POST['new_phone']);
+                    $new_phone = trim(htmlspecialchars($_POST['new_phone'], ENT_QUOTES));
                     if (preg_match("/(\+375)[\(](29|33|25|44)[\)](\d{3})-(\d{2})-(\d{2})$/", $new_phone)) {
                         array_push($field, "user_phone");
                         array_push($value, $new_phone);
@@ -449,13 +451,13 @@ class UserController extends BasicController
                     }
                 }
                 if (!empty($_POST['new_address'])) {
-                    $new_address = trim((string)$_POST['new_address']);
+                    $new_address = trim(htmlspecialchars($_POST['new_address'], ENT_QUOTES));
                     array_push($field, "user_address");
                     array_push($value, $new_address);
                     $types.="s";
                 }
                 if (!empty($_POST['new_email'])) {
-                    $new_email = trim((string)$_POST['new_email']);
+                    $new_email = trim(htmlspecialchars($_POST['new_email'], ENT_QUOTES));
                     if (preg_match("/([a-z0-9]+\.)*[a-z0-9]+@[a-z0-9]+(\.[a-z0-9]+)*\.[a-z]{2,4}$/", $user_email)) {
                         array_push($field, "user_email");
                         array_push($value, $new_email);
@@ -485,8 +487,8 @@ class UserController extends BasicController
             $types = "";
             if (!empty($_POST['submit_update_pass'])) {
                 if (preg_match("/^[a-zA-z](?=.*\d)[a-zA-z\d]{8,}$/", (string)$_POST['user_pass']) && preg_match("/^[a-zA-z](?=.*\d)[a-zA-z\d]{8,}$/", (string)$_POST['user_pass_check'])) {
-                    $user_password = (string)$_POST['user_pass'];
-                    $user_checkpass = (string)$_POST['user_pass_check'];
+                    $user_password = htmlspecialchars($_POST['user_pass'], ENT_QUOTES);
+                    $user_checkpass = htmlspecialchars($_POST['user_pass_check'], ENT_QUOTES);
                     if ($user_password === $user_checkpass) {
                         array_push($field, "user_password");
                         $user_password = hash('md5', $user_password);
