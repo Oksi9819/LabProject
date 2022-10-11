@@ -35,12 +35,12 @@
     </div>
     <div>
         <p><b>Оформить заказ</b></p>
-        <form method="post" name="set_order" action="{{BASEPATH}}profile/{{SESSION['id'}}/orders/set-order">
+        <form method="post" name="set_order" action="{{BASEPATH}}profile/{{$SESSION['id']}}/orders/set-order">
             Адрес: <input type="text" name="order_address"><br>
             <input type="submit" name="submit_set_order"><br>
         </form><br>
     </div>
-    <p>Заказы пользователя {{SESSION['id']}}</p>
+    <p>Заказы пользователя {{$SESSION['id']}}</p>
     <table>
         <tr>
             <td>Код заказа</td>
@@ -56,7 +56,7 @@
             <td>{{$order['order_id']}}</td>
             <td>{{$order['address']}}</td>
             <td>
-                <form method="post" name="set_order" action="{{BASEPATH}}profile/{{SESSION['id'}}/orders/edit-order-address/{{$order['order_id']}}">
+                <form method="post" name="set_order" action="{{BASEPATH}}profile/{{$SESSION['id']}}/orders/edit-order-address/{{$order['order_id']}}">
                     <input type="text" name="new_order_address">
                     <input type="submit" name="submit_new_order_address" value="Изменить адрес">
                 </form>
@@ -76,7 +76,7 @@
                 </table>
             </td>
             <td>
-                <form method="post" name="cancel_order" action="{{BASEPATH}}profile/{{SESSION['id'}}/orders/cancel-order/{{$order['order_id']}}">
+                <form method="post" name="cancel_order" action="{{BASEPATH}}profile/{{$SESSION['id']}}/orders/cancel-order/{{$order['order_id']}}">
                     <input type="submit" name="submit_cancel_order" value="Отменить">
                 </form>
             </td>

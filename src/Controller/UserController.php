@@ -221,7 +221,7 @@ class UserController extends BasicController
                 echo "YOU ARE NOT ADMIN";
                 try {
                     $orders = (new OrderModel())->getOrdersByUserId($_SESSION['user']['id']);
-                    $order_details = (new OrderModel())->getOrderDetailsByUser($_SESSION['user']['id']);
+                    $order_details = (new OrderModel())->getOrdersDetailsByUser($_SESSION['user']['id']);
                     return $this->userView->renderUserOrdersPage($orders, $order_details, $_SESSION['user']['id']);
                 } catch (Exception $e) {
                     return $this->userView->errorView($e->getMessage());
@@ -280,18 +280,15 @@ class UserController extends BasicController
         if(!isset($_SESSION['user'])) {
 			header("Location: /");
 		} elseif ($_SESSION['user']['id'] == $user_id) {
-            if($_SESSION['user']['id'] === "Admin") {
+            if($_SESSION['user']['role'] === "Admin") {
                 global $BASEPATH;
-                $a = "submit_new_status_".$order_id;
-                $b = "new_status_".$order_id;
-                if (!empty($_POST['.$a.'])) {
-                    $new_status = (int)(htmlspecialchars($_POST['.$b.'], ENT_QUOTES));
-                    //echo $new_status."<br>";
-                    $result = (new OrderModel())->updateOrderStatus($order_id, $new_status);
+                if (!empty($_POST['submit_new_order_status'])) {
+                    $new_status = (int)(htmlspecialchars($_POST['new_order_status'], ENT_QUOTES));
+                    $result = (new OrderModel())->updateOrderStatus((int)$order_id, $new_status);
                     if (isset($_SESSION['response'])) {
                         unset ($_SESSION['response']);
                     } 
-                    $_SESSION['response']['new_status']['order_id'];
+                    $_SESSION['response']['new_status']['order_id'] = $order_id;
                     return header('Location: '.BASEPATH.'profile/'.$_SESSION['user']['id'].'/orders');
                 }
             } else {

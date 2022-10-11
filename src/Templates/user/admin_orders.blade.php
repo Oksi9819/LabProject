@@ -5,7 +5,7 @@
     <div>
         @isset($response)
             @isset($response['new_status']['order_id'])
-                <p>Статус заказа id: {{$response['new_status']['order_id']}} обновлен.</p>
+                <p>Обновлен статус заказа id: {{$response['new_status']['order_id']}}.</p>
             @endisset
         @endisset
     </div>
@@ -34,13 +34,13 @@
             <td>{{$order['price']}} BYN </td>
             <td>{{$order['status']}}</td>
             <td>
-                <form method="post" name="set_order_{{$order['order_id']}}" action="{{BASEPATH}}profile/{{SESSION['id']}}/orders/edit-order-status/{{$order['order_id']}}">
-                    <select name="new_status_{{$order['order_id']}}" required>
+                <form method="post" name="set_order_{{$order['order_id']}}" action="{{BASEPATH}}profile/{{$SESSION['id']}}/orders/edit-order-status/{{$order['order_id']}}">
+                    <select name="new_order_status" required>
                     @foreach ($order_statuses as $order_status)
                         <option value="{{$order_status['status_id']}}">{{$order_status['status_id']}} - {{$order_status['status_name']}}</option>
                     @endforeach
                     </select>
-                    <input type="submit" name="submit_new_status_{{$order['order_id']}}" value="Изменить статус">
+                    <input type="submit" name="submit_new_order_status" value="Изменить статус">
                 </form>
             </td>
             <td>

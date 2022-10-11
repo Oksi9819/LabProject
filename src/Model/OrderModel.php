@@ -110,7 +110,6 @@ class OrderModel extends BasicModel
     //UPDATE
     public function updateOrderAddress(int $order_id, string $new_order_address):void
     {
-        //$new_order_address = trim((string)$_POST['new_order_address']);
         $updated_at = date("Y-m-d h:i:s");
         $values = array($new_order_address, $updated_at);
         $result = $this->updateModel("order_address, updated_at", "order_product", "order_id", $order_id, $values, NULL, "ssi");       
@@ -121,14 +120,15 @@ class OrderModel extends BasicModel
     {
         $updated_at = date("Y-m-d h:i:s");
         $values = array($new_order_status, $updated_at);
-        $result = $this->updateModel("order_status, updated_at", "order_product", "order_id", $order_id, $values, NULL, "isi");
+        $result = $this->updateModel("status, updated_at", "order_product", "order_id", $order_id, $values, NULL, "isi");
     }
     
     //DELETE
     public function cancelOrder(int $order_id):void
     {
-        $values = array("3");
-        $result = $this->updateModel("order_status", "order_product", "order_id", $order_id, $values, NULL, "ii");    
+        $updated_at = date("Y-m-d h:i:s");
+        $values = array(3, $updated_at);
+        $result = $this->updateModel("status, updated_at", "order_product", "order_id", $order_id, $values, NULL, "isi");    
     }
 
     public function deleteOrder(int $order_id):void

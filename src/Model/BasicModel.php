@@ -139,6 +139,8 @@ class BasicModel
         }
         $query = $this->connection->prepare($sql);
         array_push($values, $ifvalue);
+        //print_r($values);
+        //echo($types);
         $query->bind_param($types, ...$values);
         $query->execute();
         $query->get_result();
