@@ -43,7 +43,7 @@
             <table>
                 <tr><td>Артикул</td><td>Наименование товара</td><td>Описание</td><td>Цена</td><td>Изображение</td></tr>
                 @foreach ($products as $product)
-                    <tr><td>{{$product['product_id']}}</td><td>{{$product['product_name']}}</td><td>{{$product['product_desc']}}</td><td>{{$product['product_price']}}</td><td><img src="{{BASEPATH}}src/pics/{{$product['product_image']}}.jpg" width="50" height="50" alt="{{$product['product_name']}}"></td></tr><br>
+                    <tr><td>{{$product['product_id']}}</td><td>{{$product['product_name']}}</td><td>{{$product['product_desc']}}</td><td>{{$product['product_price']}}</td><td><img src="{{BASEPATH}}src/pics/{{$product['product_image']}}.jpg" width="200" height="200" alt="{{$product['product_name']}}"></td></tr><br>
                 @endforeach
             </table><br>     
         </div>

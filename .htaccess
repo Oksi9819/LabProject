@@ -1,4 +1,5 @@
 <IfModule mod_rewrite.c>
   RewriteEngine On
+  RewriteCond %{REQUEST_URI} !^/src/pics/(.*).(gif|png|jpg)$
   RewriteRule ^(.*)$ index.php
 </IfModule>
