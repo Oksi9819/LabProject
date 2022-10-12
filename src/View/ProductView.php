@@ -14,29 +14,46 @@ class ProductView extends BasicView
     //User functions
     public function renderProductsPage(array $products)
     {
-        $title = "catalog"; 
-        if(isset($_SESSION['response'])) {
-            echo $this->template->run("products.catalog", ['categories'=>$this->categories,'SESSION'=>$this->session, 'BASEPATH'=>BASEPATH, 'title'=>$title, 'products'=>$products, 'response'=>$_SESSION['response']]);
-        } else {
-            echo $this->template->run("products.catalog", ['categories'=>$this->categories,'SESSION'=>$this->session, 'BASEPATH'=>BASEPATH, 'title'=>$title, 'products'=>$products]);
-        }
+        $title = "catalog";
+        $amount = count($products);
+        echo $this->template->run("products.catalog", [
+            'categories' => $this->categories,
+            'SESSION' => $this->session, 
+            'BASEPATH' => BASEPATH, 
+            'title' => $title, 
+            'products' => $products, 
+            'amount' => $amount,
+            'response' => $this->session['role'] === "Admin" && isset($_SESSION['response']) ? $_SESSION['response'] : NULL
+        ]);
     }
     
     public function renderProductListByCategory(string $category_name, array $products)
     {
         $title = "catalog"; 
-        echo $this->template->run("products.catalog", ['categories'=>$this->categories,'SESSION'=>$this->session, 'BASEPATH'=>BASEPATH, 'title'=>$title, 'category_name'=>$category_name, 'products'=>$products]);
+        $amount = count($products);
+        echo $this->template->run("products.catalog", [
+            'categories' => $this->categories,
+            'SESSION' => $this->session, 
+            'BASEPATH' => BASEPATH, 
+            'title' => $title, 
+            'category_name' => $category_name, 
+            'products' => $products,
+            'amount' => $amount,
+            'response' => $this->session['role'] === "Admin" && isset($_SESSION['response']) ? $_SESSION['response'] : NULL
+        ]);
     }
 
     public function renderProductListById(array $product)
     {
         $title = "product_card"; 
-        if(isset($_SESSION['response'])) {
-            echo $this->template->run("products.card", ['categories'=>$this->categories,'SESSION'=>$this->session, 'BASEPATH'=>BASEPATH, 'title'=>$title, 'product'=>$product[0], 'response'=>$_SESSION['response']]);
-        } else {
-            echo $this->template->run("products.card", ['categories'=>$this->categories,'SESSION'=>$this->session, 'BASEPATH'=>BASEPATH, 'title'=>$title, 'product'=>$product[0]]);
-        }
-        
+        echo $this->template->run("products.card", [
+            'categories' => $this->categories,
+            'SESSION' => $this->session, 
+            'BASEPATH' => BASEPATH, 
+            'title' => $title, 
+            'product' => $product[0], 
+            'response' => $this->session['role'] === "Admin" && isset($_SESSION['response']) ? $_SESSION['response'] : NULL
+        ]);
     }
 
     /*public function renderProductListByName($product)

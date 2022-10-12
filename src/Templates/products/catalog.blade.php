@@ -3,7 +3,7 @@
 
 @section('article')
     <div>
-        @isset($response)
+        @empty($response)
             @isset($response['deleted_product'])
                 <p>Товар с id: {{$response['deleted_product']}} был удален.</p>
             @endisset
@@ -19,7 +19,7 @@
             @isset($response['deleted_category'])
                 <p>Удалена категория id: {{$response['deleted_category']}}.</p>
             @endisset
-        @endisset
+        @endempty
     </div>
     @empty($category_name)
         <p><b>ВСЕ ТОВАРЫ</b><br></p>
@@ -40,11 +40,33 @@
                 </select>
                 <input type="submit">
             </form><br>
-            <table>
-                <tr><td>Артикул</td><td>Наименование товара</td><td>Описание</td><td>Цена</td><td>Изображение</td></tr>
-                @foreach ($products as $product)
-                    <tr><td>{{$product['product_id']}}</td><td>{{$product['product_name']}}</td><td>{{$product['product_desc']}}</td><td>{{$product['product_price']}}</td><td><img src="{{BASEPATH}}src/pics/{{$product['product_image']}}.jpg" width="200" height="200" alt="{{$product['product_name']}}"></td></tr><br>
-                @endforeach
+            <table style="border: 5px solid black" cols="5">
+                <tr>
+                    @for ($i=0; $i<$amount; $i++)
+                        @if (($i+1) % 5 == 1)
+                            </tr>
+                            <tr>
+                        @endif
+                        <td style="border: 1px solid red">
+                            <table>
+                                <tr><td>{{$products[$i]['product_id']}}</td></tr>
+                                <tr>
+                                    <td>
+                                        <img 
+                                        src="{{BASEPATH}}src/pics/{{$products[$i]['product_image']}}.jpg" 
+                                        width="200" 
+                                        height="200" 
+                                        alt="{{$products[$i]['product_name']}}"
+                                        >
+                                    </td>
+                                </tr>
+                                <tr><td>{{$products[$i]['product_name']}}</td></tr>
+                                <tr><td>{{$products[$i]['product_desc']}}</td></tr>
+                                <tr><td>{{$products[$i]['product_price']}} BYN</td></tr>
+                            </table>
+                        </td>
+                    @endfor
+                </tr>
             </table><br>     
         </div>
     @isset($SESSION)
