@@ -12,7 +12,11 @@
         <input type="submit" name="submit_set_review"><br>
     </form><br><br>
     <p><b>Изменить текст отзыва:</b></p>
-    <form method="post" name="update_review_text" action="{{BASEPATH}}profile/{{$SESSION['id']}}/reviews/update-review-text">
+    <form 
+        method="post" 
+        name="update_review_text" 
+        action="{{BASEPATH}}profile/{{$SESSION['id']}}/reviews/update-review-text"
+    >
         Id отзыва: <select name="id_review">
         @foreach ($reviews as $review)
             <option value="{{$review['review_id']}}">{{$review['review_id']}}</option>

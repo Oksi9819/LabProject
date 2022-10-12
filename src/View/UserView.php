@@ -7,6 +7,8 @@ use eftec\bladeone\BladeOne;
 
 class UserView extends BasicView
 {
+    private $title;
+
     public function __construct()
     {
         parent::__construct();
@@ -14,73 +16,124 @@ class UserView extends BasicView
 
     public function sendUser()
     {
-        $title = "registration"; 
-        echo $this->template->run("user.registration", ['categories'=>$this->categories,'SESSION'=>$this->session, 'BASEPATH'=>BASEPATH, 'title'=>$title]);
+        $this->title = "registration"; 
+        echo $this->template->run("user.registration", [
+            'categories' => $this->categories,
+            'SESSION' => $this->session, 
+            'BASEPATH' => BASEPATH, 
+            'title' => $this->title
+        ]);
     }
 
     public function authUser()
     {
-        $title = "authorization"; 
-        echo $this->template->run("user.auth", ['categories'=>$this->categories,'SESSION'=>$this->session, 'BASEPATH'=>BASEPATH, 'title'=>$title]);
+        $this->title = "authorization"; 
+        echo $this->template->run("user.auth", [
+            'categories' => $this->categories,
+            'SESSION' => $this->session, 
+            'BASEPATH' => BASEPATH,
+            'title' => $this->title
+        ]);
     }
 
     public function renderUserPage(array $user)
     {
-        $title = "user profile"; 
-        echo $this->template->run("user.user_profile", ['categories'=>$this->categories,'SESSION'=>$this->session, 'BASEPATH'=>BASEPATH, 'title'=>$title, 'user'=>$user[0]]);
+        $this->title = "user profile"; 
+        echo $this->template->run("user.user_profile", [
+            'categories' => $this->categories,
+            'SESSION' => $this->session, 
+            'BASEPATH' => BASEPATH, 
+            'title' => $this->title, 
+            'user' => $user[0]
+        ]);
     }
 
     public function renderUserDeletedPage(int $user_id)
     {
-        $title = "main"; 
-        if(isset($_SESSION['response'])) {
-            echo $this->template->run("main.main", ['categories'=>$this->categories,'SESSION'=>$this->session, 'BASEPATH'=>BASEPATH, 'title'=>$title,'response'=>$_SESSION['response']]);
-        } else {
-            echo $this->template->run("main.main", ['categories'=>$this->categories,'SESSION'=>$this->session, 'BASEPATH'=>BASEPATH, 'title'=>$title]);
-        }
+        $this->title = "main"; 
+        echo $this->template->run("main.main", [
+            'categories'=>$this->categories,
+            'SESSION'=>$this->session, 
+            'BASEPATH'=>BASEPATH, 
+            'title'=>$this->title,
+            'response'=> isset($_SESSION['response']) ? $_SESSION['response'] : NULL
+        ]);
     }
 
     public function renderUserReviewsPage(array $reviews)
     {
-        $title = "user reviews"; 
-        echo $this->template->run("user.user_reviews", ['categories'=>$this->categories,'SESSION'=>$this->session, 'BASEPATH'=>BASEPATH, 'title'=>$title, 'reviews'=>$reviews]);   
+        $this->title = "user reviews"; 
+        echo $this->template->run("user.user_reviews", [
+            'categories' => $this->categories,
+            'SESSION' => $this->session, 
+            'BASEPATH' => BASEPATH, 
+            'title' => $this->title, 
+            'reviews' => $reviews
+        ]);   
     }
 
     public function renderUserOrdersPage(array $orders, array $order_details)
     {
-        $title = "user orders"; 
-        if(!empty($_SESSION['response'])) {
-            echo $this->template->run("user.user_orders", ['categories'=>$this->categories,'SESSION'=>$this->session, 'BASEPATH'=>BASEPATH, 'title'=>$title, 'orders'=>$orders, 'order_details'=>$order_details, 'response'=>$_SESSION['response']]);
-        } else {
-            echo $this->template->run("user.user_orders", ['categories'=>$this->categories,'SESSION'=>$this->session, 'BASEPATH'=>BASEPATH, 'title'=>$title, 'orders'=>$orders, 'order_details'=>$order_details]);
-        }
+        $this->title = "user orders"; 
+        echo $this->template->run("user.user_orders", [
+            'categories' => $this->categories,
+            'SESSION' => $this->session, 
+            'BASEPATH' => BASEPATH, 
+            'title' => $this->title, 
+            'orders' => $orders, 
+            'order_details' => $order_details, 
+            'response' => isset($_SESSION['response']) ? $_SESSION['response'] : NULL
+        ]);
     }
 
     public function renderAdminPage(array $user)
     {
-        $title = "admin profile"; 
-        echo $this->template->run("user.admin_profile", ['categories'=>$this->categories,'SESSION'=>$this->session, 'BASEPATH'=>BASEPATH, 'title'=>$title, 'user'=>$user[0]]);
+        $this->title = "admin profile"; 
+        echo $this->template->run("user.admin_profile", [
+            'categories' => $this->categories,
+            'SESSION' => $this->session, 
+            'BASEPATH' => BASEPATH, 
+            'title' => $this->title, 
+            'user' => $user[0]
+        ]);
     }
 
     public function renderAdminReviewsPage(array $reviews)
     {
-        $title = "admin reviews"; 
-        echo $this->template->run("user.admin_reviews", ['categories'=>$this->categories,'SESSION'=>$this->session, 'BASEPATH'=>BASEPATH, 'title'=>$title, 'reviews'=>$reviews]);
+        $this->title = "admin reviews"; 
+        echo $this->template->run("user.admin_reviews", [
+            'categories' => $this->categories,
+            'SESSION' => $this->session, 
+            'BASEPATH' => BASEPATH, 
+            'title' => $this->title, 
+            'reviews' => $reviews
+        ]);
     }
 
     public function renderAdminOrdersPage(array $orders, array $order_details, array $order_statuses)
     {
-        $title = "user orders"; 
-        if(!empty($_SESSION['response'])) {
-            echo $this->template->run("user.admin_orders", ['categories'=>$this->categories,'SESSION'=>$this->session, 'BASEPATH'=>BASEPATH, 'title'=>$title, 'orders'=>$orders, 'order_details'=>$order_details, 'order_statuses'=>$order_statuses, 'response'=>$_SESSION['response']]);
-        } else {
-            echo $this->template->run("user.admin_orders", ['categories'=>$this->categories,'SESSION'=>$this->session, 'BASEPATH'=>BASEPATH, 'title'=>$title, 'orders'=>$orders, 'order_details'=>$order_details, 'order_statuses'=>$order_statuses]);
-        }
+        $this->title = "user orders"; 
+        echo $this->template->run("user.admin_orders", [
+            'categories' => $this->categories,
+            'SESSION' => $this->session, 
+            'BASEPATH' => BASEPATH, 
+            'title' => $this->title, 
+            'orders' => $orders, 
+            'order_details' => $order_details, 
+            'order_statuses' => $order_statuses, 
+            'response' => isset($_SESSION['response']) ? $_SESSION['response'] : NULL
+        ]);
     }
 
     public function renderAdminUsersPage(array $users)
     {
-        $title = "admin users"; 
-        echo $this->template->run("user.admin_allusers", ['categories'=>$this->categories,'SESSION'=>$this->session, 'BASEPATH'=>BASEPATH, 'title'=>$title, 'users'=>$users]);
+        $this->title = "admin users"; 
+        echo $this->template->run("user.admin_allusers", [
+            'categories' => $this->categories,
+            'SESSION' => $this->session, 
+            'BASEPATH' => BASEPATH, 
+            'title' => $this->title, 
+            'users' => $users
+        ]);
     }
 }

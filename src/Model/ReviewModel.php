@@ -13,7 +13,7 @@ class ReviewModel extends BasicModel
     }
 
     //CREATE
-    public function setReview(int $user_id, string $review_text)
+    public function setReview(int $user_id, string $review_text) : string
     {
         if (strlen($review_text) < 501) {
             $fields = array('user_id', 'review_text', 'created_at');
@@ -22,17 +22,18 @@ class ReviewModel extends BasicModel
             array_push($values, $user_id);
             array_push($values, $review_text);
             array_push($values, $created_at);
-            print_r($values);
-            $result = $this->setModel("review", $fields, "iss", $values);
+            //print_r($values);
+            return $this->setModel("review", $fields, "iss", $values);
         } else {
-            throw new Exception("Review is too long. Length must be less than 500 characters.<br>");
+            throw new Exception("Review is too long. Length must be less than 500 characters.");
         } 
     }
 
     //READ
-    public function getReviews(): array
+    public function getReviews() : array
     {
-        $result = $this->getModel("r.review_id AS review_id, u.user_name AS user_name, u.user_surname AS user_surname, r.review_text As review_text", "review AS r LEFT JOIN shop.user AS u ON u.user_id=r.user_id", NULL, NULL, NULL, NULL, NULL, NULL);
+        $result = $this->getModel("r.review_id AS review_id, u.user_name AS user_name, u.user_surname AS user_surname, r.review_text As review_text", 
+        "review AS r LEFT JOIN shop.user AS u ON u.user_id=r.user_id", NULL, NULL, NULL, NULL, NULL, NULL);
         if (!empty($result)) {
             return $result;
         }  else {
@@ -40,7 +41,7 @@ class ReviewModel extends BasicModel
         }
     }
 
-    public function getReviewsByUserId(int $user_id): array
+    public function getReviewsByUserId(int $user_id) : array
     {
         $result = $this->getModel("*", "review", "user_id", $user_id, NULL, NULL, NULL, "i");
         if (!empty($result)) {

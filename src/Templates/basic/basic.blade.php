@@ -11,9 +11,13 @@
           <li><a href="{{BASEPATH}}">Главная</a></li>
           <li><a href="{{BASEPATH}}catalog">Каталог</a>
             <ul>
-            @foreach ($categories as $category)
-                <li><a href="{{BASEPATH}}catalog/category/{{$category['name_eng']}}">Категория {{$category['category_name']}}</a></li>
-            @endforeach
+              @foreach ($categories as $category)
+                <li>
+                  <a 
+                    href="{{BASEPATH}}catalog/category/{{$category['name_eng']}}"
+                  >Категория {{$category['category_name']}}</a>
+                </li>
+              @endforeach
                 <li><a href="{{BASEPATH}}catalog/category/VacuumCleaners/id1">Пылесосы артикул "1"</a></li>
                 <li><a href="{{BASEPATH}}catalog/id2">Продукт с артикулом "2"</a></li>
               <!--<li><a href="'.BASEPATH.'catalog/search">Поисковая строка в каталоге</a></li>-->
@@ -27,7 +31,11 @@
             @if ($SESSION['role'] === "Admin")
               <li><a href="{{BASEPATH}}profile/{{$SESSION['id']}}">Привет, Администатор {{$SESSION['name']}}</a>
                 <ul>
-                  <li><a href="{{BASEPATH}}profile/{{$SESSION['id']}}/info">Информация об администаторе id{{$SESSION['id']}}</a></li>
+                  <li>
+                    <a 
+                      href="{{BASEPATH}}profile/{{$SESSION['id']}}/info"
+                    >Информация об администаторе id{{$SESSION['id']}}</a>
+                  </li>
                   <li><a href="{{BASEPATH}}profile/{{$SESSION['id']}}/reviews">Отзывы</a></li>
                   <li><a href="{{BASEPATH}}profile/{{$SESSION['id']}}/orders">Заказы</a></li>
                   <li><a href="{{BASEPATH}}profile/{{$SESSION['id']}}/users">Все пользователи</a></li>
@@ -38,9 +46,21 @@
             @else
               <li><a href="{{BASEPATH}}profile/{{$SESSION['id']}}">Привет, {{$SESSION['name']}}</a>
                 <ul>
-                  <li><a href="{{BASEPATH}}profile/{{$SESSION['id']}}/info">Информация о пользователе id{{$SESSION['id']}}</a></li>
-                  <li><a href="{{BASEPATH}}profile/{{$SESSION['id']}}/reviews">Все отзывы пользователя id{{$SESSION['id']}}</a></li>
-                  <li><a href="{{BASEPATH}}profile/{{$SESSION['id']}}/orders">Все заказы пользователя id{{$SESSION['id']}}</a></li>
+                  <li>
+                    <a 
+                      href="{{BASEPATH}}profile/{{$SESSION['id']}}/info"
+                    >Информация о пользователе id{{$SESSION['id']}}</a>
+                  </li>
+                  <li>
+                    <a 
+                      href="{{BASEPATH}}profile/{{$SESSION['id']}}/reviews"
+                    >Все отзывы пользователя id{{$SESSION['id']}}</a>
+                  </li>
+                  <li>
+                    <a 
+                      href="{{BASEPATH}}profile/{{$SESSION['id']}}/orders"
+                    >Все заказы пользователя id{{$SESSION['id']}}</a>
+                  </li>
                 </ul>
               </li>            
             @endif

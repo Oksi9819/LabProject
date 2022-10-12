@@ -14,7 +14,7 @@ class ProductModel extends BasicModel
     }
 
     //CREATE
-    public function setProduct(string $product_name, string $product_desc, int $product_category, float $product_price): string
+    public function setProduct(string $product_name, string $product_desc, int $product_category, float $product_price) : string
     {
         $fields = array('product_name', 'product_desc', 'product_category', 'product_price', 'created_at');
         $created_at = date("Y-m-d h:i:s");
@@ -26,7 +26,13 @@ class ProductModel extends BasicModel
     public function getProducts(string $sort_field): array
     {
         if ($sort_field === "popularity") {
-            return $this->getModel("product.product_id AS product_id, product.product_name AS product_name, product.product_desc AS product_desc, product.product_price AS product_price, product.product_image AS product_image", "product LEFT JOIN cart ON product.product_id = cart.product_id",  NULL, NULL, NULL, "product_id", "COUNT(*)*cart.amount DESC", NULL);
+            $fields = "product.product_id AS product_id, 
+                product.product_name AS product_name, 
+                product.product_desc AS product_desc, 
+                product.product_price AS product_price, 
+                product.product_image AS product_image";
+            return $this->getModel($fields, "product LEFT JOIN cart ON product.product_id = cart.product_id",  
+            NULL, NULL, NULL, "product_id", "COUNT(*)*cart.amount DESC", NULL);
         }
         if ($sort_field === "pricelowhigh") {
             return $this->getModel("*", "product", NULL, NULL, NULL, NULL, "product_price", NULL);
@@ -42,7 +48,7 @@ class ProductModel extends BasicModel
         }
     }
 
-    public function getProductsByCategory(string $category_name, string $sort_field): array
+    public function getProductsByCategory(string $category_name, string $sort_field) : array
     {
         $categories = (new categoryModel())->getCategories();
         $category_id = NULL;
@@ -53,9 +59,15 @@ class ProductModel extends BasicModel
         }
         if (!empty($category_id)) {
             if ($sort_field === "popularity") {
+                $fields = "product.product_id AS product_id, 
+                    product.product_name AS product_name, 
+                    product.product_desc AS product_desc, 
+                    product.product_price AS product_price, 
+                    product.product_image AS product_image";
                 $table = "product LEFT JOIN cart ON product.product_id = cart.product_id";
                 $sort_clause = "COUNT(*)*cart.amount DESC";
-                return $this->getModel("product.product_id AS product_id, product.product_name AS product_name, product.product_desc AS product_desc, product.product_price AS product_price, product.product_image AS product_image", $table, "product.product_category", $category_id, NULL, "product.product_id", $sort_clause, "i");
+                return $this->getModel($fields, $table, "product.product_category", $category_id, NULL, 
+                "product.product_id", $sort_clause, "i");
             } elseif ($sort_field === "pricelowhigh") {
                 $sort_clause = "product_price, product_name";
                 return $this->getModel("*", "product", "product_category", $category_id, NULL, NULL, $sort_clause,  "i");
@@ -102,7 +114,13 @@ class ProductModel extends BasicModel
     public function getProductsOfOrder(int $order_id): array
     {
         $order = (int)$order_id;
-        $sql = "SELECT cart.order_id AS order_id, product.product_id AS product_id, product.product_name AS product_name, product.product_price AS product_price, cart.amount AS amount, cart.amount*product.product_price AS total_price 
+        $sql = "SELECT 
+            cart.order_id AS order_id, 
+            product.product_id AS product_id, 
+            product.product_name AS product_name, 
+            product.product_price AS product_price, 
+            cart.amount AS amount, 
+            cart.amount*product.product_price AS total_price 
         FROM `cart`
         LEFT JOIN product ON product.product_id = cart.product_id
         WHERE cart.order_id = ?;";

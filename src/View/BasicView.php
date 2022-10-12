@@ -7,7 +7,7 @@ use Itechart\InternshipProject\Model\CategoryModel;
 class BasicView
 {
     protected $template;
-    protected $session_user;
+    protected $session;
     protected $categories;
 
     protected function __construct()
@@ -30,6 +30,12 @@ class BasicView
     public function errorView(string $message)
     {
         $title = "error page"; 
-        echo $this->template->run("basic.error", ['categories'=>$this->categories,'SESSION'=>$this->session, 'BASEPATH'=>BASEPATH, 'title'=>$title, 'message'=>$message]);  
+        echo $this->template->run("basic.error", [
+            'categories' => $this->categories,
+            'SESSION' => $this->session, 
+            'BASEPATH' => BASEPATH, 
+            'title' => $title, 
+            'message' => $message
+        ]);  
     }
 }

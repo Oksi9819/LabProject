@@ -3,7 +3,7 @@
 
 @section('article')
     <div>
-        @empty($response)
+        @isset($response)
             @isset($response['deleted_product'])
                 <p>Товар с id: {{$response['deleted_product']}} был удален.</p>
             @endisset
@@ -19,7 +19,7 @@
             @isset($response['deleted_category'])
                 <p>Удалена категория id: {{$response['deleted_category']}}.</p>
             @endisset
-        @endempty
+        @endisset
     </div>
     @empty($category_name)
         <p><b>ВСЕ ТОВАРЫ</b><br></p>

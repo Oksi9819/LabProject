@@ -56,7 +56,11 @@
             <td>{{$order['order_id']}}</td>
             <td>{{$order['address']}}</td>
             <td>
-                <form method="post" name="set_order" action="{{BASEPATH}}profile/{{$SESSION['id']}}/orders/edit-order-address/{{$order['order_id']}}">
+                <form 
+                    method="post" 
+                    name="set_order" 
+                    action="{{BASEPATH}}profile/{{$SESSION['id']}}/orders/edit-order-address/{{$order['order_id']}}"
+                >
                     <input type="text" name="new_order_address">
                     <input type="submit" name="submit_new_order_address" value="Изменить адрес">
                 </form>
@@ -76,7 +80,11 @@
                 </table>
             </td>
             <td>
-                <form method="post" name="cancel_order" action="{{BASEPATH}}profile/{{$SESSION['id']}}/orders/cancel-order/{{$order['order_id']}}">
+                <form 
+                    method="post" 
+                    name="cancel_order" 
+                    action="{{BASEPATH}}profile/{{$SESSION['id']}}/orders/cancel-order/{{$order['order_id']}}"
+                >
                     <input type="submit" name="submit_cancel_order" value="Отменить">
                 </form>
             </td>

@@ -13,46 +13,41 @@ class CategoryModel extends BasicModel
     }
 
     //CREATE
-    public function setCategory(string $new_category,string $new_category_eng): array
+    public function setCategory(string $new_category,string $new_category_eng) : array
     {
         $values = array();
         if (strlen($new_category) < 31 && strlen($new_category_eng) < 31) {
             $created_at = date("Y-m-d h:i:s");
             array_push($values, $new_category, $new_category_eng, $created_at);
-            $result = $this->setModel("category", ['category_name', 'name_eng', 'created_at'], "sss", $values);
-            return $result;
+            return $this->setModel("category", ['category_name', 'name_eng', 'created_at'], "sss", $values);
         } else {
             throw new Exception("Length of category names should be shorter than 31 characters.");
         }  
     }
 
     //READ
-    public function getCategories(): array
+    public function getCategories() : array
     {
-        $result = $this->getModel("*", "category", NULL, NULL, NULL, NULL, "category_id", NULL);
-        return $result;
+        return $this->getModel("*", "category", NULL, NULL, NULL, NULL, "category_id", NULL);
     }
 
-    public function getCategoryById(int $category_id): array
+    public function getCategoryById(int $category_id) : array
     {
-        $result = $this->getModel("*", "category", "category_id", $category_id, NULL, NULL, NULL, "i");
-        return $result;
+        return $this->getModel("*", "category", "category_id", $category_id, NULL, NULL, NULL, "i");
     }
 
-    public function getCategoryByName(string $category_name): array
+    public function getCategoryByName(string $category_name) : array
     {
-        $result = $this->getModel("*", "category", "name_eng", $category_name, NULL, NULL, NULL, "s");
-        return $result;
+        return $this->getModel("*", "category", "name_eng", $category_name, NULL, NULL, NULL, "s");
     }
 
     //UPDATE
-    public function updateCategory(int $category_id, string $new_category, string $new_category_eng): array
+    public function updateCategory(int $category_id, string $new_category, string $new_category_eng) : array
     {
         $values = array();
         if (strlen($new_category) < 31 && strlen($new_category_eng) < 31) {
             array_push($values, $new_category, $new_category_eng);
-            $result = $this->updateModel("category_name, name_eng", "category", "category_id", $category_id, $values, NULL, "ssi");
-            return $result;   
+            return $this->updateModel("category_name, name_eng", "category", "category_id", $category_id, $values, NULL, "ssi");   
         } else {
             throw new Exception("Length of category names should be shorter than 31 characters.");
         }        
@@ -61,6 +56,6 @@ class CategoryModel extends BasicModel
     //DELETE
     public function deleteCategory($category_id)
     {   
-        $result = $this->deleteModelItem("category", "category_id", $category_id, NULL, "i");
+        return $this->deleteModelItem("category", "category_id", $category_id, NULL, "i");
     }
 }

@@ -12,7 +12,7 @@ class BasicModel
     }
 
     //CREATE
-    protected function setModel(string $table, array $fields, string $types, array $values): string
+    protected function setModel(string $table, array $fields, string $types, array $values) : string
     {
         $val = count($values);
         $missed = "?";
@@ -29,7 +29,8 @@ class BasicModel
     }
 
     //READ
-    protected function getModel(string $fields = "*", string $table, string $ifclause = NULL, string $ifvalue = NULL, string $ifoperator = NULL, string $group = NULL, string $sort = NULL, string $types = NULL): array
+    protected function getModel(string $fields = "*", string $table, string $ifclause = NULL, string $ifvalue = NULL, 
+    string $ifoperator = NULL, string $group = NULL, string $sort = NULL, string $types = NULL) : array
     {
         //echo $ifvalue . "<br><br><br>";
         $ifvalues = explode(", ", $ifvalue);
@@ -114,7 +115,8 @@ class BasicModel
     }
 
     //UPDATE
-    protected function updateModel(string $fields, string $table, string $ifclause, string $ifvalue, array $values, string $ifoperator = NULL, string $types): array
+    protected function updateModel(string $fields, string $table, string $ifclause, string $ifvalue, array $values, 
+    string $ifoperator = NULL, string $types) : array
     {
         $field = explode(", ", $fields);
         $sql = "UPDATE " . $table . " SET ";
@@ -153,7 +155,8 @@ class BasicModel
     }
 
     //DELETE
-    protected function deleteModelItem(string $table, string $ifclause, string $ifvalue, string $ifoperator = NULL, string $types): string
+    protected function deleteModelItem(string $table, string $ifclause, string $ifvalue, string $ifoperator = NULL, 
+    string $types) : string
     {
         $ifvalues = explode(", ", $ifvalue);
         $sql = "DELETE FROM " . $table . " WHERE ";
