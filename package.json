@@ -1,0 +1,19 @@
+{
+  "name": "labproject",
+  "version": "1.0.0",
+  "description": "Study project as part of internship",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Oksi9819/LabProject.git"
+  },
+  "author": "Oksana Ostapuk",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Oksi9819/LabProject/issues"
+  },
+  "homepage": "https://github.com/Oksi9819/LabProject#readme"
+}
