@@ -2,15 +2,19 @@
 <head>
     <meta charset="utf-8">
     <title>{{$title}}</title>
+    <script src="{{BASEPATH}}front_src/src/styles.less"></script>
+    
 </head>
 <body>
     <header>
-      <img src="{{BASEPATH}}src/pics/basepic.jpg" width="100" height="100" alt="Logo">
-      <nav id="menu">Навигация {{$title}}:
-        <ul>
+      <a href="{{BASEPATH}}">
+        <img src="{{BASEPATH}}src/pics/basepic.jpg" alt="Logo">
+      </a> 
+      <nav id="menu"><!--Навигация {{$title}}:-->
+        <ul class="menu">
           <li><a href="{{BASEPATH}}">Главная</a></li>
           <li><a href="{{BASEPATH}}catalog">Каталог</a>
-            <ul>
+            <ul class="submenu">
               @foreach ($categories as $category)
                 <li>
                   <a 
@@ -30,7 +34,7 @@
           @isset($SESSION)
             @if ($SESSION['role'] === "Admin")
               <li><a href="{{BASEPATH}}profile/{{$SESSION['id']}}">Привет, Администатор {{$SESSION['name']}}</a>
-                <ul>
+                <ul class="submenu">
                   <li>
                     <a 
                       href="{{BASEPATH}}profile/{{$SESSION['id']}}/info"
@@ -45,7 +49,7 @@
               </li>
             @else
               <li><a href="{{BASEPATH}}profile/{{$SESSION['id']}}">Привет, {{$SESSION['name']}}</a>
-                <ul>
+                <ul class="submenu">
                   <li>
                     <a 
                       href="{{BASEPATH}}profile/{{$SESSION['id']}}/info"

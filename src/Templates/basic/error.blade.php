@@ -2,6 +2,6 @@
 @extends('basic.basic')
 
 @section('article')
-    <p>Oops! There seems to be an error.</p>
-    <p>Details: {{$message}}.</p>
+    <p class="error_message">Oops! There seems to be an error.</p>
+    <p class="error_message">Details: {{$message}}.</p>
 @endsection
