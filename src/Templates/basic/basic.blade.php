@@ -2,7 +2,7 @@
 <head>
     <meta charset="utf-8">
     <title>{{$title}}</title>
-    <script src="{{BASEPATH}}front_src/src/styles.less"></script>
+    <script src="{{BASEPATH}}front_src/dist/bundle.js"></script>
     
 </head>
 <body>
