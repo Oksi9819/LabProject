@@ -26,7 +26,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _src
   \********************************************************************************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../node_modules/css-loader/dist/runtime/noSourceMaps.js */ \"../node_modules/css-loader/dist/runtime/noSourceMaps.js\");\n/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../node_modules/css-loader/dist/runtime/api.js */ \"../node_modules/css-loader/dist/runtime/api.js\");\n/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);\n// Imports\n\n\nvar ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));\n// Module\n___CSS_LOADER_EXPORT___.push([module.id, \"@font-face {\\n  font-family: 'Comfortaa';\\n  font-style: normal;\\n  font-weight: 400;\\n  font-display: swap;\\n  src: url(https://fonts.gstatic.com/s/comfortaa/v40/1Pt_g8LJRfWJmhDAuUsSQamb1W0lwk4S4WjMPrQ.ttf) format('truetype');\\n}\\nbody {\\n  font-family: 'Comfortaa', cursive;\\n  padding: 0%;\\n  margin: 0%;\\n  color: black;\\n}\\nheader {\\n  width: 100%;\\n  height: 150px;\\n  background: linear-gradient(0deg, rgba(163, 210, 225, 0.26), rgba(163, 210, 225, 0.26));\\n}\\nheader img {\\n  width: 100px;\\n  height: 100px;\\n}\\nheader img :hover {\\n  opacity: 0.9;\\n}\\nheader nav {\\n  height: 50px;\\n  font-size: larger;\\n}\\nheader nav a {\\n  text-decoration: none;\\n  transition: 0.5s linear;\\n}\\nheader nav ul {\\n  background: #d2ff0c9c;\\n  font-weight: bold;\\n  list-style: none;\\n  margin: 0;\\n  padding: 0;\\n}\\nheader nav ul li {\\n  display: inline-block;\\n  margin-right: 20px;\\n  position: relative;\\n}\\nheader nav ul li :last-child {\\n  margin-right: 0;\\n}\\nheader nav ul .submenu {\\n  position: absolute;\\n  top: 100%;\\n  left: 0;\\n  width: 100%;\\n  z-index: 10;\\n  transition: 0.5s ease-in-out;\\n  visibility: hidden;\\n  background: #59ff0c36;\\n}\\nheader nav ul li:hover .submenu {\\n  visibility: visible;\\n}\\nmain {\\n  width: 100%;\\n  background: #59ff0c36;\\n  margin: 0;\\n  padding: 0;\\n}\\narticle {\\n  width: 80%;\\n  background: whitesmoke;\\n  margin: 0;\\n  padding: 0;\\n  color: black;\\n  font-size: large;\\n  border-bottom: 3px outset #d2ff0c9c;\\n  border-right: 3px outset #d2ff0c9c;\\n}\\np.error_message {\\n  font-weight: bold;\\n  color: red;\\n}\\nfooter {\\n  width: 100%;\\n  background: #59ff0c36;\\n  margin: 0;\\n  padding: 0;\\n  color: #565555;\\n  font-size: smaller;\\n  font-weight: lighter;\\n}\\n\", \"\"]);\n// Exports\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);\n\n\n//# sourceURL=webpack://labproject/./src/styles.less?../node_modules/css-loader/dist/cjs.js!../node_modules/less-loader/dist/cjs.js");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../node_modules/css-loader/dist/runtime/noSourceMaps.js */ \"../node_modules/css-loader/dist/runtime/noSourceMaps.js\");\n/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../node_modules/css-loader/dist/runtime/api.js */ \"../node_modules/css-loader/dist/runtime/api.js\");\n/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../node_modules/css-loader/dist/runtime/getUrl.js */ \"../node_modules/css-loader/dist/runtime/getUrl.js\");\n/* harmony import */ var _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2__);\n// Imports\n\n\n\nvar ___CSS_LOADER_URL_IMPORT_0___ = new URL(/* asset import */ __webpack_require__(/*! ../../src/pics/background.png */ \"../src/pics/background.png\"), __webpack_require__.b);\nvar ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));\nvar ___CSS_LOADER_URL_REPLACEMENT_0___ = _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(___CSS_LOADER_URL_IMPORT_0___);\n// Module\n___CSS_LOADER_EXPORT___.push([module.id, \"@font-face {\\n  font-family: 'Comfortaa';\\n  font-style: normal;\\n  font-weight: 400;\\n  font-display: swap;\\n  src: url(https://fonts.gstatic.com/s/comfortaa/v40/1Pt_g8LJRfWJmhDAuUsSQamb1W0lwk4S4WjMPrQ.ttf) format('truetype');\\n}\\nbody {\\n  font-family: 'Comfortaa', cursive;\\n  display: flex;\\n  flex-direction: column;\\n  padding: 0%;\\n  margin: 0%;\\n  min-height: 100vh;\\n  color: black;\\n  background: url(\" + ___CSS_LOADER_URL_REPLACEMENT_0___ + \") no-repeat;\\n  background-size: 100% 100%;\\n}\\nheader {\\n  min-height: 15vh;\\n}\\nheader img {\\n  height: 10vh;\\n}\\nheader img :hover {\\n  opacity: 0.9;\\n}\\nheader nav {\\n  font-size: larger;\\n  background: #07575bea;\\n  margin: 0;\\n  padding: 0;\\n  color: whitesmoke;\\n}\\nheader nav a {\\n  text-decoration: none;\\n  transition: 0.5s linear;\\n  color: inherit;\\n}\\nheader nav ul {\\n  font-weight: bold;\\n  list-style: none;\\n  margin: 0;\\n  padding: 0;\\n}\\nheader nav ul li {\\n  display: inline-block;\\n  margin-right: 20px;\\n  padding: auto auto;\\n  position: relative;\\n}\\nheader nav ul li:last-child {\\n  margin-right: 0;\\n}\\nheader nav ul li:hover .submenu {\\n  visibility: visible;\\n}\\n.submenu {\\n  position: absolute;\\n  top: 100%;\\n  left: 0;\\n  z-index: 10;\\n  transition: 0.5s ease-in-out;\\n  visibility: hidden;\\n}\\n.submenu li {\\n  width: fit-content;\\n  padding: auto auto;\\n  position: relative;\\n}\\nmain {\\n  margin: 0;\\n  padding: 0;\\n  min-height: 60vh;\\n  flex-grow: 1;\\n}\\narticle {\\n  width: 90%;\\n  height: 100%;\\n  min-height: 65vh;\\n  background: #c4dfe6;\\n  margin: 0 auto;\\n  color: black;\\n  font-size: large;\\n  border-right: 3px solid #07575bea;\\n  border-left: 3px solid #07575bea;\\n}\\n.contact {\\n  background: #66a5ad;\\n  padding: 10px 0px 10px 0px;\\n  margin-top: 5vh;\\n}\\n.contact form {\\n  width: 65vh;\\n  margin: 0 auto;\\n  padding: 0px 0px;\\n  background: #66a5ad;\\n  border-radius: 0px;\\n}\\n.contact p {\\n  width: fit-content;\\n  margin: 0 auto 10px auto;\\n  font-weight: bold;\\n}\\n.contact-input,\\n.contact-btn {\\n  color: #565555;\\n  font-family: 'Comfortaa', cursive;\\n  font-size: inherit;\\n  border: 1px solid #66a5ad;\\n  border-radius: 5px;\\n}\\n.contact-input.contact-name,\\n.contact-btn.contact-name,\\n.contact-input.contact-mail,\\n.contact-btn.contact-mail {\\n  margin: 0 auto;\\n  margin-bottom: 15px;\\n  width: calc(50% - 15px);\\n}\\n.contact-input.contact-name,\\n.contact-btn.contact-name {\\n  margin-right: 12px;\\n}\\n.contact-input.contact-msg,\\n.contact-btn.contact-msg {\\n  width: calc(100% - 6px);\\n  margin-bottom: 15px;\\n}\\n.contact-btn {\\n  width: calc(100%);\\n  margin: 0 auto;\\n}\\np.error_message {\\n  font-weight: bold;\\n}\\nfooter {\\n  width: 100%;\\n  min-height: 20vh;\\n  background: #66a5ada2;\\n  border-top: 3px solid #07575bea;\\n  padding: 0;\\n  color: #565555;\\n  font-size: smaller;\\n  font-weight: lighter;\\n}\\n\", \"\"]);\n// Exports\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);\n\n\n//# sourceURL=webpack://labproject/./src/styles.less?../node_modules/css-loader/dist/cjs.js!../node_modules/less-loader/dist/cjs.js");
 
 /***/ }),
 
@@ -37,6 +37,16 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /***/ ((module) => {
 
 eval("\n\n/*\n  MIT License http://www.opensource.org/licenses/mit-license.php\n  Author Tobias Koppers @sokra\n*/\nmodule.exports = function (cssWithMappingToString) {\n  var list = []; // return the list of modules as css string\n\n  list.toString = function toString() {\n    return this.map(function (item) {\n      var content = \"\";\n      var needLayer = typeof item[5] !== \"undefined\";\n\n      if (item[4]) {\n        content += \"@supports (\".concat(item[4], \") {\");\n      }\n\n      if (item[2]) {\n        content += \"@media \".concat(item[2], \" {\");\n      }\n\n      if (needLayer) {\n        content += \"@layer\".concat(item[5].length > 0 ? \" \".concat(item[5]) : \"\", \" {\");\n      }\n\n      content += cssWithMappingToString(item);\n\n      if (needLayer) {\n        content += \"}\";\n      }\n\n      if (item[2]) {\n        content += \"}\";\n      }\n\n      if (item[4]) {\n        content += \"}\";\n      }\n\n      return content;\n    }).join(\"\");\n  }; // import a list of modules into the list\n\n\n  list.i = function i(modules, media, dedupe, supports, layer) {\n    if (typeof modules === \"string\") {\n      modules = [[null, modules, undefined]];\n    }\n\n    var alreadyImportedModules = {};\n\n    if (dedupe) {\n      for (var k = 0; k < this.length; k++) {\n        var id = this[k][0];\n\n        if (id != null) {\n          alreadyImportedModules[id] = true;\n        }\n      }\n    }\n\n    for (var _k = 0; _k < modules.length; _k++) {\n      var item = [].concat(modules[_k]);\n\n      if (dedupe && alreadyImportedModules[item[0]]) {\n        continue;\n      }\n\n      if (typeof layer !== \"undefined\") {\n        if (typeof item[5] === \"undefined\") {\n          item[5] = layer;\n        } else {\n          item[1] = \"@layer\".concat(item[5].length > 0 ? \" \".concat(item[5]) : \"\", \" {\").concat(item[1], \"}\");\n          item[5] = layer;\n        }\n      }\n\n      if (media) {\n        if (!item[2]) {\n          item[2] = media;\n        } else {\n          item[1] = \"@media \".concat(item[2], \" {\").concat(item[1], \"}\");\n          item[2] = media;\n        }\n      }\n\n      if (supports) {\n        if (!item[4]) {\n          item[4] = \"\".concat(supports);\n        } else {\n          item[1] = \"@supports (\".concat(item[4], \") {\").concat(item[1], \"}\");\n          item[4] = supports;\n        }\n      }\n\n      list.push(item);\n    }\n  };\n\n  return list;\n};\n\n//# sourceURL=webpack://labproject/../node_modules/css-loader/dist/runtime/api.js?");
+
+/***/ }),
+
+/***/ "../node_modules/css-loader/dist/runtime/getUrl.js":
+/*!*********************************************************!*\
+  !*** ../node_modules/css-loader/dist/runtime/getUrl.js ***!
+  \*********************************************************/
+/***/ ((module) => {
+
+eval("\n\nmodule.exports = function (url, options) {\n  if (!options) {\n    options = {};\n  }\n\n  if (!url) {\n    return url;\n  }\n\n  url = String(url.__esModule ? url.default : url); // If url is already wrapped in quotes, remove them\n\n  if (/^['\"].*['\"]$/.test(url)) {\n    url = url.slice(1, -1);\n  }\n\n  if (options.hash) {\n    url += options.hash;\n  } // Should url be wrapped?\n  // See https://drafts.csswg.org/css-values-3/#urls\n\n\n  if (/[\"'() \\t\\n]|(%20)/.test(url) || options.needQuotes) {\n    return \"\\\"\".concat(url.replace(/\"/g, '\\\\\"').replace(/\\n/g, \"\\\\n\"), \"\\\"\");\n  }\n\n  return url;\n};\n\n//# sourceURL=webpack://labproject/../node_modules/css-loader/dist/runtime/getUrl.js?");
 
 /***/ }),
 
@@ -118,6 +128,16 @@ eval("\n\n/* istanbul ignore next  */\nfunction apply(styleElement, options, obj
 
 eval("\n\n/* istanbul ignore next  */\nfunction styleTagTransform(css, styleElement) {\n  if (styleElement.styleSheet) {\n    styleElement.styleSheet.cssText = css;\n  } else {\n    while (styleElement.firstChild) {\n      styleElement.removeChild(styleElement.firstChild);\n    }\n\n    styleElement.appendChild(document.createTextNode(css));\n  }\n}\n\nmodule.exports = styleTagTransform;\n\n//# sourceURL=webpack://labproject/../node_modules/style-loader/dist/runtime/styleTagTransform.js?");
 
+/***/ }),
+
+/***/ "../src/pics/background.png":
+/*!**********************************!*\
+  !*** ../src/pics/background.png ***!
+  \**********************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+eval("module.exports = __webpack_require__.p + \"cd0c0bfb4be74490d486.png\";\n\n//# sourceURL=webpack://labproject/../src/pics/background.png?");
+
 /***/ })
 
 /******/ 	});
@@ -146,6 +166,9 @@ eval("\n\n/* istanbul ignore next  */\nfunction styleTagTransform(css, styleElem
 /******/ 		return module.exports;
 /******/ 	}
 /******/ 	
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = __webpack_modules__;
+/******/ 	
 /************************************************************************/
 /******/ 	/* webpack/runtime/compat get default export */
 /******/ 	(() => {
@@ -171,6 +194,18 @@ eval("\n\n/* istanbul ignore next  */\nfunction styleTagTransform(css, styleElem
 /******/ 		};
 /******/ 	})();
 /******/ 	
+/******/ 	/* webpack/runtime/global */
+/******/ 	(() => {
+/******/ 		__webpack_require__.g = (function() {
+/******/ 			if (typeof globalThis === 'object') return globalThis;
+/******/ 			try {
+/******/ 				return this || new Function('return this')();
+/******/ 			} catch (e) {
+/******/ 				if (typeof window === 'object') return window;
+/******/ 			}
+/******/ 		})();
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
 /******/ 	(() => {
 /******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
@@ -185,6 +220,52 @@ eval("\n\n/* istanbul ignore next  */\nfunction styleTagTransform(css, styleElem
 /******/ 			}
 /******/ 			Object.defineProperty(exports, '__esModule', { value: true });
 /******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/publicPath */
+/******/ 	(() => {
+/******/ 		var scriptUrl;
+/******/ 		if (__webpack_require__.g.importScripts) scriptUrl = __webpack_require__.g.location + "";
+/******/ 		var document = __webpack_require__.g.document;
+/******/ 		if (!scriptUrl && document) {
+/******/ 			if (document.currentScript)
+/******/ 				scriptUrl = document.currentScript.src
+/******/ 			if (!scriptUrl) {
+/******/ 				var scripts = document.getElementsByTagName("script");
+/******/ 				if(scripts.length) scriptUrl = scripts[scripts.length - 1].src
+/******/ 			}
+/******/ 		}
+/******/ 		// When supporting browsers where an automatic publicPath is not supported you must specify an output.publicPath manually via configuration
+/******/ 		// or pass an empty string ("") and set the __webpack_public_path__ variable from your code to use your own logic.
+/******/ 		if (!scriptUrl) throw new Error("Automatic publicPath is not supported in this browser");
+/******/ 		scriptUrl = scriptUrl.replace(/#.*$/, "").replace(/\?.*$/, "").replace(/\/[^\/]+$/, "/");
+/******/ 		__webpack_require__.p = scriptUrl;
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/jsonp chunk loading */
+/******/ 	(() => {
+/******/ 		__webpack_require__.b = document.baseURI || self.location.href;
+/******/ 		
+/******/ 		// object to store loaded and loading chunks
+/******/ 		// undefined = chunk not loaded, null = chunk preloaded/prefetched
+/******/ 		// [resolve, reject, Promise] = chunk loading, 0 = chunk loaded
+/******/ 		var installedChunks = {
+/******/ 			"main": 0
+/******/ 		};
+/******/ 		
+/******/ 		// no chunk on demand loading
+/******/ 		
+/******/ 		// no prefetching
+/******/ 		
+/******/ 		// no preloaded
+/******/ 		
+/******/ 		// no HMR
+/******/ 		
+/******/ 		// no HMR manifest
+/******/ 		
+/******/ 		// no on chunks loaded
+/******/ 		
+/******/ 		// no jsonp function
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/nonce */
