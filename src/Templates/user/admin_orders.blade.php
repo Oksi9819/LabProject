@@ -2,6 +2,7 @@
 @extends('basic.basic')
 
 @section('article')
+<div class="info">
     <div>
         @isset($response)
             @isset($response['new_status']['order_id'])
@@ -58,4 +59,5 @@
         </tr>
     @endforeach
     </table>
+</div> 
 @endsection

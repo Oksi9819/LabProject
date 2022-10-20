@@ -2,6 +2,7 @@
 @extends('basic.basic')
 
 @section('article')
+<div class="info">
     @section('title_1')
         <p>Данные о пользователе: <b></p>
     @endsection
@@ -38,4 +39,5 @@
     </form>
     @yield('admin_functions')
     <p><a href="{{BASEPATH}}exit/profile/{{$user['user_id']}}">Выйти</a></p>
+</div>    
 @endsection

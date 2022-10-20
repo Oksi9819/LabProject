@@ -6,9 +6,7 @@
 </head>
 <body>
     <header>
-      <a href="{{BASEPATH}}">
-        <img src="{{BASEPATH}}src/pics/basepic.jpg" alt="Logo">
-      </a> 
+      <a href="{{BASEPATH}}"><img src="{{BASEPATH}}src/pics/basepic.jpg" alt="Logo"></a> 
       <nav id="menu"><!--Навигация {{$title}}:-->
         <ul class="menu">
           <li><a href="{{BASEPATH}}">Главная</a></li>
@@ -32,7 +30,7 @@
           <li><a href="{{BASEPATH}}authorization-form">Авторизация</a></li>
           @isset($SESSION)
             @if ($SESSION['role'] === "Admin")
-              <li><a href="{{BASEPATH}}profile/{{$SESSION['id']}}">Привет, Администатор {{$SESSION['name']}}</a>
+              <li class="penult"><a href="{{BASEPATH}}profile/{{$SESSION['id']}}">Привет, Администатор {{$SESSION['name']}}</a>
                 <ul class="submenu">
                   <li>
                     <a 
@@ -47,7 +45,7 @@
                 </ul>
               </li>
             @else
-              <li><a href="{{BASEPATH}}profile/{{$SESSION['id']}}">Привет, {{$SESSION['name']}}</a>
+              <li class="penult"><a href="{{BASEPATH}}profile/{{$SESSION['id']}}">Привет, {{$SESSION['name']}}</a>
                 <ul class="submenu">
                   <li>
                     <a 
@@ -77,7 +75,7 @@
         </article>
     </main>
     <footer>
-        <p><br><br>This is ProjectShop</p>
+        <p>This is ProjectShop</p>
         <p>Constructed by Oksi</p>
         <p>Belarus, 2022</p>
     </footer>

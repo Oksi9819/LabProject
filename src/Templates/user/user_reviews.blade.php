@@ -2,6 +2,7 @@
 @extends('basic.basic')
 
 @section('article')
+<div class="info">
     @foreach ($reviews as $review)
         <p>Код отзыва: {{$review['review_id']}}</p>
         <p>Текст отзыва: {{$review['review_text']}}</p><br>
@@ -10,7 +11,7 @@
     <form method="post" name="set_review" action="{{BASEPATH}}profile/{{$SESSION['id']}}/reviews/set-review">
         Ваш отзыв: <input type="text" name="reviewText" maxlength="501"><br>
         <input type="submit" name="submit_set_review"><br>
-    </form><br><br>
+    </form><br>
     <p><b>Изменить текст отзыва:</b></p>
     <form 
         method="post" 
@@ -24,7 +25,7 @@
         </select><br>
         Новый текст отзыва: <input type="text" name="newReviewText" maxlength="501"><br>
         <input type="submit" name="submit_update_review_text"><br>
-    </form><br>
+    </form>
     <p><b>Удалить отзыв:</b></p>
     <form method="post" name="delete_review" action="{{BASEPATH}}profile/{{$SESSION['id']}}/reviews/delete-review">
         Id отзыва: <select name="id_review_delete">
@@ -33,5 +34,6 @@
         @endforeach
         </select><br>
         <input type="submit" name="submit_delete_review"><br>
-    </form><br>
+    </form>
+</div>
 @endsection

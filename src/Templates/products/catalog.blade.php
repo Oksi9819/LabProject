@@ -2,7 +2,7 @@
 @extends('basic.basic')
 
 @section('article')
-    <div>
+    <div class="info">
         @isset($response)
             @isset($response['deleted_product'])
                 <p>Товар с id: {{$response['deleted_product']}} был удален.</p>

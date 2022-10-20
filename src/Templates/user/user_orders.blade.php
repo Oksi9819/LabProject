@@ -2,6 +2,7 @@
 @extends('basic.basic')
 
 @section('article')
+<div class="info">
     <div>
         @isset($response)
             @isset($response['new_order'])
@@ -91,4 +92,5 @@
         </tr>
     @endforeach
     </table>
+</div>
 @endsection

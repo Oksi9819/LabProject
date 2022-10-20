@@ -2,6 +2,7 @@
 @extends('basic.basic')
 
 @section('article')
+<div class="info">
     <table>
         <tr>
             <td>ID</td>
@@ -26,4 +27,5 @@
         </tr>
     @endforeach
     </table>
+</div> 
 @endsection

@@ -2,10 +2,12 @@
 @extends('basic.basic')
 
 @section('article')
-    <div>
+    <div class="info">
+        <p class="bold">Телефоны:</p>
         <p>{{$info['phone_1']}}</p>
         <p>{{$info['phone_2']}}</p>
-        <p>{{$info['address']}}</p>
+        <p class="bold">Адрес:</p>
+        <p class="bold">{{$info['address']}}</p>
     </div>
     <div class="contact">
         @isset($values)

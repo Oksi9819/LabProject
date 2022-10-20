@@ -2,7 +2,7 @@
 @extends('basic.basic')
 
 @section('article')
-    <div>
+    <div class="info">
         <p>Артикул : {{$product['product_id']}}</p>
         <img src="{{BASEPATH}}src/pics/{{$product['product_image']}}.jpg" width="300" height="300" alt="{{$product['product_name']}}">
         <div style="display:inline-block">

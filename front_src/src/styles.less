@@ -4,7 +4,7 @@ body {
     font-family: 'Comfortaa', cursive;
     display: flex;
     flex-direction: column;
-    padding: 0%;
+    padding: 0;
     margin: 0%;
     min-height: 100vh;
     color: black;
@@ -12,13 +12,20 @@ body {
     background-size: 100% 100%;
 }
 
+
 header {
     min-height: 15vh;
+
+    a {
+        height: 0px;
+        padding: 0;
+        margin: 0;
+    }
 
     img {
         height: 10vh;
 
-        :hover {
+        &:hover {
             opacity: .9;
         }
     }
@@ -33,10 +40,11 @@ header {
             text-decoration: none;
             transition: .5s linear;
             color: inherit;
+            vertical-align: middle;
         }
 
         ul {
-            
+            height: 100%;
             font-weight: bold;
             list-style: none; 
             margin: 0;
@@ -44,12 +52,17 @@ header {
     
             li{
                 display: inline-block;
-                margin-right: 20px;
+                margin: 1em 20px 0 0;
                 padding: auto auto;
                 position: relative;
+                min-width: 10vh;
 
                 &:last-child {
-                    margin-right: 0;
+                    margin-right: 20px;
+                }
+
+                &:first-child {
+                    margin-left: 20px;
                 }
             }
 
@@ -70,11 +83,29 @@ header {
     visibility: hidden;
 
     li{
-        width: fit-content;
-        padding: auto auto;
+        width: 20em;
+        padding: 1em 1em 0 1em;
         position: relative;
-    }
-    
+        background: #66a5ad;
+        border-bottom: 1px solid  #07575b56;
+        margin: 0;
+
+        &:last-child {
+            padding-bottom: 1em;
+        }
+
+        &:first-child {
+            margin-left: 0;
+        }
+
+        &:hover {
+            text-shadow: 5px 5px 15px #07575bea;
+        }
+    } 
+}
+
+li.penult {
+    margin-left: 35vh;
 }
 
 main {
@@ -94,6 +125,22 @@ article {
     font-size: large;
     border-right: 3px solid #07575bea;
     border-left: 3px solid #07575bea;
+
+    p {
+        margin: 1em 5vh 0 5vh;
+    }
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.info {
+    padding-top: 1em;
+}
+
+input:invalid {
+    background: #ffe3e7;
 }
 
 .contact {
@@ -106,8 +153,7 @@ article {
         margin: 0 auto;
         padding: 0px 0px;
         background: #66a5ad;
-        //box-shadow: 0 1px 5px #003b46;
-        border-radius: 0px;            
+        border-radius: 0px; 
     } 
 
     p {
@@ -129,6 +175,14 @@ article {
         margin-bottom: 15px;
         width: calc(50% - 15px); 
 
+        &:hover {
+            box-shadow: 0 1px 2px whitesmoke;
+            border-color: #07575bea;
+        }
+
+        &:focus {
+            background: whitesmoke;
+        }
     }
 
     &.contact-name {
@@ -138,12 +192,27 @@ article {
     &.contact-msg{
         width: calc(100% - 6px); 
         margin-bottom: 15px;
+
+        &:hover {
+            box-shadow:0 1px 2px whitesmoke;
+            border-color: #07575bea;
+        }
+
+        &:focus {
+            background: whitesmoke;
+        }
     }
 }
 
 .contact-btn {
     width: calc(100%);
     margin: 0 auto;
+
+    &:hover {
+        background: #07575bea;
+        color: white;
+        box-shadow: 0 1px 2px whitesmoke;
+    }
 }
 
 p.error_message {
@@ -155,8 +224,11 @@ footer {
     min-height: 20vh;
     background: #66a5ada2;
     border-top: 3px solid #07575bea;
-    padding: 0;
+    padding: 1em 0 0 0;
     color: #565555;
-    font-size: smaller;
     font-weight: lighter;
+
+    p {
+        margin: 1em 5vh 0 5vh;
+    }
 }

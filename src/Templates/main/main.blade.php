@@ -9,8 +9,7 @@
             @endisset
         @endisset
     </div>
-    </div>
-    <div>
+    <div class="info">
         <p>{{$info['desc']}}</p>
     </div>
 @endsection

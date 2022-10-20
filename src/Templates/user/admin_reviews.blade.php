@@ -2,6 +2,7 @@
 @extends('basic.basic')
 
 @section('article')
+<div class="info">
     <table>
     @foreach ($reviews as $review)
         <tr>
@@ -11,4 +12,5 @@
         </tr>
     @endforeach
     </table>
+</div>    
 @endsection
