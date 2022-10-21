@@ -15,6 +15,17 @@ body {
 
 header {
     min-height: 15vh;
+    position: relative;
+
+    h2 {
+        font-weight: bold;
+        font-style: normal;
+        color: #07575bea;
+        display: inline;
+        position: absolute;
+        top: calc((10vh - 1.5em - 0.83em)/2);
+        margin-left: 20px;
+    }
 
     a {
         height: 0px;
@@ -24,6 +35,7 @@ header {
 
     img {
         height: 10vh;
+        display: inline;
 
         &:hover {
             opacity: .9;
@@ -63,6 +75,10 @@ header {
 
                 &:first-child {
                     margin-left: 20px;
+                }
+
+                &:hover {
+                    text-shadow: 5px 5px 15px #95d8e1;
                 }
             }
 
@@ -143,6 +159,91 @@ input:invalid {
     background: #ffe3e7;
 }
 
+form {
+    padding: 0px 0px;
+    background: #66a5ad;
+    border-radius: 0px; 
+}
+
+input, select {
+    color: #565555;
+    font-family: 'Comfortaa', cursive;
+    font-size: smaller;
+    border: 1px solid #66a5ad;
+    border-radius: 5px;
+
+    &:hover {
+        background: #07575bea;
+        color: white;
+        box-shadow: 0 1px 2px whitesmoke;
+    }
+}
+
+.set-changes {
+    p {
+        margin: 1.5em 0 0.5em 5vh;   
+        font-weight: bold;
+    }
+
+    form {
+        padding-left: 25px;
+        margin-bottom: 0;
+
+        input, select {
+            margin: 15px 0 0 0;
+
+            &:last-child {
+                margin-bottom: 15px;
+            }
+        }
+
+        input[type=submit] {
+            margin-left: 0;
+        }
+    }
+
+    &.sort {
+        input, select {
+            margin: 0.5em 0 0 0;
+
+            &:last-child {
+                margin-bottom: 0.5em;
+            }
+        } 
+    }
+}
+
+.info {
+    padding: 5vh 25px 5vh 5vh;
+
+    p {
+        margin-bottom: 0.5em;
+        margin-left: 0;
+    }
+    img {
+        border: 3px solid whitesmoke;
+        width: 20em;
+        height: 20em;
+        border-radius: 5px;
+        box-shadow: 0 1px 2px #66a5ad;
+    }
+}
+
+.description {
+    display:inline-block;
+    vertical-align: top;
+    margin-left: 5vh;
+    padding-left: 1em;
+    width: 40%;
+    height: 20em;
+    border: 3px solid whitesmoke;
+    border-radius: 5px;
+}
+
+.info-title {
+    font-weight: bold;
+}
+
 .contact {
     background: #66a5ad;
     padding: 10px 0px 10px 0px;
@@ -164,11 +265,7 @@ input:invalid {
 } 
 
 .contact-input, .contact-btn {
-    color: #565555;
-    font-family: 'Comfortaa', cursive;
     font-size: inherit;
-    border: 1px solid #66a5ad;
-    border-radius: 5px;
 
     &.contact-name, &.contact-mail {
         margin: 0 auto;
@@ -207,12 +304,6 @@ input:invalid {
 .contact-btn {
     width: calc(100%);
     margin: 0 auto;
-
-    &:hover {
-        background: #07575bea;
-        color: white;
-        box-shadow: 0 1px 2px whitesmoke;
-    }
 }
 
 p.error_message {

@@ -4,11 +4,11 @@
 @section('article')
     <div class="info">
         <p>Артикул : {{$product['product_id']}}</p>
-        <img src="{{BASEPATH}}src/pics/{{$product['product_image']}}.jpg" width="300" height="300" alt="{{$product['product_name']}}">
-        <div style="display:inline-block">
-            <p>Наименование товара: {{$product['product_name']}}</p>
-            <p>Описание товара: {{$product['product_desc']}}</p>
-            <p>Цена: {{$product['product_price']}} BYN</p>
+        <img src="{{BASEPATH}}src/pics/{{$product['product_image']}}.jpg" alt="{{$product['product_name']}}">
+        <div class="description">
+            <p><span class="info-title">Наименование товара:</span> {{$product['product_name']}}</p>
+            <p><span class="info-title">Описание товара:</span> {{$product['product_desc']}}</p>
+            <p><span class="info-title">Цена:</span> {{$product['product_price']}} BYN</p>
         </div>
     </div>
     <div>
@@ -17,19 +17,19 @@
         @endisset
     </div>
     @if ($SESSION['role'] === "Admin")
-        <div>
-            <p><b>Изменить данные о товаре</b></p>
+        <div class="set-changes">
+            <p>Изменить данные о товаре</p>
             <form method="post" name="update_product_form" action="{{BASEPATH}}catalog/updateProduct/id{{$product['product_id']}}">
                 Новое наименование: <input type="text" name="product_name"><br>
                 Новое описание: <input type="text" name="product_desc"><br>
                 Новая цена: <input type="number" min="1" name="product_price" step="0.01"><br>
-                <input type="submit" name="submit_update_product"><br>
-            </form><br>
+                <input type="submit" name="submit_update_product" value="Обновить">
+            </form>
         </div>
-        <div>
-            <p><b>Удалить товар</b></p>
+        <div class="set-changes">
+            <p>Удалить товар</p>
             <form method="post" name="delete_product_form" action="'.BASEPATH.'catalog/deleteProduct/id{{$product['product_id']}}">
-                <input type="submit" name="submit_delete_product" value = DELETE><br>
+                <input type="submit" name="submit_delete_product" value="Удалить">
             </form>
         </div>
     @endif

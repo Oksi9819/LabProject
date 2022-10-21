@@ -2,6 +2,7 @@
 <?php $_shouldextend[1]=1; ?>
 
 <?php $this->startSection('article'); ?>
+<div class="info">
  <div>
  <?php if(isset($response)): ?>
  <?php if(isset($response['new_status']['order_id'])): ?>
@@ -61,5 +62,6 @@
  </tr>
  <?php endforeach; $this->popLoop(); $loop = $this->getFirstLoop(); ?>
  </table>
+</div> 
 <?php $this->stopSection(); ?>
 <?php if (isset($_shouldextend[1])) { echo $this->runChild('basic.basic'); } ?>

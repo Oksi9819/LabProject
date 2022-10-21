@@ -2,7 +2,7 @@
 <?php $_shouldextend[1]=1; ?>
 
 <?php $this->startSection('article'); ?>
- <div>
+ <div class="info">
  <?php if(isset($response)): ?>
  <?php if(isset($response['deleted_product'])): ?>
  <p>Товар с id: <?php echo \htmlentities($response['deleted_product']??'', ENT_QUOTES, 'UTF-8', false); ?> был удален.</p>
@@ -22,24 +22,24 @@
  <?php endif; ?>
  </div>
  <?php if (empty($category_name)): ?>
- <p><b>ВСЕ ТОВАРЫ</b><br></p>
- <div>
- <form method="post" name="sort_form" action="<?php echo \htmlentities(BASEPATH??'', ENT_QUOTES, 'UTF-8', false); ?>catalog/sort">
+ <p class="bold">ВСЕ ТОВАРЫ</p>
+ <div class="set-changes sort">
+ <form method="post" name="sort_form" action="<?php echo \htmlentities(BASEPATH??'', ENT_QUOTES, 'UTF-8', false); ?>catalog/sort" class="contact">
  <?php endif; ?>
  <?php if(isset($category_name)): ?>
- <p><b>ТОВАРЫ КАТЕГОРИИ <?php echo \htmlentities($category_name??'', ENT_QUOTES, 'UTF-8', false); ?></b><br></p>
- <div>
- <form method="post" name="sort_form" action="<?php echo \htmlentities(BASEPATH??'', ENT_QUOTES, 'UTF-8', false); ?>catalog/category/<?php echo \htmlentities($category_name??'', ENT_QUOTES, 'UTF-8', false); ?>/sort">
+ <p class="bold">ТОВАРЫ КАТЕГОРИИ <?php echo \htmlentities($category_name??'', ENT_QUOTES, 'UTF-8', false); ?></p>
+ <div class="set-changes sort">
+ <form method="post" name="sort_form" action="<?php echo \htmlentities(BASEPATH??'', ENT_QUOTES, 'UTF-8', false); ?>catalog/category/<?php echo \htmlentities($category_name??'', ENT_QUOTES, 'UTF-8', false); ?>/sort" class="category">
  <?php endif; ?>
- <select name="sort_choice">
+ <select name="sort_choice" required class="category-select">
  <option value="popularity">по популярности</option>
  <option value="pricelowhigh">по возрастанию цены</option>
  <option value="pricehighlow">по убыванию цены</option>
  <option value="az">по названию А-Я</option>
  <option value="za">по названию Я-А</option>
  </select>
- <input type="submit">
- </form><br>
+ <input type="submit" class="category-btn">
+ </form>
  <table style="border: 5px solid black" cols="5">
  <tr>
  <?php for($i=0; $i<$amount; $i++): ?>
@@ -52,12 +52,13 @@
  <tr><td><?php echo \htmlentities($products[$i]['product_id']??'', ENT_QUOTES, 'UTF-8', false); ?></td></tr>
  <tr>
  <td>
- <img 
+ <a href="<?php echo \htmlentities(BASEPATH??'', ENT_QUOTES, 'UTF-8', false); ?>catalog/category/VacuumCleaners/id<?php echo \htmlentities($products[$i]['product_id']??'', ENT_QUOTES, 'UTF-8', false); ?>"
+ ><img 
  src="<?php echo \htmlentities(BASEPATH??'', ENT_QUOTES, 'UTF-8', false); ?>src/pics/<?php echo \htmlentities($products[$i]['product_image']??'', ENT_QUOTES, 'UTF-8', false); ?>.jpg" 
  width="200" 
  height="200" 
  alt="<?php echo \htmlentities($products[$i]['product_name']??'', ENT_QUOTES, 'UTF-8', false); ?>"
- >
+ ></a>    
  </td>
  </tr>
  <tr><td><?php echo \htmlentities($products[$i]['product_name']??'', ENT_QUOTES, 'UTF-8', false); ?></td></tr>
@@ -67,12 +68,12 @@
  </td>
  <?php endfor; ?>
  </tr>
- </table><br>     
+ </table>    
  </div>
  <?php if(isset($SESSION)): ?>
  <?php if($SESSION['role'] === "Admin"): ?>
- <div>
- <b>Добавить товар</b><br>
+ <div class="set-changes">
+ <p>Добавить товар</p>
  <form method="post" name="add_product" action="<?php echo \htmlentities(BASEPATH??'', ENT_QUOTES, 'UTF-8', false); ?>addProduct/catalog">
  Наименование: <input type="text" name="prod_name" required><br>
  Описание: <input type="text" name="prod_desc" required><br>
@@ -83,19 +84,19 @@
  <option value="<?php echo \htmlentities($category['category_id']??'', ENT_QUOTES, 'UTF-8', false); ?>"><?php echo \htmlentities($category['category_id']??'', ENT_QUOTES, 'UTF-8', false); ?> - <?php echo \htmlentities($category['category_name']??'', ENT_QUOTES, 'UTF-8', false); ?></option>
  <?php endforeach; $this->popLoop(); $loop = $this->getFirstLoop(); ?>
  </select><br>
- <input type="submit" name="submit_add_product"><br>
- </form><br>
+ <input type="submit" name="submit_add_product" value = "Добавить">
+ </form>
  </div>
- <div>
- <b>Добавить категорию</b><br>
+ <div class="set-changes">
+ <p>Добавить категорию</p>
  <form method="post" name="add_category" action="<?php echo \htmlentities(BASEPATH??'', ENT_QUOTES, 'UTF-8', false); ?>addProductCategory/catalog">
  Введите название категории: <input type="text" name="category_name" required><br>
  Введите название категории на английском без пробела и знаков препинания: <input type="text" name="category_eng" required><br>
- <input type="submit" name="submit_add_category"><br>
- </form><br>
+ <input type="submit" name="submit_add_category" value = "Добавить">
+ </form>
  </div>
- <div>
- <b>Изменить категорию</b><br>
+ <div class="set-changes">
+ <p>Изменить категорию</p>
  <form method="post" name="update_category" action="<?php echo \htmlentities(BASEPATH??'', ENT_QUOTES, 'UTF-8', false); ?>updateProductCategory/catalog">
  Id категории: <select name="update_id_category" required>
  <?php $__currentLoopData = $categories; $this->addLoop($__currentLoopData);$this->getFirstLoop();
@@ -105,11 +106,11 @@
  </select><br>
  Новое название категории: <input type="text" name="new_category" required><br>
  Новое название категории на английском без пробела и знаков препинания: <input type="text" name="new_category_eng" required><br>
- <input type="submit" name="submit_update_category"><br>
- </form><br>
+ <input type="submit" name="submit_update_category" value = "Обновить">
+ </form>
  </div>
- <div>
- <b>Удалить категорию</b><br>
+ <div class="set-changes">
+ <p>Удалить категорию</p>
  <form method="post" name="delete_category" action="<?php echo \htmlentities(BASEPATH??'', ENT_QUOTES, 'UTF-8', false); ?>deleteProductCategory/catalog">
  Id категории: <select name="id_del_category" required>';
  <?php $__currentLoopData = $categories; $this->addLoop($__currentLoopData);$this->getFirstLoop();
@@ -117,8 +118,8 @@
  <option value="<?php echo \htmlentities($category['category_id']??'', ENT_QUOTES, 'UTF-8', false); ?>"><?php echo \htmlentities($category['category_id']??'', ENT_QUOTES, 'UTF-8', false); ?> - <?php echo \htmlentities($category['category_name']??'', ENT_QUOTES, 'UTF-8', false); ?></option>
  <?php endforeach; $this->popLoop(); $loop = $this->getFirstLoop(); ?>
  </select><br>
- <input type="submit" name="submit_delete_category"><br>
- </form><br>
+ <input type="submit" name="submit_delete_category" value = "Удалить">
+ </form>
  </div>
  <?php endif; ?>
  <?php endif; ?>

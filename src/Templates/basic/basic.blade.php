@@ -7,6 +7,7 @@
 <body>
     <header>
       <a href="{{BASEPATH}}"><img src="{{BASEPATH}}src/pics/basepic.jpg" alt="Logo"></a> 
+      <h2>LabProject</h2>
       <nav id="menu"><!--Навигация {{$title}}:-->
         <ul class="menu">
           <li><a href="{{BASEPATH}}">Главная</a></li>
@@ -19,8 +20,6 @@
                   >Категория {{$category['category_name']}}</a>
                 </li>
               @endforeach
-                <li><a href="{{BASEPATH}}catalog/category/VacuumCleaners/id1">Пылесосы артикул "1"</a></li>
-                <li><a href="{{BASEPATH}}catalog/id2">Продукт с артикулом "2"</a></li>
               <!--<li><a href="'.BASEPATH.'catalog/search">Поисковая строка в каталоге</a></li>-->
             </ul>
           </li>

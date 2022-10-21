@@ -22,24 +22,24 @@
         @endisset
     </div>
     @empty($category_name)
-        <p><b>ВСЕ ТОВАРЫ</b><br></p>
-        <div>
-            <form method="post" name="sort_form" action="{{BASEPATH}}catalog/sort">
+        <p class="bold">ВСЕ ТОВАРЫ</p>
+        <div class="set-changes sort">
+            <form method="post" name="sort_form" action="{{BASEPATH}}catalog/sort" class="contact">
     @endempty
     @isset($category_name)
-        <p><b>ТОВАРЫ КАТЕГОРИИ {{$category_name}}</b><br></p>
-        <div>
-            <form method="post" name="sort_form" action="{{BASEPATH}}catalog/category/{{$category_name}}/sort">
+        <p class="bold">ТОВАРЫ КАТЕГОРИИ {{$category_name}}</p>
+        <div class="set-changes sort">
+            <form method="post" name="sort_form" action="{{BASEPATH}}catalog/category/{{$category_name}}/sort" class="category">
     @endisset
-                <select name="sort_choice">
+                <select name="sort_choice" required class="category-select">
                     <option value="popularity">по популярности</option>
                     <option value="pricelowhigh">по возрастанию цены</option>
                     <option value="pricehighlow">по убыванию цены</option>
                     <option value="az">по названию А-Я</option>
                     <option value="za">по названию Я-А</option>
                 </select>
-                <input type="submit">
-            </form><br>
+                <input type="submit" class="category-btn">
+            </form>
             <table style="border: 5px solid black" cols="5">
                 <tr>
                     @for ($i=0; $i<$amount; $i++)
@@ -52,12 +52,13 @@
                                 <tr><td>{{$products[$i]['product_id']}}</td></tr>
                                 <tr>
                                     <td>
-                                        <img 
-                                        src="{{BASEPATH}}src/pics/{{$products[$i]['product_image']}}.jpg" 
-                                        width="200" 
-                                        height="200" 
-                                        alt="{{$products[$i]['product_name']}}"
-                                        >
+                                        <a href="{{BASEPATH}}catalog/category/VacuumCleaners/id{{$products[$i]['product_id']}}"
+                                        ><img 
+                                            src="{{BASEPATH}}src/pics/{{$products[$i]['product_image']}}.jpg" 
+                                            width="200" 
+                                            height="200" 
+                                            alt="{{$products[$i]['product_name']}}"
+                                        ></a>    
                                     </td>
                                 </tr>
                                 <tr><td>{{$products[$i]['product_name']}}</td></tr>
@@ -67,12 +68,12 @@
                         </td>
                     @endfor
                 </tr>
-            </table><br>     
+            </table>    
         </div>
     @isset($SESSION)
     @if ($SESSION['role'] === "Admin")
-        <div>
-            <b>Добавить товар</b><br>
+        <div class="set-changes">
+            <p>Добавить товар</p>
             <form method="post" name="add_product" action="{{BASEPATH}}addProduct/catalog">
                 Наименование: <input type="text" name="prod_name" required><br>
                 Описание: <input type="text" name="prod_desc" required><br>
@@ -82,19 +83,19 @@
                     <option value="{{$category['category_id']}}">{{$category['category_id']}} - {{$category['category_name']}}</option>
                 @endforeach
                 </select><br>
-                <input type="submit" name="submit_add_product"><br>
-            </form><br>
+                <input type="submit" name="submit_add_product" value = "Добавить">
+            </form>
         </div>
-        <div>
-            <b>Добавить категорию</b><br>
+        <div class="set-changes">
+            <p>Добавить категорию</p>
             <form method="post" name="add_category" action="{{BASEPATH}}addProductCategory/catalog">
                 Введите название категории: <input type="text" name="category_name" required><br>
                 Введите название категории на английском без пробела и знаков препинания: <input type="text" name="category_eng" required><br>
-                <input type="submit" name="submit_add_category"><br>
-            </form><br>
+                <input type="submit" name="submit_add_category" value = "Добавить">
+            </form>
         </div>
-        <div>
-            <b>Изменить категорию</b><br>
+        <div class="set-changes">
+            <p>Изменить категорию</p>
             <form method="post" name="update_category" action="{{BASEPATH}}updateProductCategory/catalog">
                 Id категории: <select name="update_id_category" required>
                 @foreach ($categories as $category)
@@ -103,19 +104,19 @@
                 </select><br>
                 Новое название категории: <input type="text" name="new_category" required><br>
                 Новое название категории на английском без пробела и знаков препинания: <input type="text" name="new_category_eng" required><br>
-                <input type="submit" name="submit_update_category"><br>
-            </form><br>
+                <input type="submit" name="submit_update_category" value = "Обновить">
+            </form>
         </div>
-        <div>
-            <b>Удалить категорию</b><br>
+        <div class="set-changes">
+            <p>Удалить категорию</p>
             <form method="post" name="delete_category" action="{{BASEPATH}}deleteProductCategory/catalog">
                 Id категории: <select name="id_del_category" required>';
                 @foreach ($categories as $category)
                     <option value="{{$category['category_id']}}">{{$category['category_id']}} - {{$category['category_name']}}</option>
                 @endforeach
                 </select><br>
-                <input type="submit" name="submit_delete_category"><br>
-            </form><br>
+                <input type="submit" name="submit_delete_category" value = "Удалить">
+            </form>
         </div>
     @endif
     @endisset
