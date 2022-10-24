@@ -88,7 +88,7 @@ class ProductController extends BasicController
                             return header('Location: ' . BASEPATH . 'catalog');
                         }                        
                     }  
-                }               
+                } return header('Location: ' . BASEPATH . 'catalog');               
             } else {
                 return $this->productView->errorView("You have no permissions to do this action. Available only for administrators.");   
             }
@@ -131,7 +131,7 @@ class ProductController extends BasicController
                         );
                         return header('Location: ' . BASEPATH . 'catalog/id' . $product_id);
                     }
-                }           
+                } return header('Location: ' . BASEPATH . 'catalog/id' . $product_id);           
             } else {
                 return $this->productView->errorView("You have no permissions to do this action. Available only for administrators. ");   
             }
@@ -171,7 +171,7 @@ class ProductController extends BasicController
                             'new_category' => $new_category,
                         ];
                         return header('Location: ' . BASEPATH . 'catalog');
-                }           
+                } return header('Location: ' . BASEPATH . 'catalog');          
             } else {
                 return $this->productView->errorView("You have no permissions to do this action. Available only for administrators. ");
             }
@@ -193,7 +193,7 @@ class ProductController extends BasicController
                         'updated_category' => $category_id,
                     ];
                     return header('Location: ' . BASEPATH . 'catalog');
-                }              
+                } return header('Location: ' . BASEPATH . 'catalog');               
             } else {
                 return $this->productView->errorView("You have no permissions to do this action. Available only for administrators. ");  
             }
@@ -213,7 +213,7 @@ class ProductController extends BasicController
                         'deleted_category' => $category_id,
                     ];
                     return header('Location: ' . BASEPATH . 'catalog');
-                }               
+                } return header('Location: ' . BASEPATH . 'catalog');               
             } else {
                 return $this->productView->errorView("You have no permissions to do this action. Available only for administrators. ");  
             }

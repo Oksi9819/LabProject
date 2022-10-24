@@ -151,10 +151,6 @@ article {
     font-weight: bold;
 }
 
-.info {
-    padding-top: 1em;
-}
-
 input:invalid {
     background: #ffe3e7;
 }
@@ -214,7 +210,7 @@ input, select {
 }
 
 .info {
-    padding: 5vh 25px 5vh 5vh;
+    padding: 1em 25px 5vh 5vh;
 
     p {
         margin-bottom: 0.5em;
@@ -233,11 +229,45 @@ input, select {
     display:inline-block;
     vertical-align: top;
     margin-left: 5vh;
+    margin-right: 5vh;
     padding-left: 1em;
     width: 40%;
     height: 20em;
     border: 3px solid whitesmoke;
     border-radius: 5px;
+}
+
+.add-to-cart {
+    display:inline-block;
+    vertical-align: top;
+    margin-right: 5vh;
+    min-width: 20%;
+    height: 20em;
+    border: 3px solid whitesmoke;
+    border-radius: 5px;  
+    background: inherit; 
+    text-align: center;
+
+    input {
+        margin-top: 15px;
+    }
+
+    input[type=number] {
+        width: 3em;
+    }
+
+    input[type=submit] {
+        padding: 1em 1em 1em 1em;
+        background: #66a5ad;
+        color: white;
+        font-weight: bold;
+        width: 15em;
+
+        &:hover {
+            background: #07575bea;
+            color: white;
+        }
+    }
 }
 
 .info-title {
