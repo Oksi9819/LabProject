@@ -40,29 +40,28 @@
                 </select>
                 <input type="submit" class="category-btn">
             </form>
-            <table style="border: 5px solid black" cols="5">
+            <table class="catalog">
                 <tr>
                     @for ($i=0; $i<$amount; $i++)
                         @if (($i+1) % 5 == 1)
-                            </tr>
-                            <tr>
+                            </tr><tr>
                         @endif
-                        <td style="border: 1px solid red">
-                            <table>
+                        <td class="catalog">
+                            <table class="catalog product-card">
                                 <tr><td>{{$products[$i]['product_id']}}</td></tr>
                                 <tr>
                                     <td>
                                         <a href="{{BASEPATH}}catalog/category/VacuumCleaners/id{{$products[$i]['product_id']}}"
                                         ><img 
-                                            src="{{BASEPATH}}src/pics/{{$products[$i]['product_image']}}.jpg" 
-                                            width="200" 
-                                            height="200" 
+                                            src="{{BASEPATH}}src/pics/{{$products[$i]['product_image']}}.jpg"  
                                             alt="{{$products[$i]['product_name']}}"
                                         ></a>    
                                     </td>
                                 </tr>
-                                <tr><td>{{$products[$i]['product_name']}}</td></tr>
-                                <tr><td>{{$products[$i]['product_desc']}}</td></tr>
+                                <tr>
+                                    <td class="catalog product-card text"
+                                    ><a href="{{BASEPATH}}catalog/category/VacuumCleaners/id{{$products[$i]['product_id']}}"
+                                        >{{$products[$i]['product_name']}}</a></td></tr>
                                 <tr><td>{{$products[$i]['product_price']}} BYN</td></tr>
                             </table>
                         </td>

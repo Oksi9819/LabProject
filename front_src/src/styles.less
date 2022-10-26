@@ -225,6 +225,73 @@ input, select {
     }
 }
 
+table.catalog {
+    margin: 0;
+    padding: 0;
+    //border: 5px solid black;
+    //width: 90%;
+    border-collapse: collapse;
+    text-align: center;
+
+    tbody {
+        margin: 0 auto;
+    }
+
+    td {
+        border: 1px solid #07575bea;
+        border-radius: 5px;
+        border-collapse: collapse;
+        margin: 0.5vh 0.5vh 0.5vh 0.5vh;
+        padding: 0;
+        vertical-align: top;
+        display: inline-block;
+
+        &.catalog {   
+            min-width: 19%;
+        }
+    }
+
+    &.product-card {
+        min-height: 24em;
+        border-collapse: collapse;
+        
+        td {
+            border: none;
+            vertical-align: top;
+
+            a {
+                text-decoration: none;
+                color: black;
+            }
+        }
+
+        img {
+            width: 15em;
+            height: 15em;
+            border-radius: 5px;
+
+            &:hover {
+                transform: scale(1.2);
+            }
+        }
+    }
+}
+
+
+td.catalog {
+    display: inline;
+    width: 19%;
+}
+
+td.catalog.product-card.text{
+    font-weight: bold;
+    width: 100%;
+    margin: 0;;
+    vertical-align: top;
+}
+
+
+
 .description {
     display:inline-block;
     vertical-align: top;
