@@ -42,16 +42,18 @@
         </form><br>
     </div>
     <p>Заказы пользователя {{$SESSION['id']}}</p>
-    <table>
-        <tr>
-            <td>Код заказа</td>
-            <td>Адрес заказа</td>
-            <td></td>
-            <td>Сумма заказа</td>
-            <td>Статус заказа</td>
-            <td>Детали заказа</td>
-            <td></td>
-        </tr>
+    <table class="orders">
+        <thead>
+            <tr>
+                <td>Код заказа</td>
+                <td>Адрес заказа</td>
+                <td></td>
+                <td>Сумма заказа</td>
+                <td>Статус заказа</td>
+                <td>Детали заказа</td>
+                <td></td>
+            </tr>
+        </thead>
     @foreach($orders as $order)
         <tr>
             <td>{{$order['order_id']}}</td>
@@ -59,6 +61,7 @@
             <td>
                 <form 
                     method="post" 
+                    class="set-changes orders"
                     name="set_order" 
                     action="{{BASEPATH}}profile/{{$SESSION['id']}}/orders/edit-order-address/{{$order['order_id']}}"
                 >
@@ -69,7 +72,7 @@
             <td>{{$order['price']}} BYN </td>
             <td>{{$order['status']}}</td>
             <td>
-                <table>
+                <table class="orders details">
                     @foreach ($order_details as $order_detail)
                         @if ($order_detail['order_id'] == $order['order_id'])
                             <tr>
@@ -83,6 +86,7 @@
             <td>
                 <form 
                     method="post" 
+                    class="set-changes orders"
                     name="cancel_order" 
                     action="{{BASEPATH}}profile/{{$SESSION['id']}}/orders/cancel-order/{{$order['order_id']}}"
                 >

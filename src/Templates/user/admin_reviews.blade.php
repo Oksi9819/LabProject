@@ -3,12 +3,19 @@
 
 @section('article')
 <div class="info">
-    <table>
+    <table class="reviews">
+        <thead>
+            <tr>
+                <td>Код отзыва</td>
+                <td>Пользователь</td>
+                <td>Текст отзыва</td>
+            </tr>
+        </thead>
     @foreach ($reviews as $review)
         <tr>
-            <td>Код отзыва: {{$review['review_id']}}</td>
-            <td>Пользователь: {{$review['user_name']}} {{$review['user_surname']}}</td>
-            <td>Текст отзыва: {{$review['review_text']}}</td>
+            <td>{{$review['review_id']}}</td>
+            <td>{{$review['user_name']}} {{$review['user_surname']}}</td>
+            <td>{{$review['review_text']}}</td>
         </tr>
     @endforeach
     </table>

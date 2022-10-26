@@ -116,7 +116,6 @@ class UserController extends BasicController
 			header("Location: /");
 		} elseif ($_SESSION['user']['id'] == $user_id) {
             if ($_SESSION['user']['role'] === "Admin") {
-                echo "YOU ARE ADMIN";
                 try {
                     return $this->userView->renderAdminReviewsPage((new ReviewModel())->getReviews());
                 } catch (Exception $e) {
@@ -192,7 +191,6 @@ class UserController extends BasicController
 			header("Location: /");
 		} elseif ($_SESSION['user']['id'] == $user_id) {
             if ($_SESSION['user']['role'] === "Admin") {
-                echo "YOU ARE ADMIN";
                 try {  
                     $orders = (new OrderModel())->getOrders();
                     $statuses = (new OrderModel())->getOrderStatuses();
@@ -202,7 +200,6 @@ class UserController extends BasicController
                     return $this->userView->errorView($e->getMessage());
                 }
             } else {
-                echo "YOU ARE NOT ADMIN";
                 try {
                     $orders = (new OrderModel())->getOrdersByUserId($_SESSION['user']['id']);
                     $order_details = (new OrderModel())->getOrdersDetailsByUser($_SESSION['user']['id']);
@@ -305,7 +302,6 @@ class UserController extends BasicController
 			header("Location: /");
 		} elseif ($_SESSION['user']['id'] == $user_id) {
             if ($_SESSION['user']['role'] === "Admin") {
-                echo "YOU ARE ADMIN";
                 try {  
                     $fields = "u.user_id, u.user_name, u.user_surname, u.user_birthday, u.user_phone, u.user_address, u.user_email, u.created_at, u.updated_at";
                     $ifvalue = "User";
