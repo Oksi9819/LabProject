@@ -226,16 +226,10 @@ input, select {
 }
 
 table.catalog {
-    margin: 0;
+    margin: 0 auto;
     padding: 0;
-    //border: 5px solid black;
-    //width: 90%;
     border-collapse: collapse;
     text-align: center;
-
-    tbody {
-        margin: 0 auto;
-    }
 
     td {
         border: 1px solid #07575bea;
@@ -247,7 +241,7 @@ table.catalog {
         display: inline-block;
 
         &.catalog {   
-            min-width: 19%;
+            width: 18em;
         }
     }
 
@@ -258,6 +252,8 @@ table.catalog {
         td {
             border: none;
             vertical-align: top;
+            text-align: center;
+            border-collapse: collapse;
 
             a {
                 text-decoration: none;
@@ -280,17 +276,13 @@ table.catalog {
 
 td.catalog {
     display: inline;
-    width: 19%;
+    //width: 18em;
 }
 
 td.catalog.product-card.text{
     font-weight: bold;
-    width: 100%;
-    margin: 0;;
-    vertical-align: top;
+    width: 95%;
 }
-
-
 
 .description {
     display:inline-block;
