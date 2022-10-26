@@ -3,17 +3,19 @@
 
 @section('article')
 <div class="info">
-    <table>
-        <tr>
-            <td>ID</td>
-            <td>Имя</td>
-            <td>Фамилия</td>
-            <td>День рождения</td>
-            <td>Адрес</td>
-            <td>Телефон</td>
-            <td>Почта</td>
-            <td>Создан</td>
-        </tr>
+    <table class="users">
+        <thead>
+            <tr>
+                <td>ID</td>
+                <td>Имя</td>
+                <td>Фамилия</td>
+                <td>День рождения</td>
+                <td>Адрес</td>
+                <td>Телефон</td>
+                <td>Почта</td>
+                <td>Создан</td>
+            </tr>
+        </thead>
     @foreach($users as $user)
         <tr>
             <td>{{$user['user_id']}}</td>

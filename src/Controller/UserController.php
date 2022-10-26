@@ -323,7 +323,6 @@ class UserController extends BasicController
 			header("Location: /");
 		} elseif ($_SESSION['user']['id'] == $user_id) {
             if ($_SESSION['user']['role'] === "Admin") {
-                echo "YOU ARE ADMIN";
                 try {  
                     $fields = "u.user_id, u.user_name, u.user_surname, u.user_birthday, u.user_phone, u.user_address, u.user_email, u.created_at, u.updated_at";
                     $ifvalue = "Admin";

@@ -3,7 +3,8 @@
 
 <?php $this->startSection('article'); ?>
 <div class="info">
- <table>
+ <table class="users">
+ <thead>
  <tr>
  <td>ID</td>
  <td>Имя</td>
@@ -14,6 +15,7 @@
  <td>Почта</td>
  <td>Создан</td>
  </tr>
+ </thead>
  <?php $__currentLoopData = $users; $this->addLoop($__currentLoopData);$this->getFirstLoop();
  foreach($__currentLoopData as $user): $loop = $this->incrementLoopIndices();  ?>
  <tr>
