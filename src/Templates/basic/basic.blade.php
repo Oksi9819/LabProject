@@ -25,8 +25,6 @@
           </li>
           <li><a href="{{BASEPATH}}contacts">Контакты</a></li>
           <li><a href="{{BASEPATH}}delivery">Доставка</a></li>
-          <li><a href="{{BASEPATH}}registration-form">Регистрация</a></li>
-          <li><a href="{{BASEPATH}}authorization-form">Авторизация</a></li>
           @isset($SESSION)
             @if ($SESSION['role'] === "Admin")
               <li class="penult"><a href="{{BASEPATH}}profile/{{$SESSION['id']}}">Привет, Администатор {{$SESSION['name']}}</a>
@@ -66,6 +64,10 @@
             @endif
               <li><a href="{{BASEPATH}}exit/profile/{{$SESSION['id']}}">Выйти</a></li>
           @endisset
+          @empty($SESSION)
+              <li class="penult"><a href="{{BASEPATH}}registration-form">Регистрация</a></li>
+              <li class="penult one"><a href="{{BASEPATH}}authorization-form">Авторизация</a></li>
+          @endempty
               <li><a href="{{BASEPATH}}cart"><img 
                   class="cart"
                   src="{{BASEPATH}}src/pics/cart.png" 
