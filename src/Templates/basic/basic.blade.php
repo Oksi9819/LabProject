@@ -64,8 +64,13 @@
                 </ul>
               </li>            
             @endif
-              <li><a href="{{BASEPATH}}exit/profile/{{$SESSION['id']}}">Выйти</a></li><br><br>
+              <li><a href="{{BASEPATH}}exit/profile/{{$SESSION['id']}}">Выйти</a></li>
           @endisset
+              <li><a href="{{BASEPATH}}cart"><img 
+                  class="cart"
+                  src="{{BASEPATH}}src/pics/cart.png" 
+                  alt="Cart"
+                ></a></li><br><br>
       </nav>
     </header>
     <main>

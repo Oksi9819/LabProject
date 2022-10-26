@@ -2,6 +2,7 @@
 <?php $_shouldextend[1]=1; ?>
 
 <?php $this->startSection('article'); ?>
+<div class="info">
  <p><b>Заполните пожалуйста форму регистрации: </b></p><br>
  <form method="post">
  Введите фамилию: <input type="text" name="user_surname" required="required"><br>
@@ -13,5 +14,6 @@
  Введите пароль: <input type="password" name="user_password" required="required"><br>
  <input type="submit" name="submit_reg_user" value="Зарегистрироваться">
  </form>
+<div class="info">    
 <?php $this->stopSection(); ?>
 <?php if (isset($_shouldextend[1])) { echo $this->runChild('basic.basic'); } ?>

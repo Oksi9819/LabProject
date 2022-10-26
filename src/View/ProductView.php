@@ -23,7 +23,7 @@ class ProductView extends BasicView
             'title' => $title, 
             'products' => $products, 
             'amount' => $amount,
-            'response' => $this->session['role'] === "Admin" && isset($_SESSION['response']) ? $_SESSION['response'] : NULL
+            //'response' => $this->session['role'] === "Admin" && isset($_SESSION['response']) ? $_SESSION['response'] : NULL
         ]);
     }
     
@@ -39,7 +39,7 @@ class ProductView extends BasicView
             'category_name' => $category_name, 
             'products' => $products,
             'amount' => $amount,
-            'response' => $this->session['role'] === "Admin" && isset($_SESSION['response']) ? $_SESSION['response'] : NULL
+            //'response' => $this->session['role'] === "Admin" && isset($_SESSION['response']) ? $_SESSION['response'] : NULL
         ]);
     }
 

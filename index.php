@@ -34,6 +34,11 @@ Route::add('/', function() {
   (new MainController())->executeMainPage();
 });
 
+//Route to cart
+Route::add('/cart', function() {
+  (new MainController())->executeMainPage();
+});
+
 // Route to registration form
 Route::add('/registration-form', function() {
   (new UserController())->sendUser();
