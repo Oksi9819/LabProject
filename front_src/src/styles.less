@@ -257,7 +257,7 @@ table.catalog {
     }
 
     &.product-card {
-        min-height: 24em;
+        min-height: 27em;
         border-collapse: collapse;
         
         td {
@@ -306,6 +306,23 @@ td.catalog.product-card.text{
     border-radius: 5px;
 }
 
+button {
+    width: auto;
+    display: inline;
+    padding: 0.5vh 0.5vh 0.5vh 0.5vh;
+    margin: auto;
+    border: 1px solid whitesmoke;
+    border-radius: 5px;  
+    height: auto;
+    font-family: inherit;
+    font-weight: normal;
+
+    &:hover {
+        background: #07575bea;
+        color: white;
+    }
+}
+
 .add-to-cart {
     display:inline-block;
     vertical-align: top;
@@ -317,7 +334,7 @@ td.catalog.product-card.text{
     background: inherit; 
     text-align: center;
 
-    input {
+    input, button {
         margin-top: 15px;
     }
 
@@ -325,12 +342,40 @@ td.catalog.product-card.text{
         width: 3em;
     }
 
-    input[type=submit] {
+    button {
+        color: white;
+        font-family: inherit;
+        font-weight: bolder;
         padding: 1em 1em 1em 1em;
         background: #66a5ad;
-        color: white;
-        font-weight: bold;
-        width: 15em;
+        width: 17em;
+        border: 1px solid whitesmoke;
+        border-radius: 5px;
+
+        &:hover {
+            background: #07575bea; 
+            color: white;
+        }
+    }
+
+    &.catalog {
+        margin: auto;
+        border: none;
+        height: auto;
+        display: block;
+        padding-left: 0;
+    }
+
+    button.add-product {
+        width: auto;
+        display: inline;
+        padding: 0.5vh 0.5vh 0.5vh 0.5vh;
+        margin: auto;
+        border: 1px solid whitesmoke;
+        border-radius: 5px;  
+        height: auto;
+        font-family: inherit;
+        font-weight: normal;
 
         &:hover {
             background: #07575bea;
@@ -338,7 +383,6 @@ td.catalog.product-card.text{
         }
     }
 }
-
 
 table.reviews, table.orders, table.users {
     width: 100%;

@@ -2,18 +2,23 @@
 
 namespace Itechart\InternshipProject\View;
 
-class CartView
+use Itechart\InternshipProject\View\BasicView;
+use eftec\bladeone\BladeOne;
+
+class CartView extends BasicView
 {
-    public function show(int $user_id, array $cartProducts)
+    public function __construct()
     {
-        navi();
-        echo '<b>Это Корзина клиента с Id: '.$user_id.'</b><br><br>';
-        echo '<b>Добавленные товары: </b><br><br>';
-        $i = 1;
-        foreach ($cartProducts as $cartProduct) {
-            echo $i.")  ".$cartProduct."<br>";
-            $i++;
-        }
+        parent::__construct();
+    }
+
+    public function getCartPage()
+    {
+        echo $this->template->run("main.cart", [
+            'categories' => $this->categories,
+            'SESSION' => $this->session, 
+            'BASEPATH' => BASEPATH
+        ]);
     }
 
     /*public function order($user_id, $order_id)

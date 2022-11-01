@@ -10,10 +10,10 @@
             <p><span class="info-title">Описание товара:</span> {{$product['product_desc']}}</p>
             <p><span class="info-title">Цена:</span> {{$product['product_price']}} BYN</p>
         </div>
-        <form method="post" class="add-to-cart" name="add_product_to_cart_form" action="{{BASEPATH}}catalog/addProductTocart/id{{$product['product_id']}}">
-                Количество: <input type="number" min="1" name="product_price" step="1"> шт.<br>
-                <input type="submit" name="submit_add_product_to_cart" value="ДОБАВИТЬ В КОРЗИНУ">
-        </form>
+        <div class="add-to-cart" name="add_product_to_cart_form">
+                Количество: <input type="number" min="1" name="product_amount" step="1"> шт.<br>
+                <button name="submit_add_product_to_cart">ДОБАВИТЬ В КОРЗИНУ</button>
+        </div>
     </div>
     <div>
         @isset($response['updated_product'])

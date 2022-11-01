@@ -1,4 +1,5 @@
 /vendor/
 /node_modules/
+/front_src/node_modules/
 /.env
 launch.json

@@ -60,9 +60,26 @@
                                 </tr>
                                 <tr>
                                     <td class="catalog product-card text"
-                                    ><a href="{{BASEPATH}}catalog/category/VacuumCleaners/id{{$products[$i]['product_id']}}"
+                                    ><a class="catalog product-card text" 
+                                        href="{{BASEPATH}}catalog/category/VacuumCleaners/id{{$products[$i]['product_id']}}"
                                         >{{$products[$i]['product_name']}}</a></td></tr>
-                                <tr><td>{{$products[$i]['product_price']}} BYN</td></tr>
+                                <tr><td class="catalog product-card">{{$products[$i]['product_price']}} BYN</td></tr>
+                                <tr>
+                                    <td class="add-to-cart catalog" 
+                                        name="add_product_to_cart_form">
+                                        <input 
+                                            class="catalog product-card amount"
+                                            type="number"
+                                            min="1" 
+                                            name="product_price" 
+                                            step="1"
+                                            value="1"> шт.
+                                        <button
+                                            class="add-product" 
+                                            data-id="{{$products[$i]['product_id']}}"
+                                        >В КОРЗИНУ</button>    
+                                    </td>
+                                </tr>
                             </table>
                         </td>
                     @endfor

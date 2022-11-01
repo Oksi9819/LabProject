@@ -69,6 +69,7 @@
               <li class="penult one"><a href="{{BASEPATH}}authorization-form">Авторизация</a></li>
           @endempty
               <li><a href="{{BASEPATH}}cart"><img 
+                  id="open_cart"
                   class="cart"
                   src="{{BASEPATH}}src/pics/cart.png" 
                   alt="Cart"

@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<?php $_shouldextend[1]=1; ?>
+
+<?php $this->startSection('article'); ?>
+ <div class="info">
+ <p><b>Это Корзина</b><p>
+ <p>Добавленные товары:</p>
+ <div id="cart_content"></div>
+ <button id="clear_cart">ОЧИСТИТЬ КОРЗИНУ</button>
+ </div>
+<?php $this->stopSection(); ?>
+<?php if (isset($_shouldextend[1])) { echo $this->runChild('basic.basic'); } ?>

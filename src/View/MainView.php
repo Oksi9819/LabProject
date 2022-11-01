@@ -3,7 +3,6 @@
 namespace Itechart\InternshipProject\View;
 
 use Itechart\InternshipProject\View\BasicView;
-use Itechart\InternshipProject\Model\CategoryModel;
 use eftec\bladeone\BladeOne;
 
 class MainView extends BasicView

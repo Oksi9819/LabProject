@@ -1,4 +1,5 @@
 const path = require('path');
+
 module.exports = {
     entry: './src/index.js',
     output: {
@@ -21,7 +22,13 @@ module.exports = {
                     { loader: "css-loader" },
                     { loader: "less-loader" }
                 ]
-            }
+            }/*,
+            {
+                test:/\.js$/,
+                use: [
+                    {loader: "eslint-webpack-plugin"}
+                ]
+            }*/
         ]
     },
     mode: 'development'

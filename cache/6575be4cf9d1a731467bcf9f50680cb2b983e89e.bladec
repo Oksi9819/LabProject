@@ -10,10 +10,10 @@
  <p><span class="info-title">Описание товара:</span> <?php echo \htmlentities($product['product_desc']??'', ENT_QUOTES, 'UTF-8', false); ?></p>
  <p><span class="info-title">Цена:</span> <?php echo \htmlentities($product['product_price']??'', ENT_QUOTES, 'UTF-8', false); ?> BYN</p>
  </div>
- <form method="post" class="add-to-cart" name="add_product_to_cart_form" action="<?php echo \htmlentities(BASEPATH??'', ENT_QUOTES, 'UTF-8', false); ?>catalog/addProductTocart/id<?php echo \htmlentities($product['product_id']??'', ENT_QUOTES, 'UTF-8', false); ?>">
- Количество: <input type="number" min="1" name="product_price" step="1"> шт.<br>
- <input type="submit" name="submit_add_product_to_cart" value="ДОБАВИТЬ В КОРЗИНУ">
- </form>
+ <div class="add-to-cart" name="add_product_to_cart_form">
+ Количество: <input type="number" min="1" name="product_amount" step="1"> шт.<br>
+ <button name="submit_add_product_to_cart">ДОБАВИТЬ В КОРЗИНУ</button>
+ </div>
  </div>
  <div>
  <?php if(isset($response['updated_product'])): ?>

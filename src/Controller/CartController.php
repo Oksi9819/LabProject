@@ -3,13 +3,20 @@
 namespace Itechart\InternshipProject\Controller;
 
 use Itechart\InternshipProject\View\CartView;
-use Itechart\InternshipProject\Model\CartModel;
+use Itechart\InternshipProject\Controller\BasicController;
 
-class CartController
+class CartController extends BasicController
 {
-    public function show($user_id)
+    public $cartView;
+
+    public function __construct()
     {
-        return (new CartView())->show($user_id, (new CartModel())->showCart($user_id));
+        $this->cartView = new CartView();
+    }
+
+    public function show()
+    {
+        return $this->cartView->getCartPage();
     }
 
     /*public function order($user_id, $order_id)
