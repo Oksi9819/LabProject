@@ -1,5 +1,4 @@
 /vendor/
-/front_src/node_modules/
 /node_modules/
 /cache/
 /.env
