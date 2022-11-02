@@ -1,4 +1,11 @@
 const path = require('path');
+const ESLintPlugin = require('eslint-webpack-plugin');
+
+const myEslintOptions = {
+    extensions: [`js`, `jsx`, `ts`],
+    exclude: [`node_modules`],
+};
+
 
 module.exports = {
     entry: './src/index.js',
@@ -6,6 +13,9 @@ module.exports = {
        filename: 'bundle.js',
        path: path.resolve('./dist')
     },
+    plugins: [
+        new ESLintPlugin(myEslintOptions),
+    ],
     module: {
         rules: [
             {
@@ -21,12 +31,6 @@ module.exports = {
                     { loader: "style-loader" },
                     { loader: "css-loader" },
                     { loader: "less-loader" }
-                ]
-            },
-            {
-                test:/\.js$/,
-                use: [
-                    {loader: "eslint-webpack-plugin"}
                 ]
             }
         ]
