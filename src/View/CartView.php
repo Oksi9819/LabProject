@@ -17,7 +17,8 @@ class CartView extends BasicView
         echo $this->template->run("main.cart", [
             'categories' => $this->categories,
             'SESSION' => $this->session, 
-            'BASEPATH' => BASEPATH
+            'BASEPATH' => BASEPATH,
+            'year' => $this->year
         ]);
     }
 

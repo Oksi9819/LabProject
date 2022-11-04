@@ -40,51 +40,43 @@
                 </select>
                 <input type="submit" class="category-btn">
             </form>
-            <table class="catalog">
-                <tr>
-                    @for ($i=0; $i<$amount; $i++)
-                        @if (($i+1) % 5 == 1)
-                            </tr><tr>
-                        @endif
-                        <td class="catalog">
-                            <table class="catalog product-card">
-                                <tr><td>{{$products[$i]['product_id']}}</td></tr>
-                                <tr>
-                                    <td>
-                                        <a href="{{BASEPATH}}catalog/category/VacuumCleaners/id{{$products[$i]['product_id']}}"
-                                        ><img 
-                                            src="{{BASEPATH}}src/pics/{{$products[$i]['product_image']}}.jpg"  
-                                            alt="{{$products[$i]['product_name']}}"
-                                        ></a>    
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="catalog product-card text"
-                                    ><a class="catalog product-card text" 
-                                        href="{{BASEPATH}}catalog/category/VacuumCleaners/id{{$products[$i]['product_id']}}"
-                                        >{{$products[$i]['product_name']}}</a></td></tr>
-                                <tr><td class="catalog product-card">{{$products[$i]['product_price']}} BYN</td></tr>
-                                <tr>
-                                    <td class="add-to-cart catalog" 
-                                        name="add_product_to_cart_form">
-                                        <input 
-                                            class="catalog product-card amount"
-                                            type="number"
-                                            min="1" 
-                                            name="product_price" 
-                                            step="1"
-                                            value="1"> шт.
-                                        <button
-                                            class="add-product" 
-                                            data-id="{{$products[$i]['product_id']}}"
-                                        >В КОРЗИНУ</button>    
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                    @endfor
-                </tr>
-            </table>    
+        </div>    
+        <div class="catalog">
+            @for($i=0; $i<$amount; $i++)
+                <div class="catalog product-card">            
+                    <div class="inner">{{$products[$i]['product_id']}}</div>
+                    <div class="inner">
+                        <a href="{{BASEPATH}}catalog/category/VacuumCleaners/id{{$products[$i]['product_id']}}"
+                        ><img
+                            src="{{BASEPATH}}src/pics/{{$products[$i]['product_image']}}.jpg"  
+                            alt="{{$products[$i]['product_name']}}"
+                        ></a>
+                    </div>
+                    <div class="inner">
+                        <a class="catalog product-card text" 
+                            href="{{BASEPATH}}catalog/category/VacuumCleaners/id{{$products[$i]['product_id']}}"
+                        >{{$products[$i]['product_name']}}</a>
+                    </div>
+                    <div class="inner">
+                        {{$products[$i]['product_price']}} BYN
+                    </div>
+                    <div class="add-to-cart catalog inner" >
+                        <div name="add_product_to_cart_form">
+                            <input 
+                                class="catalog product-card amount"
+                                type="number"
+                                min="1" 
+                                name="product_price" 
+                                step="1"
+                                value="1"> шт.
+                            <button
+                                class="add-product" 
+                                data-id="{{$products[$i]['product_id']}}"
+                            >В КОРЗИНУ</button>    
+                        </div>
+                    </div>  
+                </div>
+            @endfor  
         </div>
     @isset($SESSION)
     @if ($SESSION['role'] === "Admin")

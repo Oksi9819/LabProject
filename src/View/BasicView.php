@@ -9,6 +9,7 @@ class BasicView
     protected $template;
     protected $session;
     protected $categories;
+    protected $year;
 
     protected function __construct()
     {
@@ -19,6 +20,7 @@ class BasicView
             $this->session = $_SESSION['user'];
         } else $this->session = NULL;
         $this->categories = (new CategoryModel())->getCategories();
+        $this->year = date("Y");
         $this->template = new BladeOne($templates, $cache, BladeOne::MODE_AUTO);
     }
 
@@ -35,7 +37,8 @@ class BasicView
             'SESSION' => $this->session, 
             'BASEPATH' => BASEPATH, 
             'title' => $title, 
-            'message' => $message
+            'message' => $message,
+            'year' => $this->year
         ]);  
     }
 }

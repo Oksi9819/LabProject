@@ -6,13 +6,15 @@
 </head>
 <body>
     <header>
-      <a href="{{BASEPATH}}"><img src="{{BASEPATH}}src/pics/basepic.jpg" alt="Logo"></a> 
-      <h2>LabProject</h2>
-      <nav id="menu"><!--Навигация {{$title}}:-->
-        <ul class="menu">
+      <div class="logo">
+        <a href="{{BASEPATH}}"><img src="{{BASEPATH}}src/pics/basepic.jpg" alt="Logo"></a> 
+        <a href="{{BASEPATH}}"><h2>LabProject</h2></a>
+      </div>
+      <nav class="menu header-menu"><!--Навигация {{$title}}:-->
+        <ul class="menu header-menu">
           <li><a href="{{BASEPATH}}">Главная</a></li>
           <li><a href="{{BASEPATH}}catalog">Каталог</a>
-            <ul class="submenu">
+            <ul class="submenu header-submenu">
               @foreach ($categories as $category)
                 <li>
                   <a 
@@ -28,7 +30,7 @@
           @isset($SESSION)
             @if ($SESSION['role'] === "Admin")
               <li class="penult"><a href="{{BASEPATH}}profile/{{$SESSION['id']}}">Привет, Администатор {{$SESSION['name']}}</a>
-                <ul class="submenu">
+                <ul class="submenu header-submenu">
                   <li>
                     <a 
                       href="{{BASEPATH}}profile/{{$SESSION['id']}}/info"
@@ -43,7 +45,7 @@
               </li>
             @else
               <li class="penult"><a href="{{BASEPATH}}profile/{{$SESSION['id']}}">Привет, {{$SESSION['name']}}</a>
-                <ul class="submenu">
+                <ul class="submenu header-submenu">
                   <li>
                     <a 
                       href="{{BASEPATH}}profile/{{$SESSION['id']}}/info"
@@ -84,7 +86,7 @@
     <footer>
         <p>This is ProjectShop</p>
         <p>Constructed by Oksi</p>
-        <p>Belarus, 2022</p>
+        <p>Belarus, {{$year}}</p>
     </footer>
 </body>
 </html>

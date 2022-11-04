@@ -20,7 +20,8 @@ class MainView extends BasicView
             'SESSION' => $this->session, 
             'BASEPATH' => BASEPATH, 
             'title' => $title, 
-            'info' => $info[0]
+            'info' => $info[0],
+            'year' => $this->year
         ]);  
     }
 
@@ -32,7 +33,8 @@ class MainView extends BasicView
             'SESSION' => $this->session, 
             'BASEPATH' => BASEPATH, 
             'title' => $title, 
-            'info' => $info[0]
+            'info' => $info[0],
+            'year' => $this->year
         ]);
     }
 
@@ -44,7 +46,8 @@ class MainView extends BasicView
             'SESSION' => $this->session, 
             'BASEPATH' => BASEPATH, 
             'title' => $title, 
-            'info' => $info[0]
+            'info' => $info[0],
+            'year' => $this->year
         ]);
     }
 
@@ -57,7 +60,8 @@ class MainView extends BasicView
             'BASEPATH' => BASEPATH, 
             'title' => $title, 
             'info' => $info[0], 
-            'values' => $values
+            'values' => $values,
+            'year' => $this->year
         ]);   
     }
 }

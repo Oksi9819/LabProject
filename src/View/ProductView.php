@@ -23,6 +23,7 @@ class ProductView extends BasicView
             'title' => $title, 
             'products' => $products, 
             'amount' => $amount,
+            'year' => $this->year
             //'response' => $this->session['role'] === "Admin" && isset($_SESSION['response']) ? $_SESSION['response'] : NULL
         ]);
     }
@@ -39,6 +40,7 @@ class ProductView extends BasicView
             'category_name' => $category_name, 
             'products' => $products,
             'amount' => $amount,
+            'year' => $this->year
             //'response' => $this->session['role'] === "Admin" && isset($_SESSION['response']) ? $_SESSION['response'] : NULL
         ]);
     }
@@ -52,6 +54,7 @@ class ProductView extends BasicView
             'BASEPATH' => BASEPATH, 
             'title' => $title, 
             'product' => $product[0], 
+            'year' => $this->year,
             'response' => $this->session['role'] === "Admin" && isset($_SESSION['response']) ? $_SESSION['response'] : NULL
         ]);
     }

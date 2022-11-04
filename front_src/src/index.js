@@ -1,2 +1,2 @@
-import styles from './';
-import script from './';
+import '/src/styles.less';
+import '/src/script.js';

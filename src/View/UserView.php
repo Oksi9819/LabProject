@@ -21,7 +21,8 @@ class UserView extends BasicView
             'categories' => $this->categories,
             'SESSION' => $this->session, 
             'BASEPATH' => BASEPATH, 
-            'title' => $this->title
+            'title' => $this->title,
+            'year' => $this->year
         ]);
     }
 
@@ -32,7 +33,8 @@ class UserView extends BasicView
             'categories' => $this->categories,
             'SESSION' => $this->session, 
             'BASEPATH' => BASEPATH,
-            'title' => $this->title
+            'title' => $this->title,
+            'year' => $this->year
         ]);
     }
 
@@ -44,7 +46,8 @@ class UserView extends BasicView
             'SESSION' => $this->session, 
             'BASEPATH' => BASEPATH, 
             'title' => $this->title, 
-            'user' => $user[0]
+            'user' => $user[0],
+            'year' => $this->year
         ]);
     }
 
@@ -56,6 +59,7 @@ class UserView extends BasicView
             'SESSION'=>$this->session, 
             'BASEPATH'=>BASEPATH, 
             'title'=>$this->title,
+            'year' => $this->year,
             'response'=> isset($_SESSION['response']) ? $_SESSION['response'] : NULL
         ]);
     }
@@ -68,7 +72,8 @@ class UserView extends BasicView
             'SESSION' => $this->session, 
             'BASEPATH' => BASEPATH, 
             'title' => $this->title, 
-            'reviews' => $reviews
+            'reviews' => $reviews,
+            'year' => $this->year
         ]);   
     }
 
@@ -82,6 +87,7 @@ class UserView extends BasicView
             'title' => $this->title, 
             'orders' => $orders, 
             'order_details' => $order_details, 
+            'year' => $this->year,
             'response' => isset($_SESSION['response']) ? $_SESSION['response'] : NULL
         ]);
     }
@@ -94,7 +100,8 @@ class UserView extends BasicView
             'SESSION' => $this->session, 
             'BASEPATH' => BASEPATH, 
             'title' => $this->title, 
-            'user' => $user[0]
+            'user' => $user[0],
+            'year' => $this->year
         ]);
     }
 
@@ -106,7 +113,8 @@ class UserView extends BasicView
             'SESSION' => $this->session, 
             'BASEPATH' => BASEPATH, 
             'title' => $this->title, 
-            'reviews' => $reviews
+            'reviews' => $reviews,
+            'year' => $this->year
         ]);
     }
 
@@ -121,6 +129,7 @@ class UserView extends BasicView
             'orders' => $orders, 
             'order_details' => $order_details, 
             'order_statuses' => $order_statuses, 
+            'year' => $this->year,
             'response' => isset($_SESSION['response']) ? $_SESSION['response'] : NULL
         ]);
     }
@@ -133,7 +142,8 @@ class UserView extends BasicView
             'SESSION' => $this->session, 
             'BASEPATH' => BASEPATH, 
             'title' => $this->title, 
-            'users' => $users
+            'users' => $users,
+            'year' => $this->year
         ]);
     }
 }
