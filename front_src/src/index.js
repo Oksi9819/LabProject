@@ -1,8 +1,2 @@
-/*<script
-  src="https://code.jquery.com/jquery-3.6.1.js"
-  integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
-  crossorigin="anonymous">
-</script>*/
-
-import '/src/styles.less';
-import '/src/script.js';
+import styles from './';
+import script from './';
