@@ -1,2 +1,2 @@
-import '/src/styles.less';
-import '/src/script.js';
+import './styles.less';
+import './script.js';

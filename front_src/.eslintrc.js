@@ -14,12 +14,7 @@ module.exports = {
     sourceType: 'module',
   },
   rules: {
+    "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
   },
-  extends: [
-    "plugin:import/errors",
-    "plugin:import/warnings",
-    "plugin:import/typescript",
-  ],
-  extends: ["plugin:import/recommended"],
   plugins: ["eslint-plugin-import"]
 };
