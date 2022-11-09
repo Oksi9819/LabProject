@@ -1,5 +1,6 @@
 /vendor/
 /front_src/node_modules/
+/front_src/dist/bundle.js
 /node_modules/
 /.env
 launch.json
