@@ -1,4 +1,4 @@
-const productCart = document.querySelectorAll('.catalog product-card');
+const buttons = document.querySelectorAll('.add-product');
 const cartContent = document.getElementById('cart_content');
 let cartData;
 
@@ -27,9 +27,15 @@ function getCartData() {
 function addToCart() {
   this.disabled = true;
   cartData = getCartData() || {};
-  const parentBox = ((this.parentNode).parentNode).parentNode;
   const itemId = this.getAttribute('data-id');
-  const itemAmount = this.parentNode.querySelector('.catalog product-card amount').innerHTML;
+  alert(itemId);
+  let parentBox = this.parentNode;
+  alert(parentBox);
+  const n = parentBox.getAttribute('name');
+  alert(n);
+  const itemAmount = parentBox.querySelector('.catalog product-card amount').innerHTML;
+  parentBox = this.parentNode;
+  parentBox = this.parentNode;
   const itemTitle = parentBox.querySelector('a.catalog product-card text').innerHTML;
   const itemPrice = parentBox.querySelector('.catalog product-card price').innerHTML;
   if (Object.prototype.hasOwnProperty.call(cartData, itemId)) {
@@ -44,8 +50,8 @@ function addToCart() {
 }
 
 // Set an event handler for each Add-Product button
-for (let i = 0; i < productCart.length; i++) {
-  addEvent(productCart[i].querySelector('.add-product'), 'click', addToCart);
+for (let i = 0; i < buttons.length; i++) {
+  addEvent(buttons[i], 'click', addToCart);
 }
 
 // Function of Openning the cart with a list of added products
@@ -70,7 +76,7 @@ function openCart() {
 }
 
 // Open cart
-addEvent(document.getElementById('open_cart'), 'click', openCart);
+addEvent(document.getElementById('open_cart'), 'click', openCart());
 
 // Clear cart
 addEvent(document.getElementById('clear_cart'), 'click', () => {

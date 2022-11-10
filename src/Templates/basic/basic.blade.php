@@ -2,7 +2,6 @@
 <head>
     <meta charset="utf-8">
     <title>{{$title}}</title>
-    <script src="{{BASEPATH}}front_src/dist/bundle.js"></script>  
 </head>
 <body>
     <header>
@@ -88,5 +87,6 @@
         <p>Constructed by Oksi</p>
         <p>Belarus, {{$year}}</p>
     </footer>
-</body>
+    <script src="{{BASEPATH}}front_src/dist/bundle.js"></script>
+</body>  
 </html>

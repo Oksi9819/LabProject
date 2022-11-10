@@ -101,22 +101,6 @@ nav.menu {
                     margin-left: 20px;
                 }
 
-                &:hover {
-                    text-shadow: 5px 5px 15px @light-bluegreen-transparent1;
-
-                    .submenu {
-                        visibility: visible;
-                    }
-                }
-
-                &.penult {
-                    margin-left: 53vh;
-                
-                    &.one {
-                        margin-right: 2vh;
-                    }
-                }
-
                 img.cart {
                     height: 5vh;
                 }
@@ -139,10 +123,6 @@ nav.menu {
                             border-bottom: 1px solid @light-bluegreen-transparent3;
                             margin: 0;
                     
-                            &:last-child {
-                                padding-bottom: 1em;
-                            }
-                    
                             &:first-child {
                                 margin-left: 0;
                             }
@@ -152,7 +132,25 @@ nav.menu {
                             }
                         } 
                     } 
-                }  
+                }
+                
+                &:hover {
+                    text-shadow: 5px 5px 15px @light-bluegreen-transparent1;
+
+                    .submenu {
+                        &.header-submenu {
+                            visibility: visible;
+                        }
+                    }
+                }
+
+                &.penult {
+                    margin-left: 53vh;
+                
+                    &.one {
+                        margin-right: 2vh;
+                    }
+                }
             } 
         }
     }
@@ -280,16 +278,21 @@ input, select {
         margin-bottom: 20px;
         justify-content: flex-start;
 
+        &.amount {
+            min-height: 1em;
+        }
+
         .inner {
             height: fit-content;
             border: none;
-            margin-bottom: 20px;
+            padding-top: 0%;
         }
         
         a {
             text-decoration: none;
             color: @black;
             border: none;
+            min-height: 10vh;
 
             &.product-card.text{
                 font-weight: bold;
