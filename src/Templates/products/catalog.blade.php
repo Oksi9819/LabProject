@@ -2,7 +2,7 @@
 @extends('basic.basic')
 
 @section('article')
-    <div class="info">
+    <div class="info resp">
         @isset($response)
             @isset($response['deleted_product'])
                 <p>Товар с id: {{$response['deleted_product']}} был удален.</p>
@@ -58,7 +58,7 @@
                         >{{$products[$i]['product_name']}}</a>
                     </div>
                     <div class="inner">
-                        {{$products[$i]['product_price']}} BYN
+                        <p class="product-card price">{{$products[$i]['product_price']}} BYN</p>
                     </div>
                     <div class="add-to-cart catalog inner" >
                         <div name="add_product_to_cart_form">

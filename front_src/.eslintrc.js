@@ -14,8 +14,9 @@ module.exports = {
     sourceType: 'module',
   },
   rules: {
-    "import/extensions": ["error", { "js": "always"}],
+    "import/extensions": ["error", { "js": "always" }],
     "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
+    "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
   },
   plugins: ["eslint-plugin-import"]
 };

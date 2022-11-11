@@ -6,7 +6,6 @@ const myEslintOptions = {
     exclude: [`node_modules`],
 };
 
-
 module.exports = {
     entry: './src/index.js',
     output: {
@@ -32,7 +31,7 @@ module.exports = {
                     { loader: "css-loader" },
                     { loader: "less-loader" }
                 ]
-            }
+            },
         ]
     },
     mode: 'development'
