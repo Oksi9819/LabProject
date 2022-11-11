@@ -449,6 +449,63 @@ table.orders {
     font-size: smaller;
 }
 
+.shopping_list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid @white;
+    border-radius: 5px;
+    text-align: left;
+    padding: 0;
+
+    .sl_row {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        width: 99%;
+        justify-content: space-between;
+        border-bottom: 1px solid @white;
+        padding: 1vh 0 1vh 0;
+
+        .sl_col {
+            &.first, &.second, &.third, &.fourth {
+                padding-left: 2vh;
+            }
+    
+            &.first {
+                width: 15%;
+                border-right: 1px solid @white;
+            }
+    
+            &.second {
+                width: 30%;
+                text-align: left;
+                padding-right: 2vh;
+            }
+    
+            &.second, &.third {
+                border-right: 1px solid @white;
+            }
+    
+            &.third, &.fourth {
+                width: calc((39%)/2);
+                text-align: right;
+                padding-right: 2vh;
+            }
+        }
+        
+        &:first-child {
+            .sl_col {
+                margin: auto;
+            }
+        }
+
+        &:last-child {
+            border: none;
+        }
+    }
+}
+
 .info-title {
     font-weight: bold;
 }
