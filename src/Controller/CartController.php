@@ -3,6 +3,7 @@
 namespace Itechart\InternshipProject\Controller;
 
 use Itechart\InternshipProject\View\CartView;
+use Itechart\InternshipProject\Model\OrderModel;
 use Itechart\InternshipProject\Controller\BasicController;
 
 class CartController extends BasicController
@@ -19,9 +20,28 @@ class CartController extends BasicController
         return $this->cartView->getCartPage();
     }
 
-    /*public function order($user_id, $order_id)
+    public function order()
     {
-        navi();
-        echo 'It is an order '.$order_id.' of client '.$user_id.'.<br>';
-    }*/
+        if(!isset($_SESSION['user'])) {
+            echo json_encode(array('result' => 'You should authorize first.'));
+            return;
+		} else {
+            $user_id = $_SESSION['user']['id'];
+            $cartData = $_POST['itemsArr'];
+            $address = $_POST['orderAddress'];
+            if (!is_null($cartData)) {
+                if (!is_null($address)) {
+                    (new OrderModel())->set_order($address, $user_id, $cartData);
+                    echo json_encode(array('result' => 'Success'));
+                    return;
+                } else {
+                    echo json_encode(array('result' => 'address does not isset'));
+                    return;
+                }
+            } else {
+                echo json_encode(array('result' => 'cartdata does not isset'));
+                return;
+            }
+        }
+    }
 }

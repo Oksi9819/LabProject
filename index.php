@@ -184,15 +184,10 @@ Route::add('/catalog/search', function($product_name) {
   (new ProductController())->getProductByName($product_name);
 });
 
-/* Route to cart
-Route::add('/cart/([0-9]*)', function($user_id) {
-  (new CartController())->show($user_id);
+// Route to make an order
+Route::add('/order', function() {
+  (new CartController())->order();
 });
-
-Route to make an order
-Route::add('/cart/([0-9]*)/order/([0-9]*)', function($user_id, $order_id) {
-  (new CartController())->order($user_id, $order_id);
-});*/
 
 // Route to contacts
 Route::add('/contacts', function() {

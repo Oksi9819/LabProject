@@ -13,22 +13,8 @@ class OrderModel extends BasicModel
     }
 
     //CREATE
-    public function setOrder(string $address, int $user_id) : array
+    public function setOrder(string $address, int $user_id, array $order_items) : array
     {
-        $cart = [
-            [
-                "prod_id" => 1,
-                "amount" => 1
-            ],
-            [
-                "prod_id" => 2,
-                "amount" => 1
-            ],
-            [
-                "prod_id" => 3,
-                "amount" => 1
-            ]
-        ];
         $created_at = date("Y-m-d h:i:s");
         $values = array($user_id, $address, $created_at);
         $sql = "INSERT INTO order_product (user_id, order_address, created_at) VALUES (?, ?, ?)";
@@ -37,12 +23,10 @@ class OrderModel extends BasicModel
         $query->execute();   
         $query->get_result();
         $order_id = $this->connection->insert_id;
-        $total_amount = count($cart);
-        for($i=0; $i<$total_amount; $i++) {
-            $product = $cart[$i];
+        foreach($order_items as $key => $order_item) {
             $sql = "INSERT INTO cart (order_id, product_id, amount) VALUES (?, ?, ?)";
             $query = $this->connection->prepare($sql);
-            $query->bind_param('iii', $order_id, $product['prod_id'], $product['amount']);
+            $query->bind_param('iii', $order_id, $key, $order_item[2]);
             $query->execute();   
             $query->get_result();
         }
