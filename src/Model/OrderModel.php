@@ -13,7 +13,7 @@ class OrderModel extends BasicModel
     }
 
     //CREATE
-    public function setOrder(string $address, int $user_id, array $order_items) : array
+    public function setOrder(string $address, int $user_id, array $order_items)
     {
         $created_at = date("Y-m-d h:i:s");
         $values = array($user_id, $address, $created_at);
@@ -30,7 +30,6 @@ class OrderModel extends BasicModel
             $query->execute();   
             $query->get_result();
         }
-        return $this->getOrderDetails($order_id);
     }
 
     //READ
