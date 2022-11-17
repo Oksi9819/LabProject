@@ -22,26 +22,28 @@ $(document).ready(() => {
     this.disabled = true;
     if (getCartData()) {
       cartData = getCartData();
-      // console.log('Cart was not empty');
+      console.log('Cart was not empty');
     } else {
       cartData = {};
-      // console.log('Cart was empty');
+      console.log('Cart was empty');
     }
     const itemId = $(this).attr('data-id');
     let parentBox = $(this).parent();
     const itemAmount = Number($(parentBox).find('.catalog.product-card.amount').val());
     parentBox = $(parentBox).parent();
-    // const a = $(parentBox).attr('class');
+    const a = $(parentBox).attr('class');
+    console.log(a);
     parentBox = $(parentBox).parent();
-    // const b = $(parentBox).attr('class');
+    const b = $(parentBox).attr('class');
+    console.log(b);
     const itemTitle = $(parentBox).find('.catalog.product-card.text').text();
     const itemPrice = Number.parseFloat($(parentBox).find('.product-card.price').text());
     if (Object.prototype.hasOwnProperty.call(cartData, itemId)) {
       cartData[itemId][2] += itemAmount;
-      // console.log('Added item to already added product.');
+      console.log('Added item to already added product.');
     } else {
       cartData[itemId] = [itemTitle, itemPrice, itemAmount];
-      // console.log('New product added to cart!');
+      console.log('New product added to cart!');
     }
     if (!setCartData(cartData)) {
       this.disabled = false;
@@ -90,19 +92,20 @@ $(document).ready(() => {
     } else {
       $.ajax({
         type: 'POST',
-        url: './order',
+        url: '/order',
         data: {
           itemsArr: cartData,
           orderAddress,
         },
         success: (data) => {
-          if (data.result === 'Success') {
+          const response = JSON.parse(data);
+          if (response.result === 'Success') {
             $('#clear_cart').trigger('click');
             $(cartContent).text('В корзине пусто!');
             alert('Order was successfully sent.');
           } else {
-            console.log(data.result);
-            alert(data.result);
+            console.log(response.result);
+            alert(response.result);
           }
         },
       });

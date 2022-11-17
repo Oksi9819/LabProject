@@ -145,7 +145,7 @@ nav.menu {
                 }
 
                 &.penult {
-                    margin-left: 53vh;
+                    margin-left: 35vh;
                 
                     &.one {
                         margin-right: 2vh;
@@ -257,9 +257,28 @@ input, select {
         box-shadow: 0 1px 2px @bluegreen;
     }
 
-    &.resp {
-        height: 1em;
-        padding: 0%;
+    .set-order {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 0.5vh;
+        flex-wrap: wrap;
+        flex: auto;
+
+        button, input {
+            margin: 0;
+            text-align: center;
+        }
+
+        &.inner {
+            justify-content: flex-end;
+    
+            #order_addr {
+                margin-right: 5px;
+                height: 1.5em;
+                width: 25em;
+            }
+        }
     }
 }
 

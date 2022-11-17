@@ -187,7 +187,7 @@ Route::add('/catalog/search', function($product_name) {
 // Route to make an order
 Route::add('/order', function() {
   (new CartController())->order();
-});
+}, 'post');
 
 // Route to contacts
 Route::add('/contacts', function() {
