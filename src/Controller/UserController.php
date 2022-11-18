@@ -33,7 +33,6 @@ class UserController extends BasicController
     public function setUser()
     {
         if(!isset($_SESSION['user'])) {
-            if (!empty($_POST['submit_reg_user'])) {
                 if (preg_match("/^[a-zA-z]{1}(?=.*\d)[a-zA-z\d]{7,}$/", trim((string)$_POST['user_password']))) {
                     $user_surname = trim(htmlspecialchars($_POST['user_surname'], ENT_QUOTES));
                     $user_name = trim(htmlspecialchars($_POST['user_name'], ENT_QUOTES));
@@ -50,16 +49,24 @@ class UserController extends BasicController
                             'name' => $user[0]['user_name'],
                         ];
                         $_SESSION['user']['role'] = $user[0]['user_role'] == 1 ? "User" : "Admin";
-                        return header('Location: ' . BASEPATH . 'profile/' . $user[0]['user_id']);
+                        $new_location = 'profile/' . $user[0]['user_id'];
+                        // return header('Location: ' . BASEPATH . 'profile/' . $user[0]['user_id']);
+                        echo json_encode(array('result' => 'Success', 'location' => $new_location));
+                        return;
                     } catch (Exception $e) {
-                        return $this->userView->errorView($e->getMessage());
+                        echo json_encode(array('result' => ($e->getMessage())));
+                        return;
+                        // return $this->userView->errorView($e->getMessage());
                     }  
                 }else {
-                    return $this->userView->errorView("Password length must be at least 8 characters. It should start with a letter and contain at least 1 number.");
+                    echo json_encode(array('result' => 'Password length must be at least 8 characters. It should start with a letter and contain at least 1 number.'));
+                    return;
+                    // return $this->userView->errorView("Password length must be at least 8 characters. It should start with a letter and contain at least 1 number.");
                 }
-            } 
 		} else {
-            return $this->userView->errorView("You're already authorized! Log out.");
+            echo json_encode(array('result' => "You're already authorized! Log out."));
+            return;
+            // return $this->userView->errorView("You're already authorized! Log out.");
         }
     }
 

@@ -17,6 +17,26 @@ $(document).ready(() => {
     return JSON.parse(localStorage.getItem('cart'));
   }
 
+  // Function of getting registered
+  $('#submit_reg_user').on('click', () => {
+    $.ajax({
+      type: 'POST',
+      data: $('#registration_form').serialize(),
+      success: (response) => {
+        console.log('Data was sent.');
+        const result = JSON.parse(response);
+        if (result.result === 'Success') {
+          console.log(result.location);
+          window.location.href = result.location;
+        } else {
+          console.log(result.result);
+          alert(result.result);
+        }
+      },
+    });
+    return false;
+  });
+
   // Set an event handler for each Add-Product button
   $(buttons).on('click', function addToCart() {
     this.disabled = true;
@@ -47,7 +67,6 @@ $(document).ready(() => {
     }
     if (!setCartData(cartData)) {
       this.disabled = false;
-    } else {
       alert('Товар добавлен в корзину.');
     }
     return false;

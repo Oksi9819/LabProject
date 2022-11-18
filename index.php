@@ -34,11 +34,6 @@ Route::add('/', function() {
   (new MainController())->executeMainPage();
 });
 
-//Route to cart
-Route::add('/cart', function() {
-  (new CartController())->show();
-});
-
 // Route to registration form
 Route::add('/registration-form', function() {
   (new UserController())->sendUser();
@@ -182,6 +177,11 @@ Route::add('/catalog/([A-Za-z]*)/id([0-9]*)', function($method, $product_id) {
 // Route to product card by product name
 Route::add('/catalog/search', function($product_name) {
   (new ProductController())->getProductByName($product_name);
+});
+
+//Route to cart
+Route::add('/cart', function() {
+  (new CartController())->show();
 });
 
 // Route to make an order
