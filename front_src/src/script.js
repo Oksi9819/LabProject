@@ -95,6 +95,7 @@ $(document).ready(() => {
     } else {
       delete cartData[itemId];
       setCartData(cartData);
+      window.location.reload(true);
     }
     return false;
   });
