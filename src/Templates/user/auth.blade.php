@@ -4,10 +4,10 @@
 @section('article')
 <div class="info">
     <p><b>Заполните пожалуйста поля авторизации: </b></p><br>
-    <form method="post">
-        Введите email: <input type="email" name="user_email"><br>
-        Введите пароль: <input type="password" name="user_password"><br>
-        <input type="submit" value="Зарегистрироваться">
+    <form method="post" id="auth_form">
+        Введите email: <input type="email" name="user_email" required="required"><br>
+        Введите пароль: <input type="password" name="user_password" required="required"><br>
+        <input id="submit_auth_user" type="submit" value="Авторизоваться">
     </form>
 </div>    
 @endsection

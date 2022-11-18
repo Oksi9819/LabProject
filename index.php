@@ -46,11 +46,13 @@ Route::add('/registration-form', function() {
 
 // Route to auth form
 Route::add('/authorization-form', function() {
+  // var_dump(3);
   (new UserController())->authUser();
 }, 'get');
 
 // Post route to auth-form
 Route::add('/authorization-form', function() {
+  // var_dump(2);
   (new UserController())->checkUser();
 }, 'post');
 

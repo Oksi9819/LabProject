@@ -113,10 +113,10 @@ class UserModel extends BasicModel
             if (hash('md5', $pass) == $result[0]['user_password']) {
                 return $this->getUserInfo($result[0]['user_id']);
             } else {
-                throw new Exception("Incorrect password.");
+                throw new Exception('Incorrect password.');
             }
         } else {
-            throw new Exception("You are not registered yet.");
+            throw new Exception('You are not registered yet.');
         }
     }
 

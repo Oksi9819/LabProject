@@ -22,15 +22,35 @@ $(document).ready(() => {
     $.ajax({
       type: 'POST',
       data: $('#registration_form').serialize(),
-      success: (response) => {
+      success: (result) => {
         console.log('Data was sent.');
-        const result = JSON.parse(response);
-        if (result.result === 'Success') {
-          console.log(result.location);
-          window.location.href = result.location;
+        const response = JSON.parse(result);
+        if (response.result === 'Success') {
+          console.log(response.location);
+          window.location.href = response.location;
         } else {
-          console.log(result.result);
-          alert(result.result);
+          console.log(response.result);
+          alert(response.result);
+        }
+      },
+    });
+    return false;
+  });
+
+  // Function of getting authorized
+  $('#submit_auth_user').on('click', () => {
+    $.ajax({
+      type: 'POST',
+      data: $('#auth_form').serialize(),
+      success: (result) => {
+        console.log('Data was sent.');
+        const response = JSON.parse(result);
+        if (response.result === 'Success') {
+          console.log(response.location);
+          window.location.href = response.location;
+        } else {
+          console.log(response.result);
+          alert(response.result);
         }
       },
     });
@@ -128,8 +148,8 @@ $(document).ready(() => {
   // Set order
   $('#set_order').on('click', () => {
     cartData = getCartData();
-    const orderAddress = $('#order_addr').val();
-    console.log(orderAddress);
+    let orderAddress = $('#order_addr').val();
+    alert(orderAddress);
     console.log(cartData);
     if (cartData === null) {
       alert('В корзине пусто!');
@@ -147,6 +167,7 @@ $(document).ready(() => {
           const response = JSON.parse(data);
           if (response.result === 'Success') {
             $('#clear_cart').trigger('click');
+            $('#order_addr').val = "";
             $(cartContent).text('В корзине пусто!');
             alert('Order was successfully sent.');
           } else {

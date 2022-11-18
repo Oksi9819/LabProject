@@ -28,14 +28,15 @@ class CartController extends BasicController
 		} else {
             $user_id = $_SESSION['user']['id'];
             $cartData = $_POST['itemsArr'];
-            $address = $_POST['orderAddress'];
+            $address = htmlspecialchars($_POST['orderAddress'], ENT_QUOTES);
+            // var_dump($address);
             if (!is_null($cartData)) {
-                if (!is_null($address)) {
-                    (new OrderModel())->set_order($address, $user_id, $cartData);
-                    echo json_encode(array('result' => 'Success'));
+                if ($address === NULL) {
+                    echo json_encode(array('result' => 'address does not isset'));
                     return;
                 } else {
-                    echo json_encode(array('result' => 'address does not isset'));
+                    (new OrderModel())->setOrder($address, $user_id, $cartData);
+                    echo json_encode(array('result' => 'Success'));
                     return;
                 }
             } else {

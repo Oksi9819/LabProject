@@ -50,23 +50,19 @@ class UserController extends BasicController
                         ];
                         $_SESSION['user']['role'] = $user[0]['user_role'] == 1 ? "User" : "Admin";
                         $new_location = 'profile/' . $user[0]['user_id'];
-                        // return header('Location: ' . BASEPATH . 'profile/' . $user[0]['user_id']);
                         echo json_encode(array('result' => 'Success', 'location' => $new_location));
                         return;
                     } catch (Exception $e) {
                         echo json_encode(array('result' => ($e->getMessage())));
                         return;
-                        // return $this->userView->errorView($e->getMessage());
                     }  
                 }else {
                     echo json_encode(array('result' => 'Password length must be at least 8 characters. It should start with a letter and contain at least 1 number.'));
                     return;
-                    // return $this->userView->errorView("Password length must be at least 8 characters. It should start with a letter and contain at least 1 number.");
                 }
 		} else {
             echo json_encode(array('result' => "You're already authorized! Log out."));
             return;
-            // return $this->userView->errorView("You're already authorized! Log out.");
         }
     }
 
@@ -84,6 +80,7 @@ class UserController extends BasicController
         if(!isset($_SESSION['user'])) {
             $user_login = trim(htmlspecialchars($_POST['user_email'], ENT_QUOTES));
             $user_pass = trim(htmlspecialchars($_POST['user_password'], ENT_QUOTES));
+            // var_dump(1);
             try {
                 $user = $this->userModel->auth($user_login, $user_pass);
                 $_SESSION['user'] = [
@@ -91,12 +88,19 @@ class UserController extends BasicController
                     'name' => $user[0]['user_name'],
                 ];
                 $_SESSION['user']['role'] = $user[0]['user_role'] == 1 ? "User" : "Admin";
-                return header('Location: ' . BASEPATH . 'profile/' . $user[0]['user_id']);
+                $new_location = 'profile/' . $user[0]['user_id'];
+                echo json_encode(array(
+                    'result' => 'Success', 
+                    'location' => $new_location,
+                ));
+                return;
             } catch (Exception $e) {
-                return $this->userView->errorView($e->getMessage());
+                echo json_encode(array('result' => ($e->getMessage())));
+                return;
             }
 		} else {
-            return $this->userView->errorView("You're already authorized! Log out.");
+            echo json_encode(array('result' => 'You\'re already authorized! Log out.'));
+            return;
         }
     }
 
