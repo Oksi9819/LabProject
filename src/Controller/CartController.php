@@ -22,7 +22,6 @@ class CartController extends BasicController
 
     public function order()
     {
-        var_dump(3);
         if(!isset($_SESSION['user'])) {
             echo json_encode(array('result' => 'You should authorize first.'));
             return;

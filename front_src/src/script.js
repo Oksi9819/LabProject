@@ -64,7 +64,7 @@ $(document).ready(() => {
       totalItems += `<div class="sl_col first">${e}</div>`;
       totalItems += `<div class="sl_col second">${cartData[e][0]}</div>`;
       totalItems += `<div class="sl_col third">${cartData[e][1]}</div>`;
-      totalItems += `<div class="sl_col fourth">${cartData[e][2]}</div>`;
+      totalItems += `<div class="sl_col fourth"><input class="change-amount" type="number" min="0" step="1" value="${cartData[e][2]}"> шт.</div>`;
       totalItems += '</div>';
     });
     totalItems += '</div>';
@@ -74,6 +74,31 @@ $(document).ready(() => {
     $(cartContent).text('В корзине пусто!');
   }
 
+  const changeAmountBtn = $('.change-amount');
+
+  // Change amount of products in cart
+  $(changeAmountBtn).on('change', function changeAmount() {
+    // console.log(changeAmountBtn);
+    // console.log(localStorage.cart);
+    let parentBox = $(this).parent();
+    // console.log($(parentBox).attr('class'));
+    parentBox = $(parentBox).parent();
+    // console.log($(parentBox).attr('class'));
+    const newAmount = Number.parseFloat($(this).val());
+    // console.log(newAmount);
+    const itemId = $(parentBox).find('.sl_col.first').text();
+    // console.log(itemId);
+    cartData = getCartData();
+    if (newAmount > 0) {
+      cartData[itemId][2] = newAmount;
+      setCartData(cartData);
+    } else {
+      delete cartData[itemId];
+      setCartData(cartData);
+    }
+    return false;
+  });
+
   // Clear cart
   $('#clear_cart').on('click', () => {
     localStorage.removeItem('cart');
@@ -82,6 +107,7 @@ $(document).ready(() => {
 
   // Set order
   $('#set_order').on('click', () => {
+    cartData = getCartData();
     const orderAddress = $('#order_addr').val();
     console.log(orderAddress);
     console.log(cartData);
