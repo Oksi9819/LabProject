@@ -29,10 +29,10 @@
     </div>
     <div class="set-changes">
         <p>Изменить пароль:</p>
-        <form method="post" name="update_user_pass" action="{{BASEPATH}}updateUserPass/profile/{{$user['user_id']}}">
-            Введите пароль: <input type="password" name="user_pass" required><br>
-            Повторите пароль: <input type="password" name="user_pass_check" required><br>
-            <input type="submit" name="submit_update_pass" value = "Изменить">
+        <form id="update_user_pass" method="post" name="update_user_pass" action="{{BASEPATH}}updateUserPass/profile/{{$user['user_id']}}">
+            Введите пароль: <input class="update_pass" type="password" name="user_pass" required><br>
+            Повторите пароль: <input class="update_pass" type="password" name="user_pass_check" required><br>
+            <input id="submit_update_pass" type="submit" name="submit_update_pass" value = "Изменить">
         </form>
     </div>    
     <div class="set-changes">

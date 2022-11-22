@@ -499,9 +499,8 @@ class UserController extends BasicController
             $field = array();
             $value = array();
             $types = "";
-            if (!empty($_POST['submit_update_pass'])) {
-                if (preg_match("/^[a-zA-z](?=.*\d)[a-zA-z\d]{8,}$/", (string)$_POST['user_pass']) 
-                    && preg_match("/^[a-zA-z](?=.*\d)[a-zA-z\d]{8,}$/", (string)$_POST['user_pass_check'])) {
+                if (preg_match("/^[a-zA-z]{1}(?=.*\d)[a-zA-z\d]{7,}$/", (string)$_POST['user_pass']) 
+                    && preg_match("/^[a-zA-z]{1}(?=.*\d)[a-zA-z\d]{7,}$/", (string)$_POST['user_pass_check'])) {
                     $user_password = htmlspecialchars($_POST['user_pass'], ENT_QUOTES);
                     $user_checkpass = htmlspecialchars($_POST['user_pass_check'], ENT_QUOTES);
                     if ($user_password === $user_checkpass) {
@@ -511,15 +510,17 @@ class UserController extends BasicController
                         $types .= "s";
                         if (!empty($value)) {
                             $this->userModel->updateUser($field, $_SESSION['user']['id'], $value, $types);
-                            return header('Location: ' . BASEPATH . 'profile/' . $_SESSION['user']['id']);
+                            echo json_encode(array('result' => 'Success'));
+                            return;
                         }  
                     } else {
-                        return $this->userView->errorView("Passwords don't match.");
+                        echo json_encode(array('result' => 'Passwords don\'t match.'));
+                        return;
                     }
                 } else {
-                    return $this->userView->errorView("Password length must be at least 8 characters. It should start with a letter and contain at least 1 number.");
+                    echo json_encode(array('result' => 'Password length must be at least 8 characters. It should start with a letter and contain at least 1 number.'));
+                    return;
                 }
-            }
         }  else {
             header("Location: /");
         } 

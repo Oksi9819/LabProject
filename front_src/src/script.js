@@ -97,7 +97,6 @@ $(document).ready(() => {
             console.log(fields[i]);
             $(`#updated_info_${fields[i]}`).text(values[i]);
           }
-          $('.update_user').val('');
         } else if (response.result === 'Fail') {
           if (response.location !== null) {
             console.log(response.location);
@@ -110,6 +109,28 @@ $(document).ready(() => {
           console.log(response.result);
           alert(response.result);
         }
+        $('.update_user').val('');
+      },
+    });
+    return false;
+  });
+
+  // Function of changing password
+  $('#submit_update_pass').on('click', () => {
+    alert($('#update_user_pass').attr('action'));
+    $.ajax({
+      type: 'POST',
+      url: $('#update_user_pass').attr('action'),
+      data: $('#update_user_pass').serialize(),
+      success: (result) => {
+        const response = JSON.parse(result);
+        if (response.result === 'Success') {
+          alert('Password was successfully changed.');
+        } else {
+          console.log(response.result);
+          alert(response.result);
+        }
+        $('.update_pass').val('');
       },
     });
     return false;
