@@ -224,7 +224,7 @@ class UserController extends BasicController
         }
     }
 
-    public function setOrder(int $user_id)
+    /* public function setOrder(int $user_id)
     {
         if(!isset($_SESSION['user'])) {
 			header("Location: /");
@@ -241,24 +241,25 @@ class UserController extends BasicController
         } else {
             header("Location: /");
         }
-    }
+    } */
 
     public function editOrderAddress(int $user_id, int $order_id)
     {
         if(!isset($_SESSION['user'])) {
 			header("Location: /");
 		} elseif ($_SESSION['user']['id'] == $user_id) {
-            if (!empty($_POST['submit_new_order_address']) && (int)$order_id) {
+            if ((int)$order_id) {
                 $new_address = htmlspecialchars($_POST['new_order_address'], ENT_QUOTES);
-                (new OrderModel())->updateOrderAddress($order_id, $new_address);
-                if (isset($_SESSION['response'])) {
-                    unset ($_SESSION['response']);
-                } 
-                $_SESSION['response']['new_order_address'] = [
-                    ['order_id'] => $order_id,
-                    ['new_address'] => $new_address
-                ];
-                return header('Location: ' . BASEPATH . 'profile/' . $_SESSION['user']['id'] . '/orders');
+                if (!((new OrderModel())->updateOrderAddress($order_id, $new_address))) {
+                    echo json_encode(array('result' => 'Failed to change order address. Please, try again.'));
+                    return;
+                } else {
+                    echo json_encode(array(
+                        'result' => 'Success',
+                        'value' => $new_address,
+                    ));
+                    return;
+                }
             }
         } else {
             header("Location: /");
@@ -271,15 +272,14 @@ class UserController extends BasicController
 			header("Location: /");
 		} elseif ($_SESSION['user']['id'] == $user_id) {
             if($_SESSION['user']['role'] === "Admin") {
-                if (!empty($_POST['submit_new_order_status'])) {
                     $new_status = (int)(htmlspecialchars($_POST['new_order_status'], ENT_QUOTES));
                     (new OrderModel())->updateOrderStatus((int)$order_id, $new_status);
-                    if (isset($_SESSION['response'])) {
-                        unset ($_SESSION['response']);
-                    } 
-                    $_SESSION['response']['new_status']['order_id'] = $order_id;
-                    return header('Location: ' . BASEPATH . 'profile/' . $_SESSION['user']['id'] . '/orders');
-                }
+                    echo json_encode(array(
+                        'result' => 'Success',
+                        'value' => $new_status,
+                        'order_id' =>$order_id,
+                    ));
+                    return;
             } else {
                 header("Location: /");
             }
@@ -293,14 +293,9 @@ class UserController extends BasicController
         if(!isset($_SESSION['user'])) {
 			header("Location: /");
 		} elseif ($_SESSION['user']['id'] == $user_id) {
-            if (!empty($_POST['submit_cancel_order'])) {
                 (new OrderModel())->cancelOrder($order_id);
-                if (isset($_SESSION['response'])) {
-                    unset ($_SESSION['response']);
-                } 
-                $_SESSION['response']['canceled_order'] = $order_id;
-                return header('Location: ' . BASEPATH . 'profile/' . $_SESSION['user']['id'] . '/orders');
-            }
+                echo json_encode(array('result' => 'Success'));
+                return;
         } else {
             header("Location: /");
         }

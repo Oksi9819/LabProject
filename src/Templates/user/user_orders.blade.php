@@ -35,12 +35,6 @@
         @endisset
     </div>
     <div>
-        <p><b>Оформить заказ</b></p>
-        <form method="post" name="set_order" action="{{BASEPATH}}profile/{{$SESSION['id']}}/orders/set-order">
-            Адрес: <input type="text" name="order_address"><br>
-            <input type="submit" name="submit_set_order"><br>
-        </form><br>
-    </div>
     <p>Заказы пользователя {{$SESSION['id']}}</p>
     <table class="orders">
         <thead>
@@ -57,20 +51,21 @@
     @foreach($orders as $order)
         <tr>
             <td>{{$order['order_id']}}</td>
-            <td>{{$order['address']}}</td>
+            <td class="order-address">{{$order['address']}}</td>
             <td>
                 <form 
+                    id="change_order_address"
                     method="post" 
                     class="set-changes orders"
                     name="set_order" 
                     action="{{BASEPATH}}profile/{{$SESSION['id']}}/orders/edit-order-address/{{$order['order_id']}}"
                 >
-                    <input type="text" name="new_order_address">
-                    <input type="submit" name="submit_new_order_address" value="Изменить адрес">
+                    <input id="new_order_address" type="text" name="new_order_address">
+                    <input id="submit_new_order_address" type="submit" name="submit_new_order_address" value="Изменить адрес">
                 </form>
             </td>
             <td>{{$order['price']}} BYN </td>
-            <td>{{$order['status']}}</td>
+            <td class="order-status">{{$order['status']}}</td>
             <td>
                 <table class="orders details">
                     @foreach ($order_details as $order_detail)
@@ -85,12 +80,13 @@
             </td>
             <td>
                 <form 
+                    id="cancel_order"
                     method="post" 
                     class="set-changes orders"
                     name="cancel_order" 
                     action="{{BASEPATH}}profile/{{$SESSION['id']}}/orders/cancel-order/{{$order['order_id']}}"
                 >
-                    <input type="submit" name="submit_cancel_order" value="Отменить">
+                    <input id="submit_cancel_order" type="submit" name="submit_cancel_order" value="Отменить">
                 </form>
             </td>
         </tr>

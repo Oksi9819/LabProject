@@ -35,9 +35,10 @@
             <td>{{$order['user_phone']}}</td>
             <td>{{$order['user_email']}}</td>
             <td>{{$order['price']}} BYN </td>
-            <td>{{$order['status']}}</td>
+            <td class="order_status">{{$order['status']}}</td>
             <td>
                 <form 
+                    id="change_order_status"
                     method="post" 
                     class="set-changes orders"
                     name="set_order_{{$order['order_id']}}" 
@@ -47,7 +48,7 @@
                         <option value="{{$order_status['status_id']}}">{{$order_status['status_id']}} - {{$order_status['status_name']}}</option>
                     @endforeach
                     </select>
-                    <input type="submit" name="submit_new_order_status" value="Изменить статус">
+                    <input id="submit_new_order_status" type="submit" name="submit_new_order_status" value="Изменить статус">
                 </form>
             </td>
             <td>

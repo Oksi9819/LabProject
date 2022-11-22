@@ -117,7 +117,7 @@ $(document).ready(() => {
 
   // Function of changing password
   $('#submit_update_pass').on('click', () => {
-    alert($('#update_user_pass').attr('action'));
+    // alert($('#update_user_pass').attr('action'));
     $.ajax({
       type: 'POST',
       url: $('#update_user_pass').attr('action'),
@@ -138,7 +138,7 @@ $(document).ready(() => {
 
   // Function of adding new admin
   $('#submit_reg_admin').on('click', () => {
-    alert($('#add_admin').attr('action'));
+    // alert($('#add_admin').attr('action'));
     $.ajax({
       type: 'POST',
       url: $('#add_admin').attr('action'),
@@ -152,6 +152,66 @@ $(document).ready(() => {
           alert(response.result);
         }
         $('.add_admin').val('');
+      },
+    });
+    return false;
+  });
+
+  // Function of changing order address
+  $('#submit_new_order_address').on('click', () => {
+    // alert($('#change_order_address').attr('action'));
+    $.ajax({
+      type: 'POST',
+      url: $('#change_order_address').attr('action'),
+      data: $('#change_order_address').serialize(),
+      success: (result) => {
+        const response = JSON.parse(result);
+        if (response.result === 'Success') {
+          const parentBox = ($('#change_order_address').parent()).parent();
+          $(parentBox).find('.order-address').val(response.value);
+          alert('Order address was changed.');
+        } else {
+          console.log(response.result);
+          alert(response.result);
+        }
+        $('#new_order_address').val('');
+      },
+    });
+    return false;
+  });
+
+  // Function to cancel order
+  $('#submit_cancel_order').on('click', () => {
+    // alert($('#cancel_order').attr('action'));
+    $.ajax({
+      type: 'POST',
+      url: $('#cancel_order').attr('action'),
+      success: (result) => {
+        const response = JSON.parse(result);
+        if (response.result === 'Success') {
+          const parentBox = ($('#cancel_order').parent()).parent();
+          $(parentBox).find('.order-status').val(3);
+          alert('Order was canceled');
+        }
+      },
+    });
+    return false;
+  });
+
+  // Function of changing order status
+  $('#submit_new_order_status').on('click', () => {
+    // alert($('#change_order_status').attr('action'));
+    $.ajax({
+      type: 'POST',
+      url: $('#change_order_status').attr('action'),
+      data: $('#change_order_status').serialize(),
+      success: (result) => {
+        const response = JSON.parse(result);
+        if (response.result === 'Success') {
+          const parentBox = ($('#cancel_order').parent()).parent();
+          $(parentBox).find('.order-status').val(response.value);
+          alert(`Status of order ${response.order_id} was changed.`);
+        }
       },
     });
     return false;
