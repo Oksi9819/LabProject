@@ -68,29 +68,28 @@ class ProductController extends BasicController
     public function addProduct()
     {
         if(!isset($_SESSION['user'])) {
-            return $this->productView->errorView("You have no permissions to do this action. Available only for administrators. ");
+            echo json_encode(array('result' => 'You have no permissions to do this action. Available only for administrators.'));
+            return;
 		} else {
             if($_SESSION['user']['role'] === "Admin") {
-                if (!empty($_POST['submit_update_product'])) {
                     if (!empty($_POST['prod_name']) && !empty($_POST['prod_desc']) && !empty($_POST['prod_price']) && !empty($_POST['id_new_prod_category'])) {
                         $product_name = htmlspecialchars($_POST['prod_name'], ENT_QUOTES);
                         $product_desc = htmlspecialchars($_POST['prod_desc'], ENT_QUOTES);
                         $product_category = (int)(htmlspecialchars($_POST['id_new_prod_category'], ENT_QUOTES));
                         $product_price = (float)(htmlspecialchars($_POST['prod_price'], ENT_QUOTES));
                         $result=$this->productModel->setProduct($product_name, $product_desc, $product_category, $product_price);
-                        if (empty($result))
+                        if (!empty($result))
                         {
-                            return header('Location: ' . BASEPATH . 'catalog');
+                            echo json_encode(array('result' => 'Success', 'product' => $product_name));
+                            return;
                         } else {
-                            $_SESSION['response'] = [
-                                'new_product '=> $product_name,
-                            ];
-                            return header('Location: ' . BASEPATH . 'catalog');
+                            echo json_encode(array('result' => 'Fail to add new product. Please, try again.'));
+                            return;
                         }                        
-                    }  
-                } return header('Location: ' . BASEPATH . 'catalog');               
+                    }      
             } else {
-                return $this->productView->errorView("You have no permissions to do this action. Available only for administrators.");   
+                echo json_encode(array('result' => 'You have no permissions to do this action. Available only for administrators.'));
+                return;
             }
         }
     }

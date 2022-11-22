@@ -252,6 +252,33 @@ $(document).ready(() => {
     return false;
   });
 
+  // Function of adding new product
+  $('#submit_add_product').on('click', () => {
+    // alert($('#add_product').attr('action'));
+    $.ajax({
+      type: 'POST',
+      url: $('#add_product').attr('action'),
+      data: $('#add_product').serialize(),
+      success: (result) => {
+        const response = JSON.parse(result);
+        if (response.result === 'Success') {
+          alert(`${response.product} was added to catalog.`);
+          window.location.reload(true);
+        } else {
+          alert(response.result);
+        }
+        $('.add_product').val('');
+      },
+    });
+    return false;
+  });
+
+  // Function of adding new product category
+
+  // Function of changing product category
+
+  // Function of deleting product category
+
   // Open cart
   cartData = getCartData();
   console.log(cartData);
