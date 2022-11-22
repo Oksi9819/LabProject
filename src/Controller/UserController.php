@@ -384,24 +384,28 @@ class UserController extends BasicController
         
     public function updateUser(int $user_id) 
     {
+        // var_dump(1);
         if(!isset($_SESSION['user'])) {
 			header("Location: /");
 		} elseif ($_SESSION['user']['id'] == $user_id) {
+            // var_dump(2);
             $field = array();
             $value = array();
+            $updated = [0, 0, 0, 0, 0, 0];
             $types = "";
-            if (!empty($_POST['submit_update_user'])) {
                 if (!empty($_POST['new_surname'])) {
                     $new_surname = trim(htmlspecialchars($_POST['new_surname'], ENT_QUOTES));
                     array_push($field, "user_surname");
                     array_push($value, $new_surname);
                     $types .= "s";
+                    $updated[0] = 1;
                 }
                 if (!empty($_POST['new_name'])) {
                     $new_name = trim(htmlspecialchars($_POST['new_name'], ENT_QUOTES));
                     array_push($field, "user_name");
                     array_push($value, $new_name);
                     $types .= "s";
+                    $updated[1] = 1;
                 }
                 if (!empty($_POST['new_birthday'])) {
                     $new_birthday = trim(htmlspecialchars($_POST['new_birthday'], ENT_QUOTES));
@@ -412,21 +416,28 @@ class UserController extends BasicController
                             array_push($field, "user_birthday");
                             array_push($value, $new_birthday);
                             $types .= "s";
+                            $updated[2] = 1;
                         } else {
-                            return $this->userView->errorView("Birthday does not follow the Gregorian calendar.");
+                            echo json_encode(array('result' => 'Birthday does not follow the Gregorian calendar.'));
+                            return;
                         }
                     } else {
-                        return $this->userView->errorView("Birthday should be in format 'YYYY-MM-DD'.");
+                        echo json_encode(array('result' => 'Birthday should be in format \'YYYY-MM-DD\'.'));
+                        return;
                     }
                 }
                 if (!empty($_POST['new_phone'])) {
+                    // var_dump(3);
                     $new_phone = trim(htmlspecialchars($_POST['new_phone'], ENT_QUOTES));
+                    // var_dump($new_phone);
                     if (preg_match("/(\+375)[\(](29|33|25|44)[\)](\d{3})-(\d{2})-(\d{2})$/", $new_phone)) {
                         array_push($field, "user_phone");
                         array_push($value, $new_phone);
                         $types .= "s";
+                        $updated[3] = 1;
                     } else {
-                        return $this->userView->errorView("Phone number should be in format '+375(29/33/..)111-11-11'.");
+                        echo json_encode(array('result' => 'Phone number should be in format \'+375(29/33/..)111-11-11\'.'));
+                        return;
                     }
                 }
                 if (!empty($_POST['new_address'])) {
@@ -434,6 +445,7 @@ class UserController extends BasicController
                     array_push($field, "user_address");
                     array_push($value, $new_address);
                     $types .= "s";
+                    $updated[4] = 1;
                 }
                 if (!empty($_POST['new_email'])) {
                     $new_email = trim(htmlspecialchars($_POST['new_email'], ENT_QUOTES));
@@ -441,17 +453,41 @@ class UserController extends BasicController
                         array_push($field, "user_email");
                         array_push($value, $new_email);
                         $types .= "s";
+                        $updated[5] = 1;
                     } else {
-                        return $this->userView->errorView("Your email looks invalid.");
+                        echo json_encode(array('result' => 'Your email looks invalid.'));
+                        return;
                     }
                 }
                 if (!empty($value)) {
-                    $this->userModel->updateUser($field, $_SESSION['user']['id'], $value, $types);
-                    return header('Location: ' . BASEPATH . 'profile/' . $_SESSION['user']['id']);
-                }     
-            }
+                    if (!($this->userModel->updateUser($field, $_SESSION['user']['id'], $value, $types))) {
+                        echo json_encode(array(
+                            'result' => 'Fail',
+                            'msg' => 'Failed to update information. Please, try again.',
+                        ));
+                        return;
+                    } else {
+                        $output = array();
+                        for ($i=0; $i < count($updated); $i++) {
+                            if ($updated[$i] === 1) {
+                                array_push($output, $i);
+                            }
+                        }
+                        $new_location = '/profile/' . $_SESSION['user']['id'];
+                        echo json_encode(array(
+                            'result' => 'Success',
+                            'values' => $value,
+                            'fields' => $output,
+                        ));
+                        return;
+                    }
+                }  
         } else {
-            header("Location: /");
+            echo json_encode(array(
+                'result' => 'Fail',
+                'location' => '/',
+            ));
+            return;
         }   
     }
         

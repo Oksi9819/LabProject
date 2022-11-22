@@ -57,6 +57,64 @@ $(document).ready(() => {
     return false;
   });
 
+  // Function of sendig a contact-form
+  /* $('#submit_contact_form').on('click', () => {
+    $.ajax({
+      type: 'POST',
+      url: '/contacts/contact-form',
+      data: $('#contact_form').serialize(),
+      success: (result) => {
+        console.log('Data was sent.');
+        const response = JSON.parse(result);
+        if (response.result === 'Success') {
+          console.log(response.location);
+          window.location.href = response.location;
+        } else {
+          console.log(response.result);
+          alert(response.result);
+        }
+      },
+    });
+    return false;
+  }); */
+
+  // Function of editting profile info
+  $('#submit_update_user').on('click', () => {
+    // alert($('#update_user'));
+    alert($('#update_user').attr('action'));
+    $.ajax({
+      type: 'POST',
+      url: $('#update_user').attr('action'),
+      data: $('#update_user').serialize(),
+      success: (result) => {
+        const response = JSON.parse(result);
+        if (response.result === 'Success') {
+          const { fields } = response;
+          console.log(fields);
+          const { values } = response;
+          console.log(values);
+          for (let i = 0; i < fields.length; i++) {
+            console.log(fields[i]);
+            $(`#updated_info_${fields[i]}`).text(values[i]);
+          }
+          $('.update_user').val('');
+        } else if (response.result === 'Fail') {
+          if (response.location !== null) {
+            console.log(response.location);
+            window.location.href = response.location;
+          } else {
+            console.log(response.msg);
+            alert(response.msg);
+          }
+        } else {
+          console.log(response.result);
+          alert(response.result);
+        }
+      },
+    });
+    return false;
+  });
+
   // Set an event handler for each Add-Product button
   $(buttons).on('click', function addToCart() {
     this.disabled = true;
@@ -148,8 +206,8 @@ $(document).ready(() => {
   // Set order
   $('#set_order').on('click', () => {
     cartData = getCartData();
-    let orderAddress = $('#order_addr').val();
-    alert(orderAddress);
+    const orderAddress = $('#order_addr').val();
+    // alert(orderAddress);
     console.log(cartData);
     if (cartData === null) {
       alert('В корзине пусто!');
@@ -167,7 +225,7 @@ $(document).ready(() => {
           const response = JSON.parse(data);
           if (response.result === 'Success') {
             $('#clear_cart').trigger('click');
-            $('#order_addr').val = "";
+            $('#order_addr').val('');
             $(cartContent).text('В корзине пусто!');
             alert('Order was successfully sent.');
           } else {

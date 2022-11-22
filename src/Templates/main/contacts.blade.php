@@ -18,11 +18,11 @@
         @endisset
         @empty($values)
             <p>Заполните форму для связи: </p>
-            <form method="post" action="{{BASEPATH}}contacts/contact-form" class="contact">
+            <form id="contact_form" method="post" action="{{BASEPATH}}contacts/contact-form" class="contact">
                 <input type="text" name="contact_name" placeholder="Введите Ваше Имя" required class="contact-input contact-name">
                 <input type="email" name="contact_email" placeholder="Введите Ваш Email" required class="contact-input contact-mail">
                 <br><input type="text" name="contact_text" placeholder="Введите сообщение" required class="contact-input contact-msg"><br>
-                <input type="submit" value="Отправить" class="contact-btn">
+                <input id="submit_contact_form" type="submit" value="Отправить" class="contact-btn">
             </form>
         @endempty
     </div>

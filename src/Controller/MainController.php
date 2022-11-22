@@ -42,9 +42,9 @@ class MainController extends BasicController
     {
         $info = $this->mainModel->getContactsInfo();
         if(!empty($_POST['contact_name']) && !empty($_POST['contact_email']) && !empty($_POST['contact_text'])) {
-            $contact_name = trim($_POST['contact_name']);
-            $contact_email = trim($_POST['contact_email']);
-            $contact_text = trim($_POST['contact_text']);
+            $contact_name = htmlspecialchars(trim($_POST['contact_name']), ENT_QUOTES);
+            $contact_email = htmlspecialchars(trim($_POST['contact_email']), ENT_QUOTES);
+            $contact_text = htmlspecialchars(trim($_POST['contact_text']), ENT_QUOTES);
             $new_contact = $this->mainModel->setContact($contact_name, $contact_email, $contact_text);
             return $this->mainView->showContactForm($info, $new_contact);
         }
