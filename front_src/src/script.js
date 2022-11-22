@@ -136,6 +136,27 @@ $(document).ready(() => {
     return false;
   });
 
+  // Function of adding new admin
+  $('#submit_reg_admin').on('click', () => {
+    alert($('#add_admin').attr('action'));
+    $.ajax({
+      type: 'POST',
+      url: $('#add_admin').attr('action'),
+      data: $('#add_admin').serialize(),
+      success: (result) => {
+        const response = JSON.parse(result);
+        if (response.result === 'Success') {
+          alert('New admin was successfully added.');
+        } else {
+          console.log(response.result);
+          alert(response.result);
+        }
+        $('.add_admin').val('');
+      },
+    });
+    return false;
+  });
+
   // Set an event handler for each Add-Product button
   $(buttons).on('click', function addToCart() {
     this.disabled = true;

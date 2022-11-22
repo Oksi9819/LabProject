@@ -355,8 +355,7 @@ class UserController extends BasicController
 			header("Location: /");
 		} elseif ($_SESSION['user']['id'] == $user_id) {
             if ($_SESSION['user']['role'] == "Admin") {
-                if (!empty($_POST['submit_reg_admin'])) {
-                    if (preg_match("/^[a-zA-z](?=.*\d)[a-zA-z\d]{8,}$/", (string)$_POST['admin_password']) < 9) {
+                    if (preg_match("/^[a-zA-z]{1}(?=.*\d)[a-zA-z\d]{7,}$/", (string)$_POST['admin_password'])) {
                         $user_surname = htmlspecialchars($_POST['admin_surname'], ENT_QUOTES);
                         $user_name = htmlspecialchars($_POST['admin_name'], ENT_QUOTES);
                         $user_birthday = htmlspecialchars($_POST['admin_birthday'], ENT_QUOTES);
@@ -366,14 +365,18 @@ class UserController extends BasicController
                         $user_password = hash('md5', htmlspecialchars($_POST['admin_password'], ENT_QUOTES));
                         try {
                             $this->userModel->setAdmin($user_surname, $user_name, $user_birthday, $user_phone, $user_address, $user_email, $user_password);
-                            return header('Location: ' . BASEPATH . 'profile/' . $_SESSION['user']['id']); 
+                            echo json_encode(array('result' => 'Success'));
+                            return;
                         } catch (Exception $e) {
-                            return $this->userView->errorView($e->getMessage());
+                            echo json_encode(array('result' => $e->getMessage()));
+                            return;
                         }
                     } else {
-                        return $this->userView->errorView("Password length must be at least 8 characters. It should start with a letter and contain at least 1 number.");
-                    }   
-                }
+                        echo json_encode(array(
+                            'result' => 'Password length must be at least 8 characters. It should start with a letter and contain at least 1 number.'
+                        ));
+                        return;
+                    }  
             } else {
                 header("Location: /");
             }
