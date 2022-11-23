@@ -22,7 +22,7 @@
                 <input type="submit" class="category-btn">
             </form>
         </div>    
-        <div class="catalog">
+        <div id="catalog" class="catalog">
             @for($i=0; $i<$amount; $i++)
                 <div class="catalog product-card">            
                     <div class="inner">{{$products[$i]['product_id']}}</div>

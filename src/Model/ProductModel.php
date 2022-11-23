@@ -23,7 +23,7 @@ class ProductModel extends BasicModel
     }
 
     //READ
-    public function getProducts(string $sort_field): array
+    public function getProducts(string $sort_field = NULL): array
     {
         if ($sort_field === "popularity") {
             $fields = "product.product_id AS product_id, 
@@ -45,6 +45,9 @@ class ProductModel extends BasicModel
         }
         if ($sort_field === "za") {
             return $this->getModel("*", "product", NULL, NULL, NULL, NULL, "product_name DESC", NULL);
+        }
+        if ($sort_field === NULL) {
+            return $this->getModel("*", "product", NULL, NULL, NULL, NULL, NULL, NULL);
         }
     }
 

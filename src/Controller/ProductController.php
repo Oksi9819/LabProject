@@ -77,16 +77,21 @@ class ProductController extends BasicController
                         $product_desc = htmlspecialchars($_POST['prod_desc'], ENT_QUOTES);
                         $product_category = (int)(htmlspecialchars($_POST['id_new_prod_category'], ENT_QUOTES));
                         $product_price = (float)(htmlspecialchars($_POST['prod_price'], ENT_QUOTES));
-                        $result=$this->productModel->setProduct($product_name, $product_desc, $product_category, $product_price);
+                        $result = $this->productModel->setProduct($product_name, $product_desc, $product_category, $product_price);
                         if (!empty($result))
                         {
-                            echo json_encode(array('result' => 'Success', 'product' => $product_name));
+                            $products = $this->productModel->getProducts();
+                            // var_dump($result);
+                            echo json_encode(array('result' => 'Success', 'product' => $products[count($products) - 1]));
                             return;
                         } else {
                             echo json_encode(array('result' => 'Fail to add new product. Please, try again.'));
                             return;
                         }                        
-                    }      
+                    } else {
+                        echo json_encode(array('result' => 'All the fields should be fullfilled.'));
+                        return;
+                    }
             } else {
                 echo json_encode(array('result' => 'You have no permissions to do this action. Available only for administrators.'));
                 return;
