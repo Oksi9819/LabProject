@@ -7,7 +7,7 @@
         <img src="{{BASEPATH}}src/pics/{{$product['product_image']}}.jpg" alt="{{$product['product_name']}}">
         <div class="description">
             <span class="info-title">Наименование товара: </span>
-            <p id="0" class="catalog product-card text">{{$product['product_name']}}</p>
+            <p id="0">{{$product['product_name']}}</p>
             <span class="info-title">Описание товара: </span>
             <p id="1">{{$product['product_desc']}}</p>
             <span class="info-title">Цена: </span>
