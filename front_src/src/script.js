@@ -356,8 +356,10 @@ $(document).ready(() => {
         const response = JSON.parse(result);
         if (response.result === 'Success') {
           alert(`Information of ${response.product} was eddited`);
+          console.log(response.fields);
+          console.log(response.values);
           for (let i = 0; i < response.fields.length; i++) {
-            $(`#${response.fields[i]}`).val(response.values[i]);
+            $(`#${response.fields[i]}`).text(`${response.values[i]}`);
           }
         } else {
           alert(response.result);

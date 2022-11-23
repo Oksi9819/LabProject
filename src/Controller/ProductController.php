@@ -138,6 +138,7 @@ class ProductController extends BasicController
                         $this->productModel->updateProduct($field, $product_id, $value, $types);
                         echo json_encode(array(
                             'result' => 'Success',
+                            'product' => $product_id,
                             'fields' => $output,
                             'values' => $value,
                         ));

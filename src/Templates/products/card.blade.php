@@ -11,7 +11,7 @@
             <span class="info-title">Описание товара: </span>
             <p id="1">{{$product['product_desc']}}</p>
             <span class="info-title">Цена: </span>
-            <p id="2" class="product-card price">{{$product['product_price']}} BYN</p>
+            <p class="product-card price"><span id="2">{{$product['product_price']}}</span> BYN</p>
         </div>
         <div class="add-to-cart" name="add_product_to_cart_form">
             <div>
@@ -53,7 +53,7 @@
                 id="delete_product_form" 
                 method="post" 
                 name="delete_product_form" 
-                action="'.BASEPATH.'catalog/deleteProduct/id{{$product['product_id']}}">
+                action="{{BASEPATH}}catalog/deleteProduct/id{{$product['product_id']}}">
                 <input id="submit_delete_product" type="submit" name="submit_delete_product" value="Удалить">
             </form>
         </div>
