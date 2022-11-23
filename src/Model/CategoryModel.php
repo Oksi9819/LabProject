@@ -13,7 +13,7 @@ class CategoryModel extends BasicModel
     }
 
     //CREATE
-    public function setCategory(string $new_category,string $new_category_eng) : array
+    public function setCategory(string $new_category,string $new_category_eng)
     {
         $values = array();
         if (strlen($new_category) < 31 && strlen($new_category_eng) < 31) {

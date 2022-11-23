@@ -97,42 +97,52 @@ class ProductController extends BasicController
     public function updateProduct(int $product_id)
     {
         if(!isset($_SESSION['user'])) {
-            return $this->productView->errorView("You have no permissions to do this action. Available only for administrators.");
+            echo json_encode(array(
+                'result' => 'You have no permissions to do this action. Available only for administrators.'
+            ));
+            return; 
 		} else {
             if($_SESSION['user']['role'] === "Admin") {
                 $product_id = (int)$product_id;
                 $field = array();
                 $value = array();
+                $output = array();
                 $types = "";
-                if (!empty($_POST['submit_update_product'])) {
                     if (!empty($_POST['product_name'])) {
                         $product_name = htmlspecialchars($_POST['product_name'], ENT_QUOTES);
                         array_push($field, "product_name");
                         array_push($value, $product_name);
                         $types .= "s";
+                        array_push($output, 0); 
                     }
                     if (!empty($_POST['product_desc'])) {
                         $product_desc = htmlspecialchars($_POST['product_desc'], ENT_QUOTES);
                         array_push($field, "product_desc");
                         array_push($value, $product_desc);
                         $types .= "s";
+                        array_push($output, 1); 
                     }
                     if (!empty($_POST['product_price'])) {
                         $product_price = (float)(htmlspecialchars($_POST['product_price'], ENT_QUOTES));
                         array_push($field, "product_price");
                         array_push($value, $product_price);
                         $types .= "d";
+                        array_push($output, 2); 
                     }
                     if (!empty($value)) {
                         $this->productModel->updateProduct($field, $product_id, $value, $types);
-                        $_SESSION['response'] = array (
-                            'updated_product' => $product_id,
-                        );
-                        return header('Location: ' . BASEPATH . 'catalog/id' . $product_id);
-                    }
-                } return header('Location: ' . BASEPATH . 'catalog/id' . $product_id);           
+                        echo json_encode(array(
+                            'result' => 'Success',
+                            'fields' => $output,
+                            'values' => $value,
+                        ));
+                        return; 
+                    }        
             } else {
-                return $this->productView->errorView("You have no permissions to do this action. Available only for administrators. ");   
+                echo json_encode(array(
+                    'result' => 'You have no permissions to do this action. Available only for administrators.'
+                ));
+                return; 
             }
         }
     }
@@ -159,20 +169,36 @@ class ProductController extends BasicController
     public function addProductCategory() 
     {
         if(!isset($_SESSION['user'])) {
-            return $this->productView->errorView("You have no permissions to do this action. Available only for administrators. ");
+            echo json_encode(array(
+                'result' => 'You have no permissions to do this action. Available only for administrators.'
+            ));
+            return;
 		} else {
             if($_SESSION['user']['role'] === "Admin") {
-                if (!empty($_POST['submit_add_category'])) {
-                        $new_category = trim(htmlspecialchars($_POST['category_name'], ENT_QUOTES));
-                        $new_category_eng = trim(htmlspecialchars($_POST['category_eng'], ENT_QUOTES));
-                        $result = (new CategoryModel())->setCategory($new_category, $new_category_eng);
-                        $_SESSION['response'] = [
-                            'new_category' => $new_category,
-                        ];
-                        return header('Location: ' . BASEPATH . 'catalog');
-                } return header('Location: ' . BASEPATH . 'catalog');          
+                if (!empty($_POST['category_name']) && !empty($_POST['category_eng']))
+                {
+                    $new_category = trim(htmlspecialchars($_POST['category_name'], ENT_QUOTES));
+                    $new_category_eng = trim(htmlspecialchars($_POST['category_eng'], ENT_QUOTES));
+                    (new CategoryModel())->setCategory($new_category, $new_category_eng);
+                    $result = (new CategoryModel())->getCategoryByName($new_category_eng);
+                    // var_dump($result);
+                    echo json_encode(array(
+                        'result' => 'Success',
+                        'category_name' => $new_category,
+                        'category_id' => $result[0]['category_id'],
+                    ));
+                    return;
+                } else {
+                    echo json_encode(array(
+                        'result' => 'Fields should be fullfilled.'
+                    ));
+                    return;
+                }           
             } else {
-                return $this->productView->errorView("You have no permissions to do this action. Available only for administrators. ");
+                echo json_encode(array(
+                    'result' => 'You have no permissions to do this action. Available only for administrators.'
+                ));
+                return;
             }
         }
     }
@@ -188,10 +214,7 @@ class ProductController extends BasicController
                     $new_category = trim(htmlspecialchars($_POST['new_category'], ENT_QUOTES));
                     $new_category_eng = trim(htmlspecialchars($_POST['new_category_eng'], ENT_QUOTES));
                     (new CategoryModel())->updateCategory($category_id, $new_category, $new_category_eng);
-                    $_SESSION['response'] = [
-                        'updated_category' => $category_id,
-                    ];
-                    return header('Location: ' . BASEPATH . 'catalog');
+
                 } return header('Location: ' . BASEPATH . 'catalog');               
             } else {
                 return $this->productView->errorView("You have no permissions to do this action. Available only for administrators. ");  
@@ -202,19 +225,24 @@ class ProductController extends BasicController
     public function deleteProductCategory()
     {
         if(!isset($_SESSION['user'])) {
-            return $this->productView->errorView("You have no permissions to do this action. Available only for administrators. ");
+            echo json_encode(array(
+                'result' => 'You have no permissions to do this action. Available only for administrators.'
+            ));
+            return;
 		} else {
             if($_SESSION['user']['role'] === "Admin") {
-                if (!empty($_POST['submit_delete_category'])) {
                     $category_id = htmlspecialchars($_POST['id_del_category'], ENT_QUOTES);
                     (new CategoryModel())->deleteCategory($category_id);
-                    $_SESSION['response'] = [
-                        'deleted_category' => $category_id,
-                    ];
-                    return header('Location: ' . BASEPATH . 'catalog');
-                } return header('Location: ' . BASEPATH . 'catalog');               
+                    echo json_encode(array(
+                        'result' => 'Success',
+                        'category_id' => $category_id,
+                    ));
+                    return;              
             } else {
-                return $this->productView->errorView("You have no permissions to do this action. Available only for administrators. ");  
+                echo json_encode(array(
+                    'result' => 'You have no permissions to do this action. Available only for administrators.'
+                ));
+                return;
             }
         }  
     } 

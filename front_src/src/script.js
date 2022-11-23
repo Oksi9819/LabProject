@@ -274,10 +274,76 @@ $(document).ready(() => {
   });
 
   // Function of adding new product category
+  $('#submit_add_category').on('click', () => {
+    // alert($('#add_category').attr('action'));
+    $.ajax({
+      type: 'POST',
+      url: $('#add_category').attr('action'),
+      data: $('#add_category').serialize(),
+      success: (result) => {
+        const response = JSON.parse(result);
+        if (response.result === 'Success') {
+          alert(`New category ${response.category_name} was added to catalog.`);
+          $('#id_new_prod_category').append(`<option value=${response.category_id}>${response.category_id} - ${response.category_name}</option>`);
+          $('#update_id_category').append(`<option value=${response.category_id}>${response.category_id} - ${response.category_name}</option>`);
+          $('#id_del_category').append(`<option value=${response.category_id}>${response.category_id} - ${response.category_name}</option>`);
+        } else {
+          alert(response.result);
+        }
+        const fields = $('#add_category').find('.add_category');
+        fields.val('');
+      },
+    });
+    return false;
+  });
 
   // Function of changing product category
 
   // Function of deleting product category
+  $('#submit_delete_category').on('click', () => {
+    // alert($('#delete_category').attr('action'));
+    $.ajax({
+      type: 'POST',
+      url: $('#delete_category').attr('action'),
+      data: $('#delete_category').serialize(),
+      success: (result) => {
+        const response = JSON.parse(result);
+        if (response.result === 'Success') {
+          alert(`${response.category_id} was deleted.`);
+          // console.log(`#id_del_category option[value=${response.category_id}]`);
+          $(`#id_del_category option[value=${response.category_id}]`).remove();
+          $(`#id_new_prod_category option[value=${response.category_id}]`).remove();
+          $(`#update_id_category option[value=${response.category_id}]`).remove();
+        } else {
+          alert(response.result);
+        }
+      },
+    });
+    return false;
+  });
+
+  // Function of editting product info
+  $('#submit_update_product').on('click', () => {
+    // alert($('#update_product_form').attr('action'));
+    $.ajax({
+      type: 'POST',
+      url: $('#update_product_form').attr('action'),
+      data: $('#update_product_form').serialize(),
+      success: (result) => {
+        const response = JSON.parse(result);
+        if (response.result === 'Success') {
+          alert(`Information of ${response.product} was eddited`);
+          for (let i = 0; i < response.fields.length; i++) {
+            $(`#${response.fields[i]}`).val(response.values[i]);
+          }
+        } else {
+          alert(response.result);
+        }
+        $('.update_product').val('');
+      },
+    });
+    return false;
+  });
 
   // Open cart
   cartData = getCartData();

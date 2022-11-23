@@ -67,7 +67,7 @@
                 Наименование: <input class="add_product" type="text" name="prod_name" required><br>
                 Описание: <input class="add_product" type="text" name="prod_desc" required><br>
                 Цена: <input class="add_product" type="number" min="1" name="prod_price" step="0.01" required><br>
-                Категория: <select name="id_new_prod_category" required>
+                Категория: <select id="id_new_prod_category" name="id_new_prod_category" required>
                 @foreach ($categories as $category)
                     <option value="{{$category['category_id']}}">{{$category['category_id']}} - {{$category['category_name']}}</option>
                 @endforeach
@@ -79,27 +79,27 @@
             <p>Добавить категорию</p>
             <form id="add_category" method="post" name="add_category" action="{{BASEPATH}}addProductCategory/catalog">
                 Введите название категории: <input class="add_category" type="text" name="category_name" required><br>
-                Введите название категории на английском без пробела и знаков препинания: <input type="text" name="category_eng" required><br>
+                Введите название категории на английском без пробела и знаков препинания: <input class="add_category" type="text" name="category_eng" required><br>
                 <input id="submit_add_category" type="submit" name="submit_add_category" value = "Добавить">
             </form>
         </div>
         <div class="set-changes">
             <p>Изменить категорию</p>
             <form id="update_category" method="post" name="update_category" action="{{BASEPATH}}updateProductCategory/catalog">
-                Id категории: <select name="update_id_category" required>
+                Id категории: <select id="update_id_category" name="update_id_category" required>
                 @foreach ($categories as $category)
                     <option value="{{$category['category_id']}}">{{$category['category_id']}} - {{$category['category_name']}}</option>
                 @endforeach
                 </select><br>
                 Новое название категории: <input class="update_category" type="text" name="new_category" required><br>
-                Новое название категории на английском без пробела и знаков препинания: <input type="text" name="new_category_eng" required><br>
+                Новое название категории на английском без пробела и знаков препинания: <input class="new_category_eng" type="text" name="new_category_eng" required><br>
                 <input id="submit_update_category" type="submit" name="submit_update_category" value = "Обновить">
             </form>
         </div>
         <div class="set-changes">
             <p>Удалить категорию</p>
             <form id="delete_category" method="post" name="delete_category" action="{{BASEPATH}}deleteProductCategory/catalog">
-                Id категории: <select name="id_del_category" required>';
+                Id категории: <select id="id_del_category" name="id_del_category" required>
                 @foreach ($categories as $category)
                     <option value="{{$category['category_id']}}">{{$category['category_id']}} - {{$category['category_name']}}</option>
                 @endforeach
