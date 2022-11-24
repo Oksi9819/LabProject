@@ -14,13 +14,12 @@ class MainModel extends BasicModel
     //CREATE
     public function setContact(string $contact_name, string $contact_email, string $contact_text) : bool
     {
-        var_dump($contact_email);
         $to = "oksanaostapuk@gmail.com";
         $subject = "Форма для связи с сайта";
         $msg = "Имя:" . $contact_name . ".\n Текст: " . $contact_text;
         $msg = wordwrap($msg,70);
-        // $headers = "From: ". $contact_email ."\r\n";
-        $headers = "From: Name Lastname <sitename@hostname.com> \r\n";
+        $headers = 'From: '.$contact_email."\r\n";
+        $headers .= 'Reply-To: '.$contact_email."\r\n";
         if (mail($to, $subject, $msg, $headers)) {
             return true;
         } else {
