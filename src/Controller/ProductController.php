@@ -212,18 +212,34 @@ class ProductController extends BasicController
     public function updateProductCategory() 
     {
         if(!isset($_SESSION['user'])) {
-            return $this->productView->errorView("You have no permissions to do this action . Available only for administrators . ");
+            echo json_encode(array(
+                'result' => 'You have no permissions to do this action. Available only for administrators.'
+            ));
+            return;
 		} else {
             if($_SESSION['user']['role'] === "Admin") {
-                if (!empty($_POST['submit_update_category'])) {
+                if (!empty($_POST['new_category']) && !empty($_POST['new_category_eng'])) {
                     $category_id = $_POST['update_id_category'];
                     $new_category = trim(htmlspecialchars($_POST['new_category'], ENT_QUOTES));
                     $new_category_eng = trim(htmlspecialchars($_POST['new_category_eng'], ENT_QUOTES));
                     (new CategoryModel())->updateCategory($category_id, $new_category, $new_category_eng);
-
-                } return header('Location: ' . BASEPATH . 'catalog');               
+                    echo json_encode(array(
+                        'result' => 'Success',
+                        'category_id' => $category_id,
+                        'category_name' => $new_category,
+                    ));
+                    return;
+                } else {
+                    echo json_encode(array(
+                        'result' => 'All fields should be fulldilled'
+                    ));
+                    return; 
+                }
             } else {
-                return $this->productView->errorView("You have no permissions to do this action. Available only for administrators. ");  
+                echo json_encode(array(
+                    'result' => 'You have no permissions to do this action. Available only for administrators.'
+                ));
+                return; 
             }
         }  
     }

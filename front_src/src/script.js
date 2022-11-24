@@ -320,7 +320,29 @@ $(document).ready(() => {
     return false;
   });
 
-  // Function of changing product category
+  // Function of editting product category
+  $('#submit_update_category').on('click', () => {
+    // alert($('#update_category').attr('action'));
+    $.ajax({
+      type: 'POST',
+      url: $('#update_category').attr('action'),
+      data: $('#update_category').serialize(),
+      success: (result) => {
+        const response = JSON.parse(result);
+        if (response.result === 'Success') {
+          alert(`Category ${response.category_name} was successfully updated.`);
+          $(`#id_new_prod_category option[value=${response.category_id}]`).text(`${response.category_id} - ${response.category_name}`);
+          $(`#update_id_category option[value=${response.category_id}]`).text(`${response.category_id} - ${response.category_name}`);
+          $(`#id_del_category option[value=${response.category_id}]`).text(`${response.category_id} - ${response.category_name}`);
+        } else {
+          alert(response.result);
+        }
+        ($('#update_category').find('.update_category')).val('');
+        ($('#update_category').find('.new_category_eng')).val('');
+      },
+    });
+    return false;
+  });
 
   // Function of deleting product category
   $('#submit_delete_category').on('click', () => {
