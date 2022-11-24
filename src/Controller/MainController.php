@@ -40,13 +40,49 @@ class MainController extends BasicController
 
     public function showContactForm()
     {
-        $info = $this->mainModel->getContactsInfo();
+        // $info = $this->mainModel->getContactsInfo();
         if(!empty($_POST['contact_name']) && !empty($_POST['contact_email']) && !empty($_POST['contact_text'])) {
             $contact_name = htmlspecialchars(trim($_POST['contact_name']), ENT_QUOTES);
             $contact_email = htmlspecialchars(trim($_POST['contact_email']), ENT_QUOTES);
             $contact_text = htmlspecialchars(trim($_POST['contact_text']), ENT_QUOTES);
-            $new_contact = $this->mainModel->setContact($contact_name, $contact_email, $contact_text);
-            return $this->mainView->showContactForm($info, $new_contact);
+            try {
+                if ($this->mainModel->setContact($contact_name, $contact_email, $contact_text)) {
+                    echo json_encode(array(
+                        'result' => 'Success',
+                        'name' => $contact_name,
+                        'mail' => $contact_email,
+                        'text' => $contact_text,
+                    ));
+                    return;
+                } else {
+                    echo json_encode(array(
+                        'result' => 'Failed to send contact form. Please, try again.'
+                    ));
+                    return;
+                }
+            } catch (Exception $e) {
+                echo $e->errorMessage();
+            }
+            /* if ($this->mainModel->setContact($contact_name, $contact_email, $contact_text)) {
+                echo json_encode(array(
+                    'result' => 'Success',
+                    'name' => $contact_name,
+                    'mail' => $new_category,
+                    'text' => $contact_text,
+                ));
+                return;
+            } else {
+                echo json_encode(array(
+                    'result' => 'Failed to send contact form. Please, try again.'
+                ));
+                return;
+            } */
+            // return $this->mainView->showContactForm($info, $new_contact);
+        } else {
+            echo json_encode(array(
+                'result' => 'All fields should be fulldilled'
+            ));
+            return; 
         }
     }
 

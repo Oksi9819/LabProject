@@ -58,25 +58,24 @@ $(document).ready(() => {
   });
 
   // Function of sendig a contact-form
-  /* $('#submit_contact_form').on('click', () => {
+  $('#submit_contact_form').on('click', () => {
     $.ajax({
       type: 'POST',
-      url: '/contacts/contact-form',
+      url: $('#contact_form').attr('action'),
       data: $('#contact_form').serialize(),
       success: (result) => {
         console.log('Data was sent.');
         const response = JSON.parse(result);
         if (response.result === 'Success') {
-          console.log(response.location);
-          window.location.href = response.location;
+          alert(`Email was successfully sent:\n ${response.name}\n ${response.mail}\n ${response.text}`);
         } else {
-          console.log(response.result);
           alert(response.result);
         }
+        $('.contact-input').val('');
       },
     });
     return false;
-  }); */
+  });
 
   // Function of editting profile info
   $('#submit_update_user').on('click', () => {

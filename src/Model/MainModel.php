@@ -12,13 +12,20 @@ class MainModel extends BasicModel
     }
 
     //CREATE
-    public function setContact(string $contact_name, string $contact_email, string $contact_text) : array
+    public function setContact(string $contact_name, string $contact_email, string $contact_text) : bool
     {
-        return [
-            'contact_name' => $contact_name,
-            'contact_email' => $contact_email,
-            'contact_text' => $contact_text
-        ];
+        var_dump($contact_email);
+        $to = "oksanaostapuk@gmail.com";
+        $subject = "Форма для связи с сайта";
+        $msg = "Имя:" . $contact_name . ".\n Текст: " . $contact_text;
+        $msg = wordwrap($msg,70);
+        // $headers = "From: ". $contact_email ."\r\n";
+        $headers = "From: Name Lastname <sitename@hostname.com> \r\n";
+        if (mail($to, $subject, $msg, $headers)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     //READ
