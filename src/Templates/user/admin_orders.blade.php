@@ -2,41 +2,33 @@
 @extends('basic.basic')
 
 @section('article')
-<div class="info">
-    <!--<div>
-        @isset($response)
-            @isset($response['new_status']['order_id'])
-                <p>Обновлен статус заказа id: {{$response['new_status']['order_id']}}.</p>
-            @endisset
-        @endisset
-    </div>-->
+<div class="info user">
+    
     <p>Все заказы</p>
-    <table class="orders">
-        <thead>
-            <tr>
-                <td>Код заказа</td>
-                <td>Фамилия заказчика</td>
-                <td>Имя заказчика</td>
-                <td>Адрес заказа</td>
-                <td>Телефон заказа</td>
-                <td>Email заказа</td>
-                <td>Сумма заказа</td>
-                <td>Статус заказа</td>
-                <td></td>
-                <td>Детали заказа</td>
-            </tr>
-        </thead>
+    <div class="orders">
+            <div class="thead">
+                <div class="col">Код заказа</div>
+                <div class="col">Фамилия заказчика</div>
+                <div class="col">Имя заказчика</div>
+                <div class="col">Адрес заказа</div>
+                <div class="col">Телефон заказа</div>
+                <div class="col">Email заказа</div>
+                <div class="col">Сумма заказа</div>
+                <div class="col">Статус заказа</div>
+                <div class="col"></div>
+                <div class="col">Детали заказа</div>
+            </div>
     @foreach($orders as $order)
-        <tr>
-            <td>{{$order['order_id']}}</td>
-            <td>{{$order['user_surname']}}</td>
-            <td>{{$order['user_name']}}</td>
-            <td>{{$order['address']}}</td>
-            <td>{{$order['user_phone']}}</td>
-            <td>{{$order['user_email']}}</td>
-            <td>{{$order['price']}} BYN </td>
-            <td class="order_status">{{$order['status']}}</td>
-            <td>
+        <div class="row">
+            <div class="col">{{$order['order_id']}}</div>
+            <div class="col">{{$order['user_surname']}}</div>
+            <div class="col">{{$order['user_name']}}</div>
+            <div class="col">{{$order['address']}}</div>
+            <div class="col">{{$order['user_phone']}}</div>
+            <div class="col">{{$order['user_email']}}</div>
+            <div class="col">{{$order['price']}} BYN </div>
+            <div class="order_status">{{$order['status']}}</div>
+            <div class="col">
                 <form 
                     id="change_order_status"
                     method="post" 
@@ -50,20 +42,20 @@
                     </select>
                     <input id="submit_new_order_status" type="submit" name="submit_new_order_status" value="Изменить статус">
                 </form>
-            </td>
-            <td>
-                <table class="orders details">
+            </div>
+            <div class="col">
+                <div class="orders details">
                     @foreach ($order_details as $order_detail)
                         @if ($order_detail['order_id'] == $order['order_id'])
-                            <tr>
-                                <td>{{$order_detail['product_id']}}</td><td>{{$order_detail['product_name']}}</td>
-                                <td>{{$order_detail['product_price']}} BYN</td>
-                            </tr>
+                            <div class="row_input">
+                                <div>{{$order_detail['product_id']}}</div><div>{{$order_detail['product_name']}}</div>
+                                <div>{{$order_detail['product_price']}} BYN</div>
+                            </div>
                         @endif
                     @endforeach
-                </table>
-            </td>
-        </tr>
+                </div>
+            </div>
+        </div>
     @endforeach
     </table>
 </div> 

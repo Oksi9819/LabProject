@@ -274,9 +274,16 @@ class UserController extends BasicController
             if($_SESSION['user']['role'] === "Admin") {
                     $new_status = (int)(htmlspecialchars($_POST['new_order_status'], ENT_QUOTES));
                     (new OrderModel())->updateOrderStatus((int)$order_id, $new_status);
+                    $statuses = (new OrderModel())->getOrderStatuses();
+                    $status = 'new status';
+                    for ($i = 0; $i < count($statuses); $i++) {
+                        if ($statuses[$i]['status_id'] == $new_status) {
+                            $status = $statuses[$i]['status_name'];
+                        }
+                    }
                     echo json_encode(array(
                         'result' => 'Success',
-                        'value' => $new_status,
+                        'value' => $status,
                         'order_id' =>$order_id,
                     ));
                     return;

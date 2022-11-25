@@ -244,6 +244,10 @@ input, select {
 .info {
     padding: 1em 5vh 5vh 5vh;
 
+    &.user {
+        padding: 1em 1vh 5vh 1vh;
+    }
+
     p {
         margin-bottom: 0.5em;
         margin-left: 0;
@@ -433,45 +437,111 @@ button {
     display: inline;
 }
 
-table.reviews, table.orders, table.users {
+.reviews, .orders, .users {
     width: 100%;
     margin: 0 auto;
     padding: 0;
-    border-collapse: collapse;
+    display: flex;
     text-align: center;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: space-between;
 
-    thead {
+    .thead {
         font-weight: bold; 
         border-top: 2px solid @dark-green-transparent;
         border-bottom: 1px solid @dark-green-transparent;
     }
 
-    tr {
+    .row, .thead {
         border-bottom: 1px solid @dark-green-transparent;
+        display: flex;
+        text-align: center;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+
+        :hover {
+            background: @dark-green-transparent;
+            color: @white;
+        }
     }
 
-    tbody tr:hover {
-        background: @dark-green-transparent;
-        color: @white;
+    .thead {
+        font-size: small;
     }
 
-    td {
+    .row {
+        font-size: smaller;
+    }
+
+    .col, .order_status {
         padding: 0.5vh 0.5vh 0.5vh 0.5vh;
+        flex-wrap: wrap;
+
+        &:nth-child(1) {
+            width: 3%;
+        }
+
+        &:nth-child(2) {
+            width: 8%;
+        }
+
+        &:nth-child(3) {
+            width: 8%;
+        }
+
+        &:nth-child(4) {
+            width: 11%;
+        }
+
+        &:nth-child(5) {
+            width: 10%;
+        }
+
+        &:nth-child(6) {
+            width: 11%;
+        }
+
+        &:nth-child(7) {
+            width: 6%;
+        }
+
+        &:nth-child(8) {
+            width: 9%;
+        }
+
+        &:nth-child(9) {
+            width: 9%;
+        }
+
+        &:nth-child(10) {
+            width: 15%;
+        }
     }
 
     &.details {
         border-radius: 5px;
         background: @white;
-        border-collapse: collapse;
         font-size: small;
+        display: flex;
+        text-align: center;
+        flex-direction: column;
+        flex-wrap: wrap;
+        justify-content: space-between;
 
-        tr {
+        .row_input {
             border:none;
+            display: flex;
+            text-align: center;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: space-between;
         }
     }
 }
 
-table.orders {
+.orders {
     font-size: smaller;
 }
 

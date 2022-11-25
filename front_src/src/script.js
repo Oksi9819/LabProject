@@ -207,8 +207,10 @@ $(document).ready(() => {
       success: (result) => {
         const response = JSON.parse(result);
         if (response.result === 'Success') {
-          const parentBox = ($('#cancel_order').parent()).parent();
-          $(parentBox).find('.order-status').val(response.value);
+          const parentBox = ($('#change_order_status').parent()).parent();
+          console.log($(parentBox).attr('class'));
+          console.log($(parentBox).find('.order_status').text());
+          $(parentBox).find('.order_status').text(response.value);
           alert(`Status of order ${response.order_id} was changed.`);
         }
       },
