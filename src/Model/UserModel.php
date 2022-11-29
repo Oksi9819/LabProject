@@ -72,7 +72,7 @@ class UserModel extends BasicModel
     public function getUsers(string $fields, string $ifvalue) : array
     {
         $result = $this->getModel($fields, "user AS u LEFT JOIN user_role AS ur ON ur.role_id=u.user_role", "ur.role_name", 
-                                  $ifvalue, NULL, NULL, "u.user_name, u.user_surname", "s");                         
+                                  $ifvalue, NULL, NULL, "u.created_at DESC", "s");                         
         if (!empty($result)) {
             return $result;
         } else {

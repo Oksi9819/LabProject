@@ -3,31 +3,29 @@
 
 @section('article')
 <div class="info">
-    <table class="users">
-        <thead>
-            <tr>
-                <td>ID</td>
-                <td>Имя</td>
-                <td>Фамилия</td>
-                <td>День рождения</td>
-                <td>Адрес</td>
-                <td>Телефон</td>
-                <td>Почта</td>
-                <td>Создан</td>
-            </tr>
-        </thead>
+    <div class="users">
+        <div class="thead">
+            <div class="col">ID</div>
+            <div class="col">Имя</div>
+            <div class="col">Фамилия</div>
+            <div class="col">День рождения</div>
+            <div class="col">Адрес</div>
+            <div class="col">Телефон</div>
+            <div class="col">Почта</div>
+            <div class="col">Создан</div>
+        </div>
     @foreach($users as $user)
-        <tr>
-            <td>{{$user['user_id']}}</td>
-            <td>{{$user['user_name']}}</td>
-            <td>{{$user['user_surname']}} BYN </td>
-            <td>{{$user['user_birthday']}}</td>
-            <td>{{$user['user_address']}}</td>
-            <td>{{$user['user_phone']}}</td>
-            <td>{{$user['user_email']}}</td>
-            <td>{{$user['created_at']}}</td>
-        </tr>
+        <div class="row">
+            <div class="col">{{$user['user_id']}}</div>
+            <div class="col">{{$user['user_name']}}</div>
+            <div class="col">{{$user['user_surname']}}</div>
+            <div class="col">{{$user['user_birthday']}}</div>
+            <div class="col">{{$user['user_address']}}</div>
+            <div class="col">{{$user['user_phone']}}</div>
+            <div class="col">{{$user['user_email']}}</div>
+            <div class="col">{{$user['created_at']}}</div>
+        </div>
     @endforeach
-    </table>
+    </div>
 </div> 
 @endsection
