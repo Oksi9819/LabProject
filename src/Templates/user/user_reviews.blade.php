@@ -3,20 +3,18 @@
 
 @section('article')
 <div class="info">
-    <table class="reviews">
-        <thead>
-            <tr>
-                <td>Код отзыва</td>
-                <td>Текст отзыва</td>
-            </tr>
-        </thead>
+    <div class="reviews">
+        <div class="thead">
+            <div class="col">Код отзыва</div>
+            <div class="col">Текст отзыва</div>
+        </div>
     @foreach ($reviews as $review)
-        <tr>
-            <td>{{$review['review_id']}}</td>
-            <td>{{$review['review_text']}}</td>
-        </tr>
+        <div class="row">
+            <div class="col">{{$review['review_id']}}</div>
+            <div class="col">{{$review['review_text']}}</div>
+        </div>
     @endforeach
-    </table>
+    </div>
     <p>Оставить отзыв:</p>
     <form 
         method="post" 

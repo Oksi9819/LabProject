@@ -4,55 +4,22 @@
 @section('article')
 <div class="info">
     <div>
-        @isset($response)
-            @isset($response['new_order'])
-                <p>Новый заказ с id: {{$response['new_order'][0]['order_id']}} отправлен на обработку.</p>
-                <p>Подробности заказа {{$response['new_order'][0]['order_id']}}:</p>
-                <table>
-                    <tr>
-                        <td>Артикул</td>
-                        <td>Наименование товара</td>
-                        <td>Цена</td>
-                        <td>Количество</td>
-                    </tr>
-                    @foreach ($response['new_order'] as $ordered_product)
-                        <tr>
-                            <td>{{$ordered_product['product_id']}}</td>
-                            <td>{{$ordered_product['product_name']}}</td>
-                            <td>{{$ordered_product['product_price']}} BYN</td>
-                            <td>{{$ordered_product['amount']}} шт.</td>
-                        </tr>
-                    @endforeach
-                </table>
-            @endisset
-            @isset($response['new_order_address'])
-                <p>Адрес доставки для заказа id: {{$response['new_order_address']['order_id']}} обновлен.</p>
-                <p>Новый адрес доставки заказа id: {{$response['new_order_address']['new_address']}}: .</p>
-            @endisset
-            @isset($response['canceled_order'])
-                <p>Заказ id: {{$response['canceled_order']}} отменен.</p>
-            @endisset
-        @endisset
-    </div>
-    <div>
     <p>Заказы пользователя {{$SESSION['id']}}</p>
-    <table class="orders">
-        <thead>
-            <tr>
-                <td>Код заказа</td>
-                <td>Адрес заказа</td>
-                <td></td>
-                <td>Сумма заказа</td>
-                <td>Статус заказа</td>
-                <td>Детали заказа</td>
-                <td></td>
-            </tr>
-        </thead>
+    <div class="orders">
+        <div class="thead">
+            <div class="col">Код заказа</div>
+            <div class="col">Адрес заказа</div>
+            <div class="col"></div>
+            <div class="col">Сумма заказа</div>
+            <div class="col">Статус заказа</div>
+            <div class="col">Детали заказа</div>
+            <div class="col"></div>
+        </div>
     @foreach($orders as $order)
-        <tr>
-            <td>{{$order['order_id']}}</td>
-            <td class="order-address">{{$order['address']}}</td>
-            <td>
+        <div class="row">>
+            <div class="col">{{$order['order_id']}}</div>
+            <div class="order-address">{{$order['address']}}</div>
+            <div class="col">
                 <form 
                     id="change_order_address"
                     method="post" 
@@ -63,22 +30,22 @@
                     <input id="new_order_address" type="text" name="new_order_address">
                     <input id="submit_new_order_address" type="submit" name="submit_new_order_address" value="Изменить адрес">
                 </form>
-            </td>
-            <td>{{$order['price']}} BYN </td>
-            <td class="order-status">{{$order['status']}}</td>
-            <td>
-                <table class="orders details">
+            </div>
+            <div class="col">{{$order['price']}} BYN </div>
+            <div class="order_status">{{$order['status']}}</div>
+            <div class="col">
+                <div class="orders details">
                     @foreach ($order_details as $order_detail)
                         @if ($order_detail['order_id'] == $order['order_id'])
-                            <tr>
-                                <td>{{$order_detail['product_id']}}</td><td>{{$order_detail['product_name']}}</td>
-                                <td>{{$order_detail['product_price']}} BYN</td>
-                            </tr>
+                            <div class="row_input">
+                                <div>{{$order_detail['product_id']}}</div><div>{{$order_detail['product_name']}}</div>
+                                <div>{{$order_detail['product_price']}} BYN</div>
+                            </div>
                         @endif
                     @endforeach
-                </table>
-            </td>
-            <td>
+                </div>
+            </div>
+            <div class="col">
                 <form 
                     id="cancel_order"
                     method="post" 
@@ -88,9 +55,9 @@
                 >
                     <input id="submit_cancel_order" type="submit" name="submit_cancel_order" value="Отменить">
                 </form>
-            </td>
-        </tr>
+            </div>
+        </div>
     @endforeach
-    </table>
+    </div>
 </div>
 @endsection

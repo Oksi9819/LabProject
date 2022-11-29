@@ -476,10 +476,34 @@ button {
         font-size: smaller;
     }
 
-    .col, .order_status {
+    .col, .order_status, .order-address {
         padding: 0.5vh 0.5vh 0.5vh 0.5vh;
         flex-wrap: wrap;
+    }
 
+    &.details {
+        border-radius: 5px;
+        background: @white;
+        font-size: small;
+        display: flex;
+        text-align: center;
+        flex-direction: column;
+        flex-wrap: wrap;
+        justify-content: space-between;
+
+        .row_input {
+            border:none;
+            display: flex;
+            text-align: center;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+    }
+}
+
+.orders {
+    .col, .order_status, .order-address {
         &:nth-child(1) {
             width: 3%;
         }
@@ -520,24 +544,20 @@ button {
             width: 15%;
         }
     }
+}
 
-    &.details {
-        border-radius: 5px;
-        background: @white;
-        font-size: small;
-        display: flex;
-        text-align: center;
-        flex-direction: column;
-        flex-wrap: wrap;
-        justify-content: space-between;
+.reviews {
+    .col{
+        &:nth-child(1) {
+            width: 10%;
+        }
 
-        .row_input {
-            border:none;
-            display: flex;
-            text-align: center;
-            flex-direction: row;
-            flex-wrap: wrap;
-            justify-content: space-between;
+        &:nth-child(2) {
+            width: 40%;
+        }
+
+        &:nth-child(3) {
+            width: 40%;
         }
     }
 }
