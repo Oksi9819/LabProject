@@ -11,7 +11,7 @@
 @black: #000000;
 @graphit: #565555;
 @invalid: #ffe3e7;
-
+@modal: rgba(0, 0, 0, 0.664);
 
 .bold {
     font-weight: bold;
@@ -175,7 +175,8 @@ article {
     border-left: 3px solid @dark-green-transparent;
 
     p {
-        margin: 1em 5vh 0 5vh;
+        margin: 0 5vh 0 5vh;
+        padding-top: 1em;;
     }
 }
 
@@ -670,6 +671,72 @@ button {
 
 p.error_message {
     font-weight: bold;
+}
+
+.modal {
+    position: absolute;
+    visibility: hidden;
+    opacity: 0;
+    transition: .3s;
+    top: -1000px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    background: @modal;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    overflow-y: scroll;
+    padding: 60px 15px;
+
+    &.active {
+        position: fixed;
+        top: 0;
+        visibility: visible;
+        opacity: 1;
+        transition: .3s;
+    }
+
+    .modal__content {
+        color: @graphit;
+        width: 80%;
+        max-width: 500px;
+        padding: 50px;
+        background: @whitesmoke;
+        border: 3px solid @light-bluegreen-transparent1;
+        border-radius: 5px;
+        position: relative;
+        box-shadow: 0 5px 15px @black;
+
+        .modal__close-button {
+            height: 50px;
+            width: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: none;
+            position: absolute;
+            right: 0;
+            top: 0;
+            background: none;
+            cursor: pointer;
+            transition: .3s;
+            outline: none;
+
+            &:hover {
+                transition: .3s;
+                transform: rotate(180deg);
+            }
+        }
+           
+        .modal__title {
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            margin: 0 0 15px;
+            text-align: center;
+        }
+    }
 }
 
 footer {

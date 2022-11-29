@@ -79,6 +79,13 @@
       </nav>
     </header>
     <main>
+      <!-- Модальное окно -->
+      <div class="modal" id="main_modal">
+        <div class="modal__content">
+          <button class="modal__close-button"><img src="{{BASEPATH}}src/pics/close_modal.png" width="50" alt=""></button>
+          <p class="modal__title" id="modal_title">Контент для примера</p>
+        </div>
+      </div>
         <article>
             @yield('article')
         </article>

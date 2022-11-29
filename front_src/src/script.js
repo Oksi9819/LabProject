@@ -17,6 +17,18 @@ $(document).ready(() => {
     return JSON.parse(localStorage.getItem('cart'));
   }
 
+  // Functions of modal
+  // Function of openning the modal
+  function openModal(s) {
+    $('.modal').addClass('active');
+    $('#modal_title').html(s);
+  }
+
+  // Function of closing the modal
+  $('.modal__close-button').on('click', () => {
+    $('.modal').removeClass('active');
+  });
+
   // Function of getting registered
   $('#submit_reg_user').on('click', () => {
     $.ajax({
@@ -30,7 +42,7 @@ $(document).ready(() => {
           window.location.href = response.location;
         } else {
           console.log(response.result);
-          alert(response.result);
+          openModal(response.result);
         }
       },
     });
@@ -50,7 +62,7 @@ $(document).ready(() => {
           window.location.href = response.location;
         } else {
           console.log(response.result);
-          alert(response.result);
+          openModal(response.result);
         }
       },
     });
@@ -67,9 +79,9 @@ $(document).ready(() => {
         console.log('Data was sent.');
         const response = JSON.parse(result);
         if (response.result === 'Success') {
-          alert(`Email was successfully sent:\n ${response.name}\n ${response.mail}\n ${response.text}`);
+          openModal(`Email was successfully sent:<br><br> ${response.name}<br> ${response.mail}<br ${response.text}`);
         } else {
-          alert(response.result);
+          openModal(response.result);
         }
         $('.contact-input').val('');
       },
@@ -80,7 +92,7 @@ $(document).ready(() => {
   // Function of editting profile info
   $('#submit_update_user').on('click', () => {
     // alert($('#update_user'));
-    alert($('#update_user').attr('action'));
+    // alert($('#update_user').attr('action'));
     $.ajax({
       type: 'POST',
       url: $('#update_user').attr('action'),
@@ -102,11 +114,11 @@ $(document).ready(() => {
             window.location.href = response.location;
           } else {
             console.log(response.msg);
-            alert(response.msg);
+            openModal(response.msg);
           }
         } else {
           console.log(response.result);
-          alert(response.result);
+          openModal(response.result);
         }
         $('.update_user').val('');
       },
@@ -124,10 +136,10 @@ $(document).ready(() => {
       success: (result) => {
         const response = JSON.parse(result);
         if (response.result === 'Success') {
-          alert('Password was successfully changed.');
+          openModal('Password was successfully changed.');
         } else {
           console.log(response.result);
-          alert(response.result);
+          openModal(response.result);
         }
         $('.update_pass').val('');
       },
@@ -145,10 +157,10 @@ $(document).ready(() => {
       success: (result) => {
         const response = JSON.parse(result);
         if (response.result === 'Success') {
-          alert('New admin was successfully added.');
+          openModal('New admin was successfully added.');
         } else {
           console.log(response.result);
-          alert(response.result);
+          openModal(response.result);
         }
         $('.add_admin').val('');
       },
@@ -168,10 +180,10 @@ $(document).ready(() => {
         if (response.result === 'Success') {
           const parentBox = ($('#change_order_address').parent()).parent();
           $(parentBox).find('.order-address').val(response.value);
-          alert('Order address was changed.');
+          openModal('Order address was changed.');
         } else {
           console.log(response.result);
-          alert(response.result);
+          openModal(response.result);
         }
         $('#new_order_address').val('');
       },
@@ -190,7 +202,7 @@ $(document).ready(() => {
         if (response.result === 'Success') {
           const parentBox = ($('#cancel_order').parent()).parent();
           $(parentBox).find('.order-status').val(3);
-          alert('Order was canceled');
+          openModal('Order was canceled');
         }
       },
     });
@@ -211,7 +223,7 @@ $(document).ready(() => {
           console.log($(parentBox).attr('class'));
           console.log($(parentBox).find('.order_status').text());
           $(parentBox).find('.order_status').text(response.value);
-          alert(`Status of order ${response.order_id} was changed.`);
+          openModal(`Status of order ${response.order_id} was changed.`);
         }
       },
     });
@@ -248,7 +260,8 @@ $(document).ready(() => {
     }
     if (!setCartData(cartData)) {
       this.disabled = false;
-      alert('Товар добавлен в корзину.');
+      // alert('Товар добавлен в корзину.');
+      openModal('Товар добавлен в корзину.');
     }
     return false;
   });
@@ -264,7 +277,7 @@ $(document).ready(() => {
         const response = JSON.parse(result);
         if (response.result === 'Success') {
           const { product } = response;
-          alert(`${product.product_name} was added to catalog.`);
+          openModal(`${product.product_name} was added to catalog.`);
           let newProduct = '<div class="catalog product-card">';
           newProduct += `<div class="inner">${product.product_id}</div>`;
           newProduct += '<div class="inner">';
@@ -287,9 +300,9 @@ $(document).ready(() => {
           newProduct += '</div></div></div>';
           console.log(newProduct);
           $('#catalog').append(newProduct);
-          window.location.reload(true);
+          // window.location.reload(true);
         } else {
-          alert(response.result);
+          openModal(response.result);
         }
         $('.add_product').val('');
       },
@@ -307,12 +320,12 @@ $(document).ready(() => {
       success: (result) => {
         const response = JSON.parse(result);
         if (response.result === 'Success') {
-          alert(`New category ${response.category_name} was added to catalog.`);
+          openModal(`New category ${response.category_name} was added to catalog.`);
           $('#id_new_prod_category').append(`<option value=${response.category_id}>${response.category_id} - ${response.category_name}</option>`);
           $('#update_id_category').append(`<option value=${response.category_id}>${response.category_id} - ${response.category_name}</option>`);
           $('#id_del_category').append(`<option value=${response.category_id}>${response.category_id} - ${response.category_name}</option>`);
         } else {
-          alert(response.result);
+          openModal(response.result);
         }
         const fields = $('#add_category').find('.add_category');
         fields.val('');
@@ -331,12 +344,12 @@ $(document).ready(() => {
       success: (result) => {
         const response = JSON.parse(result);
         if (response.result === 'Success') {
-          alert(`Category ${response.category_name} was successfully updated.`);
+          openModal(`Category ${response.category_name} was successfully updated.`);
           $(`#id_new_prod_category option[value=${response.category_id}]`).text(`${response.category_id} - ${response.category_name}`);
           $(`#update_id_category option[value=${response.category_id}]`).text(`${response.category_id} - ${response.category_name}`);
           $(`#id_del_category option[value=${response.category_id}]`).text(`${response.category_id} - ${response.category_name}`);
         } else {
-          alert(response.result);
+          openModal(response.result);
         }
         ($('#update_category').find('.update_category')).val('');
         ($('#update_category').find('.new_category_eng')).val('');
@@ -355,13 +368,13 @@ $(document).ready(() => {
       success: (result) => {
         const response = JSON.parse(result);
         if (response.result === 'Success') {
-          alert(`${response.category_id} was deleted.`);
+          openModal(`${response.category_id} was deleted.`);
           // console.log(`#id_del_category option[value=${response.category_id}]`);
           $(`#id_del_category option[value=${response.category_id}]`).remove();
           $(`#id_new_prod_category option[value=${response.category_id}]`).remove();
           $(`#update_id_category option[value=${response.category_id}]`).remove();
         } else {
-          alert(response.result);
+          openModal(response.result);
         }
       },
     });
@@ -378,14 +391,14 @@ $(document).ready(() => {
       success: (result) => {
         const response = JSON.parse(result);
         if (response.result === 'Success') {
-          alert(`Information of ${response.product} was eddited`);
+          openModal(`Information of ${response.product} was eddited`);
           console.log(response.fields);
           console.log(response.values);
           for (let i = 0; i < response.fields.length; i++) {
             $(`#${response.fields[i]}`).text(`${response.values[i]}`);
           }
         } else {
-          alert(response.result);
+          openModal(response.result);
         }
         $('.update_product').val('');
       },
@@ -453,9 +466,9 @@ $(document).ready(() => {
     // alert(orderAddress);
     console.log(cartData);
     if (cartData === null) {
-      alert('В корзине пусто!');
+      openModal('В корзине пусто!');
     } else if (orderAddress === null) {
-      alert('Input order address please.');
+      openModal('Input order address please.');
     } else {
       $.ajax({
         type: 'POST',
@@ -470,10 +483,10 @@ $(document).ready(() => {
             $('#clear_cart').trigger('click');
             $('#order_addr').val('');
             $(cartContent).text('В корзине пусто!');
-            alert('Order was successfully sent.');
+            openModal('Order was successfully sent.');
           } else {
             console.log(response.result);
-            alert(response.result);
+            openModal(response.result);
           }
         },
       });
