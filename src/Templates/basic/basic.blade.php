@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html lang="en">
 <head>
     <meta charset="utf-8">
     <title>{{$title}}</title>
@@ -9,6 +9,10 @@
       <div class="logo">
         <a href="{{BASEPATH}}"><img src="{{BASEPATH}}src/pics/basepic.jpg" alt="Logo"></a> 
         <a href="{{BASEPATH}}"><h2>LabProject</h2></a>
+        <select data-i18n-switcher class="locale-switcher">
+            <option value="ru">Русский</option>
+            <option value="en">English</option>
+        </select>
       </div>
       <nav class="menu header-menu"><!--Навигация {{$title}}:-->
         <ul class="menu header-menu">

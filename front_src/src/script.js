@@ -5,6 +5,50 @@ $(document).ready(() => {
   const cartContent = $('#cart_content');
   let cartData;
 
+  // Localization
+  const defaultLocale = 'ru';
+  let locale;
+  let translations = {};
+
+  function translateElement(element) {
+    const key = $(element).attr('data-i18n-key');
+    const translation = translations[key];
+    // let el = element;
+    $(element).text(translation);
+  }
+
+  function translatePage() {
+    $('[data-i18n-key]').each(translateElement);
+    /* document
+      .querySelectorAll('[data-i18n-key]')
+      .forEach(translateElement); */
+  }
+
+  async function fetchTranslationsFor(newLocale) {
+    const response = await fetch(`/lang/${newLocale}.json`);
+    await response.json();
+    // return;
+  }
+
+  async function setLocale(newLocale) {
+    if (newLocale === locale) return;
+    const newTranslations = await fetchTranslationsFor(newLocale);
+    locale = newLocale;
+    translations = newTranslations;
+    translatePage();
+  }
+
+  function bindLocaleSwitcher(initialValue) {
+    const switcher = $('[data-i18n-switcher]');
+    switcher.value = initialValue;
+    switcher.onchange = (e) => {
+      setLocale(e.target.value);
+    };
+  }
+
+  setLocale(defaultLocale);
+  bindLocaleSwitcher(defaultLocale);
+
   // Function of Writting data to LocalStorage
   function setCartData(o) {
     localStorage.setItem('cart', JSON.stringify(o));
