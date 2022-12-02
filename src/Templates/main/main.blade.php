@@ -3,6 +3,6 @@
 
 @section('article')
     <div class="info">
-        <p data-i18n-key="info" >{{$info['desc']}}</p>
+        <p>{{$info['desc']}}</p>
     </div>
 @endsection

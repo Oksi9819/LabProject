@@ -1,3 +1,6 @@
 {
-    "info": "Добро пожаловать!"
+    "You have no permissions to do this action. Available only for administrators." 
+    : "У вас нет прав для выполнения этого действия. Доступно только для администраторов.",
+    "New category was added to catalog." : "В каталог добавлена ​​новая категория.",
+    "Fields should be fullfilled." : "Поля должны быть заполнены."
 }

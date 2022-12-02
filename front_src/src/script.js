@@ -5,49 +5,34 @@ $(document).ready(() => {
   const cartContent = $('#cart_content');
   let cartData;
 
+  // Functions of modal
+  // Function of openning the modal
+  function openModal(s) {
+    $('.modal').addClass('active');
+    $('#modal_title').html(s);
+  }
+
+  // Function of closing the modal
+  $('.modal__close-button').on('click', () => {
+    $('.modal').removeClass('active');
+  });
+
   // Localization
-  const defaultLocale = 'ru';
-  let locale;
-  let translations = {};
+  let messages = [];
+  (async () => {
+    messages = await (await fetch('front_src/src/lang/ru.json')).json();
+    console.log(messages['You have no permissions to do this action. Available only for administrators.']);
+  })();
 
-  function translateElement(element) {
-    const key = $(element).attr('data-i18n-key');
-    const translation = translations[key];
-    // let el = element;
-    $(element).text(translation);
+  function translateMsg(response) {
+    let $msg;
+    if (messages[response.msg]) {
+      $msg = messages[response.msg];
+    } else {
+      $msg = response.msg;
+    }
+    return $msg;
   }
-
-  function translatePage() {
-    $('[data-i18n-key]').each(translateElement);
-    /* document
-      .querySelectorAll('[data-i18n-key]')
-      .forEach(translateElement); */
-  }
-
-  async function fetchTranslationsFor(newLocale) {
-    const response = await fetch(`/lang/${newLocale}.json`);
-    await response.json();
-    // return;
-  }
-
-  async function setLocale(newLocale) {
-    if (newLocale === locale) return;
-    const newTranslations = await fetchTranslationsFor(newLocale);
-    locale = newLocale;
-    translations = newTranslations;
-    translatePage();
-  }
-
-  function bindLocaleSwitcher(initialValue) {
-    const switcher = $('[data-i18n-switcher]');
-    switcher.value = initialValue;
-    switcher.onchange = (e) => {
-      setLocale(e.target.value);
-    };
-  }
-
-  setLocale(defaultLocale);
-  bindLocaleSwitcher(defaultLocale);
 
   // Function of Writting data to LocalStorage
   function setCartData(o) {
@@ -60,18 +45,6 @@ $(document).ready(() => {
   function getCartData() {
     return JSON.parse(localStorage.getItem('cart'));
   }
-
-  // Functions of modal
-  // Function of openning the modal
-  function openModal(s) {
-    $('.modal').addClass('active');
-    $('#modal_title').html(s);
-  }
-
-  // Function of closing the modal
-  $('.modal__close-button').on('click', () => {
-    $('.modal').removeClass('active');
-  });
 
   // Function of getting registered
   $('#submit_reg_user').on('click', () => {
@@ -364,16 +337,18 @@ $(document).ready(() => {
       success: (result) => {
         const response = JSON.parse(result);
         if (response.result === 'Success') {
-          openModal(`New category ${response.category_name} was added to catalog.`);
+          openModal(`${translateMsg(response)}\n ${response.category_name}`);
+          translateMsg(response);
           $('#id_new_prod_category').append(`<option value=${response.category_id}>${response.category_id} - ${response.category_name}</option>`);
           $('#update_id_category').append(`<option value=${response.category_id}>${response.category_id} - ${response.category_name}</option>`);
           $('#id_del_category').append(`<option value=${response.category_id}>${response.category_id} - ${response.category_name}</option>`);
-        } else {
-          openModal(response.result);
+        } else if (response.result === 'Error') {
+          openModal(translateMsg(response));
         }
         const fields = $('#add_category').find('.add_category');
         fields.val('');
       },
+      error: openModal('Проверьте подключение к сети'),
     });
     return false;
   });
@@ -392,12 +367,13 @@ $(document).ready(() => {
           $(`#id_new_prod_category option[value=${response.category_id}]`).text(`${response.category_id} - ${response.category_name}`);
           $(`#update_id_category option[value=${response.category_id}]`).text(`${response.category_id} - ${response.category_name}`);
           $(`#id_del_category option[value=${response.category_id}]`).text(`${response.category_id} - ${response.category_name}`);
-        } else {
+        } else if (response.result === 'Error') {
           openModal(response.result);
         }
         ($('#update_category').find('.update_category')).val('');
         ($('#update_category').find('.new_category_eng')).val('');
       },
+      error: openModal('Проверьте подключение к сети'),
     });
     return false;
   });
@@ -405,6 +381,7 @@ $(document).ready(() => {
   // Function of deleting product category
   $('#submit_delete_category').on('click', () => {
     // alert($('#delete_category').attr('action'));
+    $(this).attr('disabled', true);
     $.ajax({
       type: 'POST',
       url: $('#delete_category').attr('action'),
@@ -422,6 +399,7 @@ $(document).ready(() => {
         }
       },
     });
+    $(this).attr('disabled', true);
     return false;
   });
 

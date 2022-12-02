@@ -176,7 +176,8 @@ class ProductController extends BasicController
     {
         if(!isset($_SESSION['user'])) {
             echo json_encode(array(
-                'result' => 'You have no permissions to do this action. Available only for administrators.'
+                'result' => 'Error',
+                'msg' => 'You have no permissions to do this action. Available only for administrators.'
             ));
             return;
 		} else {
@@ -190,19 +191,22 @@ class ProductController extends BasicController
                     // var_dump($result);
                     echo json_encode(array(
                         'result' => 'Success',
+                        'msg' => 'New category was added to catalog.',
                         'category_name' => $new_category,
                         'category_id' => $result[0]['category_id'],
                     ));
                     return;
                 } else {
                     echo json_encode(array(
-                        'result' => 'Fields should be fullfilled.'
+                        'result' => 'Error',
+                        'msg' => 'Fields should be fullfilled.'
                     ));
                     return;
                 }           
             } else {
                 echo json_encode(array(
-                    'result' => 'You have no permissions to do this action. Available only for administrators.'
+                    'result' => 'Error',
+                    'msg' => 'You have no permissions to do this action. Available only for administrators.'
                 ));
                 return;
             }
