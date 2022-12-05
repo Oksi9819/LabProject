@@ -188,7 +188,6 @@ class ProductController extends BasicController
                     $new_category_eng = trim(htmlspecialchars($_POST['category_eng'], ENT_QUOTES));
                     (new CategoryModel())->setCategory($new_category, $new_category_eng);
                     $result = (new CategoryModel())->getCategoryByName($new_category_eng);
-                    // var_dump($result);
                     echo json_encode(array(
                         'result' => 'Success',
                         'msg' => 'New category was added to catalog.',
@@ -217,7 +216,8 @@ class ProductController extends BasicController
     {
         if(!isset($_SESSION['user'])) {
             echo json_encode(array(
-                'result' => 'You have no permissions to do this action. Available only for administrators.'
+                'result' => 'Error',
+                'msg' => 'You have no permissions to do this action. Available only for administrators.'
             ));
             return;
 		} else {
@@ -229,19 +229,22 @@ class ProductController extends BasicController
                     (new CategoryModel())->updateCategory($category_id, $new_category, $new_category_eng);
                     echo json_encode(array(
                         'result' => 'Success',
+                        'msg' => 'Category was successfully updated.',
                         'category_id' => $category_id,
                         'category_name' => $new_category,
                     ));
                     return;
                 } else {
                     echo json_encode(array(
-                        'result' => 'All fields should be fulldilled'
+                        'result' => 'Error',
+                        'msg' => 'All fields should be fulldilled.'
                     ));
                     return; 
                 }
             } else {
                 echo json_encode(array(
-                    'result' => 'You have no permissions to do this action. Available only for administrators.'
+                    'result' => 'Error',
+                    'msg' => 'You have no permissions to do this action. Available only for administrators.'
                 ));
                 return; 
             }
@@ -252,7 +255,8 @@ class ProductController extends BasicController
     {
         if(!isset($_SESSION['user'])) {
             echo json_encode(array(
-                'result' => 'You have no permissions to do this action. Available only for administrators.'
+                'result' => 'Error',
+                'msg' => 'You have no permissions to do this action. Available only for administrators.'
             ));
             return;
 		} else {
@@ -261,12 +265,14 @@ class ProductController extends BasicController
                     (new CategoryModel())->deleteCategory($category_id);
                     echo json_encode(array(
                         'result' => 'Success',
+                        'msg' => 'Category was deleted.',
                         'category_id' => $category_id,
                     ));
                     return;              
             } else {
                 echo json_encode(array(
-                    'result' => 'You have no permissions to do this action. Available only for administrators.'
+                    'result' => 'Error',
+                    'msg' => 'You have no permissions to do this action. Available only for administrators.'
                 ));
                 return;
             }

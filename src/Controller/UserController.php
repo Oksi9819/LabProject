@@ -53,15 +53,24 @@ class UserController extends BasicController
                         echo json_encode(array('result' => 'Success', 'location' => $new_location));
                         return;
                     } catch (Exception $e) {
-                        echo json_encode(array('result' => ($e->getMessage())));
+                        echo json_encode(array(
+                            'result' => 'Error',
+                            'msg' => ($e->getMessage())
+                        ));
                         return;
                     }  
                 }else {
-                    echo json_encode(array('result' => 'Password length must be at least 8 characters. It should start with a letter and contain at least 1 number.'));
+                    echo json_encode(array(
+                        'result' => 'Error',
+                        'msg' => 'Password length must be at least 8 characters. It should start with a letter and contain at least 1 number.'
+                    ));
                     return;
                 }
 		} else {
-            echo json_encode(array('result' => "You're already authorized! Log out."));
+            echo json_encode(array(
+                'result' => 'Error',
+                'msg' => 'You\'re already authorized! Log out.'
+            ));
             return;
         }
     }
@@ -95,11 +104,17 @@ class UserController extends BasicController
                 ));
                 return;
             } catch (Exception $e) {
-                echo json_encode(array('result' => ($e->getMessage())));
+                echo json_encode(array(
+                    'result' => 'Error',
+                    'msg' => ($e->getMessage())
+                ));
                 return;
             }
 		} else {
-            echo json_encode(array('result' => 'You\'re already authorized! Log out.'));
+            echo json_encode(array(
+                'result' => 'Error',
+                'msg' => 'You\'re already authorized! Log out.'
+            ));
             return;
         }
     }
@@ -223,25 +238,6 @@ class UserController extends BasicController
             header("Location: /");
         }
     }
-
-    /* public function setOrder(int $user_id)
-    {
-        if(!isset($_SESSION['user'])) {
-			header("Location: /");
-		} elseif ($_SESSION['user']['id'] == $user_id) {
-            if (!empty($_POST['submit_set_order']) && !empty($_POST['order_address'])) {
-                $order_adress = trim(htmlspecialchars($_POST['order_address'], ENT_QUOTES));
-                $new_order = (new OrderModel())->setOrder($order_adress, $_SESSION['user']['id']);
-                if (isset($_SESSION['response'])) {
-                    unset ($_SESSION['response']);
-                } 
-                $_SESSION['response']['new_order'] = $new_order;
-                return header('Location: ' . BASEPATH . 'profile/' . $_SESSION['user']['id'] . '/orders');   
-            }
-        } else {
-            header("Location: /");
-        }
-    } */
 
     public function editOrderAddress(int $user_id, int $order_id)
     {
@@ -367,15 +363,22 @@ class UserController extends BasicController
                         $user_password = hash('md5', htmlspecialchars($_POST['admin_password'], ENT_QUOTES));
                         try {
                             $this->userModel->setAdmin($user_surname, $user_name, $user_birthday, $user_phone, $user_address, $user_email, $user_password);
-                            echo json_encode(array('result' => 'Success'));
+                            echo json_encode(array(
+                                'result' => 'Success',
+                                'msg' => 'New admin was successfully added.',
+                            ));
                             return;
                         } catch (Exception $e) {
-                            echo json_encode(array('result' => $e->getMessage()));
+                            echo json_encode(array(
+                                'result' => 'Error',
+                                'msg' => $e->getMessage()
+                            ));
                             return;
                         }
                     } else {
                         echo json_encode(array(
-                            'result' => 'Password length must be at least 8 characters. It should start with a letter and contain at least 1 number.'
+                            'result' => 'Error',
+                            'msg' => 'Password length must be at least 8 characters. It should start with a letter and contain at least 1 number.'
                         ));
                         return;
                     }  
@@ -389,11 +392,9 @@ class UserController extends BasicController
         
     public function updateUser(int $user_id) 
     {
-        // var_dump(1);
         if(!isset($_SESSION['user'])) {
 			header("Location: /");
 		} elseif ($_SESSION['user']['id'] == $user_id) {
-            // var_dump(2);
             $field = array();
             $value = array();
             $updated = [0, 0, 0, 0, 0, 0];
@@ -423,25 +424,32 @@ class UserController extends BasicController
                             $types .= "s";
                             $updated[2] = 1;
                         } else {
-                            echo json_encode(array('result' => 'Birthday does not follow the Gregorian calendar.'));
+                            echo json_encode(array(
+                                'result' => 'Error',
+                                'msg' => 'Birthday does not follow the Gregorian calendar.'
+                            ));
                             return;
                         }
                     } else {
-                        echo json_encode(array('result' => 'Birthday should be in format \'YYYY-MM-DD\'.'));
+                        echo json_encode(array(
+                            'result' => 'Error',
+                            'msg' => 'Birthday should be in format \'YYYY-MM-DD\'.'
+                        ));
                         return;
                     }
                 }
                 if (!empty($_POST['new_phone'])) {
-                    // var_dump(3);
                     $new_phone = trim(htmlspecialchars($_POST['new_phone'], ENT_QUOTES));
-                    // var_dump($new_phone);
                     if (preg_match("/(\+375)[\(](29|33|25|44)[\)](\d{3})-(\d{2})-(\d{2})$/", $new_phone)) {
                         array_push($field, "user_phone");
                         array_push($value, $new_phone);
                         $types .= "s";
                         $updated[3] = 1;
                     } else {
-                        echo json_encode(array('result' => 'Phone number should be in format \'+375(29/33/..)111-11-11\'.'));
+                        echo json_encode(array(
+                            'result' => 'Error',
+                            'msg' => 'Phone number should be in format \'+375(29/33/..)111-11-11\'.'
+                        ));
                         return;
                     }
                 }
@@ -460,14 +468,18 @@ class UserController extends BasicController
                         $types .= "s";
                         $updated[5] = 1;
                     } else {
-                        echo json_encode(array('result' => 'Your email looks invalid.'));
+                        echo json_encode(array('result' => ''));
+                        echo json_encode(array(
+                            'result' => 'Error',
+                            'msg' => 'Your email looks invalid.'
+                        ));
                         return;
                     }
                 }
                 if (!empty($value)) {
                     if (!($this->userModel->updateUser($field, $_SESSION['user']['id'], $value, $types))) {
                         echo json_encode(array(
-                            'result' => 'Fail',
+                            'result' => 'Error',
                             'msg' => 'Failed to update information. Please, try again.',
                         ));
                         return;
@@ -481,6 +493,7 @@ class UserController extends BasicController
                         $new_location = '/profile/' . $_SESSION['user']['id'];
                         echo json_encode(array(
                             'result' => 'Success',
+                            'msg' => 'Your profile information was successfully changed.',
                             'values' => $value,
                             'fields' => $output,
                         ));
@@ -489,7 +502,7 @@ class UserController extends BasicController
                 }  
         } else {
             echo json_encode(array(
-                'result' => 'Fail',
+                'result' => 'Error',
                 'location' => '/',
             ));
             return;
@@ -515,15 +528,24 @@ class UserController extends BasicController
                         $types .= "s";
                         if (!empty($value)) {
                             $this->userModel->updateUser($field, $_SESSION['user']['id'], $value, $types);
-                            echo json_encode(array('result' => 'Success'));
+                            echo json_encode(array(
+                                'result' => 'Success',
+                                'msg' => 'Password was successfully changed.',
+                            ));
                             return;
                         }  
                     } else {
-                        echo json_encode(array('result' => 'Passwords don\'t match.'));
+                        echo json_encode(array(
+                            'result' => 'Error',
+                            'msg' => 'Passwords don\'t match.',
+                        ));
                         return;
                     }
                 } else {
-                    echo json_encode(array('result' => 'Password length must be at least 8 characters. It should start with a letter and contain at least 1 number.'));
+                    echo json_encode(array(
+                        'result' => 'Error',
+                        'msg' => 'Password length must be at least 8 characters. It should start with a letter and contain at least 1 number.',
+                    ));
                     return;
                 }
         }  else {

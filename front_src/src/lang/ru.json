@@ -2,5 +2,24 @@
     "You have no permissions to do this action. Available only for administrators." 
     : "У вас нет прав для выполнения этого действия. Доступно только для администраторов.",
     "New category was added to catalog." : "В каталог добавлена ​​новая категория.",
-    "Fields should be fullfilled." : "Поля должны быть заполнены."
+    "Fields should be fullfilled." : "Поля должны быть заполнены.",
+    "Length of category names should be shorter than 31 characters."
+    : "Длина названия категории должна быть короче 31 символа.",
+    "All fields should be fulldilled." : "Все поля должны быть заполнены.",
+    "Category was successfully updated." : "Категория успешно обновлена.",
+    "Category was deleted." : "Категория удалена.",
+    "You're already authorized! Log out." : "Вы уже авторизованы! Выйдите из аккаунта.",
+    "Password length must be at least 8 characters. It should start with a letter and contain at least 1 number."
+    : "Длина пароля должна быть не менее 8 символов. Он должен начинаться с буквы и содержать не менее 1 цифры.",
+    "Birthday does not follow the Gregorian calendar." : "День рождения не соответствует григорианскому календарю.",
+    "Birthday should be in format 'YYYY-MM-DD'." : "День рождения должен быть в формате 'ГГГГ-ММ-ДД'.",
+    "Phone number should be in format '+375(29/33/..)111-11-11'."
+    : "Номер телефона должен быть в формате '+375(29/33/..)111-11-11'.",
+    "Your email looks invalid." : "Ваш адрес электронной почты выглядит недействительным.",
+    "Failed to update information. Please, try again."
+    : "Не удалось обновить информацию. Пожалуйста, попробуйте еще раз.",
+    "Your profile information was successfully changed." : "Информация в вашем профиле успешно изменена.",
+    "Password was successfully changed." : "Пароль успешно изменен.",
+    "Passwords don't match." : "Пароли не совпадают.",
+    "New admin was successfully added." : "Новый администратор успешно добавлен."
 }
