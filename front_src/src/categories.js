@@ -13,6 +13,7 @@ $(document).ready(() => {
       success: (result) => {
         const response = JSON.parse(result);
         if (response.result === 'Success') {
+          console.log(4, mainScript.translateMsg(response));
           mainScript.openModal(`${mainScript.translateMsg(response)}\n ${response.category_name}`);
           $('#id_new_prod_category').append(`<option value=${response.category_id}>${response.category_id} - ${response.category_name}</option>`);
           $('#update_id_category').append(`<option value=${response.category_id}>${response.category_id} - ${response.category_name}</option>`);
