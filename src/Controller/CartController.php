@@ -29,7 +29,6 @@ class CartController extends BasicController
             $user_id = $_SESSION['user']['id'];
             $cartData = $_POST['itemsArr'];
             $address = htmlspecialchars($_POST['orderAddress'], ENT_QUOTES);
-            // var_dump($address);
             if (!is_null($cartData)) {
                 if ($address === NULL) {
                     echo json_encode(array('result' => 'address does not isset'));

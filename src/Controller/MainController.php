@@ -66,7 +66,7 @@ class MainController extends BasicController
             }
         } else {
             echo json_encode(array(
-                'result' => 'All fields should be fulldilled'
+                'result' => 'All fields should be fullfilled'
             ));
             return; 
         }

@@ -5,7 +5,7 @@
     "Fields should be fullfilled." : "Поля должны быть заполнены.",
     "Length of category names should be shorter than 31 characters."
     : "Длина названия категории должна быть короче 31 символа.",
-    "All fields should be fulldilled." : "Все поля должны быть заполнены.",
+    "All fields should be fullfilled." : "Все поля должны быть заполнены.",
     "Category was successfully updated." : "Категория успешно обновлена.",
     "Category was deleted." : "Категория удалена.",
     "You're already authorized! Log out." : "Вы уже авторизованы! Выйдите из аккаунта.",

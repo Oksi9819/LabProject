@@ -5,7 +5,7 @@ $(document).ready(() => {
   // Function of adding new product category
   $('#submit_add_category').on('click', () => {
     const $el = $('#add_category');
-  // alert($('#add_category').attr('action'));
+    // alert($('#add_category').attr('action'));
     $(this).attr('disabled', true);
     $.ajax({
       type: 'POST',
