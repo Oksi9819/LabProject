@@ -22,5 +22,6 @@
     "Password was successfully changed." : "Пароль успешно изменен.",
     "Passwords don't match." : "Пароли не совпадают.",
     "New admin was successfully added." : "Новый администратор успешно добавлен.",
-    "Such category already exists." : "Такая категория уже существует."
+    "Such category already exists." : "Такая категория уже существует.",
+    "Email was successfully sent:" : "Письмо было успешно отправлено:"
 }

@@ -4,12 +4,13 @@ import * as mainScript from './script.js';
 $(document).ready(() => {
   // Function of adding new product category
   $('#submit_add_category').on('click', () => {
+    const $el = $('#add_category');
   // alert($('#add_category').attr('action'));
     $(this).attr('disabled', true);
     $.ajax({
       type: 'POST',
-      url: $('#add_category').attr('action'),
-      data: $('#add_category').serialize(),
+      url: $el.attr('action'),
+      data: $el.serialize(),
       success: async (result) => {
         const response = JSON.parse(result);
         const responseMsg = await mainScript.translateMsg(response.msg);
@@ -34,11 +35,12 @@ $(document).ready(() => {
   // Function of editting product category
   $('#submit_update_category').on('click', () => {
     // alert($('#update_category').attr('action'));
+    const $el = $('#update_category');
     $(this).attr('disabled', true);
     $.ajax({
       type: 'POST',
-      url: $('#update_category').attr('action'),
-      data: $('#update_category').serialize(),
+      url: $el.attr('action'),
+      data: $el.serialize(),
       success: async (result) => {
         const response = JSON.parse(result);
         const responseMsg = await mainScript.translateMsg(response.msg);
@@ -63,11 +65,12 @@ $(document).ready(() => {
   // Function of deleting product category
   $('#submit_delete_category').on('click', () => {
     // alert($('#delete_category').attr('action'));
+    const $el = $('#delete_category');
     $(this).attr('disabled', true);
     $.ajax({
       type: 'POST',
-      url: $('#delete_category').attr('action'),
-      data: $('#delete_category').serialize(),
+      url: $el.attr('action'),
+      data: $el.serialize(),
       success: async (result) => {
         const response = JSON.parse(result);
         const responseMsg = await mainScript.translateMsg(response.msg);

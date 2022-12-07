@@ -49,6 +49,7 @@ class MainController extends BasicController
                 if ($this->mainModel->setContact($contact_name, $contact_email, $contact_text)) {
                     echo json_encode(array(
                         'result' => 'Success',
+                        'msg' => 'Email was successfully sent:',
                         'name' => $contact_name,
                         'mail' => $contact_email,
                         'text' => $contact_text,
@@ -63,21 +64,6 @@ class MainController extends BasicController
             } catch (Exception $e) {
                 echo $e->errorMessage();
             }
-            /* if ($this->mainModel->setContact($contact_name, $contact_email, $contact_text)) {
-                echo json_encode(array(
-                    'result' => 'Success',
-                    'name' => $contact_name,
-                    'mail' => $new_category,
-                    'text' => $contact_text,
-                ));
-                return;
-            } else {
-                echo json_encode(array(
-                    'result' => 'Failed to send contact form. Please, try again.'
-                ));
-                return;
-            } */
-            // return $this->mainView->showContactForm($info, $new_contact);
         } else {
             echo json_encode(array(
                 'result' => 'All fields should be fulldilled'
