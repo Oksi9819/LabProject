@@ -17,9 +17,17 @@ class CategoryModel extends BasicModel
     {
         $values = array();
         if (strlen($new_category) < 31 && strlen($new_category_eng) < 31) {
-            $created_at = date("Y-m-d h:i:s");
-            array_push($values, $new_category, $new_category_eng, $created_at);
-            return $this->setModel("category", ['category_name', 'name_eng', 'created_at'], "sss", $values);
+            if (!($a = $this->getCategoryByName($new_category_eng))) {
+                if ($a['category_name'] !== $new_category) {
+                    $created_at = date("Y-m-d h:i:s");
+                    array_push($values, $new_category, $new_category_eng, $created_at);
+                    return $this->setModel("category", ['category_name', 'name_eng', 'created_at'], "sss", $values);
+                } else {
+                    throw new Exception("Such category already exists.");
+                }
+            } else {
+                throw new Exception("Such category already exists.");
+            } 
         } else {
             throw new Exception("Length of category names should be shorter than 31 characters.");
         }  
@@ -46,8 +54,18 @@ class CategoryModel extends BasicModel
     {
         $values = array();
         if (strlen($new_category) < 31 && strlen($new_category_eng) < 31) {
-            array_push($values, $new_category, $new_category_eng);
-            return $this->updateModel("category_name, name_eng", "category", "category_id", $category_id, $values, NULL, "ssi");   
+            if (!($a = $this->getCategoryByName($new_category_eng))) {
+                if ($a['category_name'] !== $new_category) {
+                    array_push($values, $new_category, $new_category_eng);
+                    $created_at = date("Y-m-d h:i:s");
+                    array_push($values, $new_category, $new_category_eng, $created_at);
+                    return $this->updateModel("category_name, name_eng", "category", "category_id", $category_id, $values, NULL, "ssi");
+                } else {
+                    throw new Exception("Such category already exists.");
+                }
+            } else {
+                throw new Exception("Such category already exists.");
+            }    
         } else {
             throw new Exception("Length of category names should be shorter than 31 characters.");
         }        

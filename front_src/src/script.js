@@ -19,20 +19,10 @@ $(document).ready(() => {
 });
 
 // Localization
-async function translateMsg(response) {
-  let messages = [];
-  const respon = await fetch('/front_src/src/lang/ru.json');
-  messages = await respon.json();
-  console.log(1, messages);
-  console.log(2, messages);
-  let $msg;
-  if (messages[response.msg]) {
-    $msg = messages[response.msg];
-  } else {
-    $msg = response.msg;
-  }
-  console.log(3, $msg);
-  return $msg;
+async function translateMsg(msg) {
+  const translationsJSON = await fetch('/front_src/src/lang/ru.json');
+  const translations = await translationsJSON.json();
+  return translations[msg] ? translations[msg] : msg;
 }
 
 // Function of Writting data to LocalStorage

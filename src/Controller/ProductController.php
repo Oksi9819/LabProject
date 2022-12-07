@@ -1,10 +1,11 @@
 <?php
 namespace Itechart\InternshipProject\Controller;
 
-use Itechart\InternshipProject\Controller\BasicController;
+use Exception;
 use Itechart\InternshipProject\View\ProductView;
 use Itechart\InternshipProject\Model\ProductModel;
 use Itechart\InternshipProject\Model\CategoryModel;
+use Itechart\InternshipProject\Controller\BasicController;
 
 class ProductController extends BasicController
 {
@@ -186,14 +187,21 @@ class ProductController extends BasicController
                 {
                     $new_category = trim(htmlspecialchars($_POST['category_name'], ENT_QUOTES));
                     $new_category_eng = trim(htmlspecialchars($_POST['category_eng'], ENT_QUOTES));
-                    (new CategoryModel())->setCategory($new_category, $new_category_eng);
-                    $result = (new CategoryModel())->getCategoryByName($new_category_eng);
-                    echo json_encode(array(
+                    try {
+                        (new CategoryModel())->setCategory($new_category, $new_category_eng);
+                        $result = (new CategoryModel())->getCategoryByName($new_category_eng);
+                        echo json_encode(array(
                         'result' => 'Success',
                         'msg' => 'New category was added to catalog.',
                         'category_name' => $new_category,
                         'category_id' => $result[0]['category_id'],
-                    ));
+                        ));
+                    } catch (Exception $e) {
+                        echo json_encode(array(
+                            'result' => 'Error',
+                            'msg' => ($e->getMessage()),
+                        ));
+                    }
                     return;
                 } else {
                     echo json_encode(array(
@@ -226,14 +234,21 @@ class ProductController extends BasicController
                     $category_id = $_POST['update_id_category'];
                     $new_category = trim(htmlspecialchars($_POST['new_category'], ENT_QUOTES));
                     $new_category_eng = trim(htmlspecialchars($_POST['new_category_eng'], ENT_QUOTES));
-                    (new CategoryModel())->updateCategory($category_id, $new_category, $new_category_eng);
-                    echo json_encode(array(
-                        'result' => 'Success',
-                        'msg' => 'Category was successfully updated.',
-                        'category_id' => $category_id,
-                        'category_name' => $new_category,
-                    ));
-                    return;
+                    try {
+                        (new CategoryModel())->updateCategory($category_id, $new_category, $new_category_eng);
+                        echo json_encode(array(
+                            'result' => 'Success',
+                            'msg' => 'Category was successfully updated.',
+                            'category_id' => $category_id,
+                            'category_name' => $new_category,
+                        ));
+                    } catch (Exception $e) {
+                        echo json_encode(array(
+                            'result' => 'Error',
+                            'msg' => ($e->getMessage()),
+                        ));
+                    }
+                return;
                 } else {
                     echo json_encode(array(
                         'result' => 'Error',

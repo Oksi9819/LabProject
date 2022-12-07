@@ -79,7 +79,12 @@
             <p>Добавить категорию</p>
             <form id="add_category" method="post" name="add_category" action="{{BASEPATH}}addProductCategory/catalog">
                 Введите название категории: <input class="add_category" type="text" name="category_name" required><br>
-                Введите название категории на английском без пробела и знаков препинания: <input class="add_category" type="text" name="category_eng" required><br>
+                Введите название категории на английском без пробела и знаков препинания: <input 
+                    class="add_category" 
+                    type="text" 
+                    name="category_eng" 
+                    required
+                ><br>
                 <input id="submit_add_category" type="submit" name="submit_add_category" value = "Добавить">
             </form>
         </div>

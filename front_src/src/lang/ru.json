@@ -21,5 +21,6 @@
     "Your profile information was successfully changed." : "Информация в вашем профиле успешно изменена.",
     "Password was successfully changed." : "Пароль успешно изменен.",
     "Passwords don't match." : "Пароли не совпадают.",
-    "New admin was successfully added." : "Новый администратор успешно добавлен."
+    "New admin was successfully added." : "Новый администратор успешно добавлен.",
+    "Such category already exists." : "Такая категория уже существует."
 }
