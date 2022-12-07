@@ -7,16 +7,18 @@ $(document).ready(() => {
     $.ajax({
       type: 'POST',
       data: $('#registration_form').serialize(),
-      success: (result) => {
-        console.log('Data was sent.');
+      success: async (result) => {
+        // console.log('Data was sent.');
         const response = JSON.parse(result);
         if (response.result === 'Success') {
           window.location.href = response.location;
         } else if (response.result === 'Error') {
-          mainScript.openModal(mainScript.translateMsg(response));
+          mainScript.openModal(await mainScript.translateMsg(response.msg));
         }
       },
-      error: mainScript.openModal('Проверьте подключение к сети'),
+      error: async () => {
+        mainScript.openModal('Проверьте подключение к сети');
+      },
     });
     return false;
   });
@@ -26,16 +28,17 @@ $(document).ready(() => {
     $.ajax({
       type: 'POST',
       data: $('#auth_form').serialize(),
-      success: (result) => {
-        console.log('Data was sent.');
+      success: async (result) => {
         const response = JSON.parse(result);
         if (response.result === 'Success') {
           window.location.href = response.location;
         } else if (response.result === 'Error') {
-          mainScript.openModal(mainScript.translateMsg(response));
+          mainScript.openModal(await mainScript.translateMsg(response.msg));
         }
       },
-      error: mainScript.openModal('Проверьте подключение к сети'),
+      error: async () => {
+        mainScript.openModal('Проверьте подключение к сети');
+      },
     });
     return false;
   });
@@ -49,30 +52,32 @@ $(document).ready(() => {
       type: 'POST',
       url: $el.attr('action'),
       data: $el.serialize(),
-      success: (result) => {
+      success: async (result) => {
         const response = JSON.parse(result);
+        const responseMsg = await mainScript.translateMsg(response.msg);
         if (response.result === 'Success') {
-          mainScript.openModal(`Ура! ${mainScript.translateMsg(response)}`);
+          mainScript.openModal(responseMsg);
           const { fields } = response.fields;
-          console.log(fields);
+          // console.log(fields);
           const { values } = response.values;
-          console.log(values);
+          // console.log(values);
           for (let i = 0; i < fields.length; i++) {
             console.log(fields[i]);
             $(`#updated_info_${fields[i]}`).text(values[i]);
           }
         } else if (response.result === 'Error') {
           if (response.location !== null) {
-            console.log(response.location);
+            // console.log(response.location);
             window.location.href = response.location;
           } else {
-            console.log(response.msg);
-            mainScript.openModal(mainScript.translateMsg(response));
+            mainScript.openModal(responseMsg);
           }
         }
         $('.update_user').val('');
       },
-      error: mainScript.openModal('Проверьте подключение к сети'),
+      error: async () => {
+        mainScript.openModal('Проверьте подключение к сети');
+      },
     });
     return false;
   });
@@ -80,21 +85,20 @@ $(document).ready(() => {
   // Function of changing password
   $('#submit_update_pass').on('click', () => {
     // alert($('#update_user_pass').attr('action'));
+    const $el = $('#update_user_pass');
     $.ajax({
       type: 'POST',
-      url: $('#update_user_pass').attr('action'),
-      data: $('#update_user_pass').serialize(),
-      success: (result) => {
+      url: $el.attr('action'),
+      data: $el.serialize(),
+      success: async (result) => {
         const response = JSON.parse(result);
-        if (response.result === 'Success') {
-          mainScript.openModal(`Ура! ${mainScript.translateMsg(response)}`);
-        } else if (response.result === 'Error') {
-          console.log(response.result);
-          mainScript.openModal(mainScript.translateMsg(response));
-        }
+        const responseMsg = await mainScript.translateMsg(response.msg);
+        mainScript.openModal(responseMsg);
         $('.update_pass').val('');
       },
-      error: mainScript.openModal('Проверьте подключение к сети'),
+      error: async () => {
+        mainScript.openModal('Проверьте подключение к сети');
+      },
     });
     return false;
   });
@@ -102,21 +106,20 @@ $(document).ready(() => {
   // Function of adding new admin
   $('#submit_reg_admin').on('click', () => {
     // alert($('#add_admin').attr('action'));
+    const $el = $('#add_admin');
     $.ajax({
       type: 'POST',
-      url: $('#add_admin').attr('action'),
-      data: $('#add_admin').serialize(),
-      success: (result) => {
+      url: $el.attr('action'),
+      data: $el.serialize(),
+      success: async (result) => {
         const response = JSON.parse(result);
-        if (response.result === 'Success') {
-          mainScript.openModal(`Ура! ${mainScript.translateMsg(response)}`);
-        } else if (response.result === 'Error') {
-          console.log(response.result);
-          mainScript.openModal(mainScript.translateMsg(response));
-        }
+        const responseMsg = await mainScript.translateMsg(response.msg);
+        mainScript.openModal(responseMsg);
         $('.add_admin').val('');
       },
-      error: mainScript.openModal('Проверьте подключение к сети'),
+      error: async () => {
+        mainScript.openModal('Проверьте подключение к сети');
+      },
     });
     return false;
   });
