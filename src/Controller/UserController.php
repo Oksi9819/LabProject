@@ -247,11 +247,15 @@ class UserController extends BasicController
             if ((int)$order_id) {
                 $new_address = htmlspecialchars($_POST['new_order_address'], ENT_QUOTES);
                 if (!((new OrderModel())->updateOrderAddress($order_id, $new_address))) {
-                    echo json_encode(array('result' => 'Failed to change order address. Please, try again.'));
+                    echo json_encode(array(
+                        'result' => 'Error',
+                        'msg' => 'Failed to change order address. Please, try again.'
+                    ));
                     return;
                 } else {
                     echo json_encode(array(
                         'result' => 'Success',
+                        'msg' => 'Order address was changed.',
                         'value' => $new_address,
                     ));
                     return;
@@ -269,22 +273,34 @@ class UserController extends BasicController
 		} elseif ($_SESSION['user']['id'] == $user_id) {
             if($_SESSION['user']['role'] === "Admin") {
                     $new_status = (int)(htmlspecialchars($_POST['new_order_status'], ENT_QUOTES));
-                    (new OrderModel())->updateOrderStatus((int)$order_id, $new_status);
-                    $statuses = (new OrderModel())->getOrderStatuses();
-                    $status = 'new status';
-                    for ($i = 0; $i < count($statuses); $i++) {
-                        if ($statuses[$i]['status_id'] == $new_status) {
-                            $status = $statuses[$i]['status_name'];
+                    if ((new OrderModel())->updateOrderStatus((int)$order_id, $new_status)) {
+                        $statuses = (new OrderModel())->getOrderStatuses();
+                        $status = 'new status';
+                        for ($i = 0; $i < count($statuses); $i++) {
+                            if ($statuses[$i]['status_id'] == $new_status) {
+                                $status = $statuses[$i]['status_name'];
+                            }
                         }
+                        echo json_encode(array(
+                            'result' => 'Success',
+                            'msg' => 'Status of order was changed to',
+                            'value' => $status,
+                            'order_id' =>$order_id,
+                        ));
+                        return;
+                    } else {
+                        echo json_encode(array(
+                            'result' => 'Error',
+                            'msg' => 'Failed to change order status. Please, try again.'
+                        ));
+                        return;
                     }
-                    echo json_encode(array(
-                        'result' => 'Success',
-                        'value' => $status,
-                        'order_id' =>$order_id,
-                    ));
-                    return;
             } else {
-                header("Location: /");
+                echo json_encode(array(
+                    'result' => 'Error',
+                    'msg' => 'You have no permissions to do this action. Available only for administrators.'
+                ));
+                return;
             }
         } else {
             header("Location: /");
@@ -296,9 +312,19 @@ class UserController extends BasicController
         if(!isset($_SESSION['user'])) {
 			header("Location: /");
 		} elseif ($_SESSION['user']['id'] == $user_id) {
-                (new OrderModel())->cancelOrder($order_id);
-                echo json_encode(array('result' => 'Success'));
+            if ((new OrderModel())->cancelOrder($order_id)) {
+                echo json_encode(array(
+                    'result' => 'Success',
+                    'msg' => 'Order was canceled.'
+                ));
                 return;
+            }else {
+                echo json_encode(array(
+                    'result' => 'Error',
+                    'msg' => 'Failed to cancel order. Please, try again.'
+                ));
+                return;
+            }     
         } else {
             header("Location: /");
         }

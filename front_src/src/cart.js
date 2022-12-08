@@ -1,22 +1,22 @@
 import $ from 'jquery';
 import * as mainScript from './script.js';
 
-$(document).ready(() => {
-  const buttons = $('.add-product');
-  const cartContent = $('#cart_content');
-  let cartData;
-  const changeAmountBtn = $('.change-amount');
+const buttons = $('.add-product');
+const cartContent = $('#cart_content');
+let cartData;
+const changeAmountBtn = $('.change-amount');
 
+// Function of Getting data from LocalStorage
+function getCartData() {
+  return JSON.parse(localStorage.getItem('cart'));
+}
+
+$(document).ready(() => {
   // Function of Writting data to LocalStorage
   function setCartData(o) {
     localStorage.setItem('cart', JSON.stringify(o));
     console.log('Added to cart!');
     return false;
-  }
-
-  // Function of Getting data from LocalStorage
-  function getCartData() {
-    return JSON.parse(localStorage.getItem('cart'));
   }
 
   // Set an event handler for each Add-Product button
@@ -105,3 +105,5 @@ $(document).ready(() => {
     $(cartContent).text('Корзина очищена.');
   });
 });
+
+export { cartContent, getCartData };

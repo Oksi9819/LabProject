@@ -23,5 +23,23 @@
     "Passwords don't match." : "Пароли не совпадают.",
     "New admin was successfully added." : "Новый администратор успешно добавлен.",
     "Such category already exists." : "Такая категория уже существует.",
-    "Email was successfully sent:" : "Письмо было успешно отправлено:"
+    "Email was successfully sent:" : "Письмо было успешно отправлено:",
+    "Order was successfully sent." : "Заказ успешно отправлен.",
+    "Cartdata does not isset." : "Данные корзины не установлены.",
+    "Address does not isset." : "Адрес не устанавливается.",
+    "You should authorize first." : "Вы должны сначала авторизоваться.",
+    "Order address was changed." : "Адрес заказа изменен.",
+    "Failed to change order address. Please, try again."
+    : "Не удалось изменить адрес заказа. Пожалуйста, попробуйте еще раз.",
+    "Failed to change order status. Please, try again."
+    : "Не удалось изменить статус заказа. Пожалуйста, попробуйте еще раз.",
+    "Order was canceled." : "Заказ был отменен.",
+    "Status of order was changed to" : "Статус заказа изменен на",
+    "Failed to cancel order. Please, try again." : "Не удалось отменить заказ. Пожалуйста, попробуйте еще раз.",
+    "Was added new product to catalog" : "В каталог добавлен новый товар",
+    "Fail to add new product. Please, try again." : "Не удалось добавить новый продукт. Пожалуйста, попробуйте еще раз.",
+    "Information was edited." : "Информация была изменена.",
+    "There is no product with such name." : "Продукт с таким названием не существует.",
+    "Such product already exists." : "Продукт с таким названием уже существует.",
+    "Product was deleted." : "Продукт был удален."
 }

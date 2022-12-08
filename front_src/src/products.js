@@ -1,15 +1,20 @@
-// Function of adding new product
-$('#submit_add_product').on('click', () => {
+import $ from 'jquery';
+import * as mainScript from './script.js';
+
+$(document).ready(() => {
+  // Function of adding new product
+  $('#submit_add_product').on('click', () => {
     // alert($('#add_product').attr('action'));
+    const $el = $('#add_product');
     $.ajax({
       type: 'POST',
-      url: $('#add_product').attr('action'),
-      data: $('#add_product').serialize(),
-      success: (result) => {
+      url: $el.attr('action'),
+      data: $el.serialize(),
+      success: async (result) => {
         const response = JSON.parse(result);
+        const responseMsg = await mainScript.translateMsg(response.msg);
         if (response.result === 'Success') {
           const { product } = response;
-          openModal(`${product.product_name} was added to catalog.`);
           let newProduct = '<div class="catalog product-card">';
           newProduct += `<div class="inner">${product.product_id}</div>`;
           newProduct += '<div class="inner">';
@@ -30,39 +35,47 @@ $('#submit_add_product').on('click', () => {
           newProduct += '<button class="add-product" data-id=';
           newProduct += `"${product.product_id}">В КОРЗИНУ</button>`;
           newProduct += '</div></div></div>';
-          console.log(newProduct);
           $('#catalog').append(newProduct);
-          // window.location.reload(true);
-        } else {
-          openModal(response.result);
+          mainScript.openModal(`${responseMsg}: ${product.product_name}`);
+        } else if (response.result === 'Error') {
+          mainScript.openModal(responseMsg);
         }
         $('.add_product').val('');
       },
-    });
-    return false;
-  });
-  
-  // Function of editting product info
-  $('#submit_update_product').on('click', () => {
-    // alert($('#update_product_form').attr('action'));
-    $.ajax({
-      type: 'POST',
-      url: $('#update_product_form').attr('action'),
-      data: $('#update_product_form').serialize(),
-      success: (result) => {
-        const response = JSON.parse(result);
-        if (response.result === 'Success') {
-          openModal(`Information of ${response.product} was eddited`);
-          console.log(response.fields);
-          console.log(response.values);
-          for (let i = 0; i < response.fields.length; i++) {
-            $(`#${response.fields[i]}`).text(`${response.values[i]}`);
-          }
-        } else {
-          openModal(response.result);
-        }
-        $('.update_product').val('');
+      error: async () => {
+        mainScript.openModal('Проверьте подключение к сети');
       },
     });
     return false;
   });
+
+  // Function of editting product info
+  $('#submit_update_product').on('click', () => {
+    // alert($('#update_product_form').attr('action'));
+    const $el = $('#update_product_form');
+    $.ajax({
+      type: 'POST',
+      url: $el.attr('action'),
+      data: $el.serialize(),
+      success: async (result) => {
+        const response = JSON.parse(result);
+        const responseMsg = await mainScript.translateMsg(response.msg);
+        if (response.result === 'Success') {
+          mainScript.openModal(`${response.product}: ${responseMsg}`);
+          // console.log(response.fields);
+          // console.log(response.values);
+          for (let i = 0; i < response.fields.length; i++) {
+            $(`#${response.fields[i]}`).text(`${response.values[i]}`);
+          }
+        } else if (response.result === 'Error') {
+          mainScript.openModal(responseMsg);
+        }
+        $('.update_product').val('');
+      },
+      error: async () => {
+        mainScript.openModal('Проверьте подключение к сети');
+      },
+    });
+    return false;
+  });
+});

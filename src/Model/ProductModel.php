@@ -19,7 +19,13 @@ class ProductModel extends BasicModel
         $fields = array('product_name', 'product_desc', 'product_category', 'product_price', 'created_at');
         $created_at = date("Y-m-d h:i:s");
         $values = array($product_name, $product_desc, $product_category, $product_price, $created_at);
-        return $this->setModel("product", $fields, "ssids", $values);
+        if (!($a = $this->getProductByName($product_name))) {
+            $created_at = date("Y-m-d h:i:s");
+            array_push($values, $new_category, $new_category_eng, $created_at);
+            return $this->setModel("product", $fields, "ssids", $values);
+        } else {
+            throw new Exception("Such product already exists.");
+        }
     }
 
     //READ
@@ -96,7 +102,7 @@ class ProductModel extends BasicModel
         return $this->getModel("*", "product", "product_id", $product_id, NULL, NULL, NULL, "i");
     }
 
-   /* public function getProductByName(string $product_name): array
+    public function getProductByName(string $product_name): array
     {
         if (isset($_POST['search'])) {
             $product_name = trim((string)$_GET['search_product']);
@@ -109,10 +115,10 @@ class ProductModel extends BasicModel
                 $result = $result->fetch_assoc(); 
                 return $result;
             } else {
-                echo "There is no product with such name.<br>";
+                throw new Exception("There is no product with such name.");
             }
         }
-    }*/
+    }
 
     public function getProductsOfOrder(int $order_id): array
     {

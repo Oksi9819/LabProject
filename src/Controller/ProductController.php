@@ -69,7 +69,10 @@ class ProductController extends BasicController
     public function addProduct()
     {
         if(!isset($_SESSION['user'])) {
-            echo json_encode(array('result' => 'You have no permissions to do this action. Available only for administrators.'));
+            echo json_encode(array(
+                'result' => 'Error',
+                'msg' => 'You have no permissions to do this action. Available only for administrators.'
+            ));
             return;
 		} else {
             if($_SESSION['user']['role'] === "Admin") {
@@ -78,23 +81,40 @@ class ProductController extends BasicController
                         $product_desc = htmlspecialchars($_POST['prod_desc'], ENT_QUOTES);
                         $product_category = (int)(htmlspecialchars($_POST['id_new_prod_category'], ENT_QUOTES));
                         $product_price = (float)(htmlspecialchars($_POST['prod_price'], ENT_QUOTES));
-                        $result = $this->productModel->setProduct($product_name, $product_desc, $product_category, $product_price);
-                        if (!empty($result))
-                        {
-                            $products = $this->productModel->getProducts();
-                            // var_dump($result);
-                            echo json_encode(array('result' => 'Success', 'product' => $products[count($products) - 1]));
-                            return;
-                        } else {
-                            echo json_encode(array('result' => 'Fail to add new product. Please, try again.'));
-                            return;
-                        }                        
+                        try {
+                            $result = $this->productModel->setProduct($product_name, $product_desc, $product_category, $product_price);
+                            if (!empty($result)) {
+                                $products = $this->productModel->getProducts();
+                                echo json_encode(array(
+                                    'result' => 'Success',
+                                    'msg' => 'Was added new product to catalog',
+                                    'product' => $products[count($products) - 1]
+                                ));
+                            } else {
+                                echo json_encode(array(
+                                    'result' => 'Error',
+                                    'msg' => 'Fail to add new product. Please, try again.'
+                                ));
+                            }
+                        } catch (Exception $ex) {
+                            echo json_encode(array(
+                                'result' => 'Error',
+                                'msg' => ($ex->getMessage()),
+                            ));
+                        }
+                        return;                        
                     } else {
-                        echo json_encode(array('result' => 'All the fields should be fullfilled.'));
+                        echo json_encode(array(
+                            'result' => 'Error',
+                            'msg' => 'All fields should be fullfilled.'
+                        ));
                         return;
                     }
             } else {
-                echo json_encode(array('result' => 'You have no permissions to do this action. Available only for administrators.'));
+                echo json_encode(array(
+                    'result' => 'Error',
+                    'msg' => 'You have no permissions to do this action. Available only for administrators.'
+                ));
                 return;
             }
         }
@@ -104,7 +124,8 @@ class ProductController extends BasicController
     {
         if(!isset($_SESSION['user'])) {
             echo json_encode(array(
-                'result' => 'You have no permissions to do this action. Available only for administrators.'
+                'result' => 'Error',
+                'msg' => 'You have no permissions to do this action. Available only for administrators.'
             ));
             return; 
 		} else {
@@ -139,6 +160,7 @@ class ProductController extends BasicController
                         $this->productModel->updateProduct($field, $product_id, $value, $types);
                         echo json_encode(array(
                             'result' => 'Success',
+                            'msg' => 'Information was edited.',
                             'product' => $product_id,
                             'fields' => $output,
                             'values' => $value,
@@ -147,9 +169,10 @@ class ProductController extends BasicController
                     }        
             } else {
                 echo json_encode(array(
-                    'result' => 'You have no permissions to do this action. Available only for administrators.'
+                    'result' => 'Error',
+                    'msg' => 'You have no permissions to do this action. Available only for administrators.'
                 ));
-                return; 
+                return;
             }
         }
     }
@@ -157,18 +180,27 @@ class ProductController extends BasicController
     public function deleteProduct(int $product_id)
     {
         if(!isset($_SESSION['user'])) {
-            return $this->productView->errorView("You have no permissions to do this action. Available only for administrators. ");
+            echo json_encode(array(
+                'result' => 'Error',
+                'msg' => 'You have no permissions to do this action. Available only for administrators.'
+            ));
+            return;
 		} else {
             if($_SESSION['user']['role'] === "Admin") {
                 if (!empty($_POST['submit_delete_product'])) {
                     $this->productModel->deleteProduct($product_id);
-                    $_SESSION['response'] = [
-                        'deleted_product' => $product_name,
-                    ];
-                    return header('Location: ' . BASEPATH . 'catalog');
+                    echo json_encode(array(
+                        'result' => 'Success',
+                        'msg' => 'Product was deleted.'
+                    ));
+                    return;
                 }           
             } else {
-                return $this->productView->errorView("You have no permissions to do this action. Available only for administrators. ");
+                echo json_encode(array(
+                    'result' => 'Error',
+                    'msg' => 'You have no permissions to do this action. Available only for administrators.'
+                ));
+                return;
             }
         }
     }

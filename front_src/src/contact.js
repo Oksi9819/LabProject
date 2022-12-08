@@ -4,10 +4,11 @@ import * as mainScript from './script.js';
 $(document).ready(() => {
   // Function of sendig a contact-form
   $('#submit_contact_form').on('click', () => {
+    const $el = $('#contact_form');
     $.ajax({
       type: 'POST',
-      url: $('#contact_form').attr('action'),
-      data: $('#contact_form').serialize(),
+      url: $el.attr('action'),
+      data: $el.serialize(),
       success: async (result) => {
         const response = JSON.parse(result);
         const responseMsg = await mainScript.translateMsg(response.msg);
