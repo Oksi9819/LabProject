@@ -1,11 +1,12 @@
 import $ from 'jquery';
 import * as mainScript from './script.js';
-import * as cartScript from './cart.js';
+import getCartData from './cart.js';
 
 $(document).ready(() => {
+  const cartContent = $('#cart_content');
   // Set order
   $('#set_order').on('click', () => {
-    const cartData = cartScript.getCartData();
+    const cartData = getCartData();
     const orderAddress = $('#order_addr').val();
     if (cartData === null) {
       mainScript.openModal('В корзине пусто!');
@@ -25,7 +26,7 @@ $(document).ready(() => {
           if (response.result === 'Success') {
             $('#clear_cart').trigger('click');
             $('#order_addr').val('');
-            $(cartScript.cartContent).text('В корзине пусто!');
+            $(cartContent).text('В корзине пусто!');
             mainScript.openModal(responseMsg);
           } else if (response.result === 'Error') {
             mainScript.openModal(responseMsg);

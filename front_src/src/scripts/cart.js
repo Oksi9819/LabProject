@@ -1,17 +1,17 @@
 import $ from 'jquery';
 import * as mainScript from './script.js';
 
-const buttons = $('.add-product');
-const cartContent = $('#cart_content');
-let cartData;
-const changeAmountBtn = $('.change-amount');
-
 // Function of Getting data from LocalStorage
 function getCartData() {
   return JSON.parse(localStorage.getItem('cart'));
 }
 
 $(document).ready(() => {
+  const buttons = $('.add-product');
+  const cartContent = $('#cart_content');
+  let cartData;
+  const changeAmountBtn = $('.change-amount');
+
   // Function of Writting data to LocalStorage
   function setCartData(o) {
     localStorage.setItem('cart', JSON.stringify(o));
@@ -90,4 +90,4 @@ $(document).ready(() => {
   });
 });
 
-export { cartContent, getCartData };
+export default getCartData;

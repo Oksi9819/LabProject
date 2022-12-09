@@ -8,6 +8,6 @@ import './scripts/script.js';
 import './scripts/categories.js';
 import './scripts/user.js';
 import './scripts/contact.js';
-import './scripts/cart.js';
 import './scripts/products.js';
+import './scripts/cart.js';
 import './scripts/order.js';

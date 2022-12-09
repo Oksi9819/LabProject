@@ -51,12 +51,14 @@ $(document).ready(() => {
       data: $el.serialize(),
       success: async (result) => {
         const response = JSON.parse(result);
+        console.log(response);
         const responseMsg = await mainScript.translateMsg(response.msg);
         if (response.result === 'Success') {
           mainScript.openModal(responseMsg);
-          const { fields } = response.fields;
-          const { values } = response.values;
-          for (let i = 0; i < fields.length; i++) {
+          const { fields } = response;
+          const { values } = response;
+          const { length } = Array.from(response.fields);
+          for (let i = 0; i < length; i++) {
             $(`#updated_info_${fields[i]}`).text(values[i]);
           }
         } else if (response.result === 'Error') {
