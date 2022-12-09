@@ -5,7 +5,6 @@ $(document).ready(() => {
   // Function of adding new product category
   $('#submit_add_category').on('click', () => {
     const $el = $('#add_category');
-    // alert($('#add_category').attr('action'));
     $(this).attr('disabled', true);
     $.ajax({
       type: 'POST',
@@ -34,7 +33,6 @@ $(document).ready(() => {
 
   // Function of editting product category
   $('#submit_update_category').on('click', () => {
-    // alert($('#update_category').attr('action'));
     const $el = $('#update_category');
     $(this).attr('disabled', true);
     $.ajax({
@@ -64,7 +62,6 @@ $(document).ready(() => {
 
   // Function of deleting product category
   $('#submit_delete_category').on('click', () => {
-    // alert($('#delete_category').attr('action'));
     const $el = $('#delete_category');
     $(this).attr('disabled', true);
     $.ajax({

@@ -4,7 +4,6 @@ import * as mainScript from './script.js';
 $(document).ready(() => {
   // Function of adding new product
   $('#submit_add_product').on('click', () => {
-    // alert($('#add_product').attr('action'));
     const $el = $('#add_product');
     $.ajax({
       type: 'POST',
@@ -51,7 +50,6 @@ $(document).ready(() => {
 
   // Function of editting product info
   $('#submit_update_product').on('click', () => {
-    // alert($('#update_product_form').attr('action'));
     const $el = $('#update_product_form');
     $.ajax({
       type: 'POST',
@@ -62,8 +60,6 @@ $(document).ready(() => {
         const responseMsg = await mainScript.translateMsg(response.msg);
         if (response.result === 'Success') {
           mainScript.openModal(`${response.product}: ${responseMsg}`);
-          // console.log(response.fields);
-          // console.log(response.values);
           for (let i = 0; i < response.fields.length; i++) {
             $(`#${response.fields[i]}`).text(`${response.values[i]}`);
           }

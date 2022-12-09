@@ -8,7 +8,6 @@ $(document).ready(() => {
       type: 'POST',
       data: $('#registration_form').serialize(),
       success: async (result) => {
-        // console.log('Data was sent.');
         const response = JSON.parse(result);
         if (response.result === 'Success') {
           window.location.href = response.location;
@@ -46,8 +45,6 @@ $(document).ready(() => {
   // Function of editting profile info
   $('#submit_update_user').on('click', () => {
     const $el = $('#update_user');
-    // alert($('#update_user'));
-    // alert($('#update_user').attr('action'));
     $.ajax({
       type: 'POST',
       url: $el.attr('action'),
@@ -58,16 +55,12 @@ $(document).ready(() => {
         if (response.result === 'Success') {
           mainScript.openModal(responseMsg);
           const { fields } = response.fields;
-          // console.log(fields);
           const { values } = response.values;
-          // console.log(values);
           for (let i = 0; i < fields.length; i++) {
-            console.log(fields[i]);
             $(`#updated_info_${fields[i]}`).text(values[i]);
           }
         } else if (response.result === 'Error') {
           if (response.location !== null) {
-            // console.log(response.location);
             window.location.href = response.location;
           } else {
             mainScript.openModal(responseMsg);
@@ -84,7 +77,6 @@ $(document).ready(() => {
 
   // Function of changing password
   $('#submit_update_pass').on('click', () => {
-    // alert($('#update_user_pass').attr('action'));
     const $el = $('#update_user_pass');
     $.ajax({
       type: 'POST',
@@ -105,7 +97,6 @@ $(document).ready(() => {
 
   // Function of adding new admin
   $('#submit_reg_admin').on('click', () => {
-    // alert($('#add_admin').attr('action'));
     const $el = $('#add_admin');
     $.ajax({
       type: 'POST',

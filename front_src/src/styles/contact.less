@@ -1,0 +1,63 @@
+@import './basic.less';
+
+.contact {
+    background: @bluegreen;
+    padding: 10px 0px 10px 0px;
+    margin-top: 5vh;
+
+    form {
+        width: 65vh;
+        margin: 0 auto;
+        padding: 0px 0px;
+        background: @bluegreen;
+        border-radius: 0px; 
+    } 
+
+    p {
+        width: fit-content;
+        margin: 0 auto 10px auto;
+        font-weight: bold;
+    }
+} 
+
+.contact-input, .contact-btn {
+    font-size: inherit;
+
+    &.contact-name, &.contact-mail {
+        margin: 0 auto;
+        margin-bottom: 15px;
+        width: calc(50% - 15px); 
+
+        &:hover {
+            box-shadow: 0 1px 2px @whitesmoke;
+            border-color: @dark-green-transparent;
+        }
+
+        &:focus {
+            background: @whitesmoke;
+        }
+    }
+
+    &.contact-name {
+        margin-right: 12px;
+    }
+
+    &.contact-msg{
+        width: calc(100% - 6px); 
+        margin-bottom: 15px;
+
+        &:hover {
+            box-shadow: 0 1px 2px @whitesmoke;
+            border-color: @dark-green-transparent;
+        }
+
+        &:focus {
+            background: @whitesmoke;
+        }
+    }
+}
+
+.contact-btn {
+    width: calc(100%);
+    margin: 0 auto;
+}

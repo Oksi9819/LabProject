@@ -1,0 +1,92 @@
+@import './basic.less';
+
+nav.menu {
+    &.header-menu {
+        font-size: larger;
+        background: @dark-green-transparent;
+        margin: 0;
+        padding: 0;
+        color: @whitesmoke;
+    }
+
+    ul.menu {
+        a {
+            transition: .5s linear;
+            vertical-align: middle;
+        }
+
+        &.header-menu {
+            height: 100%;
+            font-weight: bold;
+            list-style: none; 
+            margin: 0;
+            padding: 0;
+    
+            li{
+                display: inline-block;
+                margin: 1em 20px 0 0;
+                position: relative;
+                min-width: 10vh;
+
+                &:last-child {
+                    margin-right: 20px;
+                }
+
+                &:first-child {
+                    margin-left: 20px;
+                }
+
+                img.cart {
+                    height: 5vh;
+                }
+
+                .submenu {
+                    &.header-submenu {
+                        position: absolute;
+                        top: 100%;
+                        left: 0;
+                        //width: 100%;
+                        z-index: 10;
+                        transition: 0.5s ease-in-out;
+                        visibility: hidden;
+                    
+                        li{
+                            width: 20em;
+                            padding: 1em 1em 0 1em;
+                            position: relative;
+                            background: @bluegreen;
+                            border-bottom: 1px solid @light-bluegreen-transparent3;
+                            margin: 0;
+                    
+                            &:first-child {
+                                margin-left: 0;
+                            }
+                    
+                            &:hover {
+                                text-shadow: 5px 5px 15px @dark-green-transparent;
+                            }
+                        } 
+                    } 
+                }
+                
+                &:hover {
+                    text-shadow: 5px 5px 15px @light-bluegreen-transparent1;
+
+                    .submenu {
+                        &.header-submenu {
+                            visibility: visible;
+                        }
+                    }
+                }
+
+                &.penult {
+                    margin-left: 35vh;
+                
+                    &.one {
+                        margin-right: 2vh;
+                    }
+                }
+            } 
+        }
+    }
+}
