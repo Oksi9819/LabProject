@@ -1,39 +1,37 @@
 @import './basic.less';
 
 .users {
-    .col {
-        &:nth-child(1) {
+        .user-id {
             width: 3%;
         }
 
-        &:nth-child(2) {
+        .user-name {
             width: 13%;
         }
 
-        &:nth-child(3) {
+        .user-surname {
             width: 13%;
         }
 
-        &:nth-child(4) {
+        .user-bday {
             width: 10%;
         }
 
-        &:nth-child(5) {
+        .user-address {
             width: 13%;
         }
 
-        &:nth-child(6) {
+        .user-phone {
             width: 13%;
         }
 
-        &:nth-child(7) {
+        .user-mail {
             width: 16%;
         }
 
-        &:nth-child(8) {
+        .user-created {
             width: 13%;
         }
-    }
 }
 
 .reviews, .orders, .users {
@@ -74,8 +72,8 @@
         font-size: smaller;
     }
 
-    .col, .order_status, .order-address {
-        padding: 0.5vh 0.5vh 0.5vh 0.5vh;
+    .col, .order_status, .order-address, .user-id, .user-name, .user-surname, .user-bday, .user-address, .user-phone, .user-created {
+        padding: 1vh 0.5vh 0.5vh 0.5vh;
         flex-wrap: wrap;
     }
 
