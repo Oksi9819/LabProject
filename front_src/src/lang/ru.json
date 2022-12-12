@@ -41,5 +41,6 @@
     "Information was edited." : "Информация была изменена.",
     "There is no product with such name." : "Продукт с таким названием не существует.",
     "Such product already exists." : "Продукт с таким названием уже существует.",
-    "Product was deleted." : "Продукт был удален."
+    "Product was deleted." : "Продукт был удален.",
+    "Youre not authorized." : ""
 }
