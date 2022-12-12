@@ -49,8 +49,7 @@ $(document).ready(() => {
         } else if (response.result === 'Error') {
           mainScript.openModal(responseMsg);
         }
-        ($('#update_category').find('.update_category')).val('');
-        ($('#update_category').find('.new_category_eng')).val('');
+        ($('#update_category').find('.update_category, .new_category_eng' )).val('');
       },
       error: async () => {
         mainScript.openModal('Проверьте подключение к сети');

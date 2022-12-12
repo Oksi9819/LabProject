@@ -51,7 +51,6 @@ $(document).ready(() => {
       data: $el.serialize(),
       success: async (result) => {
         const response = JSON.parse(result);
-        console.log(response);
         const responseMsg = await mainScript.translateMsg(response.msg);
         if (response.result === 'Success') {
           mainScript.openModal(responseMsg);

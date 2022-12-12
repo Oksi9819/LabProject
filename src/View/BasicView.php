@@ -24,11 +24,6 @@ class BasicView
         $this->template = new BladeOne($templates, $cache, BladeOne::MODE_AUTO);
     }
 
-    /*protected function main($title)
-    {
-        return $this->template->run("basic.basic", ['categories'=>$this->categories,'SESSION'=>$this->session, 'BASEPATH'=>BASEPATH, 'title'=>$title]);
-    }*/
-
     public function errorView(string $message)
     {
         $title = "error page"; 
