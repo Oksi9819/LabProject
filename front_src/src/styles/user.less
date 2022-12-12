@@ -72,7 +72,24 @@
         font-size: smaller;
     }
 
-    .col, .order_status, .order-address, .user-id, .user-name, .user-surname, .user-bday, .user-address, .user-phone, .user-created {
+    .order-id,
+    .order-surname,
+    .order-name,
+    .order-address,
+    .order-address-change,
+    .order-phone,
+    .order-email,
+    .order-sum,
+    .order-status,
+    .order-status-change,
+    .order-details,
+    .user-id, 
+    .user-name, 
+    .user-surname, 
+    .user-bday, 
+    .user-address, 
+    .user-phone, 
+    .user-created {
         padding: 1vh 0.5vh 0.5vh 0.5vh;
         flex-wrap: wrap;
     }
@@ -101,61 +118,57 @@
 .orders {
     font-size: smaller;
 
-    .col, .order_status, .order-address {
-        &:nth-child(1) {
-            width: 3%;
-        }
+    .order-id {
+        width: 3%;
+    }
 
-        &:nth-child(2) {
-            width: 8%;
-        }
+    .order-surname {
+        width: 8%;
+    }
 
-        &:nth-child(3) {
-            width: 8%;
-        }
+    .order-name, .order-address-change {
+        width: 8%;
+    }
 
-        &:nth-child(4) {
-            width: 11%;
-        }
+    .order-address {
+        width: 11%;
+    }
 
-        &:nth-child(5) {
-            width: 10%;
-        }
+    .order-phone {
+        width: 10%;
+    }
 
-        &:nth-child(6) {
-            width: 11%;
-        }
+    .order-email {
+        width: 11%;
+    }
 
-        &:nth-child(7) {
-            width: 6%;
-        }
+    .order-sum, .order-status-cancel {
+        width: 6%;
+    }
 
-        &:nth-child(8) {
-            width: 9%;
-        }
+    .order-status {
+        width: 9%;
+    }
 
-        &:nth-child(9) {
-            width: 9%;
-        }
+    .order-status-change {
+        width: 9%;
+    }
 
-        &:nth-child(10) {
-            width: 15%;
-        }
+    .order-details {
+        width: 15%;
     }
 }
 
 .reviews {
-    .col{
-        &:nth-child(1) {
-            width: 10%;
-        }
+    .review-id {
+        width: 10%;
+    }
 
-        &:nth-child(2) {
-            width: 40%;
-        }
+    .review-user {
+        width: 40%;
+    }
 
-        &:nth-child(3) {
-            width: 40%;
-        }
+    .review-text {
+        width: 40%;
     }
 }

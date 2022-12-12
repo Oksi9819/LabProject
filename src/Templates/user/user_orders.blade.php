@@ -7,19 +7,19 @@
     <p>Заказы пользователя {{$SESSION['id']}}</p>
     <div class="orders">
         <div class="thead">
-            <div class="col">Код заказа</div>
-            <div class="col">Адрес заказа</div>
-            <div class="col"></div>
-            <div class="col">Сумма заказа</div>
-            <div class="col">Статус заказа</div>
-            <div class="col">Детали заказа</div>
-            <div class="col"></div>
+            <div class="order-id">Код заказа</div>
+            <div class="order-address">Адрес заказа</div>
+            <div class="order-address-change"></div>
+            <div class="order-sum">Сумма заказа</div>
+            <div class="order-status">Статус заказа</div>
+            <div class="order-details">Детали заказа</div>
+            <div class="order-status-cancel"></div>
         </div>
     @foreach($orders as $order)
         <div class="row">>
-            <div class="col">{{$order['order_id']}}</div>
+            <div class="order-id">{{$order['order_id']}}</div>
             <div class="order-address">{{$order['address']}}</div>
-            <div class="col">
+            <div class="order-address-change">
                 <form 
                     id="change_order_address"
                     method="post" 
@@ -31,9 +31,9 @@
                     <input id="submit_new_order_address" type="submit" name="submit_new_order_address" value="Изменить адрес">
                 </form>
             </div>
-            <div class="col">{{$order['price']}} BYN </div>
-            <div class="order_status">{{$order['status']}}</div>
-            <div class="col">
+            <div class="order-sum">{{$order['price']}} BYN </div>
+            <div class="order-status">{{$order['status']}}</div>
+            <div class="order-details">
                 <div class="orders details">
                     @foreach ($order_details as $order_detail)
                         @if ($order_detail['order_id'] == $order['order_id'])
@@ -45,7 +45,7 @@
                     @endforeach
                 </div>
             </div>
-            <div class="col">
+            <div class="order-status-cancel">
                 <form 
                     id="cancel_order"
                     method="post" 
