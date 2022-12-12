@@ -254,48 +254,34 @@ class ProductController extends BasicController
 
     public function updateProductCategory() 
     {
-        if(!isset($_SESSION['user'])) {
+        function errorMsg(string $msg) {
             echo json_encode(array(
                 'result' => 'Error',
-                'msg' => 'You have no permissions to do this action. Available only for administrators.'
+                'msg' => $msg
             ));
-            return;
-		} else {
-            if($_SESSION['user']['role'] === "Admin") {
-                if (!empty($_POST['new_category']) && !empty($_POST['new_category_eng'])) {
-                    $category_id = $_POST['update_id_category'];
-                    $new_category = trim(htmlspecialchars($_POST['new_category'], ENT_QUOTES));
-                    $new_category_eng = trim(htmlspecialchars($_POST['new_category_eng'], ENT_QUOTES));
-                    try {
-                        (new CategoryModel())->updateCategory($category_id, $new_category, $new_category_eng);
-                        echo json_encode(array(
-                            'result' => 'Success',
-                            'msg' => 'Category was successfully updated.',
-                            'category_id' => $category_id,
-                            'category_name' => $new_category,
-                        ));
-                    } catch (Exception $e) {
-                        echo json_encode(array(
-                            'result' => 'Error',
-                            'msg' => ($e->getMessage()),
-                        ));
-                    }
-                return;
-                } else {
-                    echo json_encode(array(
-                        'result' => 'Error',
-                        'msg' => 'All fields should be fulldilled.'
-                    ));
-                    return; 
-                }
-            } else {
+        }
+        
+        if(!isset($_SESSION['user']) && $_SESSION['user']['role'] !== "Admin") {
+            return errorMsg('You have no permissions to do this action. Available only for administrators.');
+		} else if (!empty($_POST['new_category']) && !empty($_POST['new_category_eng'])) {
+            $category_id = $_POST['update_id_category'];
+            $new_category = trim(htmlspecialchars($_POST['new_category'], ENT_QUOTES));
+            $new_category_eng = trim(htmlspecialchars($_POST['new_category_eng'], ENT_QUOTES));
+            try {
+                (new CategoryModel())->updateCategory($category_id, $new_category, $new_category_eng);
                 echo json_encode(array(
-                    'result' => 'Error',
-                    'msg' => 'You have no permissions to do this action. Available only for administrators.'
+                    'result' => 'Success',
+                    'msg' => 'Category was successfully updated.',
+                    'category_id' => $category_id,
+                    'category_name' => $new_category,
                 ));
-                return; 
+            } catch (Exception $e) {
+                errorMsg($e->getMessage()); 
             }
-        }  
+            return;
+        } else {
+            return errorMsg('All fields should be fullfilled.'); 
+        } 
     }
 
     public function deleteProductCategory()
