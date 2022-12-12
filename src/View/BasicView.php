@@ -11,7 +11,7 @@ class BasicView
     protected $categories;
     protected $year;
 
-    protected function __construct()
+    public function __construct()
     {
         global $BASEPATH;
         $templates = $BASEPATH.'src/Templates';
