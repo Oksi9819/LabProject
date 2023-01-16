@@ -42,5 +42,6 @@
     "There is no product with such name." : "Продукт с таким названием не существует.",
     "Such product already exists." : "Продукт с таким названием уже существует.",
     "Product was deleted." : "Продукт был удален.",
-    "You're not authorized." : "Вы не авторизованы."
+    "You're not authorized." : "Вы не авторизованы.",
+    "Order id should be type of integer." : "Id заказа должно быть целым числом."
 }

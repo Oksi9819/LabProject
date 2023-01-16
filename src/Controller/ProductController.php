@@ -41,17 +41,16 @@ class ProductController extends BasicController
 
     public function getProductsByCategorySorted($category_name)
     {
-        if (!empty($_POST['sort_choice'])) {
-            $sort = htmlspecialchars($_POST['sort_choice'], ENT_QUOTES);
-            try {
-                $products = $this->productModel->getProductsByCategory($category_name, $sort);
-                return $this->productView->renderProductListByCategory($category_name, $products);
-            } catch (Exception $e) {
-                return $this->productView->errorView($e->getMessage());
-            }
-        } else {
-            return header('Location: ' . BASEPATH . 'profile/' . $user[0]['user_id']);
-        }  
+        if (empty($_POST['sort_choice'])) {
+            return header('Location: ' . BASEPATH . 'profile/' . $user[0]['user_id']);    
+        }
+        $sort = htmlspecialchars($_POST['sort_choice'], ENT_QUOTES);
+        try {
+            $products = $this->productModel->getProductsByCategory($category_name, $sort);
+            return $this->productView->renderProductListByCategory($category_name, $products);
+        } catch (Exception $e) {
+            return $this->productView->errorView($e->getMessage());
+        } 
     }
 
     public function getProductById(int $product_id)
@@ -74,50 +73,47 @@ class ProductController extends BasicController
                 'msg' => 'You have no permissions to do this action. Available only for administrators.'
             ));
             return;
-		} else {
-            if($_SESSION['user']['role'] === "Admin") {
-                    if (!empty($_POST['prod_name']) && !empty($_POST['prod_desc']) && !empty($_POST['prod_price']) && !empty($_POST['id_new_prod_category'])) {
-                        $product_name = htmlspecialchars($_POST['prod_name'], ENT_QUOTES);
-                        $product_desc = htmlspecialchars($_POST['prod_desc'], ENT_QUOTES);
-                        $product_category = (int)(htmlspecialchars($_POST['id_new_prod_category'], ENT_QUOTES));
-                        $product_price = (float)(htmlspecialchars($_POST['prod_price'], ENT_QUOTES));
-                        try {
-                            $result = $this->productModel->setProduct($product_name, $product_desc, $product_category, $product_price);
-                            if (!empty($result)) {
-                                $products = $this->productModel->getProducts();
-                                echo json_encode(array(
-                                    'result' => 'Success',
-                                    'msg' => 'Was added new product to catalog',
-                                    'product' => $products[count($products) - 1]
-                                ));
-                            } else {
-                                echo json_encode(array(
-                                    'result' => 'Error',
-                                    'msg' => 'Fail to add new product. Please, try again.'
-                                ));
-                            }
-                        } catch (Exception $ex) {
-                            echo json_encode(array(
-                                'result' => 'Error',
-                                'msg' => ($ex->getMessage()),
-                            ));
-                        }
-                        return;                        
-                    } else {
-                        echo json_encode(array(
-                            'result' => 'Error',
-                            'msg' => 'All fields should be fullfilled.'
-                        ));
-                        return;
-                    }
+		}
+        if($_SESSION['user']['role'] !== "Admin") {
+            echo json_encode(array(
+                'result' => 'Error',
+                'msg' => 'You have no permissions to do this action. Available only for administrators.'
+            ));
+            return;
+        }
+        if (empty($_POST['prod_name']) || empty($_POST['prod_desc']) || empty($_POST['prod_price']) || empty($_POST['id_new_prod_category'])) {
+            echo json_encode(array(
+                'result' => 'Error',
+                'msg' => 'All fields should be fullfilled.'
+            ));
+            return;                      
+        }
+        $product_name = htmlspecialchars($_POST['prod_name'], ENT_QUOTES);
+        $product_desc = htmlspecialchars($_POST['prod_desc'], ENT_QUOTES);
+        $product_category = (int)(htmlspecialchars($_POST['id_new_prod_category'], ENT_QUOTES));
+        $product_price = (float)(htmlspecialchars($_POST['prod_price'], ENT_QUOTES));
+        try {
+            $result = $this->productModel->setProduct($product_name, $product_desc, $product_category, $product_price);
+            if (!empty($result)) {
+                $products = $this->productModel->getProducts();
+                echo json_encode(array(
+                    'result' => 'Success',
+                    'msg' => 'Was added new product to catalog',
+                    'product' => $products[count($products) - 1]
+                ));
             } else {
                 echo json_encode(array(
                     'result' => 'Error',
-                    'msg' => 'You have no permissions to do this action. Available only for administrators.'
+                    'msg' => 'Fail to add new product. Please, try again.'
                 ));
-                return;
             }
+        } catch (Exception $ex) {
+            echo json_encode(array(
+                'result' => 'Error',
+                'msg' => ($ex->getMessage()),
+            ));
         }
+        return;
     }
 
     public function updateProduct(int $product_id)
@@ -128,52 +124,50 @@ class ProductController extends BasicController
                 'msg' => 'You have no permissions to do this action. Available only for administrators.'
             ));
             return; 
-		} else {
-            if($_SESSION['user']['role'] === "Admin") {
-                $product_id = (int)$product_id;
-                $field = array();
-                $value = array();
-                $output = array();
-                $types = "";
-                    if (!empty($_POST['product_name'])) {
-                        $product_name = htmlspecialchars($_POST['product_name'], ENT_QUOTES);
-                        array_push($field, "product_name");
-                        array_push($value, $product_name);
-                        $types .= "s";
-                        array_push($output, 0); 
-                    }
-                    if (!empty($_POST['product_desc'])) {
-                        $product_desc = htmlspecialchars($_POST['product_desc'], ENT_QUOTES);
-                        array_push($field, "product_desc");
-                        array_push($value, $product_desc);
-                        $types .= "s";
-                        array_push($output, 1); 
-                    }
-                    if (!empty($_POST['product_price'])) {
-                        $product_price = (float)(htmlspecialchars($_POST['product_price'], ENT_QUOTES));
-                        array_push($field, "product_price");
-                        array_push($value, $product_price);
-                        $types .= "d";
-                        array_push($output, 2); 
-                    }
-                    if (!empty($value)) {
-                        $this->productModel->updateProduct($field, $product_id, $value, $types);
-                        echo json_encode(array(
-                            'result' => 'Success',
-                            'msg' => 'Information was edited.',
-                            'product' => $product_id,
-                            'fields' => $output,
-                            'values' => $value,
-                        ));
-                        return; 
-                    }        
-            } else {
-                echo json_encode(array(
-                    'result' => 'Error',
-                    'msg' => 'You have no permissions to do this action. Available only for administrators.'
-                ));
-                return;
-            }
+		}
+        if($_SESSION['user']['role'] !== "Admin") {
+            echo json_encode(array(
+                'result' => 'Error',
+                'msg' => 'You have no permissions to do this action. Available only for administrators.'
+            ));
+            return;
+        }
+        $product_id = (int)$product_id;
+        $field = array();
+        $value = array();
+        $output = array();
+        $types = "";
+        if (!empty($_POST['product_name'])) {
+            $product_name = htmlspecialchars($_POST['product_name'], ENT_QUOTES);
+            array_push($field, "product_name");
+            array_push($value, $product_name);
+            $types .= "s";
+            array_push($output, 0); 
+        }
+        if (!empty($_POST['product_desc'])) {
+            $product_desc = htmlspecialchars($_POST['product_desc'], ENT_QUOTES);
+            array_push($field, "product_desc");
+            array_push($value, $product_desc);
+            $types .= "s";
+            array_push($output, 1); 
+        }
+        if (!empty($_POST['product_price'])) {
+            $product_price = (float)(htmlspecialchars($_POST['product_price'], ENT_QUOTES));
+            array_push($field, "product_price");
+            array_push($value, $product_price);
+            $types .= "d";
+            array_push($output, 2); 
+        }
+        if (!empty($value)) {
+            $this->productModel->updateProduct($field, $product_id, $value, $types);
+            echo json_encode(array(
+                'result' => 'Success',
+                'msg' => 'Information was edited.',
+                'product' => $product_id,
+                'fields' => $output,
+                'values' => $value,
+            ));
+            return; 
         }
     }
 
@@ -185,24 +179,20 @@ class ProductController extends BasicController
                 'msg' => 'You have no permissions to do this action. Available only for administrators.'
             ));
             return;
-		} else {
-            if($_SESSION['user']['role'] === "Admin") {
-                if (!empty($_POST['submit_delete_product'])) {
-                    $this->productModel->deleteProduct($product_id);
-                    echo json_encode(array(
-                        'result' => 'Success',
-                        'msg' => 'Product was deleted.'
-                    ));
-                    return;
-                }           
-            } else {
-                echo json_encode(array(
-                    'result' => 'Error',
-                    'msg' => 'You have no permissions to do this action. Available only for administrators.'
-                ));
-                return;
-            }
+		}
+        if($_SESSION['user']['role'] !== "Admin") {    
+            echo json_encode(array(
+                'result' => 'Error',
+                'msg' => 'You have no permissions to do this action. Available only for administrators.'
+            ));
+            return;       
         }
+        $this->productModel->deleteProduct($product_id);
+        echo json_encode(array(
+            'result' => 'Success',
+            'msg' => 'Product was deleted.'
+        ));
+        return;
     }
 
     public function addProductCategory() 
@@ -299,23 +289,21 @@ class ProductController extends BasicController
                 'msg' => 'You have no permissions to do this action. Available only for administrators.'
             ));
             return;
-		} else {
-            if($_SESSION['user']['role'] === "Admin") {
-                    $category_id = htmlspecialchars($_POST['id_del_category'], ENT_QUOTES);
-                    (new CategoryModel())->deleteCategory($category_id);
-                    echo json_encode(array(
-                        'result' => 'Success',
-                        'msg' => 'Category was deleted.',
-                        'category_id' => $category_id,
-                    ));
-                    return;              
-            } else {
-                echo json_encode(array(
-                    'result' => 'Error',
-                    'msg' => 'You have no permissions to do this action. Available only for administrators.'
-                ));
-                return;
-            }
-        }  
+		} 
+        if($_SESSION['user']['role'] !== "Admin") {
+            echo json_encode(array(
+                'result' => 'Error',
+                'msg' => 'You have no permissions to do this action. Available only for administrators.'
+            ));
+            return;             
+        }
+        $category_id = htmlspecialchars($_POST['id_del_category'], ENT_QUOTES);
+        (new CategoryModel())->deleteCategory($category_id);
+        echo json_encode(array(
+            'result' => 'Success',
+            'msg' => 'Category was deleted.',
+            'category_id' => $category_id,
+        ));
+        return;
     } 
 }
