@@ -34,19 +34,19 @@ class BasicModel
     {
         //echo $ifvalue . "<br><br><br>";
         $ifvalues = explode(", ", $ifvalue);
-        if ($sort===NULL && $ifclause===NULL && $ifvalue===NULL && $ifoperator === NULL && $types===NULL && $group===NULL) {
+        if ($sort === NULL && $ifclause === NULL && $ifvalue === NULL && $ifoperator === NULL && $types === NULL && $group === NULL) {
             $sql = "SELECT " . $fields . " FROM " . $table;
             $query = $this->connection->prepare($sql);
-        } elseif ($sort===NULL && $ifclause===NULL && $ifvalue===NULL && $types===NULL) {
+        } elseif ($sort === NULL && $ifclause === NULL && $ifvalue === NULL && $types === NULL) {
             $sql = "SELECT " . $fields . " FROM " . $table . " GROUP BY " . $group;
             $query = $this->connection->prepare($sql);
-        } elseif ($ifclause===NULL && $ifvalue===NULL && $types===NULL && $group===NULL) {
+        } elseif ($ifclause === NULL && $ifvalue === NULL && $types === NULL && $group === NULL) {
             $sql = "SELECT " . $fields . " FROM " . $table . " ORDER BY " . $sort;
             $query = $this->connection->prepare($sql);
-        } elseif ($ifclause===NULL && $ifvalue===NULL && $types===NULL) {
+        } elseif ($ifclause === NULL && $ifvalue === NULL && $types === NULL) {
             $sql = "SELECT " . $fields . " FROM " . $table . " GROUP BY " . $group . " ORDER BY " . $sort;
             $query = $this->connection->prepare($sql);
-        } elseif ($sort===NULL && $group===NULL) {
+        } elseif ($sort === NULL && $group === NULL) {
             $if = explode(", ", $ifclause);
             $sql = "SELECT " . $fields . " FROM " . $table . " WHERE ";
             if (is_null($ifoperator)) {
@@ -60,7 +60,7 @@ class BasicModel
             }
             $query = $this->connection->prepare($sql);
             $query->bind_param($types, ...$ifvalues);
-        } elseif ($sort===NULL) {
+        } elseif ($sort === NULL) {
             $sql = "SELECT " . $fields . " FROM " . $table . " WHERE ";
             $if = explode(", ", $ifclause);
             if (is_null($ifoperator)) {
@@ -76,7 +76,7 @@ class BasicModel
             //echo $sql . "<br>";
             $query = $this->connection->prepare($sql);
             $query->bind_param($types, ...$ifvalues);
-        }  elseif ($group===NULL) {
+        }  elseif ($group === NULL) {
             $sql = "SELECT " . $fields . " FROM " . $table . " WHERE ";
             $if = explode(", ", $ifclause);
             if (is_null($ifoperator)) {

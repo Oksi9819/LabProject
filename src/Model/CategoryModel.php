@@ -16,21 +16,18 @@ class CategoryModel extends BasicModel
     public function setCategory(string $new_category,string $new_category_eng)
     {
         $values = array();
-        if (strlen($new_category) < 31 && strlen($new_category_eng) < 31) {
-            if (!($a = $this->getCategoryByName($new_category_eng))) {
-                if ($a['category_name'] !== $new_category) {
-                    $created_at = date("Y-m-d h:i:s");
-                    array_push($values, $new_category, $new_category_eng, $created_at);
-                    return $this->setModel("category", ['category_name', 'name_eng', 'created_at'], "sss", $values);
-                } else {
-                    throw new Exception("Such category already exists.");
-                }
-            } else {
-                throw new Exception("Such category already exists.");
-            } 
-        } else {
+        if (strlen($new_category) > 30 || strlen($new_category_eng) > 30) {
             throw new Exception("Length of category names should be shorter than 31 characters.");
-        }  
+        }
+        if ($a = $this->getCategoryByName($new_category_eng)) {
+            throw new Exception("Such category already exists.");
+        }
+        if (($this->getCategoryByName($new_category_eng))['category_name'] === $new_category) {
+            throw new Exception("Such category already exists.");       
+        }
+        $created_at = date("Y-m-d h:i:s");
+        array_push($values, $new_category, $new_category_eng, $created_at);
+        return $this->setModel("category", ['category_name', 'name_eng', 'created_at'], "sss", $values);
     }
 
     //READ
@@ -53,22 +50,19 @@ class CategoryModel extends BasicModel
     public function updateCategory(int $category_id, string $new_category, string $new_category_eng) : array
     {
         $values = array();
-        if (strlen($new_category) < 31 && strlen($new_category_eng) < 31) {
-            if (!($a = $this->getCategoryByName($new_category_eng))) {
-                if ($a['category_name'] !== $new_category) {
-                    array_push($values, $new_category, $new_category_eng);
-                    $created_at = date("Y-m-d h:i:s");
-                    array_push($values, $new_category, $new_category_eng, $created_at);
-                    return $this->updateModel("category_name, name_eng", "category", "category_id", $category_id, $values, NULL, "ssi");
-                } else {
-                    throw new Exception("Such category already exists.");
-                }
-            } else {
-                throw new Exception("Such category already exists.");
-            }    
-        } else {
+        if (strlen($new_category) > 30 || strlen($new_category_eng) > 30) {
             throw new Exception("Length of category names should be shorter than 31 characters.");
-        }        
+        }
+        if ($a = $this->getCategoryByName($new_category_eng)) {
+            throw new Exception("Such category already exists.");
+        }
+        if (($this->getCategoryByName($new_category_eng))['category_name'] === $new_category) {
+            throw new Exception("Such category already exists.");       
+        }
+        array_push($values, $new_category, $new_category_eng);
+        $created_at = date("Y-m-d h:i:s");
+        array_push($values, $new_category, $new_category_eng, $created_at);
+        return $this->updateModel("category_name, name_eng", "category", "category_id", $category_id, $values, NULL, "ssi");
     }
 
     //DELETE
